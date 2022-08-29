@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "522469352479",
+    "project_id": "flutter-black-white",
+    "storage_bucket": "flutter-black-white.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522469352479:android:8ace357c45d960738be12a",
+        "android_client_info": {
+          "package_name": "com.example.flutter_black_white"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522469352479-r5lqg3j8f3re202i77k3tl0i3mr66gf8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGZ7frqkKD2tP3XVQnlhd6sgXED8FHOQ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522469352479-r5lqg3j8f3re202i77k3tl0i3mr66gf8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
