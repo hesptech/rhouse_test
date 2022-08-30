@@ -45,7 +45,6 @@ class _CustomBottomNavigatorState extends State<CustomBottomNavigator> {
       showSelectedLabels: false,
       showUnselectedLabels: false,
       iconSize: 32,
-      //currentIndex: 0,
       items: const <BottomNavigationBarItem> [
         BottomNavigationBarItem(
           icon: Icon( Icons.home_rounded,  ),
