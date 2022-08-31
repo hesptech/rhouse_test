@@ -24,7 +24,7 @@ class _CustomBottomNavigatorState extends State<CustomBottomNavigator> {
   void _onItemTapped(int index) {
     setState(() {
       //_selectedIndex = index;
-      print(loggedIn);
+      //print(loggedIn);
       if ( index == 4 && loggedIn ) {
         Navigator.pushNamed(context, _pages[5]);
         //Navigator.pop(context);
