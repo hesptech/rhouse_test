@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'widgets.dart';
+import 'widgets_formatting.dart';
 
 enum ApplicationLoginState {
   loggedOut,

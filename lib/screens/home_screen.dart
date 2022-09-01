@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/widgets/custom_buttom_navigation.dart';
+import 'package:flutter_black_white/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -7,14 +7,12 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Firebase Meetup'),
-      ),
+      appBar: const AppbarCustom(),
       body: ListView(
-        children: <Widget>[
-          Image.asset('assets/codelab.png'),
-          const SizedBox(height: 8),
-          const Divider(
+        children: const <Widget>[
+
+          SizedBox(height: 8),
+          Divider(
             height: 8,
             thickness: 1,
             indent: 8,
