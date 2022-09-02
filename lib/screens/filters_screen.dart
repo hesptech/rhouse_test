@@ -209,6 +209,7 @@ class _FiltersExpansionTilesState extends State<FiltersExpansionTiles> {
           ),
           Text('Selected: ${_filtersSearch.join(', ')}'),
           Text('${Preferences.userFilters}'),
+          Text('Log: ${Preferences.isLoggedIn}'),
     
         ],
       ),
@@ -259,6 +260,7 @@ class _FiltersExpansionTilesState extends State<FiltersExpansionTiles> {
               }else{
                 _filtersSearch.removeWhere((String name) => name == propertiesCityGtaNorth.name);
               }
+              Preferences.userFilters = _filtersSearch;
             });
           },
         )

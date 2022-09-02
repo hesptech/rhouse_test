@@ -5,7 +5,7 @@ class Preferences {
   static late SharedPreferences _prefs;
 
   static String _name = '';
-  static bool _isDarkmode = false;
+  static bool _isLoggedIn = false;
   static int _gender = 1;
   static List<String> _userFilters = [];
 
@@ -22,13 +22,13 @@ class Preferences {
     _prefs.setString( 'name', name );
   }
 
-  static bool get isDarkmode {
-    return _prefs.getBool('isDrakmode') ?? _isDarkmode;
+  static bool get isLoggedIn {
+    return _prefs.getBool('isLoggedIn') ?? _isLoggedIn;
   }
 
-  static set isDarkmode( bool value ) {
-    _isDarkmode = value;
-    _prefs.setBool( 'isDarkmode', value );
+  static set isLoggedIn( bool value ) {
+    _isLoggedIn = value;
+    _prefs.setBool( 'isLoggedIn', value );
   }
 
   static int get gender {

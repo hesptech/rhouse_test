@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'widgets_formatting.dart';
 
 enum ApplicationLoginState {
@@ -47,6 +48,7 @@ class Authentication extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (loginState) {
       case ApplicationLoginState.loggedOut:
+        Preferences.isLoggedIn = false;
         return Row(
           children: [
             Padding(
@@ -92,6 +94,7 @@ class Authentication extends StatelessWidget {
           },
         );
       case ApplicationLoginState.loggedIn:
+        Preferences.isLoggedIn = true;
         return Row(
           children: [
             Padding(

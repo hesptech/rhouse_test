@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 import '../utils/authentication.dart';
 
 class ApplicationState extends ChangeNotifier {
@@ -14,6 +15,7 @@ class ApplicationState extends ChangeNotifier {
     FirebaseAuth.instance.userChanges().listen((user) {
       if (user != null) {
         _loginState = ApplicationLoginState.loggedIn;
+        Preferences.isLoggedIn = false;
       } else {
         _loginState = ApplicationLoginState.emailAddress;
       }
@@ -86,6 +88,8 @@ class ApplicationState extends ChangeNotifier {
   }
 
   void signOut() {
+    Preferences.isLoggedIn = false;
+    print('sigOut:');
     FirebaseAuth.instance.signOut();
   }
 }
