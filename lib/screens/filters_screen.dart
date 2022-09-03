@@ -1,3 +1,4 @@
+import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,9 @@ class FiltersScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       appBar: AppBar(
-        title: const Text('Filters'),
+        elevation: 0.0,
+        centerTitle: true,
+        title: const Text('Personalize Listing'),
       ),
       body: const FiltersExpansionTiles(),
     );
@@ -33,10 +36,12 @@ class _FiltersExpansionTilesState extends State<FiltersExpansionTiles> {
   late List<PropertiesTypes> _propertiesTypes;
   late List<PropertiesRooms> _propertiesRooms;
   late List<String> _filtersSearch;
+  late List<String> _filtersSearchIsLoggedIn;
 
+  final isLoggedIn = Preferences.isLoggedIn;
 
   //double _currentSliderValue = 0.0;
-  var selectedRange = const RangeValues(1000000, 4000000);
+  var selectedRange = const RangeValues(500000, 5000000);
 
   @override
   void initState() {
@@ -72,6 +77,7 @@ class _FiltersExpansionTilesState extends State<FiltersExpansionTiles> {
       const PropertiesRooms('+5'),
     ];
     _filtersSearch = Preferences.userFilters;
+    _filtersSearchIsLoggedIn = Preferences.userFiltersIsLoggedIn;
   }
 
   @override
@@ -81,74 +87,76 @@ class _FiltersExpansionTilesState extends State<FiltersExpansionTiles> {
       child: Column(
         children: <Widget>[
 
-
-          /* ExpansionTile(
-            title: const Text('Price Range', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF2E3191)),),
-            children: <Widget>[
-              Text('${_currentSliderValue.round().toString()} to Max.', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF58595B)),),
-              Slider(
-                thumbColor: const Color(0xFF0BB48B),
-                activeColor: const Color(0xFF2E3191),
-                inactiveColor: const Color(0xFF58595B),
-                min: 0,
-                max: 5000000,
-                divisions: 10,
-                label: _currentSliderValue.round().toString(),
-                value: _currentSliderValue, 
-                onChanged: (double value) {
-                  setState(() {
-                    _currentSliderValue = value;
-                  });
-                }, 
-              ),
-            ],
-          ), */
-
-
-
-          ExpansionTile(
-            title: const Text('Price Range', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF2E3191)),),
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('from ', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF58595B)),),
-                  Text('\$ ${selectedRange.start.round().toString()} ', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF0BB48B)),),
-                  const Text(' to ', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF58595B)),),
-                  Text('\$ ${selectedRange.end.round().toString()}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF0BB48B)),),
-                ],
-              ),
-
-              RangeSlider(
-                activeColor: const Color(0xFF2E3191),
-                inactiveColor: const Color(0xFF58595B),
-                min: 0,
-                max: 5000000,
-                //divisions: 10,
-                labels: RangeLabels('${selectedRange.start}', '${selectedRange.end}'),
-                values: selectedRange,
-                onChanged: (RangeValues newRange) {
-                  setState(() => selectedRange = newRange);
-                },
-              ),
-            ],
+          Container(
+            height: 5,
+            color: kSecondaryColor,
           ),
 
-          // City
-          ExpansionTile(
-            title: const Text('City', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF2E3191)),),
-            children: [
-              const Text('GTA - Central', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF58595B)),),
-              Wrap(
-                children: propertiesCityGtaCentralWidgets.toList(),
-              ),
-              const SizedBox(height: 10.0,),
-              const Text('GTA - North', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF58595B)),),
-              Wrap(
-                children: propertiesCityGtaNorthWidgets.toList(),
-              ),
-              const SizedBox(height: 10.0,),
-            ],
+          Padding(
+            padding: const EdgeInsets.fromLTRB(28.0, 28.0, 28.0, 28.0),
+            child: Column(
+              children: [
+                const Text('Price Range', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500, color: kSecondaryColor),),
+                const SizedBox(height: 14.0,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('\$${selectedRange.start.round().toString()} \n or less', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400, ),),
+                    Text('\$${selectedRange.end.round().toString()} \n or more', textAlign: TextAlign.right, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400, ),),
+                  ],
+                ),
+                RangeSlider(
+                  activeColor: const Color(0xFF2E3191),
+                  inactiveColor: const Color(0xFF58595B),
+                  min: 0,
+                  max: 5000000,
+                  //divisions: 10,
+                  labels: RangeLabels('${selectedRange.start}', '${selectedRange.end}'),
+                  values: selectedRange,
+                  onChanged: (RangeValues newRange) {
+                    setState(() => selectedRange = newRange);
+                  },
+                ),
+              ],
+            ),
+          ),
+
+          const Text(
+            'City', 
+            style: TextStyle(
+              fontSize: 22, 
+              fontWeight: FontWeight.w500, 
+              color: kSecondaryColor
+            ),
+          ),
+          Padding(
+            //padding: const EdgeInsets.symmetric( horizontal: 28.0, vertical: 8.0 ),
+            padding: const EdgeInsets.fromLTRB(28.0, 14.0, 28.0, 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                Text('GTA - Central', style: TextStyle( fontSize: 16, fontWeight: FontWeight.bold, color: kSecondaryColor),),
+                Text('Select all', style: TextStyle( fontSize: 14, fontWeight: FontWeight.w400, color: kSecondaryColor),),
+              ],
+            ),
+          ),
+          Wrap(
+            children: propertiesCityGtaCentralWidgets.toList(),
+          ),
+
+          const SizedBox(height: 16.0,),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(28.0, 8.0, 28.0, 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                Text('GTA - North', style: TextStyle( fontSize: 16, fontWeight: FontWeight.bold, color: kSecondaryColor),),
+                Text('Select all', style: TextStyle( fontSize: 14, fontWeight: FontWeight.w400, color: kSecondaryColor),),
+              ],
+            ),              
+          ),
+          Wrap(
+            children: propertiesCityGtaNorthWidgets.toList(),
           ),
 
           // TYPES
@@ -208,6 +216,7 @@ class _FiltersExpansionTilesState extends State<FiltersExpansionTiles> {
             ],
           ),
           Text('Selected: ${_filtersSearch.join(', ')}'),
+          Text('Selected isLogged: ${_filtersSearchIsLoggedIn.join(', ')}'),
           Text('${Preferences.userFilters}'),
           Text('Log: ${Preferences.isLoggedIn}'),
     
@@ -220,21 +229,28 @@ class _FiltersExpansionTilesState extends State<FiltersExpansionTiles> {
   Iterable<Widget> get propertiesCityGtaCentralWidgets sync* {
     for (PropertiesCityGtaCentral propertiesCityGtaCentral in _propertiesCityGtaCentral) {
       yield Padding(
-        padding: const EdgeInsets.symmetric( horizontal: 6.0 ),
+        padding: const EdgeInsets.symmetric( horizontal: 5.0 ),
         child: ChoiceChip(
-          label: Text(propertiesCityGtaCentral.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 61, 62, 78)),),
-          selectedColor: const Color(0xFF0BB48B),
-          elevation: 6.0,
-          shadowColor: Colors.grey[900],
-          selected: _filtersSearch.contains(propertiesCityGtaCentral.name),
+          label: Container(
+            width: 160,
+            alignment: Alignment.center,
+            child: Text(propertiesCityGtaCentral.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: kPrimaryColor),),
+          ),
+          labelPadding: const EdgeInsets.all(0.0),
+          backgroundColor: const Color(0xFFFFFFFF),
+          selectedColor: kSecondaryColor,
+          shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
+          side: const BorderSide( color: kPrimaryColor ),
+          selected: isLoggedIn ?  _filtersSearchIsLoggedIn.contains(propertiesCityGtaCentral.name) : _filtersSearch.contains(propertiesCityGtaCentral.name),
           onSelected: ( bool selected ) {
             setState(() {
-              if(selected){
-                _filtersSearch.add(propertiesCityGtaCentral.name);
-              }else{
-                _filtersSearch.removeWhere((String name) => name == propertiesCityGtaCentral.name);
+              if ( isLoggedIn ) {
+                selected ? _filtersSearchIsLoggedIn.add(propertiesCityGtaCentral.name) : _filtersSearchIsLoggedIn.removeWhere((String name) => name == propertiesCityGtaCentral.name) ;
+                Preferences.userFiltersIsLoggedIn = _filtersSearchIsLoggedIn;                 
+              } else {
+                selected ? _filtersSearch.add(propertiesCityGtaCentral.name) : _filtersSearch.removeWhere((String name) => name == propertiesCityGtaCentral.name) ;
+                Preferences.userFilters = _filtersSearch;
               }
-              Preferences.userFilters = _filtersSearch;
             });
           },
         )
@@ -246,12 +262,18 @@ class _FiltersExpansionTilesState extends State<FiltersExpansionTiles> {
   Iterable<Widget> get propertiesCityGtaNorthWidgets sync* {
     for (PropertiesCityGtaNorth propertiesCityGtaNorth in _propertiesCityGtaNorth) {
       yield Padding(
-        padding: const EdgeInsets.symmetric( horizontal: 6.0 ),
+        padding: const EdgeInsets.symmetric( horizontal: 5.0 ),
         child: ChoiceChip(
-          label: Text(propertiesCityGtaNorth.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 61, 62, 78)),),
-          selectedColor: const Color(0xFF0BB48B),
-          elevation: 6.0,
-          shadowColor: Colors.grey[900],
+          label: Container(
+            width: 160,
+            alignment: Alignment.center,
+            child: Text(propertiesCityGtaNorth.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: kPrimaryColor),),
+          ),
+          labelPadding: const EdgeInsets.all(0.0),
+          backgroundColor: const Color(0xFFFFFFFF),
+          selectedColor: kSecondaryColor,
+          shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
+          side: const BorderSide( color: kPrimaryColor ),
           selected: _filtersSearch.contains(propertiesCityGtaNorth.name),
           onSelected: ( bool selected ) {
             setState(() {

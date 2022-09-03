@@ -4,22 +4,12 @@ class Preferences {
   
   static late SharedPreferences _prefs;
 
-  static String _name = '';
   static bool _isLoggedIn = false;
-  static int _gender = 1;
   static List<String> _userFilters = [];
+  static List<String> _userFiltersIsLoggedIn = [];
 
   static Future init() async {
     _prefs = await SharedPreferences.getInstance();
-  }
-
-  static String get name {
-    return _prefs.getString('name') ?? _name;
-  }
-
-  static set name( String name ) {
-    _name = name;
-    _prefs.setString( 'name', name );
   }
 
   static bool get isLoggedIn {
@@ -31,15 +21,6 @@ class Preferences {
     _prefs.setBool( 'isLoggedIn', value );
   }
 
-  static int get gender {
-    return _prefs.getInt('gender') ?? _gender;
-  }
-
-  static set gender( int value ) {
-    _gender = value;
-    _prefs.setInt( 'gender', value );
-  }
-
   static List<String> get userFilters {
     return _prefs.getStringList( 'userFilters') ?? _userFilters;
   }
@@ -47,6 +28,15 @@ class Preferences {
   static set userFilters( List<String> value ) {
     _userFilters = value;
     _prefs.setStringList( 'userFilters', value );
+  }
+
+  static List<String> get userFiltersIsLoggedIn {
+    return _prefs.getStringList( 'userFiltersIsLoggedIn') ?? _userFiltersIsLoggedIn;
+  }
+
+  static set userFiltersIsLoggedIn( List<String> value ) {
+    _userFiltersIsLoggedIn = value;
+    _prefs.setStringList( 'userFiltersIsLoggedIn', value );
   }
 
 }
