@@ -28,7 +28,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Firebase Meetup',
+      title: 'RHOUZE',
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
           color: kPrimaryColor,

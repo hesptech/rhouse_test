@@ -46,7 +46,8 @@ class LoginScreen extends StatelessWidget {
               children: [
                 if (appState.loginState == ApplicationLoginState.loggedIn) ...[
                   const Text('User name'),
-                  Text(FirebaseAuth.instance.currentUser?.displayName ?? 'no name')
+                  Text(FirebaseAuth.instance.currentUser?.displayName ?? 'no name'),
+                  Text('Log2: ${Preferences.isLoggedIn}'),
                 ],
               ],
             ),

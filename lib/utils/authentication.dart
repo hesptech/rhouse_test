@@ -97,18 +97,14 @@ class Authentication extends StatelessWidget {
         );
       case ApplicationLoginState.loggedIn:
         Preferences.isLoggedIn = true;
-        return Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 24, bottom: 8),
-              child: StyledButton(
-                onPressed: () {
-                  signOut();
-                },
-                child: const Text('LOGOUT'),
-              ),
-            ),
-          ],
+        return Padding(
+          padding: const EdgeInsets.symmetric( horizontal: 50.0, vertical: 70.0 ),
+          child: StyledMaterialButton(
+            onPressed: () {
+              signOut();
+            },
+            child: const Text('LOGOUT'),
+          ),
         );
       default:
         return Row(
@@ -185,15 +181,15 @@ class _EmailFormState extends State<EmailForm> {
                     contentPadding: const EdgeInsets.symmetric(vertical: 16.0),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: Color(0xFF2E3191), ),
+                      borderSide: const BorderSide(color: kPrimaryColor, ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: Color(0xFF2E3191),),
+                      borderSide: const BorderSide(color: kPrimaryColor,),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: Color(0xFF2E3191),), 
+                      borderSide: const BorderSide(color: kPrimaryColor,), 
                     ),                      
                     //hintText: 'Email',
                     label: const Center(
@@ -229,7 +225,7 @@ class _EmailFormState extends State<EmailForm> {
                 const Text('Sign up',
                   style: TextStyle(
                     fontSize: 22.0,
-                    color: Color(0xFF2E3191),
+                    color: kPrimaryColor,
                     //fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -239,20 +235,20 @@ class _EmailFormState extends State<EmailForm> {
                   child: TextButton(
                     onPressed: () { Navigator.pushNamed(context, 'login_signup_screen'); },
                     style: ButtonStyle(
-                      side: MaterialStateProperty.all(const BorderSide( color: Color(0xFF2E3191), ), ),
+                      side: MaterialStateProperty.all(const BorderSide( color: kPrimaryColor, ), ),
                       shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0))),
                         padding: MaterialStateProperty.all( const EdgeInsets.symmetric( vertical: 14 ), ),
                         textStyle: MaterialStateProperty.all(const TextStyle(
                           fontSize: 16,
                           //fontWeight: FontWeight.w700,
-                          color: Color(0xFF2E3191),
+                          color: kPrimaryColor,
                         ))),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: const [
                         Icon(Icons.email_outlined, size: 28.0, color: Color(0xFF0BB48B), ),
                         SizedBox(width : 10),
-                        Text("Continue with Email", style: TextStyle( color: Color(0xFF2E3191), ),),
+                        Text("Continue with Email", style: TextStyle( color: kPrimaryColor, ),),
                       ],
                     ),
                   ),
@@ -263,20 +259,20 @@ class _EmailFormState extends State<EmailForm> {
                   child: TextButton(
                     onPressed: () {},
                     style: ButtonStyle(
-                      side: MaterialStateProperty.all(const BorderSide( color: Color(0xFF2E3191), ), ),
+                      side: MaterialStateProperty.all(const BorderSide( color: kPrimaryColor, ), ),
                       shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0))),
                         padding: MaterialStateProperty.all( const EdgeInsets.symmetric( vertical: 14 ), ),
                         textStyle: MaterialStateProperty.all(const TextStyle(
                           fontSize: 16,
                           //fontWeight: FontWeight.w700,
-                          color: Color(0xFF2E3191),
+                          color: kPrimaryColor,
                         ))),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Image.asset("assets/icons_methods/icon_apple.png"),
                         const SizedBox(width : 10),
-                        const Text("Continue with Apple", style: TextStyle( color: Color(0xFF2E3191), ),),
+                        const Text("Continue with Apple", style: TextStyle( color: kPrimaryColor, ),),
                       ],
                     ),
                   ),
@@ -287,20 +283,20 @@ class _EmailFormState extends State<EmailForm> {
                   child: TextButton(
                     onPressed: () {},
                     style: ButtonStyle(
-                      side: MaterialStateProperty.all(const BorderSide( color: Color(0xFF2E3191), ), ),
+                      side: MaterialStateProperty.all(const BorderSide( color: kPrimaryColor, ), ),
                       shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0))),
                         padding: MaterialStateProperty.all( const EdgeInsets.symmetric( vertical: 14 ), ),
                         textStyle: MaterialStateProperty.all(const TextStyle(
                           fontSize: 16,
                           //fontWeight: FontWeight.w700,
-                          color: Color(0xFF2E3191),
+                          color: kPrimaryColor,
                         ))),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Image.asset("assets/icons_methods/Google_2.png"),
                         const SizedBox(width : 10),
-                        const Text("Continue with Google", style: TextStyle( color: Color(0xFF2E3191), ),),
+                        const Text("Continue with Google", style: TextStyle( color: kPrimaryColor, ),),
                       ],
                     ),
                   ),
@@ -311,20 +307,20 @@ class _EmailFormState extends State<EmailForm> {
                   child: TextButton(
                     onPressed: () {},
                     style: ButtonStyle(
-                      side: MaterialStateProperty.all(const BorderSide( color: Color(0xFF2E3191), ), ),
+                      side: MaterialStateProperty.all(const BorderSide( color: kPrimaryColor, ), ),
                       shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0))),
                         padding: MaterialStateProperty.all( const EdgeInsets.symmetric( vertical: 14 ), ),
                         textStyle: MaterialStateProperty.all(const TextStyle(
                           fontSize: 16,
                           //fontWeight: FontWeight.w700,
-                          color: Color(0xFF2E3191),
+                          color: kPrimaryColor,
                         ))),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Image.asset("assets/icons_methods/icon_facebook.png"),
                         const SizedBox(width : 10),
-                        const Text("Continue with Facebook", style: TextStyle( color: Color(0xFF2E3191), ),),
+                        const Text("Continue with Facebook", style: TextStyle( color: kPrimaryColor, ),),
                       ],
                     ),
                   ),
@@ -374,85 +370,157 @@ class _RegisterFormState extends State<RegisterForm> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Header('Create account'),
+        //const Header('Create account'),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric( horizontal: 50.0, vertical: 70.0 ),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: TextFormField(
-                    controller: _emailController,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter your email',
+                TextFormField(
+                  controller: _emailController,
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(vertical: 16.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(color: kPrimaryColor, ),
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Enter your email address to continue';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: TextFormField(
-                    controller: _displayNameController,
-                    decoration: const InputDecoration(
-                      hintText: 'First & last name',
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(color: kPrimaryColor,),
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Enter your account name';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: TextFormField(
-                    controller: _passwordController,
-                    decoration: const InputDecoration(
-                      hintText: 'Password',
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(color: kPrimaryColor,), 
+                    ), 
+                    label: const Center(
+                      child: Text("Enter your email"),
                     ),
-                    obscureText: true,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Enter your password';
-                      }
-                      return null;
-                    },
+                    labelStyle: const TextStyle(
+                      color: kPrimaryColor,
+                    ),
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+
                   ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Enter your email address to continue';
+                    }
+                    return null;
+                  },
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        onPressed: widget.cancel,
-                        child: const Text('CANCEL'),
-                      ),
-                      const SizedBox(width: 16),
-                      StyledButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            widget.registerAccount(
-                              _emailController.text,
-                              _displayNameController.text,
-                              _passwordController.text,
-                            );
-                          }
-                        },
-                        child: const Text('SAVE'),
-                      ),
-                      const SizedBox(width: 30),
-                    ],
+                const SizedBox( height: 16.0, ),
+                TextFormField(
+                  controller: _displayNameController,
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(vertical: 16.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(color: kPrimaryColor, ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(color: kPrimaryColor,),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(color: kPrimaryColor,), 
+                    ), 
+                    label: const Center(
+                      child: Text("First & last name"),
+                    ),
+                    labelStyle: const TextStyle(
+                      color: kPrimaryColor,
+                    ),
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
                   ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Enter your account name';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox( height: 16.0, ),
+                TextFormField(
+                  controller: _passwordController,
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(vertical: 16.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(color: kPrimaryColor, ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(color: kPrimaryColor,),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(color: kPrimaryColor,), 
+                    ), 
+                    label: const Center(
+                      child: Text("Password"),
+                    ),
+                    labelStyle: const TextStyle(
+                      color: kPrimaryColor,
+                    ),
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                  ),
+                  obscureText: true,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Enter your password';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox( height: 16.0, ),
+                RichText(
+                  text: const TextSpan(
+                    style: TextStyle( color: Color(0xFF58595B), fontSize: 12.0, ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'Password must consist of at least 6 characters.\nand be strong enough.'
+                      )
+                    ]
+                  )
+                ),
+                const SizedBox( height: 32.0, ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    //const SizedBox(width: 32),
+                    MaterialButton(
+                      elevation: 0.0,
+                      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 22.0 ),
+                      shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(8.0) ),
+                      color: kSecondaryColor,
+                      onPressed: widget.cancel,
+                      child: const Text('CANCEL', style: TextStyle( fontSize: 18.0, color: Colors.white, fontWeight: FontWeight.bold), ),
+                    ),
+                    const SizedBox(width: 16),
+                    MaterialButton(
+                      elevation: 0.0,
+                      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0 ),
+                      shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(8.0) ),
+                      color: kSecondaryColor,
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          widget.registerAccount(
+                            _emailController.text,
+                            _displayNameController.text,
+                            _passwordController.text,
+                          );
+                        }
+                      },
+                      child: const Text('REGISTER', style: TextStyle( fontSize: 18.0, color: Colors.white, fontWeight: FontWeight.bold), ),
+                    ),
+                    //const SizedBox(width: 30),
+                  ],
                 ),
               ],
             ),
@@ -490,66 +558,95 @@ class _PasswordFormState extends State<PasswordForm> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Header('Sign in'),
+        //const Header('Sign in'),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric( horizontal: 50.0, vertical: 70.0 ),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: TextFormField(
-                    controller: _emailController,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter your email',
+                TextFormField(
+                  controller: _emailController,
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(vertical: 16.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(color: kPrimaryColor, ),
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Enter your email address to continue';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: TextFormField(
-                    controller: _passwordController,
-                    decoration: const InputDecoration(
-                      hintText: 'Password',
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(color: kPrimaryColor,),
                     ),
-                    obscureText: true,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Enter your password';
-                      }
-                      return null;
-                    },
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(color: kPrimaryColor,), 
+                    ), 
+                    //hintText: 'Enter your email',
+                    label: const Center(
+                      child: Text("Email"),
+                    ),
+                    labelStyle: const TextStyle(
+                      color: kPrimaryColor,
+                    ),
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
                   ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Enter your email address to continue';
+                    }
+                    return null;
+                  },
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      const SizedBox(width: 16),
-                      StyledButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            widget.login(
-                              _emailController.text,
-                              _passwordController.text,
-                            );
-                          }
-                        },
-                        child: const Text('SIGN IN'),
-                      ),
-                      const SizedBox(width: 30),
-                    ],
+                const SizedBox( height: 16.0, ),
+                TextFormField(
+                  controller: _passwordController,
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(vertical: 16.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(color: kPrimaryColor, ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(color: kPrimaryColor,),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(color: kPrimaryColor,), 
+                    ), 
+                    //hintText: 'Password',
+                    label: const Center(
+                      child: Text("Password"),
+                    ),
+                    labelStyle: const TextStyle(
+                      color: kPrimaryColor,
+                    ),
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
                   ),
+                  obscureText: true,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Enter your password';
+                    }
+                    return null;
+                  },
                 ),
+                const SizedBox( height: 16.0, ),
+                StyledMaterialButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      widget.login(
+                        _emailController.text,
+                        _passwordController.text,
+                      );
+                    }
+                  },
+                  child: const Text('SIGN IN'),
+                ),
+                const SizedBox(width: 30),
               ],
             ),
           ),

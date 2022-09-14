@@ -63,6 +63,7 @@ class ApplicationState extends ChangeNotifier {
         email: email,
         password: password,
       );
+      Preferences.isLoggedIn = true;
     } on FirebaseAuthException catch (e) {
       errorCallback(e);
     }
@@ -89,7 +90,6 @@ class ApplicationState extends ChangeNotifier {
 
   void signOut() {
     Preferences.isLoggedIn = false;
-    print('sigOut:');
     FirebaseAuth.instance.signOut();
   }
 }
