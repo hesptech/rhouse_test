@@ -37,8 +37,8 @@ class App extends StatelessWidget {
         buttonTheme: Theme.of(context).buttonTheme.copyWith(
               highlightColor: kBackgroundColor,
             ),
-        primarySwatch: Colors.deepPurple,
-        textTheme: GoogleFonts.robotoTextTheme(
+        //primarySwatch: Colors.deepPurple,
+        textTheme: GoogleFonts.openSansTextTheme(
           Theme.of(context).textTheme,
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,

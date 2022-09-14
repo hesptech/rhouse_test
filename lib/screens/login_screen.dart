@@ -14,7 +14,9 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Firebase Login'),
+        centerTitle: true,
+        elevation: 0.0,
+        title: const Text('Log in or sign up'),
       ),
       body: ListView(
         children: <Widget>[
