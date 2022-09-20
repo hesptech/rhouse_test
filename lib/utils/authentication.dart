@@ -99,12 +99,23 @@ class Authentication extends StatelessWidget {
         Preferences.isLoggedIn = true;
         return Padding(
           padding: const EdgeInsets.symmetric( horizontal: 50.0, vertical: 70.0 ),
-          child: StyledMaterialButton(
+          child: Column(
+            children: [
+              const LoginAccount(),
+              StyledMaterialButton(
+                onPressed: () {
+                  signOut();
+                },
+                child: const Text('LOGOUT'), 
+              )             
+            ],
+          ),
+          /* child: StyledMaterialButton(
             onPressed: () {
               signOut();
             },
             child: const Text('LOGOUT'),
-          ),
+          ), */
         );
       default:
         return Row(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/utils/application_state.dart';
-import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import 'package:flutter_black_white/utils/application_state.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/screens/screens.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 
@@ -28,6 +28,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'RHOUZE',
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
@@ -49,7 +50,6 @@ class App extends StatelessWidget {
       routes: {
         '/': ( _ ) => const HomeScreen(),
         'login_screen': ( _ ) => const LoginScreen(),
-        'login_page_screen': ( _ ) => const LoginPageScreen(),
         'login_account_screen': ( _ ) => const LoginAccountScreen(),
         'filters_screen': ( _ ) => const FiltersScreen(),
       },

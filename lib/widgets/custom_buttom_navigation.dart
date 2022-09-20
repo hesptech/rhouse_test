@@ -14,7 +14,7 @@ class _CustomBottomNavigatorState extends State<CustomBottomNavigator> {
 
   static const List<String> _pages = <String>[
     '/',
-    'login_page_screen',
+    '/',
     '/',
     '/',
     'login_screen',
