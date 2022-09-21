@@ -35,9 +35,9 @@ class App extends StatelessWidget {
           color: kPrimaryColor,
         ),
         scaffoldBackgroundColor: kBackgroundColor,
-        buttonTheme: Theme.of(context).buttonTheme.copyWith(
+        /* buttonTheme: Theme.of(context).buttonTheme.copyWith(
               highlightColor: kBackgroundColor,
-            ),
+            ), */
         //primarySwatch: Colors.deepPurple,
         textTheme: GoogleFonts.openSansTextTheme(
           Theme.of(context).textTheme,

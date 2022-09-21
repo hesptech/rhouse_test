@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/filters/filters.dart';
 import 'package:flutter_black_white/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -8,18 +9,13 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AppbarCustom(),
-      body: ListView(
-        children: const <Widget>[
-
-          SizedBox(height: 8),
-          Divider(
-            height: 8,
-            thickness: 1,
-            indent: 8,
-            endIndent: 8,
-            color: Colors.grey,
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: const [
+            SizedBox( height: 15,),
+            FiltersClassButtons(),
+          ],
+        ),
       ),
       bottomNavigationBar: const CustomBottomNavigator(),
     );    

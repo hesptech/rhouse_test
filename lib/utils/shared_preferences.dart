@@ -5,6 +5,7 @@ class Preferences {
   static late SharedPreferences _prefs;
 
   static bool _isLoggedIn = false;
+  static List<String> _filtersClassButtons = [];
   static List<String> _userFilters = [];
   static List<String> _userFiltersIsLoggedIn = [];
   static List<String> _userFiltersCity = [];
@@ -82,5 +83,15 @@ class Preferences {
   static set userFiltersCityGtaNorthLoggedIn( List<String> value ) {
     _userFiltersCityGtaNorthLoggedIn = value;
     _prefs.setStringList( 'userFiltersCityGtaNorthLoggedIn', value );
-  }  
+  } 
+
+  /// FILTERS
+  static List<String> get filtersClassButtons {
+    return _prefs.getStringList('filtersClassButtons') ?? _filtersClassButtons;
+  }
+
+  static set filtersClassButtons( List<String> value ) {
+    _filtersClassButtons = value;
+    _prefs.setStringList('filtersClassButtons', value);
+  } 
 }
