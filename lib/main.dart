@@ -50,7 +50,6 @@ class App extends StatelessWidget {
       routes: {
         '/': ( _ ) => const HomeScreen(),
         'login_screen': ( _ ) => const LoginScreen(),
-        'login_account_screen': ( _ ) => const LoginAccountScreen(),
         'filters_screen': ( _ ) => const FiltersScreen(),
       },
     );

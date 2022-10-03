@@ -18,7 +18,6 @@ class _CustomBottomNavigatorState extends State<CustomBottomNavigator> {
     '/',
     '/',
     'login_screen',
-    'login_account_screen',
   ];
 
   void _onItemTapped(int index) {

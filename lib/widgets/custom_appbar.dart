@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 //import 'package:flutter_black_white/search/search_delegate.dart';
 
-class AppbarCustom extends StatelessWidget  implements PreferredSizeWidget {
-  const AppbarCustom({ Key? key }) : super(key: key);
+class CustomAppbar extends StatelessWidget  implements PreferredSizeWidget {
+  const CustomAppbar({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
