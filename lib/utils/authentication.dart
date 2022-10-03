@@ -75,6 +75,9 @@ class Authentication extends StatelessWidget {
             signInWithEmailAndPassword(email, password,
                 (e) => _showErrorDialog(context, 'Failed to sign in', e));
           },
+          cancel: () {
+            cancelRegistration();
+          },
         );
       case ApplicationLoginState.register:
         return RegisterForm(
@@ -106,7 +109,7 @@ class Authentication extends StatelessWidget {
                 onPressed: () {
                   signOut();
                 },
-                child: const Text('LOGOUT'), 
+                child: const Text('LOGOUT', style: TextStyle( fontSize: 18.0, color: Colors.white, fontWeight: FontWeight.bold), ), 
               )             
             ],
           ),
@@ -152,7 +155,7 @@ class Authentication extends StatelessWidget {
               },
               child: const Text(
                 'OK',
-                style: TextStyle(color: Colors.deepPurple),
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
             ),
           ],
@@ -501,7 +504,24 @@ class _RegisterFormState extends State<RegisterForm> {
                   )
                 ),
                 const SizedBox( height: 32.0, ),
-                Row(
+                StyledMaterialButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          widget.registerAccount(
+                            _emailController.text,
+                            _displayNameController.text,
+                            _passwordController.text,
+                          );
+                        }
+                      },
+                  child: const Text('REGISTER', style: TextStyle( fontSize: 18.0, color: Colors.white, fontWeight: FontWeight.bold), ), 
+                ),
+                const SizedBox( height: 16.0, ),
+                StyledMaterialButton(
+                  onPressed: widget.cancel,
+                  child: const Text('CANCEL', style: TextStyle( fontSize: 18.0, color: Colors.white, fontWeight: FontWeight.bold), ), 
+                ),
+                /* Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     //const SizedBox(width: 32),
@@ -532,7 +552,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     ),
                     //const SizedBox(width: 30),
                   ],
-                ),
+                ), */
               ],
             ),
           ),
@@ -547,9 +567,11 @@ class PasswordForm extends StatefulWidget {
     Key? key,
     required this.login,
     required this.email,
+    required this.cancel,
   }) : super(key: key);
   final String email;
   final void Function(String email, String password) login;
+  final void Function() cancel;
   @override
   _PasswordFormState createState() => _PasswordFormState();
 }
@@ -655,9 +677,13 @@ class _PasswordFormState extends State<PasswordForm> {
                       );
                     }
                   },
-                  child: const Text('SIGN IN'),
+                  child: const Text('SIGN IN', style: TextStyle( fontSize: 18.0, color: Colors.white, fontWeight: FontWeight.bold), ),
                 ),
-                const SizedBox(width: 30),
+                const SizedBox(height: 16),
+                StyledMaterialButton(
+                  onPressed: widget.cancel,
+                  child: const Text( 'CANCEL', style: TextStyle( fontSize: 18.0, color: Colors.white, fontWeight: FontWeight.bold), ), 
+                )
               ],
             ),
           ),
