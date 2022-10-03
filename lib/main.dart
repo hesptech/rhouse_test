@@ -12,13 +12,25 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Preferences.init();
 
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => ApplicationState(),
-      builder: (context, _) => const App(),
-    ),
-  );
+  runApp( const AppState() );
+}
 
+
+class AppState extends StatelessWidget {
+  const AppState({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => ApplicationState(),
+          builder: (context, _) => const App(),
+        ),
+      ],
+      child: const App(),
+    );
+  }
 }
 
 

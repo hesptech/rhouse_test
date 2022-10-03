@@ -74,6 +74,11 @@ class ApplicationState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void cancelLogin() {
+    _loginState = ApplicationLoginState.emailAddress;
+    notifyListeners();
+  }  
+
   Future<void> registerAccount(
       String email,
       String displayName,
