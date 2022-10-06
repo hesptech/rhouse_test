@@ -1,10 +1,13 @@
 import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:geolocator/geolocator.dart';
 
 class Preferences {
   
   static late SharedPreferences _prefs;
 
   static bool _isLoggedIn = false;
+  static double _locationLat = 43.651070;
+  static double _locationLng = -79.347015;
   static List<String> _filtersClassButtons = [];
   static List<String> _userFilters = [];
   static List<String> _userFiltersIsLoggedIn = [];
@@ -25,6 +28,26 @@ class Preferences {
   static set isLoggedIn( bool value ) {
     _isLoggedIn = value;
     _prefs.setBool( 'isLoggedIn', value );
+  }
+
+  // Location Latitude
+  static double get locationLat {
+    return _prefs.getDouble( 'locationLat') ?? _locationLat;
+  }
+
+  static set locationLat( double value ) {
+    _locationLat = value;
+    _prefs.setDouble( 'locationLat', value );
+  }
+
+  // Location Longitude
+  static double get locationLng {
+    return _prefs.getDouble( 'locationLng') ?? _locationLng;
+  }
+
+  static set locationLng( double value ) {
+    _locationLng = value;
+    _prefs.setDouble('locationLng', value );
   }
 
   // Type
