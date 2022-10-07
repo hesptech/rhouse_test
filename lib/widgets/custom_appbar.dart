@@ -37,7 +37,7 @@ class CustomAppbar extends StatelessWidget  implements PreferredSizeWidget {
                             /* onTap: () => displayDialog( context ),
                             child: const Image(image: AssetImage('assets/play&learn_logo108x37.png'),) */
                             onTap: () {
-                              Navigator.pushNamed(context, 'filters_screen');
+                              Navigator.pushNamed(context, 'map_screen');
                             },
                             child: const Icon( Icons.map_outlined, color: Color(0xFF0BB48B), size: 26.0,),
                           ),

@@ -61,6 +61,7 @@ class App extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': ( _ ) => const HomeScreen(),
+        'map_screen': ( _) => const MapScreen(),
         'login_screen': ( _ ) => const LoginScreen(),
         'filters_screen': ( _ ) => const FiltersScreen(),
       },

@@ -50,7 +50,7 @@ class _FiltersExpansionTilesState extends State<FiltersExpansionTiles> {
 
 
   //double _currentSliderValue = 0.0;
-  var selectedRange = const RangeValues(500000, 5000000);
+  var selectedRange = const RangeValues(500000, 2000000);
 
 
   @override
@@ -142,7 +142,7 @@ class _FiltersExpansionTilesState extends State<FiltersExpansionTiles> {
                   data: const SliderThemeData(
                     thumbColor: kSecondaryColor,
                     activeTrackColor: kPrimaryColor,
-                    inactiveTrackColor: Color(0xFF58595B),
+                    inactiveTrackColor: kSecondaryColor,
                   ), 
                   child: RangeSlider(
                     min: 0,
