@@ -8,6 +8,8 @@ class Preferences {
   static bool _isLoggedIn = false;
   static double _locationLat = 43.651070;
   static double _locationLng = -79.347015;
+  static double _filterPriceRangeStart = 500000;
+  static double _filterPriceRangeEnd = 2000000; 
   static List<String> _filtersClassButtons = [];
   static List<String> _userFilters = [];
   static List<String> _userFiltersIsLoggedIn = [];
@@ -30,7 +32,7 @@ class Preferences {
     _prefs.setBool( 'isLoggedIn', value );
   }
 
-  // Location Latitude
+  // GEO-LOCATION: latitude - longitude
   static double get locationLat {
     return _prefs.getDouble( 'locationLat') ?? _locationLat;
   }
@@ -40,7 +42,6 @@ class Preferences {
     _prefs.setDouble( 'locationLat', value );
   }
 
-  // Location Longitude
   static double get locationLng {
     return _prefs.getDouble( 'locationLng') ?? _locationLng;
   }
@@ -48,6 +49,25 @@ class Preferences {
   static set locationLng( double value ) {
     _locationLng = value;
     _prefs.setDouble('locationLng', value );
+  }
+
+  // FILTERS: price range
+  static double get filterPriceRangeStart {
+    return _prefs.getDouble( 'filterPriceRangeStart' ) ?? _filterPriceRangeStart;
+  }
+
+  static set filterPriceRangeStart( double value ) {
+    _filterPriceRangeStart = value;
+    _prefs.setDouble( 'filterPriceRangeStart', value );
+  }
+
+  static double get filterPriceRangeEnd {
+    return _prefs.getDouble( 'filterPriceRangeEnd' ) ?? _filterPriceRangeEnd;
+  }
+
+  static set filterPriceRangeEnd( double value ) {
+    _filterPriceRangeEnd = value;
+    _prefs.setDouble( 'filterPriceRangeEnd', value );
   }
 
   // Type
