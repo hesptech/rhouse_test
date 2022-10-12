@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/utils/constants.dart';
 
 class CustomBottomNavigator extends StatefulWidget {
   const CustomBottomNavigator({ Key? key }) : super(key: key);
@@ -40,13 +41,13 @@ class _CustomBottomNavigatorState extends State<CustomBottomNavigator> {
       type: BottomNavigationBarType.fixed,
       backgroundColor: const Color(0xFF0BB48B),
       //selectedItemColor: const Color(0xFFe8eaf6),
-      unselectedItemColor: const Color.fromRGBO(33, 31, 124, 0.5),
+      unselectedItemColor: kPrimaryColor,
       showSelectedLabels: false,
       showUnselectedLabels: false,
       iconSize: 32,
       items: const <BottomNavigationBarItem> [
         BottomNavigationBarItem(
-          icon: Icon( Icons.home_rounded,  ),
+          icon: Icon( Icons.home_outlined, size: 36.0, ),
           label: ''
         ),
         BottomNavigationBarItem(
@@ -54,7 +55,7 @@ class _CustomBottomNavigatorState extends State<CustomBottomNavigator> {
           label: ''
         ),
         BottomNavigationBarItem(
-          icon: Icon( Icons.add_box_outlined,  ),
+          icon: ImageIcon(AssetImage("assets/play&learn_bottom_nav.png")),
           label: ''
         ),
         BottomNavigationBarItem(
@@ -62,7 +63,7 @@ class _CustomBottomNavigatorState extends State<CustomBottomNavigator> {
           label: ''
         ),
         BottomNavigationBarItem(
-          icon: Icon( Icons.person_outline_outlined,  ),
+          icon: Icon( Icons.account_circle_outlined,  ),
           label: ''
         ),
       ],
