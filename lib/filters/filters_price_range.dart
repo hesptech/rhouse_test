@@ -26,10 +26,10 @@ class _FiltersPriceRangeState extends State<FiltersPriceRange> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(28.0, 28.0, 28.0, 28.0),
+      padding: const EdgeInsets.symmetric( vertical: 28.0, horizontal: 21.0),
       child: Column(
         children: [
-          const Text('Price Range', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500, color: kSecondaryColor),),
+          const Text('PRICE RANGE', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kSecondaryColor),),
           const SizedBox(height: 14.0,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

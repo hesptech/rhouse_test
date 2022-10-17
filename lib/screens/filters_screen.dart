@@ -121,6 +121,12 @@ class _FiltersExpansionTilesState extends State<FiltersExpansionTiles> {
 
           const FiltersPriceRange(),
 
+
+
+          const FiltersClassIconsBt(),
+
+          const SizedBox( height: 28.0,),
+
           // TYPES
           const Text(
             'Property Type', 

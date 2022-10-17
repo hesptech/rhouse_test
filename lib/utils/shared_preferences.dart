@@ -10,6 +10,8 @@ class Preferences {
   static double _locationLng = -79.347015;
   static double _filterPriceRangeStart = 500000;
   static double _filterPriceRangeEnd = 2000000; 
+  static bool _filterIconBtHouse = true;
+  static bool _filterIconBtCondo = false;
   static List<String> _filtersClassButtons = [];
   static List<String> _userFilters = [];
   static List<String> _userFiltersIsLoggedIn = [];
@@ -51,15 +53,17 @@ class Preferences {
     _prefs.setDouble('locationLng', value );
   }
 
+
+
   // FILTERS: price range
   static double get filterPriceRangeStart {
     return _prefs.getDouble( 'filterPriceRangeStart' ) ?? _filterPriceRangeStart;
   }
-
   static set filterPriceRangeStart( double value ) {
     _filterPriceRangeStart = value;
     _prefs.setDouble( 'filterPriceRangeStart', value );
   }
+
 
   static double get filterPriceRangeEnd {
     return _prefs.getDouble( 'filterPriceRangeEnd' ) ?? _filterPriceRangeEnd;
@@ -69,6 +73,30 @@ class Preferences {
     _filterPriceRangeEnd = value;
     _prefs.setDouble( 'filterPriceRangeEnd', value );
   }
+
+
+
+  // FILTERS: Class Icons Buttons
+  static bool get filterIconBtHouse {
+    return _prefs.getBool(  'filterIconBtHouse' ) ?? _filterIconBtHouse;
+  } 
+
+  static set filterIconBtHouse( bool value) {
+    _filterIconBtHouse = value;
+    _prefs.setBool('filterIconBtHouse', value);
+  }
+
+
+  static bool get filterIconBtCondo {
+    return _prefs.getBool(  'filterIconBtCondo' ) ?? _filterIconBtCondo;
+  } 
+
+  static set filterIconBtCondo( bool value) {
+    _filterIconBtCondo = value;
+    _prefs.setBool('filterIconBtCondo', value);
+  }
+
+
 
   // Type
   static List<String> get userFilters {
