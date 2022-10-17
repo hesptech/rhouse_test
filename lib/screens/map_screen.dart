@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
@@ -18,8 +20,42 @@ class _MapScreenState extends State<MapScreen> {
   //final LatLng _center = const LatLng(43.651070, -79.347015);
   final LatLng _center = LatLng(Preferences.locationLat,Preferences.locationLng);
 
+  //final Uint8List markerIcon = await getBytesFromAsset('assets/images/evs.png', 100);
+  late BitmapDescriptor mapMarker;
+
+  @override
+  void initState() {
+    super.initState();
+    setCustomMarker();
+  }
+
+  void setCustomMarker() async {
+    mapMarker = await BitmapDescriptor.fromAssetImage(const ImageConfiguration(), 'assets/map_marker.png');
+  }
+
+  /* final Set<Marker> _markers = {
+    const Marker(
+      markerId: MarkerId('defaultLocation'),
+      position: LatLng(37.4689, -122.1424),
+      //icon: BitmapDescriptor.defaultMarker,
+      icon: const mapMarker
+    )
+  }; */
+
+  final Set<Marker> _markers = {};  
+
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+
+    setState(() {
+      _markers.add(
+        Marker(
+          markerId: const MarkerId('defaultLocation'),
+          position: const LatLng(37.4689, -122.1424),
+          icon: mapMarker
+        )
+      );
+    });
   }
 
   @override
@@ -57,6 +93,7 @@ class _MapScreenState extends State<MapScreen> {
           target: _center,
           zoom: 11.0,
         ),
+        markers: _markers,
       ),
     );
   }
