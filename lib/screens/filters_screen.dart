@@ -101,7 +101,7 @@ class _FiltersExpansionTilesState extends State<FiltersExpansionTiles> {
 
           const SizedBox( height: 14.0, ),
 
-          const SizedBox( height: 32.0, ),
+          const FiltersLocation(),
 
 
 
