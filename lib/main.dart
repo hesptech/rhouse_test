@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/application_state.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/screens/screens.dart';
@@ -27,6 +28,7 @@ class AppState extends StatelessWidget {
           create: (context) => ApplicationState(),
           builder: (context, _) => const App(),
         ),
+        ChangeNotifierProvider(create: ( _ ) => FilterProvider(), ),
       ],
       child: const App(),
     );

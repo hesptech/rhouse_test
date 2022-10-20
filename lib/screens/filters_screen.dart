@@ -19,6 +19,7 @@ class FiltersScreen extends StatelessWidget {
         title: const Text('Personalize Listing'),
       ),
       body: const FiltersExpansionTiles(),
+      bottomNavigationBar: const FiltersBottomBar(),
     );
   }
 }
