@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_black_white/filters/filters.dart';
+import 'package:flutter_black_white/filters/filters_bathrooms.dart';
+import 'package:flutter_black_white/filters/filters_bedrooms.dart';
+import 'package:flutter_black_white/filters/filters_more.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
+import 'package:flutter_black_white/utils/widgets_formatting.dart';
 
 
 
@@ -99,40 +103,17 @@ class _FiltersExpansionTilesState extends State<FiltersExpansionTiles> {
 
           const FiltersPropertyType(),
 
-          const SizedBox( height: 14.0, ),
+          //const SizedBox( height: 14.0, ),
 
           const FiltersLocation(),
 
+          const GreenDivider(),
 
+          const FiltersBedrooms(),
 
+          const FiltersBathrooms(),
 
-          Padding(
-            padding: const EdgeInsets.fromLTRB(28.0, 8.0, 28.0, 4.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text('Beds', style: TextStyle( fontSize: 16, fontWeight: FontWeight.bold, color: kSecondaryColor),),
-              ],
-            ),
-          ),
-          Wrap(
-            children: propertiesRoomsWidgets.toList(),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(28.0, 14.0, 28.0, 4.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text('Baths', style: TextStyle( fontSize: 16, fontWeight: FontWeight.bold, color: kSecondaryColor),),
-              ],
-            ),
-          ),
-          Wrap(
-            children: propertiesBathsWidgets.toList(),
-          ),
-
-
-
+          const FiltersMore(),
           //Text('Selected notLogged: ${_filtersSearch.join(', ')}'),
           //Text('Selected notLogged city: ${_filtersSearchCity.join(', ')}'),
 

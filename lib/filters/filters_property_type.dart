@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/filters/filters_property_icons.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 
@@ -101,6 +102,7 @@ class _FiltersPropertyTypeState extends State<FiltersPropertyType> {
                 color: kSecondaryColor,
               ),
               children: <Widget>[
+                const FiltersPropertyIcons(),
                 ExpansionTile(
                   title: const Text('Other', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.w500, ),),
                   trailing: Icon(
