@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/filters/filters_property_icons.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
+import 'package:flutter_black_white/utils/widgets_formatting.dart';
+import 'package:flutter_black_white/filters/filters_property_icons.dart';
+
 
 class FiltersPropertyType extends StatefulWidget {
   const FiltersPropertyType({Key? key}) : super(key: key);
@@ -45,54 +47,11 @@ class _FiltersPropertyTypeState extends State<FiltersPropertyType> {
 
   @override
   Widget build(BuildContext context) {
-    /* return Theme(
-      data: Theme.of(context).copyWith(
-        dividerColor: Colors.transparent, 
-        dividerTheme: const DividerThemeData(
-            space: 0.0,
-            thickness: 2.0, 
-            color: kSecondaryColor, 
-            indent: 24.0,
-            endIndent: 24.0,
-        ), 
-        unselectedWidgetColor: kSecondaryColor,       
-      ),
-      child: ExpansionTile(
-        tilePadding: const EdgeInsets.fromLTRB(24.0, 0, 24.0, 0),
-        //trailing: const Icon(Icons.add, color: kSecondaryColor,),
-        iconColor: kSecondaryColor,
-        collapsedIconColor: kSecondaryColor,
-        title: const Text('PROPERTY TYPE', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kSecondaryColor),),
-        onExpansionChanged: (bool expanded) {
-          //setState(() => isExpanded = expanded);
-        },
-        children: [
-          const SizedBox( height: 14.0, ),
-          Wrap(
-            children: propertiesTypesWidgets.toList(),
-          ),
-          const ExpansionTile(
-            tilePadding: const EdgeInsets.fromLTRB(24.0, 0, 24.0, 0),
-            title: Text('Other'),
-            children: [
-              Text('data')
-            ],
-          )
-        ],
-      ),
-    ); */
     return SizedBox(
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: Column(
           children: [
-            const Divider( 
-              thickness: 2.0, 
-              color: kSecondaryColor, 
-              indent: 24.0, 
-              endIndent: 24.0, 
-              height: 0,
-            ),
             ExpansionTile(
               tilePadding: const EdgeInsets.symmetric(horizontal: 24.0),
               childrenPadding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -112,13 +71,7 @@ class _FiltersPropertyTypeState extends State<FiltersPropertyType> {
                   ),
                   children: [
                     const SizedBox( height: 7.0, ),
-                    const Divider( 
-                      thickness: 1.0, 
-                      color: kPrimaryColor, 
-                      indent: 12.0, 
-                      endIndent: 12.0, 
-                      height: 0,
-                    ),
+                    const BlueDivider(),
                     ExpansionTile(
                       title: const Text('Multiplex', style: TextStyle(color: kPrimaryColor),),
                       trailing: Icon(
@@ -128,13 +81,6 @@ class _FiltersPropertyTypeState extends State<FiltersPropertyType> {
                       ),
                       children: [
                         const SizedBox( height: 1.0, ),
-                        const Divider( 
-                          thickness: 1.0, 
-                          color: kPrimaryColor, 
-                          indent: 12.0, 
-                          endIndent: 12.0, 
-                          height: 0,
-                        ),
                         const SizedBox( height: 14.0, ),
                         Wrap(
                           children: propertiesTypesWidgets.toList(),
@@ -145,13 +91,7 @@ class _FiltersPropertyTypeState extends State<FiltersPropertyType> {
                         setState(() => _openCloseIcons[2] = expanded );
                       },
                     ),
-                    const Divider( 
-                      thickness: 1.0, 
-                      color: kPrimaryColor, 
-                      indent: 12.0, 
-                      endIndent: 12.0, 
-                      height: 0,
-                    ), 
+                    const BlueDivider(), 
                     const SizedBox( height: 24.0, ),
                     Wrap(
                       children: propertiesTypesOthersWidgets.toList(),
@@ -167,6 +107,10 @@ class _FiltersPropertyTypeState extends State<FiltersPropertyType> {
               ],
               onExpansionChanged: (bool expanded) {
                 setState(() => _openCloseIcons[0] = expanded );
+                if (expanded == false) {
+                  setState(() => _openCloseIcons[1] = false );
+                  setState(() => _openCloseIcons[2] = false );
+                }
               },
             ),            
           ],

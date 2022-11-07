@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/providers/filter_provider.dart';
-import 'package:provider/provider.dart';
 
+//import 'package:b_w0/helpers/shared_preferences.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-//import 'package:flutter_black_white/utils/shared_preferences.dart';
 
-class FiltersTrEast extends StatefulWidget {
-  const FiltersTrEast({Key? key}) : super(key: key);
+
+class FiltersTrWest extends StatefulWidget {
+  const FiltersTrWest({Key? key}) : super(key: key);
 
   @override
-  State<FiltersTrEast> createState() => _FiltersTrEastState();
+  State<FiltersTrWest> createState() => _FiltersTrWestState();
 }
 
-class _FiltersTrEastState extends State<FiltersTrEast> {
+class _FiltersTrWestState extends State<FiltersTrWest> {
 
-    late List<bool> _openCloseIcons;
-  late List<PropertiesTrEast> _propertiesTrEast;
-  late List<String> _filtersSearchTrEast;
+  late List<bool> _openCloseIcons;
+  late List<PropertiesTrWest> _propertiesTrWest;
+  late List<String> _filtersTrWest;
 
-  //bool citySelectAllTorontoEast = Preferences.filtersCityTorontoEastLoggedOut.length == 4;
-    bool citySelectAll = false;
+  //bool citySelectAllTrWest = Preferences.filtersTrWestLoggedOut.length == 4;
+  bool citySelectAll = false;
 
   @override
   void initState() {
@@ -31,27 +30,24 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
       false,
       false,
       false,
-    ]; 
-
-    _propertiesTrEast = <PropertiesTrEast>[
-      const PropertiesTrEast('Danforth'),
-      const PropertiesTrEast('Beaches'),
-      const PropertiesTrEast('East York'),
-      const PropertiesTrEast('Leslieville/Riverdale'),
-      const PropertiesTrEast('Scarborough'),
     ];
-
-    _filtersSearchTrEast = [];
+    
+    _propertiesTrWest = <PropertiesTrWest>[
+      const PropertiesTrWest('High Park and around'),
+      const PropertiesTrWest('Junction and around'),
+      const PropertiesTrWest('Etobicoke'),
+      const PropertiesTrWest('Mimico'),
+      const PropertiesTrWest('Other'),
+    ];
+    _filtersTrWest = [];
   }
 
   @override
   Widget build(BuildContext context) {
-
-    final filterProvider = Provider.of<FilterProvider>( context );
-
+    
     return 
       ExpansionTile(
-        title: const Text('Toronto East', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.w500, ),),
+        title: const Text('Toronto West', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.w500, ),),
         trailing: Icon(
           _openCloseIcons[0] ? Icons.remove : Icons.add,
           color: kPrimaryColor,
@@ -63,21 +59,14 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
             children: [
               TextButton(
                 onPressed: () {
-
-                  if (filterProvider.filterProvider == "pippo" ) {
-                    filterProvider.filterProvider = "pin";
-                  } else {
-                    filterProvider.filterProvider = "pippo";
-                  }
-                  
                   setState(() {
-                    _filtersSearchTrEast.clear() ;
+                    _filtersTrWest.clear() ;
                     if(citySelectAll) {
                       citySelectAll = false;
                     } else {
                       citySelectAll = true;
-                      for (var element in _propertiesTrEast) {
-                        _filtersSearchTrEast.add(element.name) ;
+                      for (var element in _propertiesTrWest) {
+                        _filtersTrWest.add(element.name) ;
                       }
                     }
                     //isLoggedIn ? Preferences.userFiltersTrEastLoggedIn = _filtersSearchTrEastLoggedIn : Preferences.userFiltersTrEast = _filtersSearchTrEast ;
@@ -95,48 +84,45 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
             ],
           ),
           Wrap(
-            children:  propertiesTrEastWidgets.toList(),
+            children: propertiesTrWestWidgets.toList(),
           ),
           const SizedBox( height: 16.0,),
         ],
         onExpansionChanged: (bool expanded) {
           setState(() => _openCloseIcons[0] = expanded );
         },
-      );   
+      );    
   }
 
-
-  Iterable<Widget> get propertiesTrEastWidgets sync* {
-    for ( PropertiesTrEast propertiesTrEast in _propertiesTrEast) {
+  Iterable<Widget> get propertiesTrWestWidgets sync* {
+    for (PropertiesTrWest propertiesTrWest in _propertiesTrWest) {
       yield Padding(
-        padding: const EdgeInsets.symmetric( horizontal: 5.0, ),
+        padding: const EdgeInsets.symmetric( horizontal: 5.0 ),
         child: ChoiceChip(
           label: Container(
             width: 150,
             alignment: Alignment.center,
-            child: Text(propertiesTrEast.name, style: TextStyle( fontSize: 16, fontWeight: FontWeight.w400, color: _filtersSearchTrEast.contains(propertiesTrEast.name) ? Colors.white : kPrimaryColor),),
+            child: Text(propertiesTrWest.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: _filtersTrWest.contains(propertiesTrWest.name) ? Colors.white : kPrimaryColor),),
           ),
           labelPadding: const EdgeInsets.all(0.0),
           backgroundColor: const Color(0xFFFFFFFF),
           selectedColor: kPrimaryColor,
           shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
           side: const BorderSide( color: kPrimaryColor ),
-          selected: _filtersSearchTrEast.contains(propertiesTrEast.name),
+          selected: _filtersTrWest.contains(propertiesTrWest.name),
           onSelected: ( bool selected ) {
             setState(() {
-                selected ? _filtersSearchTrEast.add(propertiesTrEast.name) : _filtersSearchTrEast.removeWhere((String name) => name == propertiesTrEast.name) ;
-                //Preferences.userFiltersTrEast = _filtersSearchTrEast;
-
-            });
+                selected ? _filtersTrWest.add(propertiesTrWest.name) : _filtersTrWest.removeWhere((String name) => name == propertiesTrWest.name) ;
+                //Preferences.filtersTrWestLoggedOut = _filtersTrWest;
+            });            
           },
-        ),
+        )
       );
     }
   }
 }
 
-
-class PropertiesTrEast {
-  const PropertiesTrEast(this.name);
+class PropertiesTrWest {
+  const PropertiesTrWest(this.name);
   final String name;
 }

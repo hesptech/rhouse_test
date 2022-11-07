@@ -12,103 +12,108 @@ class FiltersTrCentral extends StatefulWidget {
 
 class _FiltersTrCentralState extends State<FiltersTrCentral> {
 
-  late List<PropertiesTorontoCentral> _propertiesTorontoCentral;
-  late List<String> _filtersTorontoCentral;
+  late List<bool> _openCloseIcons;
+  late List<PropertiesTrCentral> _propertiesTrCentral;
+  late List<String> _filtersTrCentral;
 
-  //bool citySelectAllTorontoCentral = Preferences.filtersCityTorontoCentralLoggedOut.length == 4;
-  bool citySelectAllTorontoCentral = false;
+  //bool citySelectAllGtaCentral = Preferences.filtersTrCentralLoggedOut.length == 4;
+  bool citySelectAllGtaCentral = false;
+
 
   @override
   void initState() {
     super.initState();
 
-    _propertiesTorontoCentral = <PropertiesTorontoCentral>[
-      const PropertiesTorontoCentral('Downtown Toronto'),
-      const PropertiesTorontoCentral('Midtown Toronto'),
-      const PropertiesTorontoCentral('Leaside'),
-      const PropertiesTorontoCentral('Toronto New York'),
+    _openCloseIcons = <bool>[
+      false,
+      false,
+      false,
+      false,
+      false,
+    ]; 
+
+    _propertiesTrCentral = <PropertiesTrCentral>[
+      const PropertiesTrCentral('Downtown Toronto'),
+      const PropertiesTrCentral('Midtown Toronto'),
+      const PropertiesTrCentral('Leaside'),
+      const PropertiesTrCentral('Toronto North York'),
     ];
-    _filtersTorontoCentral = [];
+    _filtersTrCentral = [];
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox( height: 1.0, ),
-        const Divider( 
-          thickness: 1.0, 
-          color: kPrimaryColor, 
-          indent: 12.0, 
-          endIndent: 12.0, 
-          height: 0,
+
+    return 
+      ExpansionTile(
+        title: const Text('Toronto Central', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.w500, ),),
+        trailing: Icon(
+          _openCloseIcons[0] ? Icons.remove : Icons.add,
+          color: kPrimaryColor,
+          size: 18.0,
         ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(14.0, 0.0, 14.0, 0.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children:  [
-              //const Text('Toronto - Central', style: TextStyle( fontSize: 16, fontWeight: FontWeight.bold, color: kSecondaryColor),),
-              const Text('Toronto Central', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.w500, ),),
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
               TextButton(
                 onPressed: () {
                   setState(() {
-                    _filtersTorontoCentral.clear();
-                    if(citySelectAllTorontoCentral) {
-                      citySelectAllTorontoCentral = false;
+                    _filtersTrCentral.clear();
+                    if(citySelectAllGtaCentral) {
+                      citySelectAllGtaCentral = false;
                     } else {
-                      citySelectAllTorontoCentral = true;
-                      for (var element in _propertiesTorontoCentral) {
-                        _filtersTorontoCentral.add(element.name);
+                      citySelectAllGtaCentral = true;
+                      for (var element in _propertiesTrCentral) {
+                        _filtersTrCentral.add(element.name);
                       } 
                     }
-                    //Preferences.filtersTorontoCentralLoggedOut = _filtersTorontoCentral;                      
+                    //Preferences.filtersTrCentralLoggedOut = _filtersTrCentral;                      
                   });
                 },
-                child: Text( citySelectAllTorontoCentral ? 'Unselect all' : 'Select all', style: const TextStyle( fontSize: 14, fontWeight: FontWeight.w400, color: kSecondaryColor),),
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  minimumSize: const Size( 50.0, 30.0 ),
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  //alignment: Alignment.centerLeft
+                ),
+                child: Text( citySelectAllGtaCentral ? 'Unselect all' : 'Select all', style: const TextStyle( fontSize: 14, fontWeight: FontWeight.w400, color: kSecondaryColor, ),),
               ),
+              const SizedBox( width: 28.0),
             ],
           ),
-        ),
-        const SizedBox( height: 1.0, ),
-        const Divider( 
-          thickness: 1.0, 
-          color: kPrimaryColor, 
-          indent: 12.0, 
-          endIndent: 12.0, 
-          height: 0,
-        ),
-        const SizedBox( height: 14.0, ),        
-        Wrap(
-          children: propertiesTorontoCentralWidgets.toList(),
-        ),
-        //Text('Prefs. filterRoomsLoggedOut: ${Preferences.filtersTorontoCentralLoggedOut}'),
-        //Text('Prefs. filterRoomsLoggedIn: ${Preferences.filtersTorontoCentralLoggedIn}'),
-      ],
-    );
+          Wrap(
+            children: propertiesTrCentralWidgets.toList(),
+          ),
+          const SizedBox( height: 16.0,),
+        ],
+        onExpansionChanged: (bool expanded) {
+          setState(() => _openCloseIcons[0] = expanded );
+        },
+      );
   }
 
 
-  Iterable<Widget> get propertiesTorontoCentralWidgets sync* {
-    for (PropertiesTorontoCentral propertiesTorontoCentral in _propertiesTorontoCentral) {
+  Iterable<Widget> get propertiesTrCentralWidgets sync* {
+    for (PropertiesTrCentral propertiesTrCentral in _propertiesTrCentral) {
       yield Padding(
         padding: const EdgeInsets.symmetric( horizontal: 5.0 ),
         child: ChoiceChip(
           label: Container(
-            width: 160,
+            width: 150,
             alignment: Alignment.center,
-            child: Text(propertiesTorontoCentral.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: _filtersTorontoCentral.contains(propertiesTorontoCentral.name) ? Colors.white : kPrimaryColor),),
+            child: Text(propertiesTrCentral.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: _filtersTrCentral.contains(propertiesTrCentral.name) ? Colors.white : kPrimaryColor),),
           ),
           labelPadding: const EdgeInsets.all(0.0),
           backgroundColor: const Color(0xFFFFFFFF),
           selectedColor: kPrimaryColor,
           shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
           side: const BorderSide( color: kPrimaryColor ),
-          selected: _filtersTorontoCentral.contains(propertiesTorontoCentral.name),
+          selected: _filtersTrCentral.contains(propertiesTrCentral.name),
           onSelected: ( bool selected ) {
             setState(() {
-                selected ? _filtersTorontoCentral.add(propertiesTorontoCentral.name) : _filtersTorontoCentral.removeWhere((String name) => name == propertiesTorontoCentral.name) ;
-                //Preferences.filtersTorontoCentralLoggedOut = _filtersTorontoCentral;
+                selected ? _filtersTrCentral.add(propertiesTrCentral.name) : _filtersTrCentral.removeWhere((String name) => name == propertiesTrCentral.name) ;
+                //Preferences.filtersTrCentralLoggedOut = _filtersTrCentral;
             });            
           },
         )
@@ -117,8 +122,7 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
   }
 }
 
-
-class PropertiesTorontoCentral {
-  const PropertiesTorontoCentral(this.name);
+class PropertiesTrCentral {
+  const PropertiesTrCentral(this.name);
   final String name;
 }

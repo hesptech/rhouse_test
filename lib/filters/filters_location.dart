@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
-
 //import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/utils/widgets_formatting.dart';
+import 'package:flutter_black_white/filters/filters_location_topbts.dart';
 import 'package:flutter_black_white/filters/filters_tr_central.dart';
 import 'package:flutter_black_white/filters/filters_tr_east.dart';
+import 'package:flutter_black_white/filters/filters_tr_west.dart';
+import 'package:flutter_black_white/filters/filters_gta_west.dart';
+import 'package:flutter_black_white/filters/filters_gta_north.dart';
+import 'package:flutter_black_white/filters/filters_gta_east.dart';
+import 'package:flutter_black_white/filters/filters_other.dart';
 
 class FiltersLocation extends StatefulWidget {
   const FiltersLocation({Key? key}) : super(key: key);
@@ -25,6 +31,7 @@ class _FiltersLocationState extends State<FiltersLocation> {
       false,
       false,
       false,
+      false,
     ];     
   }
 
@@ -36,13 +43,6 @@ class _FiltersLocationState extends State<FiltersLocation> {
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent), 
         child: Column(
           children: [
-            const Divider(
-              thickness: 2.0, 
-              color: kSecondaryColor, 
-              indent: 24.0, 
-              endIndent: 24.0, 
-              height: 0,              
-            ),
             ExpansionTile(
               tilePadding: const EdgeInsets.symmetric(horizontal: 24.0),
               childrenPadding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -52,69 +52,47 @@ class _FiltersLocationState extends State<FiltersLocation> {
                 color: kSecondaryColor,
               ),
               children: <Widget>[
+
+
+
+
+
+                const FiltersLocationTopbts(),
                 ExpansionTile(
-                  title: const Text('TORONTO', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.w500, ),),
+                  title: const Text('more or specific location', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.w500, ),),
                   trailing: Icon(
-                    _openCloseIcons[1] ? Icons.remove : Icons.add,
+                    _openCloseIcons[4] ? Icons.remove : Icons.add,
                     color: kPrimaryColor,
                     size: 18.0,
                   ),
                   children: const [
                     FiltersTrCentral(),
-                    SizedBox( height: 16.0,),
+                    BlueDivider(),
                     FiltersTrEast(),
-                    SizedBox( height: 16.0,)
+                    BlueDivider(),
+                    FiltersTrWest(),
+                    BlueDivider(),
+                    FiltersGtaWest(),
+                    BlueDivider(),
+                    FiltersGtaNorth(),
+                    BlueDivider(),
+                    FiltersGtaEast(),
+                    BlueDivider(),
+                    FiltersOther(),                    
                   ],
                   onExpansionChanged: (bool expanded) {
-                    setState(() => _openCloseIcons[1] = expanded );
+                    setState(() => _openCloseIcons[4] = expanded );
                   },
                 ),
-                const Divider( 
-                  thickness: 1.0, 
-                  color: kPrimaryColor, 
-                  indent: 12.0, 
-                  endIndent: 12.0, 
-                  height: 0,
-                ),
-                ExpansionTile(
-                  title: const Text('SUBURBS AND CITY OUT SKIRTS', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.w500, ),),
-                  trailing: Icon(
-                    _openCloseIcons[2] ? Icons.remove : Icons.add,
-                    color: kPrimaryColor,
-                    size: 18.0,
-                  ),
-                  children: [
-                    Column(
-                      children: [
-                        const SizedBox( height: 1.0, ),
-                        const Divider( 
-                          thickness: 1.0, 
-                          color: kPrimaryColor, 
-                          indent: 12.0, 
-                          endIndent: 12.0, 
-                          height: 0,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(14.0, 0.0, 14.0, 0.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text('GTA West', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.w500, ),),
-                              TextButton(
-                                onPressed: () {}, 
-                                child: Text( 'Select all', style: const TextStyle( fontSize: 14, fontWeight: FontWeight.w400, color: kSecondaryColor),),
-                              )
-                            ],
-                          ),
-                        )                        
-                      ],
-                    )
-                  ],
-                  onExpansionChanged: (bool expanded) {
-                    setState(() => _openCloseIcons[2] = expanded );
-                  },
-                ),                
               ],
+              onExpansionChanged: (bool expanded) {
+                setState(() => _openCloseIcons[0] = expanded );
+                if (expanded == false) {
+                  setState(() => _openCloseIcons[1] = false );
+                  setState(() => _openCloseIcons[2] = false );
+                  setState(() => _openCloseIcons[4] = false );
+                }
+              },              
             )
           ],
       )
