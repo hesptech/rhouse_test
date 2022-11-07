@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
+import 'package:flutter_black_white/utils/widgets_formatting.dart';
 import 'package:flutter_black_white/filters/filters.dart';
 import 'package:flutter_black_white/filters/filters_bathrooms.dart';
 import 'package:flutter_black_white/filters/filters_bedrooms.dart';
 import 'package:flutter_black_white/filters/filters_more.dart';
-import 'package:flutter_black_white/utils/constants.dart';
-import 'package:flutter_black_white/utils/shared_preferences.dart';
-import 'package:flutter_black_white/utils/widgets_formatting.dart';
 
 
 

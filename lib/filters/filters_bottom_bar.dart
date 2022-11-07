@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-//import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 
 import 'package:flutter_black_white/utils/constants.dart';
 //import 'package:flutter_black_white/utils/shared_preferences.dart';
-//import 'package:flutter_black_white/providers/filter_provider.dart';
+import 'package:flutter_black_white/providers/filter_provider.dart';
 
 
 class FiltersBottomBar extends StatefulWidget {
@@ -18,9 +18,9 @@ class _FiltersBottomBarState extends State<FiltersBottomBar> {
   @override
   Widget build(BuildContext context) {
 
-    //final filterProvider = Provider.of<FilterProvider>( context );
+    final filterProvider = Provider.of<FilterProvider>( context );
 
-    //final currentFilter = filterProvider.filterProvider;
+    final currentFilter = filterProvider.filterProvider;
 
     return Container(
             height: 120,
@@ -73,7 +73,7 @@ class _FiltersBottomBarState extends State<FiltersBottomBar> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    //Text('Filters: $currentFilter', style: const TextStyle(color: Colors.white,),)
+                    Text('Filters: $currentFilter', style: const TextStyle(color: Colors.white,),)
                   ],
                 ),
               ],

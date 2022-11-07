@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/providers/filter_provider.dart';
+import 'package:provider/provider.dart';
+
 import 'package:flutter_black_white/utils/constants.dart';
 //import 'package:flutter_black_white/utils/shared_preferences.dart';
 
@@ -33,6 +36,9 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
 
   @override
   Widget build(BuildContext context) {
+
+    final filterProvider = Provider.of<FilterProvider>( context );
+
     return Column(
       children: [
         const SizedBox( height: 1.0, ),
@@ -51,6 +57,13 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
               const Text('Toronto East', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.w500, ),),
               TextButton(
                 onPressed: () {
+
+                  if (filterProvider.filterProvider == "pippo" ) {
+                    filterProvider.filterProvider = "pin";
+                  } else {
+                    filterProvider.filterProvider = "pippo";
+                  }
+
                   setState(() {
                     _filtersTorontoEast.clear();
                     if(citySelectAllTorontoEast) {
