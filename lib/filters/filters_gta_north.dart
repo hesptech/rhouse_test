@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-//import 'package:b_w0/helpers/shared_preferences.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 
 class FiltersGtaNorth extends StatefulWidget {
@@ -17,8 +17,7 @@ class _FiltersGtaNorthState extends State<FiltersGtaNorth> {
   late List<PropertiesGtaNorthOther> _propertiesGtaNorthOther;
   late List<String> _filtersGtaNorth;
 
-  //bool citySelectAllGtaNorth = Preferences.filtersGtaNorthLoggedOut.length == 4;
-  bool citySelectAll = false;
+  bool citySelectAll = Preferences.filtersGtaNorth.length == 9;
 
   @override
   void initState() {
@@ -41,7 +40,7 @@ class _FiltersGtaNorthState extends State<FiltersGtaNorth> {
       const PropertiesGtaNorthOther('Georgina'),
       const PropertiesGtaNorthOther('East Gwillingbury'),
     ];
-    _filtersGtaNorth = [];
+    _filtersGtaNorth = Preferences.filtersGtaNorth;
   }
 
   @override
@@ -62,16 +61,30 @@ class _FiltersGtaNorthState extends State<FiltersGtaNorth> {
               TextButton(
                 onPressed: () {
                   setState(() {
-                    _filtersGtaNorth.clear() ;
+                    for (var element in _propertiesGtaNorth) {
+                      _filtersGtaNorth.remove(element.name) ;
+                    }
+                    for (var element in _propertiesGtaNorthOther) {
+                      _filtersGtaNorth.remove(element.name) ;
+                    }
                     if(citySelectAll) {
                       citySelectAll = false;
+                      for (var element in _propertiesGtaNorth) {
+                        _filtersGtaNorth.remove(element.name) ;
+                      }
+                      for (var element in _propertiesGtaNorthOther) {
+                        _filtersGtaNorth.remove(element.name) ;
+                      }
                     } else {
                       citySelectAll = true;
                       for (var element in _propertiesGtaNorth) {
                         _filtersGtaNorth.add(element.name) ;
                       }
+                      for (var element in _propertiesGtaNorthOther) {
+                        _filtersGtaNorth.add(element.name) ;
+                      }
                     }
-                    //isLoggedIn ? Preferences.userFiltersTrEastLoggedIn = _filtersSearchTrEastLoggedIn : Preferences.userFiltersTrEast = _filtersSearchTrEast ;
+                    Preferences.filtersGtaNorth = _filtersGtaNorth ;
                   });  
                 }, 
                 style: TextButton.styleFrom(
@@ -125,7 +138,7 @@ class _FiltersGtaNorthState extends State<FiltersGtaNorth> {
           onSelected: ( bool selected ) {
             setState(() {
                 selected ? _filtersGtaNorth.add(propertiesGtaNorth.name) : _filtersGtaNorth.removeWhere((String name) => name == propertiesGtaNorth.name) ;
-                //Preferences.filtersGtaNorthLoggedOut = _filtersGtaNorth;
+                Preferences.filtersGtaNorth = _filtersGtaNorth;
             });            
           },
         )
@@ -152,7 +165,7 @@ class _FiltersGtaNorthState extends State<FiltersGtaNorth> {
           onSelected: ( bool selected ) {
             setState(() {
                 selected ? _filtersGtaNorth.add(propertiesGtaWestOther.name) : _filtersGtaNorth.removeWhere((String name) => name == propertiesGtaWestOther.name) ;
-                //Preferences.filtersGtaWestLoggedOut = _filtersGtaWest;
+                Preferences.filtersGtaWest = _filtersGtaNorth;
             });            
           },        
         ),

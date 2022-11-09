@@ -17,20 +17,15 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
 
   late List<bool> _openCloseIcons;
   late List<PropertiesTrEast> _propertiesTrEast;
-  late List<String> _filtersSearchTrEast;
+  late List<String> _filtersTrEast;
 
-  //bool citySelectAllTorontoEast = Preferences.filtersCityTorontoEastLoggedOut.length == 4;
-  bool citySelectAll = false;
+  bool citySelectAll = Preferences.filtersTrEast.length == 5;
 
   @override
   void initState() {
     super.initState();
 
     _openCloseIcons = <bool>[
-      false,
-      false,
-      false,
-      false,
       false,
     ]; 
 
@@ -42,7 +37,7 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
       const PropertiesTrEast('Scarborough'),
     ];
 
-    _filtersSearchTrEast = Preferences.userFiltersCity;
+    _filtersTrEast = Preferences.filtersTrEast;
   }
 
   @override
@@ -72,19 +67,21 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
                   }
                   
                   setState(() {
-                    //_filtersSearchTrEast.clear() ;
+                    for (var element in _propertiesTrEast) {
+                      _filtersTrEast.remove(element.name) ;
+                    }
                     if(citySelectAll) {
                       citySelectAll = false;
                       for (var element in _propertiesTrEast) {
-                        _filtersSearchTrEast.remove(element.name) ;
+                        _filtersTrEast.remove(element.name) ;
                       }
                     } else {
                       citySelectAll = true;
                       for (var element in _propertiesTrEast) {
-                        _filtersSearchTrEast.add(element.name) ;
+                        _filtersTrEast.add(element.name) ;
                       }
                     }
-                    Preferences.userFiltersCity = _filtersSearchTrEast ;
+                    Preferences.filtersTrEast = _filtersTrEast ;
                   });  
                 }, 
                 style: TextButton.styleFrom(
@@ -102,7 +99,6 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
             children:  propertiesTrEastWidgets.toList(),
           ),
           const SizedBox( height: 16.0,),
-          Text('Prefs.userFiltersCity: ${Preferences.userFiltersCity}'),
         ],
         onExpansionChanged: (bool expanded) {
           setState(() => _openCloseIcons[0] = expanded );
@@ -119,19 +115,18 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
           label: Container(
             width: 150,
             alignment: Alignment.center,
-            child: Text(propertiesTrEast.name, style: TextStyle( fontSize: 16, fontWeight: FontWeight.w400, color: _filtersSearchTrEast.contains(propertiesTrEast.name) ? Colors.white : kPrimaryColor),),
+            child: Text(propertiesTrEast.name, style: TextStyle( fontSize: 16, fontWeight: FontWeight.w400, color: _filtersTrEast.contains(propertiesTrEast.name) ? Colors.white : kPrimaryColor),),
           ),
           labelPadding: const EdgeInsets.all(0.0),
           backgroundColor: const Color(0xFFFFFFFF),
           selectedColor: kPrimaryColor,
           shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
           side: const BorderSide( color: kPrimaryColor ),
-          selected: _filtersSearchTrEast.contains(propertiesTrEast.name),
+          selected: _filtersTrEast.contains(propertiesTrEast.name),
           onSelected: ( bool selected ) {
             setState(() {
-                selected ? _filtersSearchTrEast.add(propertiesTrEast.name) : _filtersSearchTrEast.removeWhere((String name) => name == propertiesTrEast.name) ;
-                //Preferences.userFiltersTrEast = _filtersSearchTrEast;
-                Preferences.userFiltersCity = _filtersSearchTrEast ;
+                selected ? _filtersTrEast.add(propertiesTrEast.name) : _filtersTrEast.removeWhere((String name) => name == propertiesTrEast.name) ;
+                Preferences.filtersTrEast = _filtersTrEast ;
 
             });
           },

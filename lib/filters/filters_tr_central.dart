@@ -16,19 +16,13 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
   late List<PropertiesTrCentral> _propertiesTrCentral;
   late List<String> _filtersTrCentral;
 
-  bool citySelectAllGtaCentral = Preferences.userFilters.length == 4 ? true : false ;
-  //bool citySelectAllGtaCentral = false;
-
+  bool citySelectAll = Preferences.filtersTrCentral.length == 4 ? true : false ;
 
   @override
   void initState() {
     super.initState();
 
     _openCloseIcons = <bool>[
-      false,
-      false,
-      false,
-      false,
       false,
     ]; 
 
@@ -38,7 +32,7 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
       const PropertiesTrCentral('Leaside'),
       const PropertiesTrCentral('Toronto North York'),
     ];
-    _filtersTrCentral = Preferences.userFilters;
+    _filtersTrCentral = Preferences.filtersTrCentral;
   }
 
   @override
@@ -62,18 +56,18 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
                     for (var element in _propertiesTrCentral) {
                       _filtersTrCentral.remove(element.name);
                     } 
-                    if(citySelectAllGtaCentral) {
-                      citySelectAllGtaCentral = false;
+                    if(citySelectAll) {
+                      citySelectAll = false;
                       for (var element in _propertiesTrCentral) {
                         _filtersTrCentral.remove(element.name);
                       } 
                     } else {
-                      citySelectAllGtaCentral = true;
+                      citySelectAll = true;
                       for (var element in _propertiesTrCentral) {
                         _filtersTrCentral.add(element.name);
                       } 
                     }
-                    Preferences.userFilters = _filtersTrCentral;                      
+                    Preferences.filtersTrCentral = _filtersTrCentral;                      
                   });
                 },
                 style: TextButton.styleFrom(
@@ -82,7 +76,7 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   //alignment: Alignment.centerLeft
                 ),
-                child: Text( citySelectAllGtaCentral ? 'Unselect all' : 'Select all', style: const TextStyle( fontSize: 14, fontWeight: FontWeight.w400, color: kSecondaryColor, ),),
+                child: Text( citySelectAll ? 'Unselect all' : 'Select all', style: const TextStyle( fontSize: 14, fontWeight: FontWeight.w400, color: kSecondaryColor, ),),
               ),
               const SizedBox( width: 28.0),
             ],
@@ -91,7 +85,7 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
             children: propertiesTrCentralWidgets.toList(),
           ),
           const SizedBox( height: 16.0,),
-          Text('Prefs.userFilters: ${Preferences.userFilters}'),
+          Text('Prefs.filtersTrCentral: ${Preferences.filtersTrCentral}'),
         ],
         onExpansionChanged: (bool expanded) {
           setState(() => _openCloseIcons[0] = expanded );
@@ -119,7 +113,7 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
           onSelected: ( bool selected ) {
             setState(() {
                 selected ? _filtersTrCentral.add(propertiesTrCentral.name) : _filtersTrCentral.removeWhere((String name) => name == propertiesTrCentral.name) ;
-                Preferences.userFilters = _filtersTrCentral;
+                Preferences.filtersTrCentral = _filtersTrCentral;
             });            
           },
         )

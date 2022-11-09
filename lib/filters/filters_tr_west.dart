@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-//import 'package:b_w0/helpers/shared_preferences.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 
 
@@ -17,18 +17,13 @@ class _FiltersTrWestState extends State<FiltersTrWest> {
   late List<PropertiesTrWest> _propertiesTrWest;
   late List<String> _filtersTrWest;
 
-  //bool citySelectAllTrWest = Preferences.filtersTrWestLoggedOut.length == 4;
-  bool citySelectAll = false;
+  bool citySelectAll = Preferences.filtersTrWest.length == 5;
 
   @override
   void initState() {
     super.initState();
 
     _openCloseIcons = <bool>[
-      false,
-      false,
-      false,
-      false,
       false,
     ];
     
@@ -39,7 +34,7 @@ class _FiltersTrWestState extends State<FiltersTrWest> {
       const PropertiesTrWest('Mimico'),
       const PropertiesTrWest('Other'),
     ];
-    _filtersTrWest = [];
+    _filtersTrWest = Preferences.filtersTrWest;
   }
 
   @override
@@ -60,16 +55,21 @@ class _FiltersTrWestState extends State<FiltersTrWest> {
               TextButton(
                 onPressed: () {
                   setState(() {
-                    _filtersTrWest.clear() ;
+                    for (var element in _propertiesTrWest) {
+                      _filtersTrWest.remove(element.name) ;
+                    }
                     if(citySelectAll) {
                       citySelectAll = false;
+                      for (var element in _propertiesTrWest) {
+                        _filtersTrWest.remove(element.name) ;
+                      }
                     } else {
                       citySelectAll = true;
                       for (var element in _propertiesTrWest) {
                         _filtersTrWest.add(element.name) ;
                       }
                     }
-                    //isLoggedIn ? Preferences.userFiltersTrEastLoggedIn = _filtersSearchTrEastLoggedIn : Preferences.userFiltersTrEast = _filtersSearchTrEast ;
+                    Preferences.filtersTrWest = _filtersTrWest;
                   });  
                 }, 
                 style: TextButton.styleFrom(
@@ -87,7 +87,6 @@ class _FiltersTrWestState extends State<FiltersTrWest> {
             children: propertiesTrWestWidgets.toList(),
           ),
           const SizedBox( height: 16.0,),
-          //Text('Prefs. city: ${Preferences.userFiltersCity}'),
         ],
         onExpansionChanged: (bool expanded) {
           setState(() => _openCloseIcons[0] = expanded );
@@ -114,7 +113,7 @@ class _FiltersTrWestState extends State<FiltersTrWest> {
           onSelected: ( bool selected ) {
             setState(() {
                 selected ? _filtersTrWest.add(propertiesTrWest.name) : _filtersTrWest.removeWhere((String name) => name == propertiesTrWest.name) ;
-                //Preferences.filtersTrWestLoggedOut = _filtersTrWest;
+                Preferences.filtersTrWest = _filtersTrWest;
             });            
           },
         )

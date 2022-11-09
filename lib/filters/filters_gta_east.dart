@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 
 
@@ -16,8 +17,7 @@ class _FiltersGtaEastState extends State<FiltersGtaEast> {
   late List<PropertiesGtaEastOther> _propertiesGtaEastOther;
   late List<String> _filtersGtaEast;
 
-  //bool citySelectAllGtaEast = Preferences.filtersGtaEastLoggedOut.length == 4;
-  bool citySelectAll = false;
+  bool citySelectAll = Preferences.filtersGtaEast.length == 9;
 
   @override
   void initState() {
@@ -40,7 +40,7 @@ class _FiltersGtaEastState extends State<FiltersGtaEast> {
       const PropertiesGtaEastOther('Scugog'),
       const PropertiesGtaEastOther('Brock'),
     ];
-    _filtersGtaEast = [];
+    _filtersGtaEast = Preferences.filtersGtaEast;
   }
 
   @override
@@ -61,16 +61,30 @@ class _FiltersGtaEastState extends State<FiltersGtaEast> {
               TextButton(
                 onPressed: () {
                   setState(() {
-                    _filtersGtaEast.clear() ;
+                    for (var element in _propertiesGtaEast) {
+                      _filtersGtaEast.remove(element.name) ;
+                    }
+                    for (var element in _propertiesGtaEastOther) {
+                      _filtersGtaEast.remove(element.name) ;
+                    }
                     if(citySelectAll) {
                       citySelectAll = false;
+                      for (var element in _propertiesGtaEast) {
+                        _filtersGtaEast.remove(element.name) ;
+                      }
+                      for (var element in _propertiesGtaEastOther) {
+                        _filtersGtaEast.remove(element.name) ;
+                      }
                     } else {
                       citySelectAll = true;
                       for (var element in _propertiesGtaEast) {
                         _filtersGtaEast.add(element.name) ;
                       }
+                      for (var element in _propertiesGtaEastOther) {
+                        _filtersGtaEast.add(element.name) ;
+                      }
                     }
-                    //isLoggedIn ? Preferences.userFiltersTrEastLoggedIn = _filtersSearchTrEastLoggedIn : Preferences.userFiltersTrEast = _filtersSearchTrEast ;
+                    Preferences.filtersGtaEast= _filtersGtaEast ;
                   });  
                 }, 
                 style: TextButton.styleFrom(
@@ -124,7 +138,7 @@ class _FiltersGtaEastState extends State<FiltersGtaEast> {
           onSelected: ( bool selected ) {
             setState(() {
                 selected ? _filtersGtaEast.add(propertiesGtaEast.name) : _filtersGtaEast.removeWhere((String name) => name == propertiesGtaEast.name) ;
-                //Preferences.filtersGtaEastLoggedOut = _filtersGtaEast;
+                Preferences.filtersGtaEast = _filtersGtaEast;
             });            
           },
         )
@@ -151,7 +165,7 @@ class _FiltersGtaEastState extends State<FiltersGtaEast> {
           onSelected: ( bool selected ) {
             setState(() {
                 selected ? _filtersGtaEast.add(propertiesGtaEastOther.name) : _filtersGtaEast.removeWhere((String name) => name == propertiesGtaEastOther.name) ;
-                //Preferences.filtersGtaEastLoggedOut = _filtersGtaEast;
+                Preferences.filtersGtaEast = _filtersGtaEast;
             });            
           },
         )

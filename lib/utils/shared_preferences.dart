@@ -15,6 +15,14 @@ class Preferences {
   static List<String> _userFilters = [];
   static List<String> _userFiltersCity = [];
 
+  static List<String> _filtersTrCentral = [];
+  static List<String> _filtersTrEast = [];
+  static List<String> _filtersTrWest = [];
+  static List<String> _filtersGtaWest = [];
+  static List<String> _filtersGtaNorth = [];
+  static List<String> _filtersGtaEast = [];
+  static List<String> _filtersOther = [];
+
 
   static Future init() async {
     _prefs = await SharedPreferences.getInstance();
@@ -81,19 +89,8 @@ class Preferences {
     _prefs.setStringList( 'userFilters', value );
   }
 
-  // CITY
-  // GtaCentral
-  static List<String> get userFiltersCity {
-    return _prefs.getStringList( 'userFiltersCity') ?? _userFiltersCity;
-  }
 
-  static set userFiltersCity( List<String> value ) {
-    _userFiltersCity = value;
-    _prefs.setStringList( 'userFiltersCity', value );
-  }
-
-
-  /// FILTERS
+  /// FILTERS Class Buttons
   static List<String> get filtersClassButtons {
     return _prefs.getStringList('filtersClassButtons') ?? _filtersClassButtons;
   }
@@ -112,5 +109,87 @@ class Preferences {
   static set filterClassIcons( List<String> value ) {
     _filterClassIcons = value;
     _prefs.setStringList( 'filterClassIcons', value );
+  }
+
+
+  // CITY
+  static List<String> get userFiltersCity {
+    return _prefs.getStringList( 'userFiltersCity') ?? _userFiltersCity;
+  }
+
+  static set userFiltersCity( List<String> value ) {
+    _userFiltersCity = value;
+    _prefs.setStringList( 'userFiltersCity', value );
+  }
+
+
+  // FILTERS Tr Central
+  static List<String> get filtersTrCentral {
+    return _prefs.getStringList('filtersTrCentral') ?? _filtersTrCentral;
+  }
+
+  static set filtersTrCentral( List<String> value ) {
+    _filtersTrCentral = value;
+    _prefs.setStringList( 'filtersTrCentral', value );
+  }
+
+  // FILTERS Tr East
+  static List<String> get filtersTrEast {
+    return _prefs.getStringList('filtersTrEast') ?? _filtersTrEast;
+  }
+
+  static set filtersTrEast( List<String> value ) {
+    _filtersTrEast = value;
+    _prefs.setStringList( 'filtersTrEast', value );
+  }
+
+  // FILTERS Tr West
+  static List<String> get filtersTrWest {
+    return _prefs.getStringList('filtersTrWest') ?? _filtersTrWest;
+  }
+
+  static set filtersTrWest( List<String> value ) {
+    _filtersTrWest = value;
+    _prefs.setStringList( 'filtersTrWest', value );
+  }
+
+  // FILTERS Gta West
+  static List<String> get filtersGtaWest {
+    return _prefs.getStringList('filtersGtaWest') ?? _filtersGtaWest;
+  }
+
+  static set filtersGtaWest( List<String> value ) {
+    _filtersGtaWest = value;
+    _prefs.setStringList( 'filtersGtaWest', value );
+  }
+
+  // FILTERS Gta North
+  static List<String> get filtersGtaNorth {
+    return _prefs.getStringList('filtersGtaNorth') ?? _filtersGtaNorth;
+  }
+
+  static set filtersGtaNorth( List<String> value ) {
+    _filtersGtaNorth = value;
+    _prefs.setStringList( 'filtersGtaNorth', value );
+  }
+
+  // FILTERS Gta East
+  static List<String> get filtersGtaEast {
+    return _prefs.getStringList('filtersGtaEast') ?? _filtersGtaEast;
+  }
+
+  static set filtersGtaEast( List<String> value ) {
+    _filtersGtaEast = value;
+    _prefs.setStringList( 'filtersGtaEast', value );
+  }
+
+  // FILTERS Other
+  static List<String> get filtersOther {
+    return _prefs.getStringList('filtersOther') ?? _filtersOther;
+  }
+
+  static set filtersOther( List<String> value ) {
+    _filtersOther = value;
+    _prefs.setStringList( 'filtersOther', value );
   }
 }
