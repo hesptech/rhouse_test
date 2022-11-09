@@ -8,17 +8,13 @@ class Preferences {
   static bool _isLoggedIn = false;
   static double _locationLat = 43.651070;
   static double _locationLng = -79.347015;
+  static List<String> _filtersClassButtons = [];
   static double _filterPriceRangeStart = 500000;
   static double _filterPriceRangeEnd = 2000000; 
-  static bool _filterIconBtHouse = true;
-  static bool _filterIconBtCondo = false;
-  static List<String> _filtersClassButtons = [];
+  static List<String> _filterClassIcons = [];
   static List<String> _userFilters = [];
-  static List<String> _userFiltersIsLoggedIn = [];
   static List<String> _userFiltersCity = [];
-  static List<String> _userFiltersCityIsLoggedIn = [];
-  static List<String> _userFiltersCityGtaNorth = [];
-  static List<String> _userFiltersCityGtaNorthLoggedIn = [];
+
 
   static Future init() async {
     _prefs = await SharedPreferences.getInstance();
@@ -75,29 +71,6 @@ class Preferences {
   }
 
 
-
-  // FILTERS: Class Icons Buttons
-  static bool get filterIconBtHouse {
-    return _prefs.getBool(  'filterIconBtHouse' ) ?? _filterIconBtHouse;
-  } 
-
-  static set filterIconBtHouse( bool value) {
-    _filterIconBtHouse = value;
-    _prefs.setBool('filterIconBtHouse', value);
-  }
-
-
-  static bool get filterIconBtCondo {
-    return _prefs.getBool(  'filterIconBtCondo' ) ?? _filterIconBtCondo;
-  } 
-
-  static set filterIconBtCondo( bool value) {
-    _filterIconBtCondo = value;
-    _prefs.setBool('filterIconBtCondo', value);
-  }
-
-
-
   // Type
   static List<String> get userFilters {
     return _prefs.getStringList( 'userFilters') ?? _userFilters;
@@ -106,15 +79,6 @@ class Preferences {
   static set userFilters( List<String> value ) {
     _userFilters = value;
     _prefs.setStringList( 'userFilters', value );
-  }
-
-  static List<String> get userFiltersIsLoggedIn {
-    return _prefs.getStringList( 'userFiltersIsLoggedIn') ?? _userFiltersIsLoggedIn;
-  }
-
-  static set userFiltersIsLoggedIn( List<String> value ) {
-    _userFiltersIsLoggedIn = value;
-    _prefs.setStringList( 'userFiltersIsLoggedIn', value );
   }
 
   // CITY
@@ -128,33 +92,6 @@ class Preferences {
     _prefs.setStringList( 'userFiltersCity', value );
   }
 
-  static List<String> get userFiltersCityIsLoggedIn {
-    return _prefs.getStringList( 'userFiltersCityIsLoggedIn') ?? _userFiltersCityIsLoggedIn;
-  }
-
-  static set userFiltersCityIsLoggedIn( List<String> value ) {
-    _userFiltersCityIsLoggedIn = value;
-    _prefs.setStringList( 'userFiltersCityIsLoggedIn', value );
-  }
-
-  // GtaNorth
-  static List<String> get userFiltersCityGtaNorth {
-    return _prefs.getStringList( 'userFiltersCityGtaNorth') ?? _userFiltersCityGtaNorth;
-  }
-
-  static set userFiltersCityGtaNorth( List<String> value ) {
-    _userFiltersCityGtaNorth = value;
-    _prefs.setStringList( 'userFiltersCityGtaNorth', value );
-  }
-
-  static List<String> get userFiltersCityGtaNorthLoggedIn {
-    return _prefs.getStringList( 'userFiltersCityGtaNorthLoggedIn') ?? _userFiltersCityGtaNorthLoggedIn;
-  }
-
-  static set userFiltersCityGtaNorthLoggedIn( List<String> value ) {
-    _userFiltersCityGtaNorthLoggedIn = value;
-    _prefs.setStringList( 'userFiltersCityGtaNorthLoggedIn', value );
-  } 
 
   /// FILTERS
   static List<String> get filtersClassButtons {
@@ -165,4 +102,15 @@ class Preferences {
     _filtersClassButtons = value;
     _prefs.setStringList('filtersClassButtons', value);
   } 
+
+
+  /// FILTER Class Icons
+  static List<String> get filterClassIcons {
+    return _prefs.getStringList('filterClassIcons') ?? _filterClassIcons;
+  }
+
+  static set filterClassIcons( List<String> value ) {
+    _filterClassIcons = value;
+    _prefs.setStringList( 'filterClassIcons', value );
+  }
 }

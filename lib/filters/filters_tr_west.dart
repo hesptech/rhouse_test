@@ -87,6 +87,7 @@ class _FiltersTrWestState extends State<FiltersTrWest> {
             children: propertiesTrWestWidgets.toList(),
           ),
           const SizedBox( height: 16.0,),
+          //Text('Prefs. city: ${Preferences.userFiltersCity}'),
         ],
         onExpansionChanged: (bool expanded) {
           setState(() => _openCloseIcons[0] = expanded );

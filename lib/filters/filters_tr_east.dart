@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-//import 'package:flutter_black_white/utils/shared_preferences.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
+
 
 class FiltersTrEast extends StatefulWidget {
   const FiltersTrEast({Key? key}) : super(key: key);
@@ -14,12 +15,12 @@ class FiltersTrEast extends StatefulWidget {
 
 class _FiltersTrEastState extends State<FiltersTrEast> {
 
-    late List<bool> _openCloseIcons;
+  late List<bool> _openCloseIcons;
   late List<PropertiesTrEast> _propertiesTrEast;
   late List<String> _filtersSearchTrEast;
 
   //bool citySelectAllTorontoEast = Preferences.filtersCityTorontoEastLoggedOut.length == 4;
-    bool citySelectAll = false;
+  bool citySelectAll = false;
 
   @override
   void initState() {
@@ -41,7 +42,7 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
       const PropertiesTrEast('Scarborough'),
     ];
 
-    _filtersSearchTrEast = [];
+    _filtersSearchTrEast = Preferences.userFiltersCity;
   }
 
   @override
@@ -71,16 +72,19 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
                   }
                   
                   setState(() {
-                    _filtersSearchTrEast.clear() ;
+                    //_filtersSearchTrEast.clear() ;
                     if(citySelectAll) {
                       citySelectAll = false;
+                      for (var element in _propertiesTrEast) {
+                        _filtersSearchTrEast.remove(element.name) ;
+                      }
                     } else {
                       citySelectAll = true;
                       for (var element in _propertiesTrEast) {
                         _filtersSearchTrEast.add(element.name) ;
                       }
                     }
-                    //isLoggedIn ? Preferences.userFiltersTrEastLoggedIn = _filtersSearchTrEastLoggedIn : Preferences.userFiltersTrEast = _filtersSearchTrEast ;
+                    Preferences.userFiltersCity = _filtersSearchTrEast ;
                   });  
                 }, 
                 style: TextButton.styleFrom(
@@ -98,6 +102,7 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
             children:  propertiesTrEastWidgets.toList(),
           ),
           const SizedBox( height: 16.0,),
+          Text('Prefs.userFiltersCity: ${Preferences.userFiltersCity}'),
         ],
         onExpansionChanged: (bool expanded) {
           setState(() => _openCloseIcons[0] = expanded );
@@ -126,6 +131,7 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
             setState(() {
                 selected ? _filtersSearchTrEast.add(propertiesTrEast.name) : _filtersSearchTrEast.removeWhere((String name) => name == propertiesTrEast.name) ;
                 //Preferences.userFiltersTrEast = _filtersSearchTrEast;
+                Preferences.userFiltersCity = _filtersSearchTrEast ;
 
             });
           },

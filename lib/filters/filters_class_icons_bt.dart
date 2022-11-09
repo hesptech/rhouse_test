@@ -11,16 +11,6 @@ class FiltersClassIconsBt extends StatefulWidget {
 
 class _FiltersClassIconsBtState extends State<FiltersClassIconsBt> {
 
-  bool imageHouseOn = true;
-  bool imageCondoOn = false;
-
-  @override
-  void initState() {
-    super.initState();
-    imageHouseOn = Preferences.filterIconBtHouse;
-    imageCondoOn = Preferences.filterIconBtCondo;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -34,24 +24,21 @@ class _FiltersClassIconsBtState extends State<FiltersClassIconsBt> {
               border: Border.all(
                 color: kPrimaryColor,
               ),
-              color: imageHouseOn ? kPrimaryColor : Colors.white,
+              color: Preferences.filterClassIcons.contains('freehold') ? kPrimaryColor : Colors.white,
             ),
             child: Column(
               children: [
                 Icon(
                   Icons.home_outlined, size: 100.0, 
-                  color: imageHouseOn ? Colors.white : kPrimaryColor,
+                  color: Preferences.filterClassIcons.contains('freehold') ? Colors.white : kPrimaryColor,
                 ),
-                Text('HOUSE', style: TextStyle( color: imageHouseOn ? Colors.white : kPrimaryColor , fontSize: 18.0, fontWeight: FontWeight.w500 ), )
+                Text('HOUSE', style: TextStyle( color: Preferences.filterClassIcons.contains('freehold') ? Colors.white : kPrimaryColor , fontSize: 18.0, fontWeight: FontWeight.w500 ), )
               ]
             ),
           ),
           onTap: () {
             setState(() {
-              imageHouseOn = true;
-              imageCondoOn = false;
-              Preferences.filterIconBtHouse = imageHouseOn;
-              Preferences.filterIconBtCondo = imageCondoOn;
+              Preferences.filterClassIcons.contains('freehold') ? Preferences.filterClassIcons.remove('freehold') : Preferences.filterClassIcons.add('freehold') ; 
             });
           },
         ), 
@@ -64,24 +51,21 @@ class _FiltersClassIconsBtState extends State<FiltersClassIconsBt> {
               border: Border.all(
                 color: kPrimaryColor,
               ),
-              color: imageCondoOn ? kPrimaryColor : Colors.white,
+              color: Preferences.filterClassIcons.contains('condo') ? kPrimaryColor : Colors.white,
             ),
             child: Column(
               children: [
                 Icon(
                   Icons.apartment, size: 100.0, 
-                  color: imageCondoOn ? Colors.white : kPrimaryColor,
+                  color: Preferences.filterClassIcons.contains('condo') ? Colors.white : kPrimaryColor,
                 ),
-                Text('CONDO', style: TextStyle( color: imageCondoOn ? Colors.white : kPrimaryColor , fontSize: 18.0, fontWeight: FontWeight.w500 ), )
+                Text('CONDO', style: TextStyle( color: Preferences.filterClassIcons.contains('condo') ? Colors.white : kPrimaryColor , fontSize: 18.0, fontWeight: FontWeight.w500 ), )
               ]
             ),
           ),
           onTap: () {
             setState(() {
-              imageCondoOn = true;
-              imageHouseOn = false;
-              Preferences.filterIconBtHouse = imageHouseOn;
-              Preferences.filterIconBtCondo = imageCondoOn;        
+              Preferences.filterClassIcons.contains('condo') ? Preferences.filterClassIcons.remove('condo') : Preferences.filterClassIcons.add('condo') ;   
             });
           },
         ),              

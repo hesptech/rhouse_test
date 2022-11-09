@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-//import 'package:flutter_black_white/utils/shared_preferences.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 
 
 class FiltersTrCentral extends StatefulWidget {
@@ -16,8 +16,8 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
   late List<PropertiesTrCentral> _propertiesTrCentral;
   late List<String> _filtersTrCentral;
 
-  //bool citySelectAllGtaCentral = Preferences.filtersTrCentralLoggedOut.length == 4;
-  bool citySelectAllGtaCentral = false;
+  bool citySelectAllGtaCentral = Preferences.userFilters.length == 4 ? true : false ;
+  //bool citySelectAllGtaCentral = false;
 
 
   @override
@@ -38,7 +38,7 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
       const PropertiesTrCentral('Leaside'),
       const PropertiesTrCentral('Toronto North York'),
     ];
-    _filtersTrCentral = [];
+    _filtersTrCentral = Preferences.userFilters;
   }
 
   @override
@@ -59,16 +59,21 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
               TextButton(
                 onPressed: () {
                   setState(() {
-                    _filtersTrCentral.clear();
+                    for (var element in _propertiesTrCentral) {
+                      _filtersTrCentral.remove(element.name);
+                    } 
                     if(citySelectAllGtaCentral) {
                       citySelectAllGtaCentral = false;
+                      for (var element in _propertiesTrCentral) {
+                        _filtersTrCentral.remove(element.name);
+                      } 
                     } else {
                       citySelectAllGtaCentral = true;
                       for (var element in _propertiesTrCentral) {
                         _filtersTrCentral.add(element.name);
                       } 
                     }
-                    //Preferences.filtersTrCentralLoggedOut = _filtersTrCentral;                      
+                    Preferences.userFilters = _filtersTrCentral;                      
                   });
                 },
                 style: TextButton.styleFrom(
@@ -86,6 +91,7 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
             children: propertiesTrCentralWidgets.toList(),
           ),
           const SizedBox( height: 16.0,),
+          Text('Prefs.userFilters: ${Preferences.userFilters}'),
         ],
         onExpansionChanged: (bool expanded) {
           setState(() => _openCloseIcons[0] = expanded );
@@ -113,7 +119,7 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
           onSelected: ( bool selected ) {
             setState(() {
                 selected ? _filtersTrCentral.add(propertiesTrCentral.name) : _filtersTrCentral.removeWhere((String name) => name == propertiesTrCentral.name) ;
-                //Preferences.filtersTrCentralLoggedOut = _filtersTrCentral;
+                Preferences.userFilters = _filtersTrCentral;
             });            
           },
         )

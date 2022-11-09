@@ -18,8 +18,6 @@ class _FiltersPropertyIconsState extends State<FiltersPropertyIcons> {
   @override
   void initState() {
     super.initState();
-    /* imageOn1 = Preferences.filterIconBtHouse;
-    imageOn3 = Preferences.filterIconBtCondo; */
   }
 
   @override
@@ -52,9 +50,6 @@ class _FiltersPropertyIconsState extends State<FiltersPropertyIcons> {
           onTap: () {
             setState(() {
               imageOn1 ? imageOn1 = false : imageOn1 = true;
-              //imageOn3 = false;
-              /* Preferences.filterIconBtHouse = imageOn1;
-              Preferences.filterIconBtCondo = imageOn3; */
             });
           },
         ), 
@@ -93,9 +88,6 @@ class _FiltersPropertyIconsState extends State<FiltersPropertyIcons> {
           onTap: () {
             setState(() {
               imageOn2 ? imageOn2 = false : imageOn2 = true ;
-              //imageOn3 = false;
-              /* Preferences.filterIconBtHouse = imageHouseOn;
-              Preferences.filterIconBtCondo = imageOn3; */
             });
           },
         ), 
@@ -123,10 +115,7 @@ class _FiltersPropertyIconsState extends State<FiltersPropertyIcons> {
           ),
           onTap: () {
             setState(() {
-              imageOn3 ? imageOn3 = false : imageOn3 = true ;
-              //imageHouseOn = false;
-              /* Preferences.filterIconBtHouse = imageHouseOn;
-              Preferences.filterIconBtCondo = imageOn3; */        
+              imageOn3 ? imageOn3 = false : imageOn3 = true ;       
             });
           },
         ),              
