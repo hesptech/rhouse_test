@@ -42,7 +42,7 @@ class _FiltersPropertyTypeState extends State<FiltersPropertyType> {
       const PropertiesTypesOthers('OTHER'),
     ];
 
-    _filtersPropertyType = Preferences.userFilters;
+    _filtersPropertyType = Preferences.filterPropertyType;
   }
 
   @override
@@ -138,7 +138,7 @@ class _FiltersPropertyTypeState extends State<FiltersPropertyType> {
           onSelected: ( bool selected ) {
             setState(() {
                 selected ? _filtersPropertyType.add(propertiesTypes.name) : _filtersPropertyType.removeWhere((String name) => name == propertiesTypes.name) ;
-                //Preferences.userFilters = _filtersSearch;
+                Preferences.filterPropertyType = _filtersPropertyType;
             });
           },
         )
@@ -164,7 +164,7 @@ class _FiltersPropertyTypeState extends State<FiltersPropertyType> {
           onSelected: ( bool selected ) {
             setState(() {
                 selected ? _filtersPropertyType.add(propertiesTypesOthers.name) : _filtersPropertyType.removeWhere((String name) => name == propertiesTypesOthers.name) ;
-                //Preferences.userFilters = _filtersSearch;
+                Preferences.filterPropertyType = _filtersPropertyType;
             });
           },
         )

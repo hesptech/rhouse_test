@@ -12,9 +12,13 @@ class Preferences {
   static double _filterPriceRangeStart = 500000;
   static double _filterPriceRangeEnd = 2000000; 
   static List<String> _filterClassIcons = [];
+  static List<String> _filterPropertyIcons = [];
+  static List<String> _filterPropertyType = [];
+
   static List<String> _userFilters = [];
   static List<String> _userFiltersCity = [];
 
+  static List<String> _filtersLocationTopbts = [];
   static List<String> _filtersTrCentral = [];
   static List<String> _filtersTrEast = [];
   static List<String> _filtersTrWest = [];
@@ -112,6 +116,28 @@ class Preferences {
   }
 
 
+  /// FILTER Property Icons
+  static List<String> get filterPropertyIcons {
+    return _prefs.getStringList('filterPropertyIcons') ?? _filterPropertyIcons;
+  }
+
+  static set filterPropertyIcons( List<String> value ) {
+    _filterPropertyIcons = value;
+    _prefs.setStringList( 'filterPropertyIcons', value );
+  }
+
+
+  /// FILTER Property Type
+  static List<String> get filterPropertyType {
+    return _prefs.getStringList('filterPropertyType') ?? _filterPropertyType;
+  }
+
+  static set filterPropertyType( List<String> value ) {
+    _filterPropertyType = value;
+    _prefs.setStringList( 'filterPropertyType', value );
+  }
+
+
   // CITY
   static List<String> get userFiltersCity {
     return _prefs.getStringList( 'userFiltersCity') ?? _userFiltersCity;
@@ -120,6 +146,17 @@ class Preferences {
   static set userFiltersCity( List<String> value ) {
     _userFiltersCity = value;
     _prefs.setStringList( 'userFiltersCity', value );
+  }
+
+
+  // FILTERS Location Topbts
+  static List<String> get filtersLocationTopbts {
+    return _prefs.getStringList('filtersLocationTopbts') ?? _filtersLocationTopbts;
+  }
+
+  static set filtersLocationTopbts( List<String> value ) {
+    _filtersLocationTopbts = value;
+    _prefs.setStringList( 'filtersLocationTopbts', value );
   }
 
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 
 
@@ -13,10 +14,7 @@ class _FiltersOtherState extends State<FiltersOther> {
 
   late List<bool> _openCloseIcons;
   late List<PropertiesOther> _propertiesOther;
-  late List<String> _filtersGtaEast;
-
-  //bool citySelectAllGtaEast = Preferences.filtersGtaEastLoggedOut.length == 4;
-  bool citySelectAll = false;
+  late List<String> _filtersOther;
 
   @override
   void initState() {
@@ -32,7 +30,7 @@ class _FiltersOtherState extends State<FiltersOther> {
       const PropertiesOther('Peterborough'),
       const PropertiesOther('Other'),
     ];
-    _filtersGtaEast = [];
+    _filtersOther = Preferences.filtersOther;
   }
 
   @override
@@ -67,18 +65,18 @@ class _FiltersOtherState extends State<FiltersOther> {
           label: Container(
             width: 150,
             alignment: Alignment.center,
-            child: Text(propertiesOther.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: _filtersGtaEast.contains(propertiesOther.name) ? Colors.white : kPrimaryColor),),
+            child: Text(propertiesOther.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: _filtersOther.contains(propertiesOther.name) ? Colors.white : kPrimaryColor),),
           ),
           labelPadding: const EdgeInsets.all(0.0),
           backgroundColor: const Color(0xFFFFFFFF),
           selectedColor: kPrimaryColor,
           shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
           side: const BorderSide( color: kPrimaryColor ),
-          selected: _filtersGtaEast.contains(propertiesOther.name),
+          selected: _filtersOther.contains(propertiesOther.name),
           onSelected: ( bool selected ) {
             setState(() {
-                selected ? _filtersGtaEast.add(propertiesOther.name) : _filtersGtaEast.removeWhere((String name) => name == propertiesOther.name) ;
-                //Preferences.filtersGtaEastLoggedOut = _filtersGtaEast;
+                selected ? _filtersOther.add(propertiesOther.name) : _filtersOther.removeWhere((String name) => name == propertiesOther.name) ;
+                Preferences.filtersOther = _filtersOther;
             });            
           },
         )

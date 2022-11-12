@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_black_white/utils/constants.dart';
-import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/utils/widgets_formatting.dart';
 import 'package:flutter_black_white/filters/filters.dart';
 
@@ -32,7 +31,6 @@ class FiltersExpansionTiles extends StatefulWidget {
   State<FiltersExpansionTiles> createState() => _FiltersExpansionTilesState();
 }
 
-
 class _FiltersExpansionTilesState extends State<FiltersExpansionTiles> {
 
   @override
@@ -56,13 +54,6 @@ class _FiltersExpansionTilesState extends State<FiltersExpansionTiles> {
           const FiltersBedrooms(),
           const FiltersBathrooms(),
           const FiltersMore(),
-
-
-          //Text('Prefs. notLoged? ${Preferences.userFilters}'),
-          //Text('Prefs. notLoged city? ${Preferences.userFiltersCity}'),
-          //Text('log isLogged? $isLoggedIn'),
-
-    
         ],
       ),
     );

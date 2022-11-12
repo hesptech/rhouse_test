@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 
 
 class FiltersLocationTopbts extends StatefulWidget {
@@ -13,7 +13,6 @@ class FiltersLocationTopbts extends StatefulWidget {
 class _FiltersLocationTopbtsState extends State<FiltersLocationTopbts> {
 
   late List<PropertiesTopbts> _propertiesTopbts;
-  late List<String> _filtersTopbts;
 
   @override
   void initState() {
@@ -23,7 +22,6 @@ class _FiltersLocationTopbtsState extends State<FiltersLocationTopbts> {
       const PropertiesTopbts('TORONTO'),
       const PropertiesTopbts('Suburbs - Outskirts'),
     ];
-    _filtersTopbts = [];
   }
 
   @override
@@ -34,11 +32,6 @@ class _FiltersLocationTopbtsState extends State<FiltersLocationTopbts> {
         Wrap(
           children: propertiesTopbtsWidgets.toList(),
         ),     
-
-        //const SizedBox( height: 14.0, ),
-
-        //Text('Prefs. filterRoomsLoggedOut: ${Preferences.filtersGtaWestLoggedOut}'),
-        //Text('Prefs. filterRoomsLoggedIn: ${Preferences.filtersGtaWestLoggedIn}'),
       ],
     );    
   }
@@ -52,18 +45,21 @@ class _FiltersLocationTopbtsState extends State<FiltersLocationTopbts> {
           label: Container(
             width: 150,
             alignment: Alignment.center,
-            child: Text(propertiesTopbts.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: _filtersTopbts.contains(propertiesTopbts.name) ? Colors.white : kPrimaryColor),),
+            child: Text(propertiesTopbts.name, style: TextStyle(
+              fontSize: 16, 
+              fontWeight: FontWeight.w400, 
+              color: Preferences.filtersLocationTopbts.contains(propertiesTopbts.name) ? Colors.white : kPrimaryColor),
+            ),
           ),
           labelPadding: const EdgeInsets.all(0.0),
           backgroundColor: const Color(0xFFFFFFFF),
           selectedColor: kPrimaryColor,
           shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
           side: const BorderSide( color: kPrimaryColor ),
-          selected: _filtersTopbts.contains(propertiesTopbts.name),
+          selected: Preferences.filtersLocationTopbts.contains(propertiesTopbts.name),
           onSelected: ( bool selected ) {
             setState(() {
-                selected ? _filtersTopbts.add(propertiesTopbts.name) : _filtersTopbts.removeWhere((String name) => name == propertiesTopbts.name) ;
-                //Preferences.filtersGtaWestLoggedOut = _filtersGtaWest;
+                Preferences.filtersLocationTopbts.contains(propertiesTopbts.name) ? Preferences.filtersLocationTopbts.remove(propertiesTopbts.name) : Preferences.filtersLocationTopbts.add(propertiesTopbts.name) ;
             });            
           },        
         ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter_black_white/utils/shared_preferences.dart';
+
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/widgets_formatting.dart';
 import 'package:flutter_black_white/filters/filters_location_topbts.dart';
@@ -52,11 +52,6 @@ class _FiltersLocationState extends State<FiltersLocation> {
                 color: kSecondaryColor,
               ),
               children: <Widget>[
-
-
-
-
-
                 const FiltersLocationTopbts(),
                 ExpansionTile(
                   title: const Text('more or specific location', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.w500, ),),
