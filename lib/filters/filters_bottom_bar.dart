@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
 
 import 'package:flutter_black_white/utils/constants.dart';
-//import 'package:flutter_black_white/utils/shared_preferences.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
 
 
@@ -19,7 +18,6 @@ class _FiltersBottomBarState extends State<FiltersBottomBar> {
   Widget build(BuildContext context) {
 
     final filterProvider = Provider.of<FilterProvider>( context );
-
     final currentFilter = filterProvider.filterProvider;
 
     return Container(
@@ -40,10 +38,9 @@ class _FiltersBottomBarState extends State<FiltersBottomBar> {
                           //elevation: 6.0,
                         ),
                         onPressed: () {
-                          //print(Preferences.filterRoomsLoggedOut);
-                            // Respond to button press
                             setState(() {
-                              //Preferences.filterRoomsLoggedOut.clear();
+                              Preferences.filtersClassIconsBt = '&class=residential';
+                              filterProvider.filterProvider = '&class=residential';
                               Navigator.pushNamed(context, 'filters_screen');
                             });
                         },
@@ -59,8 +56,7 @@ class _FiltersBottomBarState extends State<FiltersBottomBar> {
                           backgroundColor: kPrimaryColor
                         ),
                         onPressed: () {
-                            // Respond to button press
-                            Navigator.pushNamed(context, '/');
+                          //Navigator.pushNamed( context, 'custom-selection', arguments: 'Filtered results' );
                         },
                         child: const Text("SAVE", style: TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.bold),),
                       ),
@@ -74,6 +70,12 @@ class _FiltersBottomBarState extends State<FiltersBottomBar> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text('Filters: $currentFilter', style: const TextStyle(color: Colors.white,),)
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text('Prefs: ${Preferences.filtersClassIconsBt}', style: const TextStyle(color: Colors.white,),)
                   ],
                 ),
               ],

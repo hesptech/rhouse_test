@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
+
 
 class FiltersClassIconsBt extends StatefulWidget {
   const FiltersClassIconsBt({Key? key}) : super(key: key);
@@ -11,8 +15,20 @@ class FiltersClassIconsBt extends StatefulWidget {
 
 class _FiltersClassIconsBtState extends State<FiltersClassIconsBt> {
 
+  late String _filtersClassIconsBt;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _filtersClassIconsBt = Preferences.filtersClassIconsBt;
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    final filterProvider = Provider.of<FilterProvider>( context );
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -24,21 +40,24 @@ class _FiltersClassIconsBtState extends State<FiltersClassIconsBt> {
               border: Border.all(
                 color: kPrimaryColor,
               ),
-              color: Preferences.filterClassIcons.contains('freehold') ? kPrimaryColor : Colors.white,
+              color: _filtersClassIconsBt == '&class=residential' ? kPrimaryColor : Colors.white,
             ),
             child: Column(
               children: [
                 Icon(
                   Icons.home_outlined, size: 100.0, 
-                  color: Preferences.filterClassIcons.contains('freehold') ? Colors.white : kPrimaryColor,
+                  color: _filtersClassIconsBt == '&class=residential' ? Colors.white : kPrimaryColor,
                 ),
-                Text('HOUSE', style: TextStyle( color: Preferences.filterClassIcons.contains('freehold') ? Colors.white : kPrimaryColor , fontSize: 18.0, fontWeight: FontWeight.w500 ), )
+                Text('HOUSE', style: TextStyle( color: _filtersClassIconsBt == '&class=residential' ? Colors.white : kPrimaryColor , fontSize: 18.0, fontWeight: FontWeight.w500 ), )
               ]
             ),
           ),
           onTap: () {
+            _filtersClassIconsBt = "&class=residential";
+            filterProvider.filterProvider = "&class=residential";
+
             setState(() {
-              Preferences.filterClassIcons.contains('freehold') ? Preferences.filterClassIcons.remove('freehold') : Preferences.filterClassIcons.add('freehold') ; 
+              Preferences.filtersClassIconsBt = '&class=residential';
             });
           },
         ), 
@@ -51,21 +70,24 @@ class _FiltersClassIconsBtState extends State<FiltersClassIconsBt> {
               border: Border.all(
                 color: kPrimaryColor,
               ),
-              color: Preferences.filterClassIcons.contains('condo') ? kPrimaryColor : Colors.white,
+              color: _filtersClassIconsBt == '&class=condo' ? kPrimaryColor : Colors.white,
             ),
             child: Column(
               children: [
                 Icon(
                   Icons.apartment, size: 100.0, 
-                  color: Preferences.filterClassIcons.contains('condo') ? Colors.white : kPrimaryColor,
+                  color: _filtersClassIconsBt == '&class=condo' ? Colors.white : kPrimaryColor,
                 ),
-                Text('CONDO', style: TextStyle( color: Preferences.filterClassIcons.contains('condo') ? Colors.white : kPrimaryColor , fontSize: 18.0, fontWeight: FontWeight.w500 ), )
+                Text('CONDO', style: TextStyle( color: _filtersClassIconsBt == '&class=condo' ? Colors.white : kPrimaryColor , fontSize: 18.0, fontWeight: FontWeight.w500 ), )
               ]
             ),
           ),
           onTap: () {
+            _filtersClassIconsBt = "&class=condo";
+            filterProvider.filterProvider = "&class=condo";
+
             setState(() {
-              Preferences.filterClassIcons.contains('condo') ? Preferences.filterClassIcons.remove('condo') : Preferences.filterClassIcons.add('condo') ;   
+              Preferences.filtersClassIconsBt = '&class=condo';
             });
           },
         ),              

@@ -15,6 +15,12 @@ class FiltersScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0.0,
         centerTitle: true,
+        leading: IconButton(
+          onPressed: () { 
+            Navigator.pushNamed(context, '/');
+          }, 
+          icon: const Icon(Icons.close_outlined),
+        ),
         title: const Text('Personalize Listing'),
       ),
       body: const FiltersExpansionTiles(),
