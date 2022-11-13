@@ -52,7 +52,7 @@ class _FiltersClassButtonsState extends State<FiltersClassButtons> {
     location = 'Lat: ${position.latitude}, Alt: ${position.longitude}';
     _locationLat = position.latitude;
     _locationLng = position.longitude;
-    print(location);
+    //print(location);
   }  
 
 
