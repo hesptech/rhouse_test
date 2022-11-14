@@ -124,12 +124,12 @@ class _FiltersPropertyCondoState extends State<FiltersPropertyCondo> {
                   border: Border.all(
                     color: kPrimaryColor,
                   ),
-                  color: Preferences.filterPropertyIcons.contains('detached') ? kPrimaryColor : Colors.white,
+                  color: Preferences.filterPropertyIcons.contains('other') ? kPrimaryColor : Colors.white,
                 ),
                 child: Column(
                   children: [
                     Text('OTHER', style: TextStyle( 
-                      color: Preferences.filterPropertyIcons.contains('detached') ?  Colors.white : kPrimaryColor , 
+                      color: Preferences.filterPropertyIcons.contains('other') ?  Colors.white : kPrimaryColor , 
                       fontSize: 14.0, 
                     ), textAlign: TextAlign.center, ),
                   ]
@@ -137,7 +137,7 @@ class _FiltersPropertyCondoState extends State<FiltersPropertyCondo> {
               ),
               onTap: () {
                 setState(() {
-                  Preferences.filterPropertyIcons.contains('detached') ? Preferences.filterPropertyIcons.remove('detached') : Preferences.filterPropertyIcons.add('detached');
+                  Preferences.filterPropertyIcons.contains('other') ? Preferences.filterPropertyIcons.remove('other') : Preferences.filterPropertyIcons.add('other');
                 });
               },
             ),                
