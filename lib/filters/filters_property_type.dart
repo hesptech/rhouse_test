@@ -8,7 +8,6 @@ import 'package:flutter_black_white/filters/filters_property_house.dart';
 //import 'package:flutter_black_white/utils/shared_preferences.dart';
 
 
-
 class FiltersPropertyType extends StatefulWidget {
   const FiltersPropertyType({Key? key}) : super(key: key);
 
@@ -39,8 +38,6 @@ class _FiltersPropertyTypeState extends State<FiltersPropertyType> {
     final filterProvider = Provider.of<FilterProvider>( context );
     final currentFilter = filterProvider.filterProvider;
 
-
-
     if(currentFilter == "&class=residential") {
       bodyExpansionTile = [
         const FiltersPropertyHouse()
@@ -50,7 +47,6 @@ class _FiltersPropertyTypeState extends State<FiltersPropertyType> {
         const FiltersPropertyCondo()
       ];
     }
-
 
     return SizedBox(
       child: Theme(
@@ -65,17 +61,7 @@ class _FiltersPropertyTypeState extends State<FiltersPropertyType> {
                 _openCloseIcons[0] ? Icons.remove : Icons.add,
                 color: kSecondaryColor,
               ),
-
               children: bodyExpansionTile,
-
-
-              /* children: currentFilter == "&class=residential" ? <Widget>[
-                const FiltersPropertyHouse(),
-              ] : <Widget>[
-                const FiltersPropertyCondo(),
-              ], */
-
-
               onExpansionChanged: (bool expanded) {
                 setState(() => _openCloseIcons[0] = expanded );
                 if (expanded == false) {

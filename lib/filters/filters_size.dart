@@ -3,39 +3,38 @@ import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 
 
-class FiltersDaysMarket extends StatefulWidget {
-  const FiltersDaysMarket({Key? key}) : super(key: key);
+class FiltersSize extends StatefulWidget {
+  const FiltersSize({Key? key}) : super(key: key);
 
   @override
-  State<FiltersDaysMarket> createState() => _FiltersDaysMarketState();
+  State<FiltersSize> createState() => _FiltersSizeState();
 }
 
-class _FiltersDaysMarketState extends State<FiltersDaysMarket> {
+class _FiltersSizeState extends State<FiltersSize> {
 
-  late double _filterDaysStart;
-  late double _filterDaysEnd;
+  late double _filterSizesStart;
+  late double _filterSizesEnd;
   late RangeValues selectedRange;
 
   @override
   void initState() {
     super.initState();
 
-    _filterDaysStart = Preferences.filterDaysMarketStart;
-    _filterDaysEnd = Preferences.filterDaysMarketEnd;
-    selectedRange = RangeValues(_filterDaysStart, _filterDaysEnd);
+    _filterSizesStart = Preferences.filterSizeStart;
+    _filterSizesEnd = Preferences.filterSizeEnd;
+    selectedRange = RangeValues(_filterSizesStart, _filterSizesEnd);
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(18.0, 24.0, 18.0, 0.0),
+          padding: const EdgeInsets.symmetric( horizontal: 18.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: const [
-              Text('DAYS ON MARKET', style: TextStyle(fontSize: 18, color: kPrimaryColor),),
+              Text('SIZE', style: TextStyle(fontSize: 18, color: kPrimaryColor),),
             ],
           ),
         ),
@@ -46,12 +45,12 @@ class _FiltersDaysMarketState extends State<FiltersDaysMarket> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '${selectedRange.start.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} Day', 
+                '${selectedRange.start.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} SQ FT', 
                 style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: kPrimaryColor ),
               ),
               Text(
-                '${selectedRange.end.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} Days\n or more', 
-                textAlign: TextAlign.right, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: kPrimaryColor ),
+                '${selectedRange.end.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} SQ FT\n or more', 
+                textAlign: TextAlign.right, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: kPrimaryColor),
               ),
             ],
           ),
@@ -63,19 +62,19 @@ class _FiltersDaysMarketState extends State<FiltersDaysMarket> {
             inactiveTrackColor: kSecondaryColor,
           ), 
           child: RangeSlider(
-            min: 0,
-            max: 30,
+            min: 0.0,
+            max: 3000.0,
             labels: RangeLabels('${selectedRange.start}', '${selectedRange.end}'),
             values: selectedRange,
             onChanged: (RangeValues newRange) {
               setState(() => selectedRange = newRange);
-              Preferences.filterDaysMarketStart = selectedRange.start;
-              Preferences.filterDaysMarketEnd = selectedRange.end;
+              Preferences.filterSizeStart = selectedRange.start;
+              Preferences.filterSizeEnd = selectedRange.end;
             },
           ),
-        ), 
-        const SizedBox( height: 12.0,)       
+        ),
+        const SizedBox( height: 12.0,),
       ]
-    );
+    ); 
   }
 }

@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:flutter_black_white/filters/filters_condo_extra.dart';
+import 'package:flutter_black_white/filters/filters_condo_fee.dart';
+import 'package:flutter_black_white/filters/filters_size.dart';
+
+import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/widgets_formatting.dart';
-
+//import 'package:b_w0/helpers/shared_preferences.dart';
+import 'package:flutter_black_white/filters/filters_style_condo.dart';
+import 'package:flutter_black_white/filters/filters_style_house.dart';
 import '../filters/filters_more_extra.dart';
 import '../filters/filters_parking.dart';
 import '../filters/filters_kitchens.dart';
 import '../filters/filters_basement.dart';
 import '../filters/filters_days_market.dart';
-
-//import 'package:b_w0/helpers/shared_preferences.dart';
-import '../filters/filters_style.dart';
 
 class FiltersMore extends StatefulWidget {
   const FiltersMore({Key? key}) : super(key: key);
@@ -21,6 +27,7 @@ class FiltersMore extends StatefulWidget {
 class _FiltersMoreState extends State<FiltersMore> {
 
   late List<bool> _openCloseIcons;
+  late List<Widget> bodyExpansionTile;
 
   @override
   void initState() {
@@ -36,6 +43,36 @@ class _FiltersMoreState extends State<FiltersMore> {
 
   @override
   Widget build(BuildContext context) {
+
+    final filterProvider = Provider.of<FilterProvider>( context );
+    final currentFilter = filterProvider.filterProvider;
+
+    if(currentFilter == "&class=residential") {
+      bodyExpansionTile = const <Widget>[
+        FiltersStyleHouse(),
+        BlueDivider(),
+        FiltersBasement(),
+        BlueDivider(),
+        FiltersDaysMarket(),
+        BlueDivider(),
+        FiltersMoreExtra(),
+        BlueDivider(),
+        FiltersParking(),
+        FiltersKitchens(),
+        SizedBox( height: 24.0, ),
+      ];
+    } else if (currentFilter == "&class=condo") {
+      bodyExpansionTile = const <Widget>[
+        FiltersStyleCondo(),
+        BlueDivider(),
+        FiltersDaysMarket(),
+        FiltersSize(),
+        FiltersCondoFee(),
+        FiltersCondoExtra(),
+        SizedBox( height: 24.0, ),
+      ];
+    }
+
     return SizedBox(
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
@@ -56,18 +93,7 @@ class _FiltersMoreState extends State<FiltersMore> {
                 _openCloseIcons[0] ? Icons.remove : Icons.add,
                 color: kSecondaryColor,
               ),
-              children: const <Widget>[
-                FiltersStyle(),
-                BlueDivider(),
-                FiltersBasement(),
-                BlueDivider(),
-                FiltersDaysMarket(),
-                BlueDivider(),
-                FiltersMoreExtra(),
-                BlueDivider(),
-                FiltersParking(),
-                FiltersKitchens(),
-              ],
+              children: bodyExpansionTile,
               onExpansionChanged: (bool expanded) {
                 setState(() => _openCloseIcons[0] = expanded );
                 if (expanded == false) {

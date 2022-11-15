@@ -2,27 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 
-
-class FiltersDaysMarket extends StatefulWidget {
-  const FiltersDaysMarket({Key? key}) : super(key: key);
+class FiltersCondoFee extends StatefulWidget {
+  const FiltersCondoFee({Key? key}) : super(key: key);
 
   @override
-  State<FiltersDaysMarket> createState() => _FiltersDaysMarketState();
+  State<FiltersCondoFee> createState() => _FiltersCondoFeeState();
 }
 
-class _FiltersDaysMarketState extends State<FiltersDaysMarket> {
+class _FiltersCondoFeeState extends State<FiltersCondoFee> {
 
-  late double _filterDaysStart;
-  late double _filterDaysEnd;
+  late double _filterCondoFeeStart;
+  late double _filterCondoFeeEnd;
   late RangeValues selectedRange;
 
   @override
   void initState() {
     super.initState();
 
-    _filterDaysStart = Preferences.filterDaysMarketStart;
-    _filterDaysEnd = Preferences.filterDaysMarketEnd;
-    selectedRange = RangeValues(_filterDaysStart, _filterDaysEnd);
+    _filterCondoFeeStart = Preferences.filterCondoFeeStart;
+    _filterCondoFeeEnd = Preferences.filterCondoFeeEnd;
+    selectedRange = RangeValues(_filterCondoFeeStart, _filterCondoFeeEnd);
   }
 
   @override
@@ -31,11 +30,11 @@ class _FiltersDaysMarketState extends State<FiltersDaysMarket> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(18.0, 24.0, 18.0, 0.0),
+          padding: const EdgeInsets.symmetric( horizontal: 18.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: const [
-              Text('DAYS ON MARKET', style: TextStyle(fontSize: 18, color: kPrimaryColor),),
+              Text('CONDO FEE', style: TextStyle(fontSize: 18, color: kPrimaryColor),),
             ],
           ),
         ),
@@ -46,12 +45,12 @@ class _FiltersDaysMarketState extends State<FiltersDaysMarket> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '${selectedRange.start.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} Day', 
+                '\$${selectedRange.start.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} ', 
                 style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: kPrimaryColor ),
               ),
               Text(
-                '${selectedRange.end.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} Days\n or more', 
-                textAlign: TextAlign.right, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: kPrimaryColor ),
+                '\$${selectedRange.end.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} \n or more', 
+                textAlign: TextAlign.right, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: kPrimaryColor),
               ),
             ],
           ),
@@ -63,19 +62,19 @@ class _FiltersDaysMarketState extends State<FiltersDaysMarket> {
             inactiveTrackColor: kSecondaryColor,
           ), 
           child: RangeSlider(
-            min: 0,
-            max: 30,
+            min: 0.0,
+            max: 1500.0,
             labels: RangeLabels('${selectedRange.start}', '${selectedRange.end}'),
             values: selectedRange,
             onChanged: (RangeValues newRange) {
               setState(() => selectedRange = newRange);
-              Preferences.filterDaysMarketStart = selectedRange.start;
-              Preferences.filterDaysMarketEnd = selectedRange.end;
+              Preferences.filterCondoFeeStart = selectedRange.start;
+              Preferences.filterCondoFeeEnd = selectedRange.end;
             },
           ),
         ), 
         const SizedBox( height: 12.0,)       
       ]
-    );
+    );      
   }
 }
