@@ -40,7 +40,7 @@ class _FiltersBathroomsState extends State<FiltersBathrooms> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB( 24.0, 14.0, 24.0, 28.0 ),
+              padding: const EdgeInsets.fromLTRB( 24.0, 14.0, 24.0, 0.0 ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -73,7 +73,7 @@ class _FiltersBathroomsState extends State<FiltersBathrooms> {
           label: Container(
             width: 30,
             alignment: Alignment.center,
-            child: Text(propertiesBaths.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: _defaultChoiceIndex == _propertiesBaths.indexOf(propertiesBaths) ? Colors.white : kPrimaryColor),),
+            child: Text(propertiesBaths.name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: _defaultChoiceIndex == _propertiesBaths.indexOf(propertiesBaths) ? Colors.white : kPrimaryColor),),
           ), 
           labelPadding: const EdgeInsets.all(0.0),
           backgroundColor: const Color(0xFFFFFFFF),

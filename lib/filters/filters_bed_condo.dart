@@ -1,36 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 
-//import 'package:b_w0/helpers/shared_preferences.dart';
 
-
-
-class FiltersBedrooms extends StatefulWidget {
-  const FiltersBedrooms({Key? key}) : super(key: key);
+class FiltersBedCondo extends StatefulWidget {
+  const FiltersBedCondo({Key? key}) : super(key: key);
 
   @override
-  State<FiltersBedrooms> createState() => _FiltersBedroomsState();
+  State<FiltersBedCondo> createState() => _FiltersBedCondoState();
 }
 
-class _FiltersBedroomsState extends State<FiltersBedrooms> {
+class _FiltersBedCondoState extends State<FiltersBedCondo> {
 
-  late List<PropertiesRooms> _propertiesRooms;
-  late List<String> _filtersSearchRooms;
+  late List<PropertiesBedCondo> _propertiesBedCondo;
+  late List<String> _filtersSearchBedCondo;
   late int _defaultChoiceIndex;
 
 
   @override
   void initState() {
     super.initState();
-    _propertiesRooms = <PropertiesRooms>[
-      const PropertiesRooms('1+'),
-      const PropertiesRooms('2+'),
-      const PropertiesRooms('3+'),
-      const PropertiesRooms('4+'),
-      //const PropertiesRooms('5+'),
+    _propertiesBedCondo = <PropertiesBedCondo>[
+      const PropertiesBedCondo('0+'),
+      const PropertiesBedCondo('1+'),
+      const PropertiesBedCondo('2+'),
+      const PropertiesBedCondo('3+'),
+      const PropertiesBedCondo('DEN'),
+      //const PropertiesBedCondo('5+'),
     ];
-    //_filtersSearchRooms = Preferences.filterRoomsLoggedOut;
-    _filtersSearchRooms = [];
+    //_filtersSearchBedCondo = Preferences.filterBedCondoLoggedOut;
+    _filtersSearchBedCondo = [];
     _defaultChoiceIndex = 0;
   }
 
@@ -56,7 +54,7 @@ class _FiltersBedroomsState extends State<FiltersBedrooms> {
                     ],
                   ),
                   Wrap(
-                    children: propertiesRoomsWidgets.toList(),
+                    children: propertiesBedCondoWidgets.toList(),
                   ),
                 ],
               ),
@@ -68,27 +66,27 @@ class _FiltersBedroomsState extends State<FiltersBedrooms> {
   }
 
 
-  Iterable<Widget> get propertiesRoomsWidgets sync* {
-    for (PropertiesRooms propertiesRooms in _propertiesRooms) {
+  Iterable<Widget> get propertiesBedCondoWidgets sync* {
+    for (PropertiesBedCondo propertiesBedCondo in _propertiesBedCondo) {
       yield Padding(
         padding: const EdgeInsets.symmetric( horizontal: 0.0 ),
         child: ChoiceChip(
           label: Container(
             width: 30,
             alignment: Alignment.center,
-            child: Text(propertiesRooms.name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: _defaultChoiceIndex == _propertiesRooms.indexOf(propertiesRooms) ? Colors.white : kPrimaryColor ), ),
+            child: Text(propertiesBedCondo.name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: _defaultChoiceIndex == _propertiesBedCondo.indexOf(propertiesBedCondo) ? Colors.white : kPrimaryColor ), ),
           ),
           labelPadding: const EdgeInsets.all(0.0),
           backgroundColor: const Color(0xFFFFFFFF),
           selectedColor: kPrimaryColor,
           shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
           side: const BorderSide( color: kPrimaryColor ),
-          selected: _defaultChoiceIndex == _propertiesRooms.indexOf(propertiesRooms),
+          selected: _defaultChoiceIndex == _propertiesBedCondo.indexOf(propertiesBedCondo),
           onSelected: ( bool selected ) {
             setState(() {
-              _defaultChoiceIndex = selected ? _propertiesRooms.indexOf(propertiesRooms) : 0;
-              selected ? _filtersSearchRooms.add(propertiesRooms.name) : _filtersSearchRooms.removeWhere((String name) => name == propertiesRooms.name);
-              //Preferences.filterRoomsLoggedOut = _filtersSearchRooms;
+              _defaultChoiceIndex = selected ? _propertiesBedCondo.indexOf(propertiesBedCondo) : 0;
+              selected ? _filtersSearchBedCondo.add(propertiesBedCondo.name) : _filtersSearchBedCondo.removeWhere((String name) => name == propertiesBedCondo.name);
+              //Preferences.filterBedCondoLoggedOut = _filtersSearchBedCondo;
             });
           },
         )
@@ -98,7 +96,7 @@ class _FiltersBedroomsState extends State<FiltersBedrooms> {
 }
 
 
-class PropertiesRooms {
-  const PropertiesRooms(this.name);
+class PropertiesBedCondo {
+  const PropertiesBedCondo(this.name);
   final String name;
 }

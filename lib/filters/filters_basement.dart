@@ -69,17 +69,17 @@ class _FiltersBasementState extends State<FiltersBasement> {
                 label: Container(
                   width: 160,
                   alignment: Alignment.center,
-                  child: const Text('Separate Entrance', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: kPrimaryColor),),
+                  child: Text('Separate Entrance', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: _filtersBasement.contains('Separate Entrance') ? Colors.white : kPrimaryColor),),
                 ), 
                 labelPadding: const EdgeInsets.all(0.0),
                 backgroundColor: const Color(0xFFFFFFFF),
                 selectedColor: kPrimaryColor,
                 shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
                 side: const BorderSide( color: kPrimaryColor ),
-                selected: false,
+                selected: _filtersBasement.contains('Separate Entrance'),
                 onSelected: ( bool selected ) {
                   setState(() {
-                      //selected ? _filtersBasement.add(propertiesBasement.name) : _filtersBasement.removeWhere((String name) => name == propertiesBasement.name) ;
+                      selected ? _filtersBasement.add('Separate Entrance') : _filtersBasement.removeWhere((String name) => name == 'Separate Entrance') ;
                       //Preferences.filtersBasementLoggedOut = _filtersBasement;
                   });            
                 },
