@@ -32,6 +32,7 @@ class _FiltersLocationState extends State<FiltersLocation> {
       false,
       false,
       false,
+      false,
     ];     
   }
 
@@ -53,11 +54,12 @@ class _FiltersLocationState extends State<FiltersLocation> {
               ),
               children: <Widget>[
                 const FiltersLocationTopbts(),
+                const SizedBox( height: 12.0, ),
                 ExpansionTile(
-                  title: const Text('more or specific location', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.w500, ),),
+                  title: const Text('Toronto more or specific location', style: TextStyle(color: kSecondaryColor, fontWeight: FontWeight.w500, ),),
                   trailing: Icon(
                     _openCloseIcons[4] ? Icons.remove : Icons.add,
-                    color: kPrimaryColor,
+                    color: kSecondaryColor,
                     size: 18.0,
                   ),
                   children: const [
@@ -65,8 +67,21 @@ class _FiltersLocationState extends State<FiltersLocation> {
                     BlueDivider(),
                     FiltersTrEast(),
                     BlueDivider(),
-                    FiltersTrWest(),
-                    BlueDivider(),
+                    FiltersTrWest(),                  
+                  ],
+                  onExpansionChanged: (bool expanded) {
+                    setState(() => _openCloseIcons[4] = expanded );
+                  },
+                ),
+                //const BlueDivider(),
+                ExpansionTile(
+                  title: const Text('Suburbs more or specific location', style: TextStyle(color: kSecondaryColor, fontWeight: FontWeight.w500, ),),
+                  trailing: Icon(
+                    _openCloseIcons[5] ? Icons.remove : Icons.add,
+                    color: kSecondaryColor,
+                    size: 18.0,
+                  ),
+                  children: const [
                     FiltersGtaWest(),
                     BlueDivider(),
                     FiltersGtaNorth(),
@@ -76,7 +91,7 @@ class _FiltersLocationState extends State<FiltersLocation> {
                     FiltersOther(),                    
                   ],
                   onExpansionChanged: (bool expanded) {
-                    setState(() => _openCloseIcons[4] = expanded );
+                    setState(() => _openCloseIcons[5] = expanded );
                   },
                 ),
               ],
@@ -86,6 +101,7 @@ class _FiltersLocationState extends State<FiltersLocation> {
                   setState(() => _openCloseIcons[1] = false );
                   setState(() => _openCloseIcons[2] = false );
                   setState(() => _openCloseIcons[4] = false );
+                  setState(() => _openCloseIcons[5] = false );
                 }
               },              
             )
