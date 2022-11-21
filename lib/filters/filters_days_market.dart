@@ -16,6 +16,8 @@ class _FiltersDaysMarketState extends State<FiltersDaysMarket> {
   late double _filterDaysEnd;
   late RangeValues selectedRange;
 
+  double sliderValue = 10;
+
   @override
   void initState() {
     super.initState();
@@ -23,6 +25,7 @@ class _FiltersDaysMarketState extends State<FiltersDaysMarket> {
     _filterDaysStart = Preferences.filterDaysMarketStart;
     _filterDaysEnd = Preferences.filterDaysMarketEnd;
     selectedRange = RangeValues(_filterDaysStart, _filterDaysEnd);
+    
   }
 
   @override
@@ -30,7 +33,53 @@ class _FiltersDaysMarketState extends State<FiltersDaysMarket> {
 
     return Column(
       children: [
+
+
         Padding(
+          padding: const EdgeInsets.fromLTRB(18.0, 24.0, 18.0, 0.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: const [
+              Text('DAYS ON MARKET', style: TextStyle(fontSize: 18, color: kPrimaryColor),),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric( horizontal: 18.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '${sliderValue.round().toString()} days', 
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: kPrimaryColor ),
+              ),
+            ],
+          ),
+        ),
+
+        SliderTheme(
+          data: const SliderThemeData(
+            thumbColor: kPrimaryColor,
+            activeTrackColor: kPrimaryColor,
+            inactiveTrackColor: kSecondaryColor,
+            valueIndicatorColor: kPrimaryColor,
+            activeTickMarkColor: Colors.transparent,
+            inactiveTickMarkColor: Colors.transparent,
+          ),
+          child: Slider(
+            value: sliderValue,
+            min: 1,
+            max: 30, 
+            divisions: 30,
+            //activeColor: kPrimaryColor,
+            //inactiveColor: kSecondaryColor,
+            label: sliderValue.round().toString(),
+            onChanged: (value) => setState(() => sliderValue = value) 
+          ),
+        ),
+
+
+        /* Padding(
           padding: const EdgeInsets.fromLTRB(18.0, 24.0, 18.0, 0.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -74,7 +123,7 @@ class _FiltersDaysMarketState extends State<FiltersDaysMarket> {
             },
           ),
         ), 
-        const SizedBox( height: 12.0,)       
+        const SizedBox( height: 12.0,) */       
       ]
     );
   }

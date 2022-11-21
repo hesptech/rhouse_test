@@ -14,6 +14,7 @@ class _FiltersPriceRangeState extends State<FiltersPriceRange> {
   late double _filterPriceRangeStart;
   late double _filterPriceRangeEnd;
   late RangeValues selectedRange;
+  late String maxUnlimited = '\$${_filterPriceRangeEnd.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} \n or more';
 
   @override
   void initState() {
@@ -21,6 +22,14 @@ class _FiltersPriceRangeState extends State<FiltersPriceRange> {
     _filterPriceRangeStart = Preferences.filterPriceRangeStart;
     _filterPriceRangeEnd = Preferences.filterPriceRangeEnd;
     selectedRange = RangeValues(_filterPriceRangeStart, _filterPriceRangeEnd);
+
+    if (_filterPriceRangeEnd < 4800000) {
+      maxUnlimited = '\$${_filterPriceRangeEnd.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} \n or less';
+    } else {
+      maxUnlimited = 'max';
+    }
+
+    //maxUnlimited = '\$${_filterPriceRangeEnd.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} \n or more';
   }
 
   @override
@@ -35,18 +44,19 @@ class _FiltersPriceRangeState extends State<FiltersPriceRange> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '\$${selectedRange.start.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} \n or less', 
+                '\$${selectedRange.start.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} \n or more', 
                 style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: kPrimaryColor ),
               ),
               Text(
-                '\$${selectedRange.end.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} \n or more', 
+                //'\$${selectedRange.end.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} \n or more', 
+                maxUnlimited,
                 textAlign: TextAlign.right, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: kPrimaryColor, ),
               ),
             ],
           ),
           SliderTheme(
             data: const SliderThemeData(
-              thumbColor: kSecondaryColor,
+              thumbColor: kPrimaryColor,
               activeTrackColor: kPrimaryColor,
               inactiveTrackColor: kSecondaryColor,
             ), 
@@ -56,7 +66,16 @@ class _FiltersPriceRangeState extends State<FiltersPriceRange> {
               labels: RangeLabels('${selectedRange.start}', '${selectedRange.end}'),
               values: selectedRange,
               onChanged: (RangeValues newRange) {
-                setState(() => selectedRange = newRange);
+                
+                //setState(() => selectedRange = newRange);
+                setState(() {
+                  if (newRange.end < 4800000) {
+                    maxUnlimited = '\$${newRange.end.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} \n or less';
+                  } else {
+                    maxUnlimited = 'max';
+                  }
+                  selectedRange = newRange;
+                });
                 Preferences.filterPriceRangeStart = selectedRange.start;
                 Preferences.filterPriceRangeEnd = selectedRange.end;
               },

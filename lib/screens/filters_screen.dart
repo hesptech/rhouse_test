@@ -49,6 +49,7 @@ class _FiltersExpansionTilesState extends State<FiltersExpansionTiles> {
             height: 5,
             color: kSecondaryColor,
           ),
+          //const FiltersPriceMinmax(),
           const FiltersPriceRange(),
           const FiltersClassIconsBt(),
           const SizedBox( height: 28.0,),
