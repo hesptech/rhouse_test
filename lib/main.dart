@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import 'package:flutter_black_white/providers/repliers_provider.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/application_state.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
@@ -25,6 +26,7 @@ class AppState extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: ( _ ) => FilterProvider(), ),
+        ChangeNotifierProvider( create: (_) => RepliersProvider('toronto ALL'), lazy: false,),
         ChangeNotifierProvider(
           create: (context) => ApplicationState(),
           builder: (context, _) => const App(),
