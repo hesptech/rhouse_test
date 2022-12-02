@@ -66,9 +66,10 @@ class _CardsSliderHorState extends State<CardsSliderHor> {
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                   onPressed: () {
-                    Navigator.pushNamed( context, 'custom-selection', arguments: widget.title );
+                    //Navigator.pushNamed( context, 'custom-selection', arguments: widget.title );
                   }, 
-                  child: const Text('See More', style: TextStyle(color: Color(0xFF0BB48B), fontWeight: FontWeight.w400),),
+                  //child: const Text('See More', style: TextStyle(color: Color(0xFF0BB48B), fontWeight: FontWeight.w400),),
+                  child: const Text('', style: TextStyle(color: Color(0xFF0BB48B), fontWeight: FontWeight.w400),),
                 ),
               ],
             ),

@@ -39,6 +39,14 @@ class CardHor extends StatelessWidget {
     //final String area = listing.address?.area?? '';
     final String cityArea = listing.address?.area == 'Toronto' ? 'Toronto' : city ;
 
+    final String finalAddress2 = '$cityArea, $neighborhood';
+    String finalAddress3 = '';
+    if ( finalAddress2.length > 30 ) {
+      finalAddress3 = '${finalAddress2.substring(0, 30)}...';
+    } else {
+      finalAddress3 = finalAddress2;
+    }
+
     // Details
     final String numRooms = listing.details?.numRooms?? '';
     final String numBedroomsPlus = listing.details?.numBedroomsPlus == '' ? '' : '+${listing.details?.numBedroomsPlus}' ;
@@ -108,7 +116,7 @@ class CardHor extends StatelessWidget {
                                 InkWell(
                                   child: const Icon(Icons.filter_9_plus_outlined, color: Color(0xFFffffff), size: 30),
                                   onTap: () {
-                                    Navigator.pushNamed(context, 'card_images_screen', arguments: mlsNumber);
+                                    //Navigator.pushNamed(context, 'card_images_screen', arguments: mlsNumber);
                                     //print('object');
                                   },
                                 )
@@ -187,7 +195,7 @@ class CardHor extends StatelessWidget {
                                 const SizedBox(width: 2,),
                                 ConstrainedBox(
                                   constraints: BoxConstraints( maxWidth: screenSize.width - 120 ),
-                                  child: Text('$unitNumberHyphen $streetNumber $streetName $streetSuffix $streetDirection', style:const TextStyle( fontSize: 16, color: Color(0xFF58595B)), overflow: TextOverflow.ellipsis,)
+                                  child: Text('$unitNumberHyphen$streetNumber $streetName $streetSuffix $streetDirection', style:const TextStyle( fontSize: 16, color: Color(0xFF58595B)), overflow: TextOverflow.ellipsis,)
                                 ),                            
                               ],
                             ),
@@ -204,12 +212,36 @@ class CardHor extends StatelessWidget {
                                 Text(neighborhood, style: const TextStyle( fontSize: 16, color: Color(0xFF58595B)), ), */
 
 
-                                Text(cityArea, style: const TextStyle( fontSize: 16, color: Color(0xFF58595B), fontWeight: FontWeight.bold, ), ),
+                                /* Text(cityArea, style: const TextStyle( fontSize: 16, color: Color(0xFF58595B), fontWeight: FontWeight.bold, ), ),
                                 const Text(', ', style: TextStyle( fontSize: 16, color: Color(0xFF58595B), fontWeight: FontWeight.bold, ), ),
                                 ConstrainedBox(
                                   constraints: BoxConstraints( maxWidth: screenSize.width - 265 ),
                                   child: Text(neighborhood, style: const TextStyle( fontSize: 16, color: Color(0xFF58595B)), overflow: TextOverflow.ellipsis,),
-                                ),
+                                ), */
+
+ 
+                                /* ConstrainedBox(
+                                  constraints: BoxConstraints( maxWidth: screenSize.width - 100 ),
+                                  child: Text(finalAddress3, style: const TextStyle( fontSize: 16, color: Color(0xFF58595B)), overflow: TextOverflow.ellipsis,),
+                                ), */
+
+                                Text(finalAddress3, style: const TextStyle( fontSize: 16, color: Color(0xFF58595B), ), ),
+
+                                /* Container(
+                                  //width: 100,
+                                  margin: EdgeInsets.all(0.0),
+                                  padding: EdgeInsets.all(0.0),
+                                  alignment: Alignment.centerLeft,
+                                  constraints: BoxConstraints(maxWidth: 150.0),
+                                  child: ChoiceChip(
+                                    selected: false,
+                                    labelPadding: const EdgeInsets.all(0.0),
+                                    label: Text(neighborhood, style: const TextStyle( fontSize: 16, color: Color(0xFF58595B))),
+                                  ),
+                                ), */
+
+
+
 
                                 /* ConstrainedBox(
                                   constraints: BoxConstraints( maxWidth: screenSize.width - 120 ),
@@ -323,7 +355,7 @@ class CardHor extends StatelessWidget {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, 'details', arguments: listing);
+                  //Navigator.pushNamed(context, 'details', arguments: listing);
                 },
                 child: Row(
                   children: [
@@ -346,7 +378,7 @@ class CardHor extends StatelessWidget {
                   backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF5f68be)),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, 'details', arguments: listing);
+                  //Navigator.pushNamed(context, 'details', arguments: listing);
                 },
                 child: const Text('Login required'),
               )
