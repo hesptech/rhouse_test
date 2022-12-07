@@ -2,42 +2,45 @@ import 'dart:convert';
 
 class Listing {
   Listing({
+    this.mlsNumber,
     this.listingClass,
-    this.listDate,
     this.images,
+    this.listDate,
+    this.timestamps,
     this.daysOnMarket,
     this.listPrice,
     this.address,
     this.details,
     this.rooms,
     this.lot,
-    this.mlsNumber,
   });
 
+  String? mlsNumber;
   String? listingClass;
-  DateTime? listDate;
   List<String>? images;
+  DateTime? listDate;
+  Timestamps? timestamps;
   String? daysOnMarket;
   String? listPrice;
   Address? address;
   Details? details;
   Map<String, Room>? rooms;
   Lot? lot;
-  String? mlsNumber;
 
   factory Listing.fromJson(String str) => Listing.fromMap(json.decode(str));
 
   factory Listing.fromMap(Map<String, dynamic> json) => Listing(
+    mlsNumber: json["mlsNumber"],
     listingClass: json["class"],
-    listDate: DateTime.parse(json["listDate"]),
     images: List<String>.from(json["images"].map((x) => x)),
+    listDate: DateTime.parse(json["listDate"]),
+    timestamps: Timestamps.fromMap(json["timestamps"]),
     daysOnMarket: json["daysOnMarket"],
     listPrice: json["listPrice"],
     address: Address.fromMap(json["address"]),
     details: Details.fromMap(json["details"]),
     rooms: Map.from(json["rooms"]).map((k, v) => MapEntry<String, Room>(k, Room.fromMap(v))),
     lot: Lot.fromMap(json["lot"]),
-    mlsNumber: json["mlsNumber"],
   );
 }
 
@@ -74,6 +77,21 @@ class Room {
         features3: json["features3"] ?? json["features3"],
         features2: json["features2"] ?? json["features2"],
     );
+}
+
+
+class Timestamps {
+  Timestamps({
+    this.listingEntryDate
+  });
+
+  DateTime? listingEntryDate;
+
+  factory Timestamps.fronJson(String str) => Timestamps.fromMap(json.decode(str));
+
+  factory Timestamps.fromMap(Map<String, dynamic> json) => Timestamps(
+    listingEntryDate: DateTime.parse(json["listingEntryDate"]),
+  );
 }
 
 
@@ -116,7 +134,7 @@ class Address {
 class Details {
   Details({
     this.propertyType,
-    this.numRooms,
+    this.numBedrooms,
     this.numBedroomsPlus,
     this.numBathrooms,
     this.numParkingSpaces,
@@ -124,7 +142,7 @@ class Details {
   });
 
   String? propertyType;
-  String? numRooms;
+  String? numBedrooms;
   String? numBedroomsPlus;
   String? numBathrooms;
   String? numParkingSpaces;
@@ -134,7 +152,7 @@ class Details {
 
   factory Details.fromMap(Map<String, dynamic> json) => Details(
     propertyType: json["propertyType"],
-    numRooms: json["numRooms"],
+    numBedrooms: json["numBedrooms"],
     numBedroomsPlus: json["numBedroomsPlus"],
     numBathrooms: json["numBathrooms"],
     numParkingSpaces: json["numParkingSpaces"],

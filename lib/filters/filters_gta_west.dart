@@ -112,7 +112,7 @@ class _FiltersGtaWestState extends State<FiltersGtaWest> {
             children: propertiesGtaWestOtherWidgets.toList(),
           ),
           const SizedBox( height: 16.0,),
-          Text('Prefs.filtersGtaWest: ${Preferences.filtersGtaWest}'),
+          //Text('Prefs.filtersGtaWest: ${Preferences.filtersGtaWest}'),
         ],
         onExpansionChanged: (bool expanded) {
           setState(() => _openCloseIcons[0] = expanded );

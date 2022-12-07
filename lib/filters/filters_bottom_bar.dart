@@ -18,10 +18,10 @@ class _FiltersBottomBarState extends State<FiltersBottomBar> {
   Widget build(BuildContext context) {
 
     final filterProvider = Provider.of<FilterProvider>( context );
-    final currentFilter = filterProvider.filterProvider;
+    //final currentFilter = filterProvider.filterProvider;
 
     return Container(
-            height: 120,
+            height: 75,
             color: kSecondaryColor,
             padding: const EdgeInsets.fromLTRB(22.0, 14.0, 22.0, 0),
             child: Column(
@@ -63,7 +63,7 @@ class _FiltersBottomBarState extends State<FiltersBottomBar> {
                     ),                
                   ]
                 ),
-                const SizedBox(
+                /* const SizedBox(
                   height: 14,
                 ),
                 Row(
@@ -77,7 +77,7 @@ class _FiltersBottomBarState extends State<FiltersBottomBar> {
                   children: [
                     Text('Prefs: ${Preferences.filtersClassIconsBt}', style: const TextStyle(color: Colors.white,),)
                   ],
-                ),
+                ), */
               ],
             ),
           

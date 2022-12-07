@@ -85,7 +85,7 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
             children: propertiesTrCentralWidgets.toList(),
           ),
           const SizedBox( height: 16.0,),
-          Text('Prefs.filtersTrCentral: ${Preferences.filtersTrCentral}'),
+          //Text('Prefs.filtersTrCentral: ${Preferences.filtersTrCentral}'),
         ],
         onExpansionChanged: (bool expanded) {
           setState(() => _openCloseIcons[0] = expanded );

@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
 
 import 'package:flutter_black_white/providers/repliers_provider.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
@@ -10,7 +13,8 @@ import 'package:flutter_black_white/screens/screens.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 
 void main() async {
-
+  
+  HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
   await Preferences.init();
 
@@ -71,5 +75,14 @@ class App extends StatelessWidget {
         'card_details_screen': ( _ ) => const CardDetailsScreen(),
       },
     );
+  }
+}
+
+
+class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
   }
 }

@@ -1,6 +1,8 @@
 
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:http/io_client.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_black_white/models/models.dart';
 
@@ -8,7 +10,7 @@ import 'package:flutter_black_white/models/models.dart';
 class RepliersProvider extends ChangeNotifier {
 
   final String _apiKey = 'AiMUNTXACg2hJOWyy1FJFx4yqtA3Hw';
-  final String _baseUrl = 'sandbox.repliers.io';
+  final String _baseUrl = 'api.repliers.io';
   String citySearchParam = '';
   List<Listing> onDisplayProperties = [];
   List<Listing> onDisplayHouses = [];
@@ -19,11 +21,12 @@ class RepliersProvider extends ChangeNotifier {
     citySearchParam == 'toronto' ? 'toronto' : citySearchParam ;
     getDisplayHouses();
     getDisplayCondo();
+    //getAccessToken();
   }
 
   Future<String> _getJsonData( String endPoint, String classParam, [int page = 1] ) async {
     final url = Uri.https( _baseUrl, endPoint, {
-      'page': '$page',
+      'pageNum': '$page',
       'resultsPerPage': '15',
       'maxPrice': '2000000',
       'minPrice': '1500000',
@@ -31,7 +34,7 @@ class RepliersProvider extends ChangeNotifier {
       'hasImages': 'true',
       'class': classParam,
     });
-
+    //print( 'page: $page' );
     Map<String, String>? headers = { 'REPLIERS-API-KEY': _apiKey };
 
     // Await the http get response, then decode the json-formatted response.
@@ -57,5 +60,42 @@ class RepliersProvider extends ChangeNotifier {
 
     onDisplayCondo = [ ...onDisplayCondo, ...nowPlayingResponse.listings];
     notifyListeners();
+  }
+
+
+
+
+  Future getAccessToken() async {
+    final url = Uri.https( 'api.repliers.io', 'listings', {
+      'page': '1',
+      'resultsPerPage': '15',
+      'maxPrice': '2000000',
+      'minPrice': '1500000',
+      'type': 'sale',
+      'hasImages': 'true',
+      'class': 'condo',
+    });
+
+    Map<String, String>? headers = { 'REPLIERS-API-KEY': 'AiMUNTXACg2hJOWyy1FJFx4yqtA3Hw' };
+
+    List<Listing> onDisplayHousesB = [];
+
+    try {
+      final ioc = HttpClient();
+      ioc.badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+      final http = IOClient(ioc);
+      http.get(url, headers: headers).then(
+          (response) {
+        //print("Reponse status : ${response.statusCode}");
+        //print("Response body : ${response.body}");
+        final nowPlayingResponse = ResponseBody.fromJson(response.body);
+        //print( nowPlayingResponse.listings[1].mlsNumber );
+        onDisplayHousesB = [ ...onDisplayHousesB, ...nowPlayingResponse.listings];
+        notifyListeners();
+      });
+    } catch (e) {
+      //print(e.toString());
+    }
   }
 }

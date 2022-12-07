@@ -19,9 +19,17 @@ class CardHor extends StatelessWidget {
     final screenSize = MediaQuery.of(context).size;
 
     // Gen. Info
-    final Map mlsNumber = { 'mlsNumber': listing.mlsNumber };
+    final listingClass = listing.listingClass?? '';
+    //final Map mlsNumber = { 'mlsNumber': listing.mlsNumber };
     final String images = listing.images?.first?? '';
-    final String daysOnMarket = listing.daysOnMarket?? '';
+    //final String daysOnMarket = listing.daysOnMarket?? '';
+
+    DateTime listingEntryDate = listing.timestamps?.listingEntryDate?? DateTime.now();
+    DateTime addDt = DateTime.now();
+    Duration diffDt = addDt.difference(listingEntryDate); 
+    //print(diffDt.inDays);
+
+
     final listPrice = listing.listPrice?? '' ;
     double doubleString = double.parse(listPrice);
     String formattedPrice = '\$${doubleString.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}';
@@ -39,7 +47,7 @@ class CardHor extends StatelessWidget {
     //final String area = listing.address?.area?? '';
     final String cityArea = listing.address?.area == 'Toronto' ? 'Toronto' : city ;
 
-    final String finalAddress2 = '$cityArea, $neighborhood';
+    final String finalAddress2 = '$neighborhood, $cityArea';
     String finalAddress3 = '';
     if ( finalAddress2.length > 30 ) {
       finalAddress3 = '${finalAddress2.substring(0, 30)}...';
@@ -48,7 +56,7 @@ class CardHor extends StatelessWidget {
     }
 
     // Details
-    final String numRooms = listing.details?.numRooms?? '';
+    final String numBedrooms = listing.details?.numBedrooms?? '';
     final String numBedroomsPlus = listing.details?.numBedroomsPlus == '' ? '' : '+${listing.details?.numBedroomsPlus}' ;
     final String numBathrooms = listing.details?.numBathrooms?? '';
     final String numParkingSpacesString = listing.details?.numParkingSpaces?? '';
@@ -56,13 +64,14 @@ class CardHor extends StatelessWidget {
     final String newParkingSpaces = arrayParkingSpaces[0];
     final String depth = listing.lot?.depth?? '';
     final List newDepth = depth.split('.');
-    final String superNewString = newDepth[0];
+    final String noZerosDepth = newDepth[0];
     final String width = listing.lot?.width?? ''; 
     final List newWidth = width.split('.');
-    final String superNewWidth = newWidth[0];
+    final String noZerosWidth = newWidth[0];
     final String sqft = listing.details?.sqft?? '';
-    final String size = listing.details?.sqft == '' ? '$superNewString + $superNewWidth\n(ft)' : '$sqft \n(sqft)' ;
-    //print(listing.images?.first);
+    final String sizeLot = listingClass == 'ResidentialProperty' ? '$noZerosDepth x $noZerosWidth ft' : '$sqft sqft' ;
+    //print(diffDt.inDays);
+
 
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -256,7 +265,7 @@ class CardHor extends StatelessWidget {
                           Row(
                             children: [
                               Container(
-                                width: 75.0,
+                                width: 80.0,
                                 height: 35.0,
                                 decoration: const BoxDecoration(
                                   // border: Border.all(color: const Color(0xFF0BB48B))
@@ -269,12 +278,12 @@ class CardHor extends StatelessWidget {
                                   children: [
                                     const Icon(Icons.king_bed_outlined, color: Color(0xFF0BB48B), size: 30,),
                                     const SizedBox(width: 5,),
-                                    Text('$numRooms$numBedroomsPlus' , style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), ),                                  
+                                    Text('$numBedrooms$numBedroomsPlus' , style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), ),                                  
                                   ],
                                 ),
                               ),
                               Container(
-                                width: 75.0,
+                                width: 68.0,
                                 height: 35.0,
                                 padding: const EdgeInsets.all(3.0),
                                 decoration: const BoxDecoration(
@@ -293,7 +302,7 @@ class CardHor extends StatelessWidget {
                                 ),
                               ),
                               Container(
-                                width: 75.0,
+                                width: 68.0,
                                 height: 35.0,
                                 padding: const EdgeInsets.all(3.0),
                                 decoration: const BoxDecoration(
@@ -313,7 +322,7 @@ class CardHor extends StatelessWidget {
                               ),
                               Container(
                                 height: 35.0,
-                                width: 104.0,
+                                width: 112.0,
                                 padding: const EdgeInsets.all(0.0),
                                 decoration: const BoxDecoration(
                                   border: Border(
@@ -325,7 +334,7 @@ class CardHor extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     //const SizedBox(width: 5,),
-                                    Text(size, style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 12, ), textAlign: TextAlign.center,)                                    
+                                    Text(sizeLot, style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), textAlign: TextAlign.center,)                                    
                                   ],
                                 ),
                               ),
@@ -361,7 +370,7 @@ class CardHor extends StatelessWidget {
                   children: [
                     const Icon(Icons.calendar_month_outlined, size: 16,),
                     const SizedBox(width: 5,),
-                    Text('Listed $daysOnMarket days ago', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400))
+                    Text('Listed ${diffDt.inDays} days ago', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400))
                   ],
                 ),
               )
@@ -386,6 +395,6 @@ class CardHor extends StatelessWidget {
           ],
         )
       )
-      );
+    );
   }
 }
