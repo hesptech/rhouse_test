@@ -24,10 +24,11 @@ class CardHor extends StatelessWidget {
     final String images = listing.images?.first?? '';
     //final String daysOnMarket = listing.daysOnMarket?? '';
 
+    // days on market
     DateTime listingEntryDate = listing.timestamps?.listingEntryDate?? DateTime.now();
     DateTime addDt = DateTime.now();
     Duration diffDt = addDt.difference(listingEntryDate); 
-    //print(diffDt.inDays);
+    final finalDiffDt = diffDt.inDays == 0 ? 'Listed today' : 'Listed ${diffDt.inDays} day(s) ago';
 
 
     final listPrice = listing.listPrice?? '' ;
@@ -360,7 +361,7 @@ class CardHor extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   primary: const Color(0xFF2E3191),
                   minimumSize: const Size(140.0, 28.0),
-                  padding: const EdgeInsets.symmetric(horizontal: 0),
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                 ),
                 onPressed: () {
@@ -370,7 +371,7 @@ class CardHor extends StatelessWidget {
                   children: [
                     const Icon(Icons.calendar_month_outlined, size: 16,),
                     const SizedBox(width: 5,),
-                    Text('Listed ${diffDt.inDays} days ago', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400))
+                    Text(finalDiffDt, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400))
                   ],
                 ),
               )

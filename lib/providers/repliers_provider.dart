@@ -16,6 +16,8 @@ class RepliersProvider extends ChangeNotifier {
   List<Listing> onDisplayHouses = [];
   List<Listing> onDisplayCondo = [];
   int _displayPage = 0;
+  int _displayPageHouses = 0;
+  int _displayPageCondo = 0;
 
   RepliersProvider( this.citySearchParam ) {
     citySearchParam == 'toronto' ? 'toronto' : citySearchParam ;
@@ -39,12 +41,18 @@ class RepliersProvider extends ChangeNotifier {
 
     // Await the http get response, then decode the json-formatted response.
     final response = await http.get(url, headers: headers);
-    return response.body;
+
+    if ( response.statusCode == 200 ) {
+      return response.body;
+    } else {
+      return '';
+      //print(response.statusCode);
+    }
   }
 
   getDisplayHouses() async {
-    _displayPage++;
-    final jsonData = await _getJsonData('listings', 'residential', _displayPage); 
+    _displayPageHouses++;
+    final jsonData = await _getJsonData('listings', 'residential', _displayPageHouses); 
 
     final nowPlayingResponse = ResponseBody.fromJson(jsonData);
 
@@ -53,8 +61,8 @@ class RepliersProvider extends ChangeNotifier {
   }
 
   getDisplayCondo() async {
-    _displayPage++;
-    final jsonData = await _getJsonData('listings', 'condo', _displayPage); 
+    _displayPageCondo++;
+    final jsonData = await _getJsonData('listings', 'condo', _displayPageCondo); 
 
     final nowPlayingResponse = ResponseBody.fromJson(jsonData);
 
