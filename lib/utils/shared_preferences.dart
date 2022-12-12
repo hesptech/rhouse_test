@@ -9,7 +9,7 @@ class Preferences {
   static double _locationLat = 43.651070;
   static double _locationLng = -79.347015;
   static List<String> _filtersClassButtons = [];
-  static double _filterPriceRangeStart = 500000;
+  static double _filterPriceRangeStart = 400000;
   static double _filterPriceRangeEnd = 2000000; 
   static double _filterDaysMarketStart = 1.0;
   static double _filterDaysMarketEnd = 30.0;

@@ -33,7 +33,7 @@ class _FiltersKitchensState extends State<FiltersKitchens> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB( 14.0, 0, 14.0, 28.0 ),
+      padding: const EdgeInsets.fromLTRB( 28.0, 0, 28.0, 28.0 ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

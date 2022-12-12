@@ -34,7 +34,7 @@ class _FiltersParkingState extends State<FiltersParking> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB( 14.0, 28.0, 14.0, 14.0 ),
+      padding: const EdgeInsets.fromLTRB( 28.0, 28.0, 28.0, 14.0 ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

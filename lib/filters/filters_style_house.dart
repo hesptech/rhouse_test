@@ -41,22 +41,25 @@ class _FiltersStyleHouseState extends State<FiltersStyleHouse> {
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(
-      title: const Text('STYLE', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold, ),),
-      trailing: Icon(
-        _openCloseIcons[1] ? Icons.remove : Icons.add,
-        color: kPrimaryColor,
-        size: 18.0,
-      ),
-      children: [
-        Wrap(
-          children: propertiesStyleHouseWidgets.toList(),
+    return Padding(
+      padding: const EdgeInsets.symmetric( horizontal: 12.0 ),
+      child: ExpansionTile(
+        title: const Text('STYLE', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold, ),),
+        trailing: Icon(
+          _openCloseIcons[1] ? Icons.remove : Icons.add,
+          color: kPrimaryColor,
+          size: 18.0,
         ),
-        const SizedBox( height: 14.0,)
-      ],
-      onExpansionChanged: (bool expanded) {
-        setState(() => _openCloseIcons[1] = expanded );
-      },
+        children: [
+          Wrap(
+            children: propertiesStyleHouseWidgets.toList(),
+          ),
+          const SizedBox( height: 14.0,)
+        ],
+        onExpansionChanged: (bool expanded) {
+          setState(() => _openCloseIcons[1] = expanded );
+        },
+      ),
     );     
   }
 

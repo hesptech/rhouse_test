@@ -50,13 +50,25 @@ class _FiltersMoreState extends State<FiltersMore> {
     if(currentFilter == "&class=residential") {
       bodyExpansionTile = const <Widget>[
         FiltersStyleHouse(),
-        BlueDivider(),
+        Padding(
+          padding: EdgeInsets.symmetric( horizontal: 12.0 ),
+          child: BlueDivider()
+        ),
         FiltersBasement(),
-        BlueDivider(),
+        Padding(
+          padding: EdgeInsets.symmetric( horizontal: 12.0 ),
+          child: BlueDivider()
+        ),
         FiltersDaysMarket(),
-        BlueDivider(),
+        Padding(
+          padding: EdgeInsets.symmetric( horizontal: 12.0 ),
+          child: BlueDivider()
+        ),
         FiltersMoreExtra(),
-        BlueDivider(),
+        Padding(
+          padding: EdgeInsets.symmetric( horizontal: 12.0 ),
+          child: BlueDivider()
+        ),
         FiltersParking(),
         FiltersKitchens(),
         SizedBox( height: 24.0, ),
@@ -64,7 +76,7 @@ class _FiltersMoreState extends State<FiltersMore> {
     } else if (currentFilter == "&class=condo") {
       bodyExpansionTile = const <Widget>[
         FiltersStyleCondo(),
-        BlueDivider(),
+        //BlueDivider(),
         FiltersDaysMarket(),
         FiltersSize(),
         FiltersCondoFee(),
@@ -87,7 +99,7 @@ class _FiltersMoreState extends State<FiltersMore> {
             ),
             ExpansionTile(
               tilePadding: const EdgeInsets.symmetric(horizontal: 24.0),
-              childrenPadding: const EdgeInsets.symmetric(horizontal: 12.0),
+              //childrenPadding: const EdgeInsets.symmetric(horizontal: 12.0),
               title: const Text('MORE FILTERS', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kSecondaryColor),),
               trailing: Icon(
                 _openCloseIcons[0] ? Icons.remove : Icons.add,
