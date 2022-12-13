@@ -127,6 +127,7 @@ class CardHor extends StatelessWidget {
                                   child: const Icon(Icons.filter_9_plus_outlined, color: Color(0xFFffffff), size: 30),
                                   onTap: () {
                                     //Navigator.pushNamed(context, 'card_images_screen', arguments: mlsNumber);
+                                    Navigator.pushNamed(context, 'card_images_screen', arguments: listing);
                                     //print('object');
                                   },
                                 )

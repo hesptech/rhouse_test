@@ -73,6 +73,7 @@ class App extends StatelessWidget {
         'login_screen': ( _ ) => const LoginScreen(),
         'filters_screen': ( _ ) => const FiltersScreen(),
         'card_details_screen': ( _ ) => const CardDetailsScreen(),
+        'card_images_screen': ( _ ) => const CardImagesScreen(),
       },
     );
   }
