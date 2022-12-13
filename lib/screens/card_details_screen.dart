@@ -14,7 +14,7 @@ class CardDetailsScreen extends StatelessWidget {
     final screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFFEFEFF),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
@@ -64,7 +64,7 @@ class CardDetailsScreen extends StatelessWidget {
           children: [
             Container(
               height: 5,
-              color: const Color(0xFF0BB48B),        
+              color: kSecondaryColor,        
             ),
             Container(
               margin: const EdgeInsets.all(14),
@@ -238,7 +238,7 @@ class CardDetailsScreen extends StatelessWidget {
                         InkWell(
                           child: const Icon(Icons.favorite_outlined, color: Color(0xFFffffff), size: 32),
                           onTap: () {
-                            print('object');
+                            //print('object');
                           },
                         )
                       ],
@@ -274,7 +274,7 @@ class CardDetailsScreen extends StatelessWidget {
                     child: InkWell(
                       child: const Image(image: AssetImage('assets/play&learn_chip_85h.png'), ),
                       onTap: () {
-                        print('object');
+                        //print('object');
                       },
                     ),
                   ),

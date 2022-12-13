@@ -8,8 +8,7 @@ class CardImagesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final Listing listing = ModalRoute.of(context)?.settings.arguments! as Listing;
-    print(listing.images?[0]);
-    print(listing.mlsNumber);
+    //print(listing.images?[0]);
 
     return Scaffold(
       //backgroundColor: Colors.black,

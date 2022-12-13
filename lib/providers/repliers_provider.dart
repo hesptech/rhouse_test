@@ -15,7 +15,7 @@ class RepliersProvider extends ChangeNotifier {
   List<Listing> onDisplayProperties = [];
   List<Listing> onDisplayHouses = [];
   List<Listing> onDisplayCondo = [];
-  int _displayPage = 0;
+  //int _displayPage = 0;
   int _displayPageHouses = 0;
   int _displayPageCondo = 0;
 

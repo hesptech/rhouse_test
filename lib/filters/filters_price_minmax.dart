@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+//import 'package:flutter/services.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 //import 'package:flutter_black_white/utils/constants.dart';
 
@@ -131,7 +131,7 @@ class _FiltersPriceMinmaxState extends State<FiltersPriceMinmax> {
           onChanged: (value) {
             setState(() {
               if (value != '') {
-              print(value);
+                //print(value);
                 //numberController.value.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
                 //numberController.value.replaced(replacementRange, value)
               }
