@@ -35,13 +35,25 @@ class _FiltersCondoExtraState extends State<FiltersCondoExtra> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric( vertical: 12.0, ),
-      child: Wrap(
-          children: propertiesStyleCondoWidgets.toList(),
+    return Column(
+      children: [
+        const Padding(
+          padding: EdgeInsets.symmetric( vertical: 0.0, ),
         ),
-    )
-    ;    
+        Padding(
+          padding: const EdgeInsets.symmetric( vertical: 12.0, horizontal: 24.0 ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: const [
+              Text('AMENITIES', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold,),),
+            ],
+          ),
+        ),
+        Wrap(
+          children: propertiesStyleCondoWidgets.toList(),
+        ),                
+      ],
+    );   
   }
 
   Iterable<Widget> get propertiesStyleCondoWidgets sync* {

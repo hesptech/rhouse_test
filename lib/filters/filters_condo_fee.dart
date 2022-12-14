@@ -30,7 +30,7 @@ class _FiltersCondoFeeState extends State<FiltersCondoFee> {
   Widget build(BuildContext context) {
 
     String finalSliderValue = sliderValue > 1400 ? 
-    '\$${sliderValue.round().toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} or more' : 
+    'any Condo fee' : 
     '\$${sliderValue.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} or less' ;
 
     return Column(
@@ -40,7 +40,7 @@ class _FiltersCondoFeeState extends State<FiltersCondoFee> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: const [
-              Text('CONDO FEE', style: TextStyle(fontSize: 18, color: kPrimaryColor),),
+              Text('CONDO FEE', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold,),),
               //Text('${sliderValue.round().toString()}', style: const TextStyle(fontSize: 18, color: kPrimaryColor),),
             ],
           ),

@@ -44,13 +44,14 @@ class _FiltersDaysMarketState extends State<FiltersDaysMarket> {
       children: [
         const Padding(
           padding: EdgeInsets.symmetric( vertical: 0.0, horizontal: 12.0),
-          child: BlueDivider()),
+          child: BlueDivider()
+        ),
         Padding(
           padding: const EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 0.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: const [
-              Text('DAYS ON MARKET', style: TextStyle(fontSize: 18, color: kPrimaryColor),),
+              Text('DAYS ON MARKET', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold,),),
             ],
           ),
         ),

@@ -41,7 +41,7 @@ class _FiltersSizeState extends State<FiltersSize> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: const [
-              Text('SIZE', style: TextStyle(fontSize: 18, color: kPrimaryColor),),
+              Text('SIZE', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold,),),
             ],
           ),
         ),

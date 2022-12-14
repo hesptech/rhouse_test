@@ -43,11 +43,19 @@ class CardHor extends StatelessWidget {
     final String streetName = listing.address?.streetName?? '';
     final String streetSuffix = listing.address?.streetSuffix?? '';
     final String streetDirection = listing.address?.streetDirection?? '';
-    final String neighborhood = listing.address?.neighborhood?? '';
+    String neighborhood = listing.address?.neighborhood?? '';
     final String city = listing.address?.city?? '';
     //final String area = listing.address?.area?? '';
     final String cityArea = listing.address?.area == 'Toronto' ? 'Toronto' : city ;
 
+     
+    if ( neighborhood == 'Waterfront Communities C1' ) {
+      neighborhood == 'Waterfront Communities West';
+    } else if ( neighborhood == 'Waterfront Communities C8' ) {
+      neighborhood == 'Waterfront Communities East';
+    } else {
+      neighborhood == 'xxxxxxxx';
+    }
     final String finalAddress2 = '$neighborhood, $cityArea';
     String finalAddress3 = '';
     if ( finalAddress2.length > 30 ) {
