@@ -1,6 +1,5 @@
-import 'package:flutter_black_white/filters/filters_price_slider.dart';
-
-export 'package:flutter_black_white/filters/filters_price_range.dart';
+export 'package:flutter_black_white/filters/Filters_price_slider.dart';
+//export 'package:flutter_black_white/filters/filters_price_range.dart';
 export 'package:flutter_black_white/filters/filters_class_buttons.dart';
 export 'package:flutter_black_white/filters/filters_property_type.dart';
 export 'package:flutter_black_white/filters/filters_class_icons_bt.dart';
@@ -12,4 +11,3 @@ export 'package:flutter_black_white/filters/filters_more.dart';
 export 'package:flutter_black_white/filters/filters_bottom_bar.dart';
 
 export 'package:flutter_black_white/filters/filters_price_minmax.dart';
-export 'package:flutter_black_white/filters/Filters_price_slider.dart';

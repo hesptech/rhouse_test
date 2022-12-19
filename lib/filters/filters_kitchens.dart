@@ -12,8 +12,8 @@ class FiltersKitchens extends StatefulWidget {
 class _FiltersKitchensState extends State<FiltersKitchens> {
 
   late List<PropertiesKitchens> _propertiesKitchens;
-  late List<String> _filtersSearchKitchens;
-  late int _defaultChoiceIndex;
+  //late List<String> _filtersSearchKitchens;
+  late int _choiceIndex;
 
   @override
   void initState() {
@@ -26,8 +26,8 @@ class _FiltersKitchensState extends State<FiltersKitchens> {
       const PropertiesKitchens('4+'),
       const PropertiesKitchens('5+'),
     ];
-    _filtersSearchKitchens = [];
-    _defaultChoiceIndex = 0;
+    //_filtersSearchKitchens = [];
+    _choiceIndex = 0;
   }
 
   @override
@@ -61,18 +61,18 @@ class _FiltersKitchensState extends State<FiltersKitchens> {
           label: Container(
             width: 30,
             alignment: Alignment.center,
-            child: Text(propertiesKitchens.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: _defaultChoiceIndex == _propertiesKitchens.indexOf(propertiesKitchens) ? Colors.white : kPrimaryColor),),
+            child: Text(propertiesKitchens.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: _choiceIndex == _propertiesKitchens.indexOf(propertiesKitchens) ? Colors.white : kPrimaryColor),),
           ), 
           labelPadding: const EdgeInsets.all(0.0),
           backgroundColor: const Color(0xFFFFFFFF),
           selectedColor: kPrimaryColor,
           shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
           side: const BorderSide( color: kPrimaryColor ),
-          selected: _defaultChoiceIndex == _propertiesKitchens.indexOf(propertiesKitchens),
+          selected: _choiceIndex == _propertiesKitchens.indexOf(propertiesKitchens),
           onSelected: ( bool selected ) {
             setState(() {
-              _defaultChoiceIndex = selected ? _propertiesKitchens.indexOf(propertiesKitchens) : 0 ;
-              selected ? _filtersSearchKitchens.add(propertiesKitchens.name) : _filtersSearchKitchens.removeWhere((String name) => name == propertiesKitchens.name);
+              _choiceIndex = _propertiesKitchens.indexOf(propertiesKitchens) ;
+              //selected ? _filtersSearchKitchens.add(propertiesKitchens.name) : _filtersSearchKitchens.removeWhere((String name) => name == propertiesKitchens.name);
 
             });
           },

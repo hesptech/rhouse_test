@@ -56,7 +56,7 @@ class _FiltersBottomBarState extends State<FiltersBottomBar> {
                           backgroundColor: kPrimaryColor
                         ),
                         onPressed: () {
-                          //Navigator.pushNamed( context, 'custom-selection', arguments: 'Filtered results' );
+                          Navigator.pushNamed( context, 'filters_results_screen', arguments: 'Filtered results' );
                         },
                         child: const Text("SAVE", style: TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.bold),),
                       ),

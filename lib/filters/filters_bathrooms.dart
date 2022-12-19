@@ -14,8 +14,8 @@ class FiltersBathrooms extends StatefulWidget {
 class _FiltersBathroomsState extends State<FiltersBathrooms> {
 
   late List<PropertiesBaths> _propertiesBaths;
-  late List<String> _filtersSearchBaths;
-  late int _defaultChoiceIndex;
+  //late List<String> _filtersSearchBaths;
+  late int _choiceIndex;
 
   @override
   void initState() {
@@ -28,8 +28,8 @@ class _FiltersBathroomsState extends State<FiltersBathrooms> {
       const PropertiesBaths('4+'),
       //const PropertiesBaths('5+'),
     ];
-    _filtersSearchBaths = [];
-    _defaultChoiceIndex = 0;
+    //_filtersSearchBaths = [];
+    _choiceIndex = 0;
   }
 
   @override
@@ -73,18 +73,18 @@ class _FiltersBathroomsState extends State<FiltersBathrooms> {
           label: Container(
             width: 30,
             alignment: Alignment.center,
-            child: Text(propertiesBaths.name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: _defaultChoiceIndex == _propertiesBaths.indexOf(propertiesBaths) ? Colors.white : kPrimaryColor),),
+            child: Text(propertiesBaths.name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: _choiceIndex == _propertiesBaths.indexOf(propertiesBaths) ? Colors.white : kPrimaryColor),),
           ), 
           labelPadding: const EdgeInsets.all(0.0),
           backgroundColor: const Color(0xFFFFFFFF),
           selectedColor: kPrimaryColor,
           shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
           side: const BorderSide( color: kPrimaryColor ),
-          selected: _defaultChoiceIndex == _propertiesBaths.indexOf(propertiesBaths),
+          selected: _choiceIndex == _propertiesBaths.indexOf(propertiesBaths),
           onSelected: ( bool selected ) {
             setState(() {
-              _defaultChoiceIndex = selected ? _propertiesBaths.indexOf(propertiesBaths) : 0 ;
-              selected ? _filtersSearchBaths.add(propertiesBaths.name) : _filtersSearchBaths.removeWhere((String name) => name == propertiesBaths.name);
+              _choiceIndex = _propertiesBaths.indexOf(propertiesBaths) ;
+              //selected ? _filtersSearchBaths.add(propertiesBaths.name) : _filtersSearchBaths.removeWhere((String name) => name == propertiesBaths.name);
 
             });
           },

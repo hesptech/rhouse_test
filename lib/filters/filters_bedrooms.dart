@@ -16,7 +16,7 @@ class _FiltersBedroomsState extends State<FiltersBedrooms> {
 
   late List<PropertiesRooms> _propertiesRooms;
   late List<String> _filtersSearchRooms;
-  late int _defaultChoiceIndex;
+  late int _choiceIndex;
 
 
   @override
@@ -31,7 +31,7 @@ class _FiltersBedroomsState extends State<FiltersBedrooms> {
     ];
     //_filtersSearchRooms = Preferences.filterRoomsLoggedOut;
     _filtersSearchRooms = [];
-    _defaultChoiceIndex = 0;
+    _choiceIndex = 0;
   }
 
 
@@ -76,17 +76,18 @@ class _FiltersBedroomsState extends State<FiltersBedrooms> {
           label: Container(
             width: 30,
             alignment: Alignment.center,
-            child: Text(propertiesRooms.name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: _defaultChoiceIndex == _propertiesRooms.indexOf(propertiesRooms) ? Colors.white : kPrimaryColor ), ),
+            child: Text(propertiesRooms.name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: _choiceIndex == _propertiesRooms.indexOf(propertiesRooms) ? Colors.white : kPrimaryColor ), ),
           ),
           labelPadding: const EdgeInsets.all(0.0),
           backgroundColor: const Color(0xFFFFFFFF),
           selectedColor: kPrimaryColor,
           shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
           side: const BorderSide( color: kPrimaryColor ),
-          selected: _defaultChoiceIndex == _propertiesRooms.indexOf(propertiesRooms),
+          selected: _choiceIndex == _propertiesRooms.indexOf(propertiesRooms),
           onSelected: ( bool selected ) {
             setState(() {
-              _defaultChoiceIndex = selected ? _propertiesRooms.indexOf(propertiesRooms) : 0;
+              //print(_propertiesRooms.indexOf(propertiesRooms));
+              _choiceIndex = _propertiesRooms.indexOf(propertiesRooms);
               selected ? _filtersSearchRooms.add(propertiesRooms.name) : _filtersSearchRooms.removeWhere((String name) => name == propertiesRooms.name);
               //Preferences.filterRoomsLoggedOut = _filtersSearchRooms;
             });

@@ -12,8 +12,9 @@ class FiltersBedCondo extends StatefulWidget {
 class _FiltersBedCondoState extends State<FiltersBedCondo> {
 
   late List<PropertiesBedCondo> _propertiesBedCondo;
-  late List<String> _filtersSearchBedCondo;
-  late int _defaultChoiceIndex;
+  //late List<String> _filtersSearchBedCondo;
+  late int _choiceIndex;
+  late bool _den;
 
 
   @override
@@ -24,12 +25,13 @@ class _FiltersBedCondoState extends State<FiltersBedCondo> {
       const PropertiesBedCondo('1+'),
       const PropertiesBedCondo('2+'),
       const PropertiesBedCondo('3+'),
-      const PropertiesBedCondo('DEN'),
+      //const PropertiesBedCondo('DEN'),
       //const PropertiesBedCondo('5+'),
     ];
     //_filtersSearchBedCondo = Preferences.filterBedCondoLoggedOut;
-    _filtersSearchBedCondo = [];
-    _defaultChoiceIndex = 0;
+    //_filtersSearchBedCondo = [];
+    _choiceIndex = 0;
+    _den = false;
   }
 
 
@@ -56,6 +58,27 @@ class _FiltersBedCondoState extends State<FiltersBedCondo> {
                   Wrap(
                     children: propertiesBedCondoWidgets.toList(),
                   ),
+                  ChoiceChip(
+                    label: Container(
+                      width: 30,
+                      alignment: Alignment.center,
+                      child: Text('DEN', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: _den ? Colors.white : kPrimaryColor  ), ),
+                    ), 
+                    labelPadding: const EdgeInsets.all(0.0),
+                    backgroundColor: const Color(0xFFFFFFFF),
+                    selectedColor: kPrimaryColor,
+                    shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
+                    side: const BorderSide( color: kPrimaryColor ),
+                    selected: _den,
+                    onSelected: ( bool selected ) {
+                      setState(() {
+                        _den = selected;
+                        //_choiceIndex = selected ? _propertiesBedCondo.indexOf(propertiesBedCondo) : 0;
+                        //selected ? _filtersSearchBedCondo.add(propertiesBedCondo.name) : _filtersSearchBedCondo.removeWhere((String name) => name == propertiesBedCondo.name);
+                        //Preferences.filterBedCondoLoggedOut = _filtersSearchBedCondo;
+                      });
+                    },
+                  )
                 ],
               ),
             ),        
@@ -74,18 +97,20 @@ class _FiltersBedCondoState extends State<FiltersBedCondo> {
           label: Container(
             width: 30,
             alignment: Alignment.center,
-            child: Text(propertiesBedCondo.name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: _defaultChoiceIndex == _propertiesBedCondo.indexOf(propertiesBedCondo) ? Colors.white : kPrimaryColor ), ),
+            child: Text(propertiesBedCondo.name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: _choiceIndex == _propertiesBedCondo.indexOf(propertiesBedCondo) ? Colors.white : kPrimaryColor ), ),
           ),
           labelPadding: const EdgeInsets.all(0.0),
           backgroundColor: const Color(0xFFFFFFFF),
           selectedColor: kPrimaryColor,
           shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
           side: const BorderSide( color: kPrimaryColor ),
-          selected: _defaultChoiceIndex == _propertiesBedCondo.indexOf(propertiesBedCondo),
+          selected: _choiceIndex == _propertiesBedCondo.indexOf(propertiesBedCondo),
           onSelected: ( bool selected ) {
             setState(() {
-              _defaultChoiceIndex = selected ? _propertiesBedCondo.indexOf(propertiesBedCondo) : 0;
-              selected ? _filtersSearchBedCondo.add(propertiesBedCondo.name) : _filtersSearchBedCondo.removeWhere((String name) => name == propertiesBedCondo.name);
+              //print(selected);
+              //_choiceIndex = selected ? _propertiesBedCondo.indexOf(propertiesBedCondo) : 0;
+              _choiceIndex = _propertiesBedCondo.indexOf(propertiesBedCondo);
+              //selected ? _filtersSearchBedCondo.add(propertiesBedCondo.name) : _filtersSearchBedCondo.removeWhere((String name) => name == propertiesBedCondo.name);
               //Preferences.filterBedCondoLoggedOut = _filtersSearchBedCondo;
             });
           },

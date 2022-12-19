@@ -11,8 +11,8 @@ class FiltersParkCondo extends StatefulWidget {
 class _FiltersParkCondoState extends State<FiltersParkCondo> {
 
   late List<PropertiesParkCondo> _propertiesParkCondo;
-  late List<String> _filtersSearchParkCondo;
-  late int _defaultChoiceIndex;
+  //late List<String> _filtersSearchParkCondo;
+  late int _choiceIndex;
 
   @override
   void initState() {
@@ -22,8 +22,8 @@ class _FiltersParkCondoState extends State<FiltersParkCondo> {
       const PropertiesParkCondo('YES'),
       const PropertiesParkCondo('NO'),
     ];
-    _filtersSearchParkCondo = [];
-    _defaultChoiceIndex = 0;
+    //_filtersSearchParkCondo = [];
+    _choiceIndex = 0;
   }
 
   @override
@@ -57,18 +57,18 @@ class _FiltersParkCondoState extends State<FiltersParkCondo> {
           label: Container(
             width: 30,
             alignment: Alignment.center,
-            child: Text(propertiesParkCondo.name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: _defaultChoiceIndex == _propertiesParkCondo.indexOf(propertiesParkCondo) ? Colors.white : kPrimaryColor),),
+            child: Text(propertiesParkCondo.name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: _choiceIndex == _propertiesParkCondo.indexOf(propertiesParkCondo) ? Colors.white : kPrimaryColor),),
           ), 
           labelPadding: const EdgeInsets.all(0.0),
           backgroundColor: const Color(0xFFFFFFFF),
           selectedColor: kPrimaryColor,
           shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
           side: const BorderSide( color: kPrimaryColor ),
-          selected: _defaultChoiceIndex == _propertiesParkCondo.indexOf(propertiesParkCondo),
+          selected: _choiceIndex == _propertiesParkCondo.indexOf(propertiesParkCondo),
           onSelected: ( bool selected ) {
             setState(() {
-              _defaultChoiceIndex = selected ? _propertiesParkCondo.indexOf(propertiesParkCondo) : 0 ;
-              selected ? _filtersSearchParkCondo.add(propertiesParkCondo.name) : _filtersSearchParkCondo.removeWhere((String name) => name == propertiesParkCondo.name);
+              _choiceIndex = _propertiesParkCondo.indexOf(propertiesParkCondo) ;
+              //selected ? _filtersSearchParkCondo.add(propertiesParkCondo.name) : _filtersSearchParkCondo.removeWhere((String name) => name == propertiesParkCondo.name);
 
             });
           },

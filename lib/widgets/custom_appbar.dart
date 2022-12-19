@@ -39,9 +39,15 @@ class CustomAppbar extends StatelessWidget  implements PreferredSizeWidget {
                             onTap: () {
                               Navigator.pushNamed(context, 'map_screen');
                             },
-                            child: const Icon( Icons.map_outlined, color: Color(0xFF0BB48B), size: 26.0,),
+                            //child: const Icon( Icons.map_outlined, color: Color(0xFF0BB48B), size: 26.0,),
+                            child: Row(
+                              children: const [
+                                Icon( Icons.map_outlined, color: Color(0xFF0BB48B), size: 26.0,),
+                                Text('Search by map', style: TextStyle(color: Colors.white54, fontSize: 12.0, fontWeight: FontWeight.bold),),    
+                              ],
+                            )
                           ),
-                          const Text('Search by map', style: TextStyle(color: Colors.white54, fontSize: 12.0, fontWeight: FontWeight.bold),),
+                          //const Text('Search by map', style: TextStyle(color: Colors.white54, fontSize: 12.0, fontWeight: FontWeight.bold),),
                         ],
                       ),
                       GestureDetector(

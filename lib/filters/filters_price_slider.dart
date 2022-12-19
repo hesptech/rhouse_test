@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-import 'package:flutter_black_white/utils/shared_preferences.dart';
+//import 'package:flutter_black_white/utils/shared_preferences.dart';
 
 
 class FiltersPriceSlider extends StatefulWidget {
@@ -207,7 +207,7 @@ class _FiltersPriceSliderState extends State<FiltersPriceSlider> {
           onChanged: (RangeValues values) {
             setState(() {
               selectedRange = values;
-               print(selectedRange);
+              //print(selectedRange);
             });
           } 
         ),

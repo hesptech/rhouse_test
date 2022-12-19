@@ -72,6 +72,7 @@ class App extends StatelessWidget {
         'map_screen': ( _) => const MapScreen(),
         'login_screen': ( _ ) => const LoginScreen(),
         'filters_screen': ( _ ) => const FiltersScreen(),
+        'filters_results_screen': ( _ ) => const FiltersResultsScreen(),
         'card_details_screen': ( _ ) => const CardDetailsScreen(),
         'card_images_screen': ( _ ) => const CardImagesScreen(),
       },
