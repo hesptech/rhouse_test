@@ -57,7 +57,7 @@ class _CardsSliderHorState extends State<CardsSliderHor> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only( top: 10, left: 20, ),
-                  child: Text(widget.title!, style: const TextStyle( fontSize: 16, fontWeight: FontWeight.w500, color: Color(0xFF58595B)),),
+                  child: Text(widget.title!, style: const TextStyle( fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF58595B)),),
                 ),
                 TextButton(
                   style: TextButton.styleFrom(

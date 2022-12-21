@@ -152,10 +152,10 @@ class CardHor extends StatelessWidget {
                                 const Positioned(
                                   left: 1.0,
                                   top: 2.0,
-                                  child: Icon(Icons.favorite_outlined, color: Colors.black26, size: 30),
+                                  child: Icon(Icons.favorite_border_outlined, color: Colors.black26, size: 30),
                                 ),
                                 InkWell(
-                                  child: const Icon(Icons.favorite_outlined, color: Color(0xFFffffff), size: 30),
+                                  child: const Icon(Icons.favorite_border_outlined, color: Color(0xFFffffff), size: 30),
                                   onTap: () {
                                     //print('object');
                                   },

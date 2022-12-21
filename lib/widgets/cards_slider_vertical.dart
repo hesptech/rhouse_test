@@ -43,7 +43,6 @@ class _CardsSliderVerticalState extends State<CardsSliderVertical> {
   @override
   Widget build(BuildContext context) {
     
-    //return CardVertical(Listing Widget.listing);
     return Container(
       //width: double.infinity,
       height: 680,
