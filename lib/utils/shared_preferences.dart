@@ -12,7 +12,7 @@ class Preferences {
 
   static double _filterPriceRangeStart = 400000;
   static double _filterPriceRangeEnd = 2000000; 
-  static String _filtersClassIconsBt = '&class=residential';
+  static String _filtersClassIconsBt = 'residential';
   static List<String> _filterPropertyIcons = [];
   static List<String> _filterPropertyType = [];
   static List<String> _filtersLocationTopbts = [];

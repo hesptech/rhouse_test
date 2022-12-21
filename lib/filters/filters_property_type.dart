@@ -38,7 +38,7 @@ class _FiltersPropertyTypeState extends State<FiltersPropertyType> {
     final filterProvider = Provider.of<FilterProvider>( context );
     final currentFilter = filterProvider.filterProvider;
 
-    if(currentFilter == "&class=residential") {
+    if(currentFilter == "residential") {
       bodyExpansionTile = [
         const FiltersPropertyHouse()
       ];

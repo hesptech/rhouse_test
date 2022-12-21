@@ -40,24 +40,24 @@ class _FiltersClassIconsBtState extends State<FiltersClassIconsBt> {
               border: Border.all(
                 color: kPrimaryColor,
               ),
-              color: _filtersClassIconsBt == '&class=residential' ? kPrimaryColor : Colors.white,
+              color: _filtersClassIconsBt == 'residential' ? kPrimaryColor : Colors.white,
             ),
             child: Column(
               children: [
                 Icon(
                   Icons.home_outlined, size: 100.0, 
-                  color: _filtersClassIconsBt == '&class=residential' ? Colors.white : kPrimaryColor,
+                  color: _filtersClassIconsBt == 'residential' ? Colors.white : kPrimaryColor,
                 ),
-                Text('HOUSE', style: TextStyle( color: _filtersClassIconsBt == '&class=residential' ? Colors.white : kPrimaryColor , fontSize: 18.0, fontWeight: FontWeight.w500 ), )
+                Text('HOUSE', style: TextStyle( color: _filtersClassIconsBt == 'residential' ? Colors.white : kPrimaryColor , fontSize: 18.0, fontWeight: FontWeight.w500 ), )
               ]
             ),
           ),
           onTap: () {
-            _filtersClassIconsBt = "&class=residential";
-            filterProvider.filterProvider = "&class=residential";
+            _filtersClassIconsBt = "residential";
+            filterProvider.filterProvider = "residential";
 
             setState(() {
-              Preferences.filtersClassIconsBt = '&class=residential';
+              Preferences.filtersClassIconsBt = 'residential';
             });
           },
         ), 

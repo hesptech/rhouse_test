@@ -26,7 +26,7 @@ class _FiltersBathbedparkState extends State<FiltersBathbedpark> {
     final filterProvider = Provider.of<FilterProvider>( context );
     final currentFilter = filterProvider.filterProvider;
 
-    if(currentFilter == "&class=residential") {
+    if(currentFilter == "residential") {
       filtersBathBedPark = [
         const FiltersBedrooms(),
         const FiltersBathrooms(),

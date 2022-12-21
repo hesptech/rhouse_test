@@ -47,7 +47,7 @@ class _FiltersMoreState extends State<FiltersMore> {
     final filterProvider = Provider.of<FilterProvider>( context );
     final currentFilter = filterProvider.filterProvider;
 
-    if(currentFilter == "&class=residential") {
+    if(currentFilter == "residential") {
       bodyExpansionTile = const <Widget>[
         FiltersStyleHouse(),
         Padding(

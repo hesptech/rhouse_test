@@ -39,8 +39,8 @@ class _FiltersBottomBarState extends State<FiltersBottomBar> {
                         ),
                         onPressed: () {
                             setState(() {
-                              Preferences.filtersClassIconsBt = '&class=residential';
-                              filterProvider.filterProvider = '&class=residential';
+                              Preferences.filtersClassIconsBt = 'residential';
+                              filterProvider.filterProvider = 'residential';
                               Navigator.pushNamed(context, 'filters_screen');
                             });
                         },
