@@ -32,7 +32,7 @@ class _FiltersBathbedparkState extends State<FiltersBathbedpark> {
         const FiltersBathrooms(),
         const SizedBox( height: 28.0, ),
       ];
-    } else if (currentFilter == "&class=condo") {
+    } else if (currentFilter == "condo") {
       filtersBathBedPark = [
         const FiltersBedCondo(),
         const FiltersBathrooms(),

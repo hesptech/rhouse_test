@@ -73,7 +73,7 @@ class _FiltersMoreState extends State<FiltersMore> {
         FiltersKitchens(),
         SizedBox( height: 24.0, ),
       ];
-    } else if (currentFilter == "&class=condo") {
+    } else if (currentFilter == "condo") {
       bodyExpansionTile = const <Widget>[
         FiltersStyleCondo(),
         //BlueDivider(),

@@ -70,24 +70,24 @@ class _FiltersClassIconsBtState extends State<FiltersClassIconsBt> {
               border: Border.all(
                 color: kPrimaryColor,
               ),
-              color: _filtersClassIconsBt == '&class=condo' ? kPrimaryColor : Colors.white,
+              color: _filtersClassIconsBt == 'condo' ? kPrimaryColor : Colors.white,
             ),
             child: Column(
               children: [
                 Icon(
                   Icons.apartment, size: 100.0, 
-                  color: _filtersClassIconsBt == '&class=condo' ? Colors.white : kPrimaryColor,
+                  color: _filtersClassIconsBt == 'condo' ? Colors.white : kPrimaryColor,
                 ),
-                Text('CONDO', style: TextStyle( color: _filtersClassIconsBt == '&class=condo' ? Colors.white : kPrimaryColor , fontSize: 18.0, fontWeight: FontWeight.w500 ), )
+                Text('CONDO', style: TextStyle( color: _filtersClassIconsBt == 'condo' ? Colors.white : kPrimaryColor , fontSize: 18.0, fontWeight: FontWeight.w500 ), )
               ]
             ),
           ),
           onTap: () {
-            _filtersClassIconsBt = "&class=condo";
-            filterProvider.filterProvider = "&class=condo";
+            _filtersClassIconsBt = "condo";
+            filterProvider.filterProvider = "condo";
 
             setState(() {
-              Preferences.filtersClassIconsBt = '&class=condo';
+              Preferences.filtersClassIconsBt = 'condo';
             });
           },
         ),              

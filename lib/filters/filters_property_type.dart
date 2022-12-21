@@ -42,7 +42,7 @@ class _FiltersPropertyTypeState extends State<FiltersPropertyType> {
       bodyExpansionTile = [
         const FiltersPropertyHouse()
       ];
-    } else if (currentFilter == "&class=condo") {
+    } else if (currentFilter == "condo") {
       bodyExpansionTile = [
         const FiltersPropertyCondo()
       ];
