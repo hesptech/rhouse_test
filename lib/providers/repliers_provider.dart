@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/io_client.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 
 
 class RepliersProvider extends ChangeNotifier {
@@ -15,9 +16,11 @@ class RepliersProvider extends ChangeNotifier {
   List<Listing> onDisplayProperties = [];
   List<Listing> onDisplayHouses = [];
   List<Listing> onDisplayCondo = [];
+  List<Listing> onDisplayFilters = [];
   //int _displayPage = 0;
   int _displayPageHouses = 0;
   int _displayPageCondo = 0;
+  int _displayPageFilters = 0;
 
 
   Map<String, dynamic> filtersResults = {
@@ -27,16 +30,16 @@ class RepliersProvider extends ChangeNotifier {
       'minPrice': '1500000',
       'type': 'sale',
       'hasImages': 'true',
-      'class': 'condo',
+      'class': 'residential',
   };
-  List<String> valuesParams = [];
+  Map<String, dynamic> valuesParams = {};
 
 
   RepliersProvider( this.citySearchParam ) {
     citySearchParam == 'toronto' ? 'toronto' : citySearchParam ;
     getDisplayHouses();
     getDisplayCondo();
-    //getDisplayFilters(valuesParams);
+    //getDisplayFilters(filtersResults);
     //getAccessToken();
   }
 
@@ -86,17 +89,9 @@ class RepliersProvider extends ChangeNotifier {
 
 
 
-
-  Future<String> _getJsonDataFilters( String endPoint, List<String> valuesParams, [int page = 1] ) async {
-    final url = Uri.https( _baseUrl, endPoint, {
-      'pageNum': '$page',
-      'resultsPerPage': '15',
-      'maxPrice': '2000000',
-      'minPrice': '1500000',
-      'type': 'sale',
-      'hasImages': 'true',
-      'class': 'condo',
-    });
+  // FILTERS
+  Future<String> _getJsonDataFilters( String endPoint, Map<String, dynamic> valuesParams, [int page = 1] ) async {
+    final url = Uri.https( _baseUrl, endPoint, valuesParams);
 
     Map<String, String>? headers = { 'REPLIERS-API-KEY': _apiKey };
 
@@ -106,25 +101,23 @@ class RepliersProvider extends ChangeNotifier {
   }
 
   // getDisplayFilters(Map<String, dynamic> filtersAdditions) async {
-  getDisplayFilters() async {
-    //print(filtersAdditions);
+  getDisplayFilters(Map<String, dynamic> filtersResults) async {
 
-    //print(filtersResults);
-
-    
-
-    /* _displayPage++;
-    final jsonData = await _getJsonDataFilters('listings', 'residential', _displayPage); 
+    _displayPageFilters++;
+    filtersResults['pageNum'] = _displayPageFilters.toString(); 
+    print(filtersResults);
+    print(Preferences.filtersClassIconsBt);
+    final jsonData = await _getJsonDataFilters('listings', filtersResults, _displayPageFilters); 
 
     final nowPlayingResponse = ResponseBody.fromJson(jsonData);
 
-    onDisplayHouses = [ ...onDisplayHouses, ...nowPlayingResponse.listings];
-    notifyListeners(); */
+    onDisplayFilters = [ ...onDisplayFilters, ...nowPlayingResponse.listings];
+    notifyListeners();
   }
 
 
 
-  // stackoverflow bad certificate solution not in use
+  // BAD CERTIFICATE solution not in use
   Future getAccessToken() async {
     final url = Uri.https( 'api.repliers.io', 'listings', {
       'page': '1',

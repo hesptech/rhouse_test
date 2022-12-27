@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 
 import 'package:flutter_black_white/providers/repliers_provider.dart';
+import 'package:flutter_black_white/providers/repliers_filters.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/application_state.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
@@ -31,6 +32,7 @@ class AppState extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: ( _ ) => FilterProvider(), ),
         ChangeNotifierProvider( create: (_) => RepliersProvider('toronto ALL'), lazy: false,),
+        ChangeNotifierProvider( create: (_) => RepliersFilters('toronto ALL'), ),
         ChangeNotifierProvider(
           create: (context) => ApplicationState(),
           builder: (context, _) => const App(),
