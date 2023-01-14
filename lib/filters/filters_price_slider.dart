@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-//import 'package:flutter_black_white/utils/shared_preferences.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 
 
 class FiltersPriceSlider extends StatefulWidget {
@@ -26,8 +26,10 @@ class _FiltersPriceSliderState extends State<FiltersPriceSlider> {
   @override
   void initState() {
     super.initState();
-    _filterPriceRangeStart = 9.0;
-    _filterPriceRangeEnd = 28.0;
+    //_filterPriceRangeStart = 9.0;
+    //_filterPriceRangeEnd = 28.0;
+    _filterPriceRangeStart = Preferences.filterPriceRangeStart;
+    _filterPriceRangeEnd = Preferences.filterPriceRangeEnd;
     selectedRange = RangeValues(_filterPriceRangeStart, _filterPriceRangeEnd);
     //RangeValues _currentRangeValues = const RangeValues(40, 80);
 
@@ -209,6 +211,8 @@ class _FiltersPriceSliderState extends State<FiltersPriceSlider> {
               selectedRange = values;
               //print(selectedRange);
             });
+            Preferences.filterPriceRangeStart = selectedRange.start;
+            Preferences.filterPriceRangeEnd = selectedRange.end;            
           } 
         ),
 

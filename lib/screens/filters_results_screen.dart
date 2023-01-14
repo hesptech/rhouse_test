@@ -21,16 +21,25 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
   late Map<String, dynamic> filtersPrefs;
   List<Listing> pippo = [];
   List<Listing> puppo = [];
+  final labels = ['0', '100000', '150000', '200000', '250000', '300000', '350000', '400000', '450000', '500000', '550000', '600000', '650000', '700000', '750000', '800000', '850000', '900000', '950000', 
+  '1000000', '1200000', '1300000', '1400000', '1500000', '1600000', '1700000', '1800000', '1900000', 
+  '2000000', '2250000', '2500000', '2750000', '3000000', '3250000', '3500000', '3750000', '4000000', '4250000','4500000','4750000',
+  '5000000'];
+  late String filterPriceRangeStart;
+  late String filterPriceRangeEnd;
 
   @override
   void initState () {
     super.initState();
-
+    filterPriceRangeStart = labels[Preferences.filterPriceRangeStart.round()].toString();
+    filterPriceRangeEnd = labels[Preferences.filterPriceRangeEnd.round()].toString();
+    print(filterPriceRangeStart);
+    print(filterPriceRangeEnd);
     Map<String, dynamic> filtersPrefs = {
         'pageNum': '1',
         'resultsPerPage': '15',
-        'maxPrice': '2000000',
-        'minPrice': '1500000',
+        'maxPrice': filterPriceRangeEnd,
+        'minPrice': filterPriceRangeStart,
         'type': 'sale',
         'hasImages': 'true',
         'class': Preferences.filtersClassIconsBt,
