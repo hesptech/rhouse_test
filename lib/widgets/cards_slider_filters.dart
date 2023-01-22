@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/models/models.dart';
-import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/widgets/widgets.dart';
+//import 'package:flutter_black_white/utils/shared_preferences.dart';
 
 
 class CardsSliderFilters extends StatefulWidget {
@@ -33,14 +33,14 @@ class _CardsSliderFiltersState extends State<CardsSliderFilters> {
   void initState() {
     super.initState();
     widget.listing.clear();
-    print(widget.listing.length);
+    //print(widget.listing.length);
     widget.onInitPage();
     scrollController.addListener(() {
       if ( scrollController.position.pixels >= scrollController.position.maxScrollExtent - 500 ) {
         widget.onNextPage();
       }
     });
-print(widget.listing.length);
+    //print(widget.listing.length);
     /* Map<String, dynamic> filtersPrefs = {
         'pageNum': '1',
         'resultsPerPage': '15',

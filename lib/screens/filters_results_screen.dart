@@ -40,7 +40,7 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
       filtersParkings = Preferences.filtersNumParkingSpaces.toString();
     } else {
       filtersBed = Preferences.filtersBedCondo.toString();
-      filtersParkings = Preferences.filtersNumParkingSpaces > 0 ? '0' : '1';
+      filtersParkings = Preferences.filtersNumParkingSpacesCondos >= 0 ? '1' : '1';
     }
     Map<String, dynamic> filtersPrefs = {
         'pageNum': '1',
@@ -52,6 +52,7 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
         'class': Preferences.filtersClassIconsBt,
         'minBeds': filtersBed,
         'minBaths': Preferences.filtersBath.toString(),
+        'minParkingSpaces': filtersParkings,
         //'city': 'toronto',
     };
     filtersResults.addAll(filtersPrefs);

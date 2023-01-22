@@ -92,14 +92,14 @@ class _FiltersBedCondoState extends State<FiltersBedCondo> {
           label: Container(
             width: 30,
             alignment: Alignment.center,
-            child: Text(propertiesBedCondo.name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Preferences.filtersBedCondo == _propertiesBedCondo.indexOf(propertiesBedCondo) ? Colors.white : kPrimaryColor ), ),
+            child: Text(propertiesBedCondo.name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Preferences.filtersBedCondo - 1 == _propertiesBedCondo.indexOf(propertiesBedCondo) ? Colors.white : kPrimaryColor ), ),
           ),
           labelPadding: const EdgeInsets.all(0.0),
           backgroundColor: const Color(0xFFFFFFFF),
           selectedColor: kPrimaryColor,
           shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
           side: const BorderSide( color: kPrimaryColor ),
-          selected: Preferences.filtersBedCondo == _propertiesBedCondo.indexOf(propertiesBedCondo),
+          selected: Preferences.filtersBedCondo - 1 == _propertiesBedCondo.indexOf(propertiesBedCondo),
           onSelected: ( bool selected ) {
             setState(() {
               _choiceIndex = _propertiesBedCondo.indexOf(propertiesBedCondo);

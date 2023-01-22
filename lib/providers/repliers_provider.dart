@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/io_client.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_black_white/models/models.dart';
-import 'package:flutter_black_white/utils/shared_preferences.dart';
+//import 'package:flutter_black_white/utils/shared_preferences.dart';
 
 
 class RepliersProvider extends ChangeNotifier {
@@ -105,8 +105,8 @@ class RepliersProvider extends ChangeNotifier {
 
     _displayPageFilters++;
     filtersResults['pageNum'] = _displayPageFilters.toString(); 
-    print(filtersResults);
-    print(Preferences.filtersClassIconsBt);
+    //print(filtersResults);
+    //print(Preferences.filtersClassIconsBt);
     final jsonData = await _getJsonDataFilters('listings', filtersResults, _displayPageFilters); 
 
     final nowPlayingResponse = ResponseBody.fromJson(jsonData);
