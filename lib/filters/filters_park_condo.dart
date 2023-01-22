@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 
 class FiltersParkCondo extends StatefulWidget {
   const FiltersParkCondo({Key? key}) : super(key: key);
@@ -23,7 +24,7 @@ class _FiltersParkCondoState extends State<FiltersParkCondo> {
       const PropertiesParkCondo('NO'),
     ];
     //_filtersSearchParkCondo = [];
-    _choiceIndex = 0;
+    _choiceIndex = Preferences.filtersNumParkingSpacesCondos - 1;
   }
 
   @override
@@ -57,20 +58,19 @@ class _FiltersParkCondoState extends State<FiltersParkCondo> {
           label: Container(
             width: 30,
             alignment: Alignment.center,
-            child: Text(propertiesParkCondo.name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: _choiceIndex == _propertiesParkCondo.indexOf(propertiesParkCondo) ? Colors.white : kPrimaryColor),),
+            child: Text(propertiesParkCondo.name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Preferences.filtersNumParkingSpacesCondos - 1 == _propertiesParkCondo.indexOf(propertiesParkCondo) ? Colors.white : kPrimaryColor),),
           ), 
           labelPadding: const EdgeInsets.all(0.0),
           backgroundColor: const Color(0xFFFFFFFF),
           selectedColor: kPrimaryColor,
           shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
           side: const BorderSide( color: kPrimaryColor ),
-          selected: _choiceIndex == _propertiesParkCondo.indexOf(propertiesParkCondo),
+          selected: Preferences.filtersNumParkingSpacesCondos - 1 == _propertiesParkCondo.indexOf(propertiesParkCondo),
           onSelected: ( bool selected ) {
             setState(() {
               _choiceIndex = _propertiesParkCondo.indexOf(propertiesParkCondo) ;
-              //selected ? _filtersSearchParkCondo.add(propertiesParkCondo.name) : _filtersSearchParkCondo.removeWhere((String name) => name == propertiesParkCondo.name);
-
             });
+            Preferences.filtersNumParkingSpacesCondos = _choiceIndex + 1;
           },
         ),
       );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 
 
 class FiltersParking extends StatefulWidget {
@@ -28,7 +28,7 @@ class _FiltersParkingState extends State<FiltersParking> {
       const PropertiesParking('4+'),
     ];
     //_filtersSearchParking = [];
-    _choiceIndex = 0;
+    _choiceIndex = Preferences.filtersNumParkingSpaces - 1;
   }
 
   @override
@@ -62,20 +62,20 @@ class _FiltersParkingState extends State<FiltersParking> {
           label: Container(
             width: 30,
             alignment: Alignment.center,
-            child: Text(propertiesParking.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: _choiceIndex == _propertiesParking.indexOf(propertiesParking) ? Colors.white : kPrimaryColor),),
+            child: Text(propertiesParking.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Preferences.filtersNumParkingSpaces - 1 == _propertiesParking.indexOf(propertiesParking) ? Colors.white : kPrimaryColor),),
           ), 
           labelPadding: const EdgeInsets.all(0.0),
           backgroundColor: const Color(0xFFFFFFFF),
           selectedColor: kPrimaryColor,
           shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
           side: const BorderSide( color: kPrimaryColor ),
-          selected: _choiceIndex == _propertiesParking.indexOf(propertiesParking),
+          selected: Preferences.filtersNumParkingSpaces - 1 == _propertiesParking.indexOf(propertiesParking),
           onSelected: ( bool selected ) {
             setState(() {
               _choiceIndex = _propertiesParking.indexOf(propertiesParking) ;
               //selected ? _filtersSearchParking.add(propertiesParking.name) : _filtersSearchParking.removeWhere((String name) => name == propertiesParking.name);
-
             });
+            Preferences.filtersNumParkingSpaces = _choiceIndex + 1;
           },
         ),
       );

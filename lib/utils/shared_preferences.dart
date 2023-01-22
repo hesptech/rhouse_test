@@ -23,9 +23,11 @@ class Preferences {
   static List<String> _filtersGtaNorth = [];
   static List<String> _filtersGtaEast = [];
   static List<String> _filtersOther = [];  
-  static int _filtersBedHouse = 0;
+  static int _filtersBedHouse = 1;
   static int _filtersBedCondo = 0;
   static int _filtersBath = 0;
+  static int _filtersNumParkingSpaces = 0;
+  static int _filtersNumParkingSpacesCondos = 0;
   static double _filterDaysMarketStart = 1.0;
   static double _filterDaysMarketEnd = 30.0;
   static double _filterSizeStart = 10.0;
@@ -170,6 +172,25 @@ class Preferences {
     _filtersBath = value;
     _prefs.setInt( 'filtersBath', value );
   }
+
+  static int get filtersNumParkingSpaces {
+    return _prefs.getInt( 'filtersNumParkingSpaces' ) ?? _filtersNumParkingSpaces;
+  }
+
+  static set filtersNumParkingSpaces( int value ) {
+    _filtersNumParkingSpaces = value;
+    _prefs.setInt('filtersNumParkingSpaces', value);
+  }
+
+  static int get filtersNumParkingSpacesCondos {
+    return _prefs.getInt( 'filtersNumParkingSpacesCondos' ) ?? _filtersNumParkingSpacesCondos;
+  }
+
+  static set filtersNumParkingSpacesCondos( int value ) {
+    _filtersNumParkingSpacesCondos = value;
+    _prefs.setInt('filtersNumParkingSpacesCondos', value);
+  }
+
 
 
   // FILTERS Style House/Condo

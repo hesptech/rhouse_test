@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-
-//import 'package:b_w0/helpers/shared_preferences.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 
 
 class FiltersBathrooms extends StatefulWidget {
@@ -29,7 +28,7 @@ class _FiltersBathroomsState extends State<FiltersBathrooms> {
       //const PropertiesBaths('5+'),
     ];
     //_filtersSearchBaths = [];
-    _choiceIndex = 0;
+    _choiceIndex = Preferences.filtersBath - 1;
   }
 
   @override
@@ -73,20 +72,21 @@ class _FiltersBathroomsState extends State<FiltersBathrooms> {
           label: Container(
             width: 30,
             alignment: Alignment.center,
-            child: Text(propertiesBaths.name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: _choiceIndex == _propertiesBaths.indexOf(propertiesBaths) ? Colors.white : kPrimaryColor),),
+            child: Text(propertiesBaths.name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Preferences.filtersBath - 1 == _propertiesBaths.indexOf(propertiesBaths) ? Colors.white : kPrimaryColor),),
           ), 
           labelPadding: const EdgeInsets.all(0.0),
           backgroundColor: const Color(0xFFFFFFFF),
           selectedColor: kPrimaryColor,
           shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
           side: const BorderSide( color: kPrimaryColor ),
-          selected: _choiceIndex == _propertiesBaths.indexOf(propertiesBaths),
+          selected: Preferences.filtersBath - 1 == _propertiesBaths.indexOf(propertiesBaths),
           onSelected: ( bool selected ) {
             setState(() {
               _choiceIndex = _propertiesBaths.indexOf(propertiesBaths) ;
               //selected ? _filtersSearchBaths.add(propertiesBaths.name) : _filtersSearchBaths.removeWhere((String name) => name == propertiesBaths.name);
 
             });
+            Preferences.filtersBath = _choiceIndex + 1;
           },
         ),
       );

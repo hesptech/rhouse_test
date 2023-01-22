@@ -31,8 +31,9 @@ class RepliersFilters extends ChangeNotifier {
 
   // FILTERS
   Future<String> _getJsonDataFilters( String endPoint, Map<String, dynamic> valuesParams, [int page = 1] ) async {
+    //endPoint = 'listings?pageNum=1&resultsPerPage=15&maxPrice=2500000&minPrice=1500000&type=sale&hasImages=true';
     final url = Uri.https( _baseUrl, endPoint, valuesParams);
-
+    print( url );
     Map<String, String>? headers = { 'REPLIERS-API-KEY': _apiKey };
 
     // Await the http get response, then decode the json-formatted response.

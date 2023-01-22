@@ -27,14 +27,21 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
   '5000000'];
   late String filterPriceRangeStart;
   late String filterPriceRangeEnd;
+  late String filtersBed;
+  late String filtersParkings;
 
   @override
   void initState () {
     super.initState();
     filterPriceRangeStart = labels[Preferences.filterPriceRangeStart.round()].toString();
     filterPriceRangeEnd = labels[Preferences.filterPriceRangeEnd.round()].toString();
-    print(filterPriceRangeStart);
-    print(filterPriceRangeEnd);
+    if(Preferences.filtersClassIconsBt == 'residential'){
+      filtersBed = Preferences.filtersBedHouse.toString();
+      filtersParkings = Preferences.filtersNumParkingSpaces.toString();
+    } else {
+      filtersBed = Preferences.filtersBedCondo.toString();
+      filtersParkings = Preferences.filtersNumParkingSpaces > 0 ? '0' : '1';
+    }
     Map<String, dynamic> filtersPrefs = {
         'pageNum': '1',
         'resultsPerPage': '15',
@@ -43,6 +50,9 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
         'type': 'sale',
         'hasImages': 'true',
         'class': Preferences.filtersClassIconsBt,
+        'minBeds': filtersBed,
+        'minBaths': Preferences.filtersBath.toString(),
+        //'city': 'toronto',
     };
     filtersResults.addAll(filtersPrefs);
     //ChangeNotifierProvider( create: (_) => RepliersFilters('toronto ALL'), lazy: false,);

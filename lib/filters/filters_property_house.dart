@@ -33,7 +33,7 @@ class _FiltersPropertyHouseState extends State<FiltersPropertyHouse> {
 
     _propertiesHouse = <PropertiesHouse>[
       const PropertiesHouse('DUPLEX'),
-      const PropertiesHouse('TIPLEX'),
+      const PropertiesHouse('TRIPLEX'),
       const PropertiesHouse('FOURPLEX'),
       const PropertiesHouse('OTHER MULTIPLEX'),
     ];

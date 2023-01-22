@@ -26,17 +26,17 @@ class _FiltersPropertyIconsState extends State<FiltersPropertyIcons> {
               border: Border.all(
                 color: kPrimaryColor,
               ),
-              color: Preferences.filterPropertyIcons.contains('detached') ? kPrimaryColor : Colors.white,
+              color: Preferences.filterPropertyIcons.contains('Detached') ? kPrimaryColor : Colors.white,
             ),
             child: Column(
               children: [
                 Icon(
                   Icons.home_outlined, size: 50.0, 
-                  color: Preferences.filterPropertyIcons.contains('detached') ? Colors.white : kPrimaryColor,
+                  color: Preferences.filterPropertyIcons.contains('Detached') ? Colors.white : kPrimaryColor,
                 ),
                 const Text('DETACHED', style: TextStyle( color: Colors.transparent , fontSize: 14.0, ), ),
                 Text('DETACHED', style: TextStyle( 
-                  color: Preferences.filterPropertyIcons.contains('detached') ?  Colors.white : kPrimaryColor , 
+                  color: Preferences.filterPropertyIcons.contains('Detached') ?  Colors.white : kPrimaryColor , 
                   fontSize: 14.0, 
                 ), ),
               ]
@@ -44,7 +44,7 @@ class _FiltersPropertyIconsState extends State<FiltersPropertyIcons> {
           ),
           onTap: () {
             setState(() {
-              Preferences.filterPropertyIcons.contains('detached') ? Preferences.filterPropertyIcons.remove('detached') : Preferences.filterPropertyIcons.add('detached');
+              Preferences.filterPropertyIcons.contains('Detached') ? Preferences.filterPropertyIcons.remove('Detached') : Preferences.filterPropertyIcons.add('Detached');
             });
           },
         ), 
@@ -57,7 +57,7 @@ class _FiltersPropertyIconsState extends State<FiltersPropertyIcons> {
               border: Border.all(
                 color: kPrimaryColor,
               ),
-              color: Preferences.filterPropertyIcons.contains('semidetached') ? kPrimaryColor : Colors.white,
+              color: Preferences.filterPropertyIcons.contains('Semi-Detached') ? kPrimaryColor : Colors.white,
             ),
             child: Column(
               children: [
@@ -65,19 +65,19 @@ class _FiltersPropertyIconsState extends State<FiltersPropertyIcons> {
                   children: [
                     Icon(
                       Icons.home_outlined, size: 50.0, 
-                      color: Preferences.filterPropertyIcons.contains('semidetached') ? Colors.white : kPrimaryColor,
+                      color: Preferences.filterPropertyIcons.contains('Semi-Detached') ? Colors.white : kPrimaryColor,
                     ),
                     Padding(
                       padding: const EdgeInsets.only( left: 25.0),
                       child: Icon(
                       Icons.home_outlined, size: 50.0, 
-                      color: Preferences.filterPropertyIcons.contains('semidetached') ? Colors.white : kPrimaryColor,
+                      color: Preferences.filterPropertyIcons.contains('Semi-Detached') ? Colors.white : kPrimaryColor,
                     ),
                     )
                   ],
                 ),
                 Text('SEMI \n DETACHED', style: TextStyle( 
-                  color: Preferences.filterPropertyIcons.contains('semidetached') ? Colors.white : kPrimaryColor , 
+                  color: Preferences.filterPropertyIcons.contains('Semi-Detached') ? Colors.white : kPrimaryColor , 
                   fontSize: 14.0, 
                 ), textAlign: TextAlign.center,)
               ]
@@ -85,7 +85,7 @@ class _FiltersPropertyIconsState extends State<FiltersPropertyIcons> {
           ),
           onTap: () {
             setState(() {
-              Preferences.filterPropertyIcons.contains('semidetached') ? Preferences.filterPropertyIcons.remove('semidetached') : Preferences.filterPropertyIcons.add('semidetached');
+              Preferences.filterPropertyIcons.contains('Semi-Detached') ? Preferences.filterPropertyIcons.remove('Semi-Detached') : Preferences.filterPropertyIcons.add('Semi-Detached');
             });
           },
         ), 
@@ -98,17 +98,17 @@ class _FiltersPropertyIconsState extends State<FiltersPropertyIcons> {
               border: Border.all(
                 color: kPrimaryColor,
               ),
-              color: Preferences.filterPropertyIcons.contains('townhouse') ? kPrimaryColor : Colors.white,
+              color: Preferences.filterPropertyIcons.contains('Att/Row/Twnhouse') ? kPrimaryColor : Colors.white,
             ),
             child: Column(
               children: [
                 Icon(
                   Icons.holiday_village_outlined, size: 50.0, 
-                  color: Preferences.filterPropertyIcons.contains('townhouse') ? Colors.white : kPrimaryColor,
+                  color: Preferences.filterPropertyIcons.contains('Att/Row/Twnhouse') ? Colors.white : kPrimaryColor,
                 ),
                 const Text('TOWNHOUSE', style: TextStyle( color: Colors.transparent , fontSize: 14.0, ), ),
                 Text('TOWNHOUSE', style: TextStyle( 
-                  color: Preferences.filterPropertyIcons.contains('townhouse') ? Colors.white : kPrimaryColor , 
+                  color: Preferences.filterPropertyIcons.contains('Att/Row/Twnhouse') ? Colors.white : kPrimaryColor , 
                   fontSize: 14.0, 
                 ), )
               ]
@@ -116,7 +116,7 @@ class _FiltersPropertyIconsState extends State<FiltersPropertyIcons> {
           ),
           onTap: () {
             setState(() {
-              Preferences.filterPropertyIcons.contains('townhouse') ? Preferences.filterPropertyIcons.remove('townhouse') : Preferences.filterPropertyIcons.add('townhouse');       
+              Preferences.filterPropertyIcons.contains('Att/Row/Twnhouse') ? Preferences.filterPropertyIcons.remove('Att/Row/Twnhouse') : Preferences.filterPropertyIcons.add('Att/Row/Twnhouse');       
             });
           },
         ),              

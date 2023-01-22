@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-
-//import 'package:b_w0/helpers/shared_preferences.dart';
-
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 
 
 class FiltersBedrooms extends StatefulWidget {
@@ -15,9 +13,7 @@ class FiltersBedrooms extends StatefulWidget {
 class _FiltersBedroomsState extends State<FiltersBedrooms> {
 
   late List<PropertiesRooms> _propertiesRooms;
-  late List<String> _filtersSearchRooms;
   late int _choiceIndex;
-
 
   @override
   void initState() {
@@ -29,9 +25,7 @@ class _FiltersBedroomsState extends State<FiltersBedrooms> {
       const PropertiesRooms('4+'),
       //const PropertiesRooms('5+'),
     ];
-    //_filtersSearchRooms = Preferences.filterRoomsLoggedOut;
-    _filtersSearchRooms = [];
-    _choiceIndex = 0;
+    _choiceIndex = Preferences.filtersBedHouse;
   }
 
 
@@ -76,21 +70,20 @@ class _FiltersBedroomsState extends State<FiltersBedrooms> {
           label: Container(
             width: 30,
             alignment: Alignment.center,
-            child: Text(propertiesRooms.name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: _choiceIndex == _propertiesRooms.indexOf(propertiesRooms) ? Colors.white : kPrimaryColor ), ),
+            child: Text(propertiesRooms.name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Preferences.filtersBedHouse - 1 == _propertiesRooms.indexOf(propertiesRooms) ? Colors.white : kPrimaryColor ), ),
           ),
           labelPadding: const EdgeInsets.all(0.0),
           backgroundColor: const Color(0xFFFFFFFF),
           selectedColor: kPrimaryColor,
           shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
           side: const BorderSide( color: kPrimaryColor ),
-          selected: _choiceIndex == _propertiesRooms.indexOf(propertiesRooms),
+          selected: Preferences.filtersBedHouse - 1 == _propertiesRooms.indexOf(propertiesRooms),
           onSelected: ( bool selected ) {
             setState(() {
               //print(_propertiesRooms.indexOf(propertiesRooms));
               _choiceIndex = _propertiesRooms.indexOf(propertiesRooms);
-              selected ? _filtersSearchRooms.add(propertiesRooms.name) : _filtersSearchRooms.removeWhere((String name) => name == propertiesRooms.name);
-              //Preferences.filterRoomsLoggedOut = _filtersSearchRooms;
             });
+            Preferences.filtersBedHouse = _choiceIndex + 1;
           },
         )
       );
