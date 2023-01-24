@@ -26,7 +26,11 @@ class _FiltersBedCondoState extends State<FiltersBedCondo> {
       const PropertiesBedCondo('3+'),
     ];
     _choiceIndex = Preferences.filtersBedCondo;
-    _den = false;
+    if (Preferences.filtersDen == 'N') {
+      _den = false;
+    } else {
+      _den = true;
+    }
   }
 
 
@@ -68,10 +72,8 @@ class _FiltersBedCondoState extends State<FiltersBedCondo> {
                     onSelected: ( bool selected ) {
                       setState(() {
                         _den = selected;
-                        //_choiceIndex = selected ? _propertiesBedCondo.indexOf(propertiesBedCondo) : 0;
-                        //selected ? _filtersSearchBedCondo.add(propertiesBedCondo.name) : _filtersSearchBedCondo.removeWhere((String name) => name == propertiesBedCondo.name);
-                        //Preferences.filterBedCondoLoggedOut = _filtersSearchBedCondo;
                       });
+                      Preferences.filtersDen = _den ? 'Y' : 'N';
                     },
                   )
                 ],

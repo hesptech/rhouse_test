@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 
 
 class FiltersKitchens extends StatefulWidget {
@@ -12,7 +13,6 @@ class FiltersKitchens extends StatefulWidget {
 class _FiltersKitchensState extends State<FiltersKitchens> {
 
   late List<PropertiesKitchens> _propertiesKitchens;
-  //late List<String> _filtersSearchKitchens;
   late int _choiceIndex;
 
   @override
@@ -26,8 +26,7 @@ class _FiltersKitchensState extends State<FiltersKitchens> {
       const PropertiesKitchens('4+'),
       const PropertiesKitchens('5+'),
     ];
-    //_filtersSearchKitchens = [];
-    _choiceIndex = 0;
+    _choiceIndex = Preferences.filtersMinKitchens - 1;
   }
 
   @override
@@ -44,7 +43,6 @@ class _FiltersKitchensState extends State<FiltersKitchens> {
               Text('KITCHENS', style: TextStyle(fontSize: 18, color: kPrimaryColor),),
             ],
           ),
-          //const Text('BATHROOMS', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kSecondaryColor),),
           Wrap(
             children: propertiesKitchensWidgets.toList(),
           ),
@@ -61,20 +59,19 @@ class _FiltersKitchensState extends State<FiltersKitchens> {
           label: Container(
             width: 30,
             alignment: Alignment.center,
-            child: Text(propertiesKitchens.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: _choiceIndex == _propertiesKitchens.indexOf(propertiesKitchens) ? Colors.white : kPrimaryColor),),
+            child: Text(propertiesKitchens.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Preferences.filtersMinKitchens - 1 == _propertiesKitchens.indexOf(propertiesKitchens) ? Colors.white : kPrimaryColor),),
           ), 
           labelPadding: const EdgeInsets.all(0.0),
           backgroundColor: const Color(0xFFFFFFFF),
           selectedColor: kPrimaryColor,
           shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
           side: const BorderSide( color: kPrimaryColor ),
-          selected: _choiceIndex == _propertiesKitchens.indexOf(propertiesKitchens),
+          selected: Preferences.filtersMinKitchens - 1 == _propertiesKitchens.indexOf(propertiesKitchens),
           onSelected: ( bool selected ) {
             setState(() {
               _choiceIndex = _propertiesKitchens.indexOf(propertiesKitchens) ;
-              //selected ? _filtersSearchKitchens.add(propertiesKitchens.name) : _filtersSearchKitchens.removeWhere((String name) => name == propertiesKitchens.name);
-
             });
+            Preferences.filtersMinKitchens = _choiceIndex + 1;
           },
         ),
       );
