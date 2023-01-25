@@ -30,6 +30,9 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
   late String filtersBed;
   late String filtersParkings;
   late String filtersKitchens;
+  DateTime todayDate = DateTime.now();
+  late String startListDate;
+  late String endListDate;
 
   @override
   void initState () {
@@ -45,6 +48,15 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
       filtersParkings = Preferences.filtersNumParkingSpacesCondos >= 0 ? '1' : '1';
       filtersKitchens = '0';
     }
+    DateTime minListDate = todayDate.subtract(Duration(days: Preferences.filterDaysMarketStart.toInt()));
+    startListDate = minListDate.toString();
+    startListDate = startListDate.substring(0, 10);
+    DateTime maxListDate = todayDate.subtract(Duration(days: Preferences.filterDaysMarketEnd.toInt()));
+    endListDate = maxListDate.toString();
+    endListDate = endListDate.substring(0, 10);
+    print(startListDate);
+    print(endListDate);
+
     Map<String, dynamic> filtersPrefs = {
         'pageNum': '1',
         'resultsPerPage': '15',
@@ -57,11 +69,15 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
         'minBaths': Preferences.filtersBath.toString(),
         'minParkingSpaces': filtersParkings,
         'minKitchens': filtersKitchens,
+        'minListDate': endListDate,
         //'city': 'toronto',
     };
 
     if(Preferences.filtersClassIconsBt == 'condo'){
       filtersPrefs['den'] = Preferences.filtersDen;
+    }
+    if(Preferences.filterDaysMarketEnd < 90){
+      filtersPrefs['maxListDate'] = startListDate;
     }
 
     filtersResults.addAll(filtersPrefs);

@@ -18,9 +18,6 @@ class _FiltersDaysMarketState extends State<FiltersDaysMarket> {
   late RangeValues selectedRange;
   late String maxUnlimited = 'more than ${_filterDaysEnd.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} \n or more';
 
-
-  //double sliderValue = 10;
-
   @override
   void initState() {
     super.initState();
@@ -33,8 +30,7 @@ class _FiltersDaysMarketState extends State<FiltersDaysMarket> {
       maxUnlimited = 'max. ${_filterDaysEnd.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} day(s)';
     } else {
       maxUnlimited = 'more than ${_filterDaysEnd.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} days';
-    }
-    
+    } 
   }
 
   @override
@@ -100,8 +96,8 @@ class _FiltersDaysMarketState extends State<FiltersDaysMarket> {
                 }
                 selectedRange = values;
               });
-            Preferences.filterDaysMarketStart = selectedRange.start;
-            Preferences.filterDaysMarketEnd = selectedRange.end;
+              Preferences.filterDaysMarketStart = values.start;
+              Preferences.filterDaysMarketEnd = values.end;
             },
           ),
         ),
