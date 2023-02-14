@@ -27,6 +27,7 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
   '5000000'];
   late String filterPriceRangeStart;
   late String filterPriceRangeEnd;
+  late List<String> filterPropertyIcons;
   late String filtersBed;
   late String filtersParkings;
   late String filtersKitchens;
@@ -40,10 +41,12 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
     filterPriceRangeStart = labels[Preferences.filterPriceRangeStart.round()].toString();
     filterPriceRangeEnd = labels[Preferences.filterPriceRangeEnd.round()].toString();
     if(Preferences.filtersClassIconsBt == 'residential'){
+      filterPropertyIcons = Preferences.filterPropertyIcons;
       filtersBed = Preferences.filtersBedHouse.toString();
       filtersParkings = Preferences.filtersNumParkingSpaces.toString();
       filtersKitchens = Preferences.filtersMinKitchens.toString();
     } else {
+      filterPropertyIcons = Preferences.filterPropertyIconsCondo;
       filtersBed = Preferences.filtersBedCondo.toString();
       filtersParkings = Preferences.filtersNumParkingSpacesCondos >= 0 ? '1' : '1';
       filtersKitchens = '0';
@@ -54,22 +57,25 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
     DateTime maxListDate = todayDate.subtract(Duration(days: Preferences.filterDaysMarketEnd.toInt()));
     endListDate = maxListDate.toString();
     endListDate = endListDate.substring(0, 10);
-    print(startListDate);
-    print(endListDate);
+    //print(startListDate);
+    //print(endListDate);
+    print(Preferences.filtersBedHouse);
 
     Map<String, dynamic> filtersPrefs = {
         'pageNum': '1',
         'resultsPerPage': '15',
-        'maxPrice': filterPriceRangeEnd,
-        'minPrice': filterPriceRangeStart,
         'type': 'sale',
         'hasImages': 'true',
+        'maxPrice': filterPriceRangeEnd,
+        'minPrice': filterPriceRangeStart,
         'class': Preferences.filtersClassIconsBt,
+        'propertyType': filterPropertyIcons,
         'minBeds': filtersBed,
         'minBaths': Preferences.filtersBath.toString(),
         'minParkingSpaces': filtersParkings,
         'minKitchens': filtersKitchens,
         'minListDate': endListDate,
+        //'city': ['toronto','mississauga'],
         //'city': 'toronto',
     };
 

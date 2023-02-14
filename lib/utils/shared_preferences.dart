@@ -14,6 +14,7 @@ class Preferences {
   static double _filterPriceRangeEnd = 28.0; 
   static String _filtersClassIconsBt = 'residential';
   static List<String> _filterPropertyIcons = [];
+  static List<String> _filterPropertyIconsCondo = [];
   static List<String> _filterPropertyType = [];
   static List<String> _filtersLocationTopbts = [];
   static List<String> _filtersTrCentral = [];
@@ -133,6 +134,15 @@ class Preferences {
   static set filterPropertyIcons( List<String> value ) {
     _filterPropertyIcons = value;
     _prefs.setStringList( 'filterPropertyIcons', value );
+  }
+
+  static List<String> get filterPropertyIconsCondo {
+    return _prefs.getStringList('filterPropertyIconsCondo') ?? _filterPropertyIconsCondo;
+  }
+
+  static set filterPropertyIconsCondo( List<String> value ) {
+    _filterPropertyIconsCondo = value;
+    _prefs.setStringList( 'filterPropertyIconsCondo', value );
   }
 
 

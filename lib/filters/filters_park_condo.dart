@@ -25,7 +25,6 @@ class _FiltersParkCondoState extends State<FiltersParkCondo> {
     ];
     //_filtersSearchParkCondo = [];
     _choiceIndex = Preferences.filtersNumParkingSpacesCondos - 1;
-    print(Preferences.filtersNumParkingSpacesCondos);
   }
 
   @override
@@ -71,8 +70,7 @@ class _FiltersParkCondoState extends State<FiltersParkCondo> {
             setState(() {
               _choiceIndex = _propertiesParkCondo.indexOf(propertiesParkCondo) ;
             });
-            Preferences.filtersNumParkingSpacesCondos = _choiceIndex + 1;
-            print(Preferences.filtersNumParkingSpacesCondos);
+            Preferences.filtersNumParkingSpacesCondos = _choiceIndex;
           },
         ),
       );
