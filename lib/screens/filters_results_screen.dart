@@ -59,7 +59,7 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
     endListDate = endListDate.substring(0, 10);
     //print(startListDate);
     //print(endListDate);
-    print(Preferences.filtersBedHouse);
+    print(Preferences.filterPropertyIcons);
 
     Map<String, dynamic> filtersPrefs = {
         'pageNum': '1',

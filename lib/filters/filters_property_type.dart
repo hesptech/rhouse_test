@@ -35,7 +35,7 @@ class _FiltersPropertyTypeState extends State<FiltersPropertyType> {
   @override
   Widget build(BuildContext context) {
 
-    final filterProvider = Provider.of<FilterProvider>( context );
+    final filterProvider = Provider.of<FilterProvider>( context, listen: false );
     final currentFilter = filterProvider.filterProvider;
 
     if(currentFilter == "residential") {
@@ -53,22 +53,24 @@ class _FiltersPropertyTypeState extends State<FiltersPropertyType> {
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: Column(
           children: [
-            ExpansionTile(
-              tilePadding: const EdgeInsets.symmetric(horizontal: 24.0),
-              childrenPadding: const EdgeInsets.symmetric(horizontal: 12.0),
-              title: const Text('PROPERTY TYPE', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kSecondaryColor),),
-              trailing: Icon(
-                _openCloseIcons[0] ? Icons.remove : Icons.add,
-                color: kSecondaryColor,
+            Consumer<FilterProvider>(
+              builder: (context, currentFilter, child) => ExpansionTile(
+                tilePadding: const EdgeInsets.symmetric(horizontal: 24.0),
+                childrenPadding: const EdgeInsets.symmetric(horizontal: 12.0),
+                title: const Text('PROPERTY TYPE', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kSecondaryColor),),
+                trailing: Icon(
+                  _openCloseIcons[0] ? Icons.remove : Icons.add,
+                  color: kSecondaryColor,
+                ),
+                children: filterProvider.filterProvider == "residential" ? [const FiltersPropertyHouse()] : [const FiltersPropertyCondo()],
+                onExpansionChanged: (bool expanded) {
+                  setState(() => _openCloseIcons[0] = expanded );
+                  if (expanded == false) {
+                    setState(() => _openCloseIcons[1] = false );
+                    setState(() => _openCloseIcons[2] = false );
+                  }
+                },
               ),
-              children: bodyExpansionTile,
-              onExpansionChanged: (bool expanded) {
-                setState(() => _openCloseIcons[0] = expanded );
-                if (expanded == false) {
-                  setState(() => _openCloseIcons[1] = false );
-                  setState(() => _openCloseIcons[2] = false );
-                }
-              },
             ),            
           ],
         )

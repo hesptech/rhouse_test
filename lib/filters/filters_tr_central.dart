@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+//import 'package:provider/provider.dart';
+
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
+//import 'package:flutter_black_white/providers/filter_provider.dart';
 
 
 class FiltersTrCentral extends StatefulWidget {
@@ -18,6 +21,10 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
 
   bool citySelectAll = Preferences.filtersTrCentral.length == 4 ? true : false ;
 
+  List downtownToronto = ['M5L','M5S','M5K','M5J',];
+  late List<String> trCentral = [];
+  //final List downtownToronto = [];
+
   @override
   void initState() {
     super.initState();
@@ -33,10 +40,14 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
       const PropertiesTrCentral('Toronto North York'),
     ];
     _filtersTrCentral = Preferences.filtersTrCentral;
+    trCentral = Preferences.filtersTrCentral;
   }
 
   @override
   Widget build(BuildContext context) {
+
+    /* final filterProvider = Provider.of<FilterProvider>( context );
+    final locationsFilter = filterProvider.filtersLocation; */
 
     return 
       ExpansionTile(
@@ -113,7 +124,9 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
           onSelected: ( bool selected ) {
             setState(() {
                 selected ? _filtersTrCentral.add(propertiesTrCentral.name) : _filtersTrCentral.removeWhere((String name) => name == propertiesTrCentral.name) ;
-                Preferences.filtersTrCentral = _filtersTrCentral;
+                //Preferences.filtersTrCentral = _filtersTrCentral;
+                selected ? trCentral.add(downtownToronto[_propertiesTrCentral.indexOf(propertiesTrCentral)]) : trCentral.removeWhere((String name) => name == downtownToronto[_propertiesTrCentral.indexOf(propertiesTrCentral)]) ;
+                Preferences.filtersTrCentral = trCentral;
             });            
           },
         )
