@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-//import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
-//import 'package:flutter_black_white/providers/filter_provider.dart';
+import 'package:flutter_black_white/providers/filter_provider.dart';
 
 
 class FiltersTrCentral extends StatefulWidget {
@@ -21,9 +21,15 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
 
   bool citySelectAll = Preferences.filtersTrCentral.length == 4 ? true : false ;
 
-  List downtownToronto = ['M5L','M5S','M5K','M5J',];
-  late List<String> trCentral = [];
-  //final List downtownToronto = [];
+  List<List<String>> torontoCentral = [
+    ['Toronto C01','Toronto C08'],
+    ['Toronto C02','Toronto C03','Toronto C04','Toronto C09','Toronto C10'],
+    ['Toronto C11'],
+    ['Toronto C04','Toronto C06','Toronto C07','Toronto C11','Toronto C13','Toronto C15'],
+  ];
+  late List<List<String>> trCentral = [];
+  List<String> locationsCodes = [];
+  //final List torontoCentral = [];
 
   @override
   void initState() {
@@ -40,14 +46,15 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
       const PropertiesTrCentral('Toronto North York'),
     ];
     _filtersTrCentral = Preferences.filtersTrCentral;
-    trCentral = Preferences.filtersTrCentral;
+    locationsCodes = Preferences.userFiltersCity;
+    //trCentral = [[]];
   }
 
   @override
   Widget build(BuildContext context) {
 
-    /* final filterProvider = Provider.of<FilterProvider>( context );
-    final locationsFilter = filterProvider.filtersLocation; */
+    final filterProvider = Provider.of<FilterProvider>( context );
+    //final filtersLocation = filterProvider.filtersLocation;
 
     return 
       ExpansionTile(
@@ -71,14 +78,17 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
                       citySelectAll = false;
                       for (var element in _propertiesTrCentral) {
                         _filtersTrCentral.remove(element.name);
-                      } 
+                      }
+                      locationsCodes = [];
                     } else {
                       citySelectAll = true;
                       for (var element in _propertiesTrCentral) {
                         _filtersTrCentral.add(element.name);
+                        locationsCodes = [...locationsCodes,  ...torontoCentral[_propertiesTrCentral.indexOf(element)]];
                       } 
                     }
-                    Preferences.filtersTrCentral = _filtersTrCentral;                      
+                    Preferences.filtersTrCentral = _filtersTrCentral;
+                    Preferences.userFiltersCity = locationsCodes;                      
                   });
                 },
                 style: TextButton.styleFrom(
@@ -125,8 +135,21 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
             setState(() {
                 selected ? _filtersTrCentral.add(propertiesTrCentral.name) : _filtersTrCentral.removeWhere((String name) => name == propertiesTrCentral.name) ;
                 //Preferences.filtersTrCentral = _filtersTrCentral;
-                selected ? trCentral.add(downtownToronto[_propertiesTrCentral.indexOf(propertiesTrCentral)]) : trCentral.removeWhere((String name) => name == downtownToronto[_propertiesTrCentral.indexOf(propertiesTrCentral)]) ;
-                Preferences.filtersTrCentral = trCentral;
+                //selected ? trCentral.add(torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)]) : trCentral.removeWhere((String name) => name == torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)]) ;
+                selected ? trCentral.add(torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)]) : trCentral.removeWhere((List name) => name == torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)]) ;
+                //locationsCodes = [ ...locationsCodes, torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)]];
+                Preferences.filtersTrCentral = _filtersTrCentral;
+                if(selected){
+                  locationsCodes = [...locationsCodes,  ...torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)]];
+                } else {
+                  for(int i = 0; i < torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)].length; ++i){
+                    if(locationsCodes.contains(torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)][i])){
+                      locationsCodes.removeWhere((String name) => name == torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)][i]);
+                    }
+                  }                
+                }
+                Preferences.userFiltersCity = locationsCodes;
+                print(Preferences.userFiltersCity);
             });            
           },
         )
