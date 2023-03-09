@@ -27,7 +27,7 @@ class FiltersMore extends StatefulWidget {
 class _FiltersMoreState extends State<FiltersMore> {
 
   late List<bool> _openCloseIcons;
-  late List<Widget> bodyExpansionTile;
+  List<Widget> bodyExpansionTile = [];
 
   @override
   void initState() {

@@ -38,7 +38,7 @@ class CardVertical extends StatelessWidget {
     final String finalAddress2 = '$neighborhood, $cityArea';
     String finalAddress3 = '';
     if ( finalAddress2.length > 40 ) {
-      finalAddress3 = '${finalAddress2.substring(0, 40)}...';
+      finalAddress3 = '${finalAddress2.substring(0, 35)}...';
     } else {
       finalAddress3 = finalAddress2;
     }

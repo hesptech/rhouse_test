@@ -19,7 +19,7 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
   late List<PropertiesTrEast> _propertiesTrEast;
   late List<String> _filtersTrEast;
 
-  bool citySelectAll = Preferences.filtersTrEast.length == 5;
+  bool citySelectAll = Preferences.filtersTrEast.length == 5  ? true : false ;
 
   @override
   void initState() {

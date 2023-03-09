@@ -18,7 +18,9 @@ class FiltersPropertyType extends StatefulWidget {
 class _FiltersPropertyTypeState extends State<FiltersPropertyType> {
 
   late List<bool> _openCloseIcons;
-  late List<Widget> bodyExpansionTile;
+  List<Widget> bodyExpansionTile = [
+        const FiltersPropertyHouse()
+      ];
 
   @override
   void initState() {

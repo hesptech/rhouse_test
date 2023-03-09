@@ -78,8 +78,16 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
                       citySelectAll = false;
                       for (var element in _propertiesTrCentral) {
                         _filtersTrCentral.remove(element.name);
+
+
+                        for(int i = 0; i < torontoCentral[_propertiesTrCentral.indexOf(element)].length; ++i){
+                          if(locationsCodes.contains(torontoCentral[_propertiesTrCentral.indexOf(element)][i])){
+                            locationsCodes.removeWhere((String name) => name == torontoCentral[_propertiesTrCentral.indexOf(element)][i]);
+                          }
+                        } 
+
                       }
-                      locationsCodes = [];
+                      //locationsCodes = [];
                     } else {
                       citySelectAll = true;
                       for (var element in _propertiesTrCentral) {
@@ -88,7 +96,8 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
                       } 
                     }
                     Preferences.filtersTrCentral = _filtersTrCentral;
-                    Preferences.userFiltersCity = locationsCodes;                      
+                    Preferences.userFiltersCity = locationsCodes; 
+                    print(Preferences.userFiltersCity);                     
                   });
                 },
                 style: TextButton.styleFrom(

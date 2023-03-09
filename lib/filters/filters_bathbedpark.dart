@@ -18,7 +18,7 @@ class FiltersBathbedpark extends StatefulWidget {
 
 class _FiltersBathbedparkState extends State<FiltersBathbedpark> {
 
-  late List<Widget> filtersBathBedPark;
+  List<Widget> filtersBathBedPark = [];
 
   @override
   Widget build(BuildContext context) {
