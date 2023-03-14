@@ -21,6 +21,17 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
 
   bool citySelectAll = Preferences.filtersTrEast.length == 5  ? true : false ;
 
+  List<List<String>> torontoEastDistricts = [
+    ['Toronto E01','Toronto E02','Toronto E03'],
+    ['Toronto E02'],
+    ['Toronto E03'],
+    ['Toronto E01'],
+    ['Toronto E11','Toronto E04'],
+  ];
+
+  //late List<String> filtersLocationProvider; 
+
+
   @override
   void initState() {
     super.initState();
@@ -38,12 +49,14 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
     ];
 
     _filtersTrEast = Preferences.filtersTrEast;
+
+    /* WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final filtersLocationProvider = Provider.of<FilterProvider>(context, listen: false).filtersLocation;
+    }); */
   }
 
   @override
   Widget build(BuildContext context) {
-
-    final filterProvider = Provider.of<FilterProvider>( context );
 
     return 
       ExpansionTile(
@@ -58,14 +71,7 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               TextButton(
-                onPressed: () {
-
-                  if (filterProvider.filterProvider == "pippo" ) {
-                    filterProvider.filterProvider = "pin";
-                  } else {
-                    filterProvider.filterProvider = "pippo";
-                  }
-                  
+                onPressed: () { 
                   setState(() {
                     for (var element in _propertiesTrEast) {
                       _filtersTrEast.remove(element.name) ;
@@ -74,14 +80,26 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
                       citySelectAll = false;
                       for (var element in _propertiesTrEast) {
                         _filtersTrEast.remove(element.name) ;
+
+                        for(int i = 0; i < torontoEastDistricts[_propertiesTrEast.indexOf(element)].length; ++i){
+                          if(Provider.of<FilterProvider>(context, listen: false).filtersLocation.contains(torontoEastDistricts[_propertiesTrEast.indexOf(element)][i])){
+                            Provider.of<FilterProvider>(context, listen: false).filtersLocation.removeWhere((String name) => name == torontoEastDistricts[_propertiesTrEast.indexOf(element)][i]);
+                          }
+                        } 
+
                       }
                     } else {
                       citySelectAll = true;
                       for (var element in _propertiesTrEast) {
                         _filtersTrEast.add(element.name) ;
+                        Provider.of<FilterProvider>(context, listen: false).filtersLocation = [ ...Provider.of<FilterProvider>(context, listen: false).filtersLocation, ...torontoEastDistricts[_propertiesTrEast.indexOf(element)]];
                       }
                     }
                     Preferences.filtersTrEast = _filtersTrEast ;
+                    Preferences.userFiltersCity = Provider.of<FilterProvider>(context, listen: false).filtersLocation;
+                    
+                    //print(Preferences.userFiltersCity);
+                    //print(Provider.of<FilterProvider>(context, listen: false).filtersLocation); 
                   });  
                 }, 
                 style: TextButton.styleFrom(
@@ -126,8 +144,21 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
           onSelected: ( bool selected ) {
             setState(() {
                 selected ? _filtersTrEast.add(propertiesTrEast.name) : _filtersTrEast.removeWhere((String name) => name == propertiesTrEast.name) ;
-                Preferences.filtersTrEast = _filtersTrEast ;
+                Preferences.filtersTrEast = _filtersTrEast;
 
+                if(selected){
+                  Provider.of<FilterProvider>(context, listen: false).filtersLocation = [...Provider.of<FilterProvider>(context, listen: false).filtersLocation,  ...torontoEastDistricts[_propertiesTrEast.indexOf(propertiesTrEast)]];
+                } else {
+                  for(int i = 0; i < torontoEastDistricts[_propertiesTrEast.indexOf(propertiesTrEast)].length; ++i){
+                    if(Provider.of<FilterProvider>(context, listen: false).filtersLocation.contains(torontoEastDistricts[_propertiesTrEast.indexOf(propertiesTrEast)][i])){
+                      Provider.of<FilterProvider>(context, listen: false).filtersLocation.removeWhere((String name) => name == torontoEastDistricts[_propertiesTrEast.indexOf(propertiesTrEast)][i]);
+                    }
+                  }                
+                }
+                Preferences.userFiltersCity = Provider.of<FilterProvider>(context, listen: false).filtersLocation;
+                
+                //print(Preferences.userFiltersCity);
+                //print(Provider.of<FilterProvider>(context, listen: false).filtersLocation);
             });
           },
         ),

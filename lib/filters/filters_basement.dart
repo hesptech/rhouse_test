@@ -19,6 +19,13 @@ class _FiltersBasementState extends State<FiltersBasement> {
   //bool selectAllBasement = Preferences.filtersBasementLoggedOut.length == 4;
   bool selectAllBasement = false;
 
+  List<List<String>> filterBasement = [
+    ['Finished'],
+    ['Unfinished'],
+    ['Partiallyfinished'],
+    ['Sep Entrance'],
+  ];
+
   @override
   void initState() {
     super.initState();

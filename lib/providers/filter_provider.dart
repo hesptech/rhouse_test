@@ -5,7 +5,7 @@ import 'package:flutter_black_white/utils/shared_preferences.dart';
 class FilterProvider extends ChangeNotifier{
 
   String _filterProvider = Preferences.filtersClassIconsBt == 'residential' ? 'residential' : 'condo' ;
-  List<String> _filtersLocation = [];
+  List<String> _filtersLocation = Preferences.userFiltersCity;
 
   String get filterProvider {
     return _filterProvider;

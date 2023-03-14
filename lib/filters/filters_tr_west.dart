@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 
@@ -17,7 +19,15 @@ class _FiltersTrWestState extends State<FiltersTrWest> {
   late List<PropertiesTrWest> _propertiesTrWest;
   late List<String> _filtersTrWest;
 
-  bool citySelectAll = Preferences.filtersTrWest.length == 5;
+  bool citySelectAll = Preferences.filtersTrWest.length == 5 ? true : false ;
+
+  List<List<String>> torontoWestDistricts = [
+    ['Toronto W01','Toronto W02'],
+    ['Toronto W02','Toronto W03'],
+    ['Toronto W07','Toronto W08','Toronto W09','Toronto W10'],
+    ['Toronto W06'],
+    ['Toronto W04','Toronto W05'],
+  ];
 
   @override
   void initState() {
@@ -34,6 +44,7 @@ class _FiltersTrWestState extends State<FiltersTrWest> {
       const PropertiesTrWest('Mimico'),
       const PropertiesTrWest('Other'),
     ];
+
     _filtersTrWest = Preferences.filtersTrWest;
   }
 
@@ -62,14 +73,26 @@ class _FiltersTrWestState extends State<FiltersTrWest> {
                       citySelectAll = false;
                       for (var element in _propertiesTrWest) {
                         _filtersTrWest.remove(element.name) ;
+
+                        for(int i = 0; i < torontoWestDistricts[_propertiesTrWest.indexOf(element)].length; ++i){
+                          if(Provider.of<FilterProvider>(context, listen: false).filtersLocation.contains(torontoWestDistricts[_propertiesTrWest.indexOf(element)][i])){
+                            Provider.of<FilterProvider>(context, listen: false).filtersLocation.removeWhere((String name) => name == torontoWestDistricts[_propertiesTrWest.indexOf(element)][i]);
+                          }
+                        } 
+
                       }
                     } else {
                       citySelectAll = true;
                       for (var element in _propertiesTrWest) {
                         _filtersTrWest.add(element.name) ;
+                        Provider.of<FilterProvider>(context, listen: false).filtersLocation = [...Provider.of<FilterProvider>(context, listen: false).filtersLocation, ...torontoWestDistricts[_propertiesTrWest.indexOf(element)]];
                       }
                     }
                     Preferences.filtersTrWest = _filtersTrWest;
+                    Preferences.userFiltersCity = Provider.of<FilterProvider>(context, listen: false).filtersLocation;
+
+                    //print(Preferences.userFiltersCity);
+                    //print(Provider.of<FilterProvider>(context, listen: false).filtersLocation); 
                   });  
                 }, 
                 style: TextButton.styleFrom(
@@ -114,6 +137,21 @@ class _FiltersTrWestState extends State<FiltersTrWest> {
             setState(() {
                 selected ? _filtersTrWest.add(propertiesTrWest.name) : _filtersTrWest.removeWhere((String name) => name == propertiesTrWest.name) ;
                 Preferences.filtersTrWest = _filtersTrWest;
+
+                if(selected){
+                  Provider.of<FilterProvider>(context, listen: false).filtersLocation = [...Provider.of<FilterProvider>(context, listen: false).filtersLocation,  ...torontoWestDistricts[_propertiesTrWest.indexOf(propertiesTrWest)]];
+                } else {
+                  for(int i = 0; i < torontoWestDistricts[_propertiesTrWest.indexOf(propertiesTrWest)].length; ++i){
+                    if(Provider.of<FilterProvider>(context, listen: false).filtersLocation.contains(torontoWestDistricts[_propertiesTrWest.indexOf(propertiesTrWest)][i])){
+                      Provider.of<FilterProvider>(context, listen: false).filtersLocation.removeWhere((String name) => name == torontoWestDistricts[_propertiesTrWest.indexOf(propertiesTrWest)][i]);
+                    }
+                  }                
+                }
+                Preferences.userFiltersCity = Provider.of<FilterProvider>(context, listen: false).filtersLocation;
+
+                //print(Provider.of<FilterProvider>(context, listen: false).filtersLocation);
+                //print(Preferences.userFiltersCity);
+
             });            
           },
         )

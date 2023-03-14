@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 //import 'package:flutter_black_white/providers/repliers_provider.dart';
 import 'package:flutter_black_white/providers/repliers_filters.dart';
@@ -59,7 +61,6 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
     endListDate = endListDate.substring(0, 10);
     //print(startListDate);
     //print(endListDate);
-    //print(Preferences.filtersTrCentral);
 
     Map<String, dynamic> filtersPrefs = {
         'pageNum': '1',
@@ -75,7 +76,7 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
         'minParkingSpaces': filtersParkings,
         'minKitchens': filtersKitchens,
         'minListDate': endListDate,
-        'district': Preferences.userFiltersCity,
+        'district': Provider.of<FilterProvider>(context, listen: false).filtersLocation,
         //'city': ['toronto','mississauga'],
         //'city': 'toronto',
     };
