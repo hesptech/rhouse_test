@@ -31,7 +31,7 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
   late String filterPriceRangeEnd;
   late List<String> filterPropertyIcons;
   late String filtersBed;
-  late String filtersParkings;
+  late int filtersParkings;
   late String filtersKitchens;
   DateTime todayDate = DateTime.now();
   late String startListDate;
@@ -45,12 +45,12 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
     if(Preferences.filtersClassIconsBt == 'residential'){
       filterPropertyIcons = Preferences.filterPropertyIcons;
       filtersBed = Preferences.filtersBedHouse.toString();
-      filtersParkings = Preferences.filtersNumParkingSpaces.toString();
+      filtersParkings = Preferences.filtersNumParkingSpaces;
       filtersKitchens = Preferences.filtersMinKitchens.toString();
     } else {
       filterPropertyIcons = Preferences.filterPropertyIconsCondo;
       filtersBed = Preferences.filtersBedCondo.toString();
-      filtersParkings = Preferences.filtersNumParkingSpacesCondos >= 0 ? '1' : '1';
+      filtersParkings = Preferences.filtersNumParkingSpacesCondos;
       filtersKitchens = '0';
     }
     DateTime minListDate = todayDate.subtract(Duration(days: Preferences.filterDaysMarketStart.toInt()));
@@ -61,6 +61,7 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
     endListDate = endListDate.substring(0, 10);
     //print(startListDate);
     //print(endListDate);
+    print(filtersParkings);
 
     Map<String, dynamic> filtersPrefs = {
         'pageNum': '1',
@@ -73,17 +74,21 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
         'propertyType': filterPropertyIcons,
         'minBeds': filtersBed,
         'minBaths': Preferences.filtersBath.toString(),
-        'minParkingSpaces': filtersParkings,
         'minKitchens': filtersKitchens,
         'minListDate': endListDate,
         'district': Provider.of<FilterProvider>(context, listen: false).filtersLocation,
-        //'city': ['toronto','mississauga'],
-        //'city': 'toronto',
     };
 
     if(Preferences.filtersClassIconsBt == 'condo'){
       filtersPrefs['den'] = Preferences.filtersDen;
     }
+
+    if(Preferences.filtersClassIconsBt == 'residential' && filtersParkings > 0){
+      filtersPrefs['minParkingSpaces'] = filtersParkings.toString();
+    } else if(Preferences.filtersClassIconsBt == 'condo' && filtersParkings == 0){
+      filtersPrefs['minParkingSpaces'] = '1';
+    }
+
     if(Preferences.filterDaysMarketEnd < 90){
       filtersPrefs['maxListDate'] = startListDate;
     }

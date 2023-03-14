@@ -53,7 +53,7 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
   @override
   Widget build(BuildContext context) {
 
-    final filterProvider = Provider.of<FilterProvider>( context );
+    //final filterProvider = Provider.of<FilterProvider>( context );
     //final filtersLocation = filterProvider.filtersLocation;
 
     return 
@@ -99,8 +99,9 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
                     }
                     Preferences.filtersTrCentral = _filtersTrCentral;
                     Preferences.userFiltersCity = locationsCodes; 
+
                     //print(Preferences.userFiltersCity);
-                    print(Provider.of<FilterProvider>(context, listen: false).filtersLocation);                     
+                    //print(Provider.of<FilterProvider>(context, listen: false).filtersLocation);                     
                   });
                 },
                 style: TextButton.styleFrom(
@@ -163,8 +164,9 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
                   }                
                 }
                 Preferences.userFiltersCity = locationsCodes;
+                
                 //print(Preferences.userFiltersCity);
-                print(Provider.of<FilterProvider>(context, listen: false).filtersLocation);
+                //print(Provider.of<FilterProvider>(context, listen: false).filtersLocation);
             });            
           },
         )

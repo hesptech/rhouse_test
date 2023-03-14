@@ -13,7 +13,6 @@ class FiltersParking extends StatefulWidget {
 class _FiltersParkingState extends State<FiltersParking> {
 
   late List<PropertiesParking> _propertiesParking;
-  //late List<String> _filtersSearchParking;
   late int _choiceIndex;
 
   @override
@@ -27,8 +26,7 @@ class _FiltersParkingState extends State<FiltersParking> {
       const PropertiesParking('3+'),
       const PropertiesParking('4+'),
     ];
-    //_filtersSearchParking = [];
-    _choiceIndex = Preferences.filtersNumParkingSpaces - 1;
+    _choiceIndex = Preferences.filtersNumParkingSpaces;
   }
 
   @override
@@ -45,7 +43,6 @@ class _FiltersParkingState extends State<FiltersParking> {
               Text('PARKING', style: TextStyle(fontSize: 18,  color: kPrimaryColor),),
             ],
           ),
-          //const Text('BATHROOMS', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kSecondaryColor),),
           Wrap(
             children: propertiesParkingWidgets.toList(),
           ),
@@ -62,20 +59,19 @@ class _FiltersParkingState extends State<FiltersParking> {
           label: Container(
             width: 30,
             alignment: Alignment.center,
-            child: Text(propertiesParking.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Preferences.filtersNumParkingSpaces - 1 == _propertiesParking.indexOf(propertiesParking) ? Colors.white : kPrimaryColor),),
+            child: Text(propertiesParking.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Preferences.filtersNumParkingSpaces == _propertiesParking.indexOf(propertiesParking) ? Colors.white : kPrimaryColor),),
           ), 
           labelPadding: const EdgeInsets.all(0.0),
           backgroundColor: const Color(0xFFFFFFFF),
           selectedColor: kPrimaryColor,
           shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
           side: const BorderSide( color: kPrimaryColor ),
-          selected: Preferences.filtersNumParkingSpaces - 1 == _propertiesParking.indexOf(propertiesParking),
+          selected: Preferences.filtersNumParkingSpaces == _propertiesParking.indexOf(propertiesParking),
           onSelected: ( bool selected ) {
             setState(() {
               _choiceIndex = _propertiesParking.indexOf(propertiesParking) ;
-              //selected ? _filtersSearchParking.add(propertiesParking.name) : _filtersSearchParking.removeWhere((String name) => name == propertiesParking.name);
             });
-            Preferences.filtersNumParkingSpaces = _choiceIndex + 1;
+            Preferences.filtersNumParkingSpaces = _choiceIndex;
           },
         ),
       );

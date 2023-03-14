@@ -12,7 +12,6 @@ class FiltersParkCondo extends StatefulWidget {
 class _FiltersParkCondoState extends State<FiltersParkCondo> {
 
   late List<PropertiesParkCondo> _propertiesParkCondo;
-  //late List<String> _filtersSearchParkCondo;
   late int _choiceIndex;
 
   @override
@@ -23,8 +22,7 @@ class _FiltersParkCondoState extends State<FiltersParkCondo> {
       const PropertiesParkCondo('YES'),
       const PropertiesParkCondo('NO'),
     ];
-    //_filtersSearchParkCondo = [];
-    _choiceIndex = Preferences.filtersNumParkingSpacesCondos - 1;
+    _choiceIndex = Preferences.filtersNumParkingSpacesCondos;
   }
 
   @override
@@ -41,7 +39,6 @@ class _FiltersParkCondoState extends State<FiltersParkCondo> {
               Text('PARKING', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kSecondaryColor),),
             ],
           ),
-          //const Text('BATHROOMS', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kSecondaryColor),),
           Wrap(
             children: propertiesParkCondoWidgets.toList(),
           ),
@@ -58,14 +55,14 @@ class _FiltersParkCondoState extends State<FiltersParkCondo> {
           label: Container(
             width: 30,
             alignment: Alignment.center,
-            child: Text(propertiesParkCondo.name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Preferences.filtersNumParkingSpacesCondos - 1 == _propertiesParkCondo.indexOf(propertiesParkCondo) ? Colors.white : kPrimaryColor),),
+            child: Text(propertiesParkCondo.name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Preferences.filtersNumParkingSpacesCondos == _propertiesParkCondo.indexOf(propertiesParkCondo) ? Colors.white : kPrimaryColor),),
           ), 
           labelPadding: const EdgeInsets.all(0.0),
           backgroundColor: const Color(0xFFFFFFFF),
           selectedColor: kPrimaryColor,
           shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
           side: const BorderSide( color: kPrimaryColor ),
-          selected: Preferences.filtersNumParkingSpacesCondos - 1 == _propertiesParkCondo.indexOf(propertiesParkCondo),
+          selected: Preferences.filtersNumParkingSpacesCondos == _propertiesParkCondo.indexOf(propertiesParkCondo),
           onSelected: ( bool selected ) {
             setState(() {
               _choiceIndex = _propertiesParkCondo.indexOf(propertiesParkCondo) ;

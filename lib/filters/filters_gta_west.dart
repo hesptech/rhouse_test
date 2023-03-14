@@ -122,7 +122,7 @@ class _FiltersGtaWestState extends State<FiltersGtaWest> {
                     Preferences.userFiltersCity = Provider.of<FilterProvider>(context, listen: false).filtersLocation;
 
                     //print(Preferences.userFiltersCity);
-                    print(Provider.of<FilterProvider>(context, listen: false).filtersLocation);
+                    //print(Provider.of<FilterProvider>(context, listen: false).filtersLocation);
                   });  
                 }, 
                 style: TextButton.styleFrom(
@@ -190,7 +190,7 @@ class _FiltersGtaWestState extends State<FiltersGtaWest> {
                 }
                 Preferences.userFiltersCity = Provider.of<FilterProvider>(context, listen: false).filtersLocation;
 
-                print(Provider.of<FilterProvider>(context, listen: false).filtersLocation);
+                //print(Provider.of<FilterProvider>(context, listen: false).filtersLocation);
                 //print(Preferences.userFiltersCity);
             });            
           },
@@ -231,7 +231,7 @@ class _FiltersGtaWestState extends State<FiltersGtaWest> {
                 }
                 Preferences.userFiltersCity = Provider.of<FilterProvider>(context, listen: false).filtersLocation;
 
-                print(Provider.of<FilterProvider>(context, listen: false).filtersLocation);
+                //print(Provider.of<FilterProvider>(context, listen: false).filtersLocation);
                 //print(Preferences.userFiltersCity);
             });            
           },        
