@@ -6,6 +6,7 @@ class FilterProvider extends ChangeNotifier{
 
   String _filterProvider = Preferences.filtersClassIconsBt == 'residential' ? 'residential' : 'condo' ;
   List<String> _filtersLocation = Preferences.userFiltersCity;
+  List<String> _filtersPropertyTypeHouse = Preferences.filtersPropertyTypeHouse;
 
   String get filterProvider {
     return _filterProvider;
@@ -22,6 +23,15 @@ class FilterProvider extends ChangeNotifier{
 
   set filtersLocation( List<String> value ) {
     _filtersLocation = value;
+    notifyListeners();
+  }
+
+  List<String> get filtersPropertyTypeHouse {
+    return _filtersPropertyTypeHouse;
+  }
+
+  set filtersPropertyTypeHouse( List<String> value ) {
+    _filtersPropertyTypeHouse = value;
     notifyListeners();
   }
 }

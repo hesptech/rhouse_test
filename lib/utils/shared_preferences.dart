@@ -28,8 +28,8 @@ class Preferences {
   static int _filtersBedCondo = 1;
   static String _filtersDen = 'N';
   static int _filtersBath = 1;
-  static int _filtersNumParkingSpaces = 1;
-  static int _filtersNumParkingSpacesCondos = 1;
+  static int _filtersNumParkingSpaces = 0;
+  static int _filtersNumParkingSpacesCondos = 0;
   static  int _filtersMinKitchens = 1;
   static double _filterDaysMarketStart = 1.0;
   static double _filterDaysMarketEnd = 30.0;
@@ -42,7 +42,7 @@ class Preferences {
   static List<String> _filtersCondoExtra = [];
 
 
-  static List<String> _userFilters = [];
+  static List<String> _filtersPropertyTypeHouse = [];
   static List<String> _userFiltersCity = [];
 
 
@@ -405,13 +405,13 @@ class Preferences {
 
 
   // Type
-  static List<String> get userFilters {
-    return _prefs.getStringList( 'userFilters') ?? _userFilters;
+  static List<String> get filtersPropertyTypeHouse {
+    return _prefs.getStringList( 'filtersPropertyTypeHouse') ?? _filtersPropertyTypeHouse;
   }
 
-  static set userFilters( List<String> value ) {
-    _userFilters = value;
-    _prefs.setStringList( 'userFilters', value );
+  static set filtersPropertyTypeHouse( List<String> value ) {
+    _filtersPropertyTypeHouse = value;
+    _prefs.setStringList( 'filtersPropertyTypeHouse', value );
   }
 
 

@@ -43,7 +43,7 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
     filterPriceRangeStart = labels[Preferences.filterPriceRangeStart.round()].toString();
     filterPriceRangeEnd = labels[Preferences.filterPriceRangeEnd.round()].toString();
     if(Preferences.filtersClassIconsBt == 'residential'){
-      filterPropertyIcons = Preferences.filterPropertyIcons;
+      filterPropertyIcons = [...Preferences.filterPropertyIcons, ...Provider.of<FilterProvider>(context, listen: false).filtersPropertyTypeHouse];
       filtersBed = Preferences.filtersBedHouse.toString();
       filtersParkings = Preferences.filtersNumParkingSpaces;
       filtersKitchens = Preferences.filtersMinKitchens.toString();
@@ -61,7 +61,7 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
     endListDate = endListDate.substring(0, 10);
     //print(startListDate);
     //print(endListDate);
-    print(filtersParkings);
+
 
     Map<String, dynamic> filtersPrefs = {
         'pageNum': '1',
