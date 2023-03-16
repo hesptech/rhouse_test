@@ -127,6 +127,22 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text('Filters Results'),
+        actions: [
+          const Padding(
+            padding: EdgeInsets.only(top: 18.0),
+            child: Text(
+              'Total: ',
+              style: TextStyle( fontSize: 16.0),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 18.0, 15.0, 0),
+            child: Text(
+              repliersFilters.onCount.toString(),
+              style: const TextStyle( fontSize: 16.0, fontWeight: FontWeight.bold ),
+            ),
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -136,6 +152,7 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
 
             CardsSliderFilters(
               listing: repliersFilters.onDisplayFilters,
+              count: repliersFilters.onCount,
               title: 'FILTERS Listings',
               //onNextPage: () => moviesProvider.getPopularMovies(),
               onNextPage: () => repliersFilters.getDisplayFilters(filtersResults),

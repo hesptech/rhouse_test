@@ -11,6 +11,7 @@ class RepliersFilters extends ChangeNotifier {
   final String _baseUrl = 'api.repliers.io';
   String citySearchParam = '';
   List<Listing> onDisplayFilters = [];
+  int onCount = 0;
   int _displayPageFilters = 0;
 
   Map<String, dynamic> filtersResultsOff = {
@@ -53,12 +54,14 @@ class RepliersFilters extends ChangeNotifier {
     final nowPlayingResponse = ResponseBody.fromJson(jsonData);
 
     onDisplayFilters = [ ...onDisplayFilters, ...nowPlayingResponse.listings];
+    onCount = nowPlayingResponse.count;
     notifyListeners();
   }
 
   initGetDisplay(Map<String, dynamic> filtersResults) {
     _displayPageFilters = 0;
     onDisplayFilters = [];
+    onCount = 0;
     //print(filtersResults);
     getDisplayFilters(filtersResults);
   }

@@ -7,13 +7,15 @@ import 'package:flutter_black_white/widgets/widgets.dart';
 class CardsSliderFilters extends StatefulWidget {
 
   final List<Listing> listing;
+  late int? count;
   final String? title;
   final Function onNextPage;
   final Function onInitPage;
 
-  const CardsSliderFilters({
+  CardsSliderFilters({
     Key? key, 
-    required this.listing, 
+    required this.listing,
+    this.count,
     this.title, 
     required this.onNextPage,
     required this.onInitPage,
@@ -51,6 +53,7 @@ class _CardsSliderFiltersState extends State<CardsSliderFilters> {
         'class': Preferences.filtersClassIconsBt,
     };
     filtersResults.addAll(filtersPrefs); */
+    widget.count = 0;
   }
 
   @override
@@ -85,6 +88,7 @@ class _CardsSliderFiltersState extends State<CardsSliderFilters> {
         children: [
 
           //const SizedBox( height: 3,),
+          //Text(widget.count.toString()),
 
           Expanded(
             child: ListView.builder(
