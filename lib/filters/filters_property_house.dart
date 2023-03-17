@@ -31,7 +31,7 @@ class _FiltersPropertyHouseState extends State<FiltersPropertyHouse> {
 
   List<List<String>> propertyTypeHouseOther = [
     ['Vacant Land'],
-    ['Rural Resid','Mobile/Trailer','Other'],
+    ['Cottage','Farm','Link','Land','Rural Resid','Mobile/Trailer','Other'],
   ];
 
   @override

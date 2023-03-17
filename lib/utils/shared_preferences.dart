@@ -24,7 +24,7 @@ class Preferences {
   static List<String> _filtersGtaNorth = [];
   static List<String> _filtersGtaEast = [];
   static List<String> _filtersOther = [];  
-  static int _filtersBedHouse = 1;
+  static int _filtersBedHouse = 0;
   static int _filtersBedCondo = 1;
   static String _filtersDen = 'N';
   static int _filtersBath = 1;

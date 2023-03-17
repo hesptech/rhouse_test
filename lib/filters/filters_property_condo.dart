@@ -12,6 +12,16 @@ class FiltersPropertyCondo extends StatefulWidget {
 }
 
 class _FiltersPropertyCondoState extends State<FiltersPropertyCondo> {
+
+  late List<String> _filtersPropertyCondoState;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _filtersPropertyCondoState = Preferences.filterPropertyIconsCondo; 
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -29,16 +39,16 @@ class _FiltersPropertyCondoState extends State<FiltersPropertyCondo> {
                   border: Border.all(
                     color: kPrimaryColor,
                   ),
-                  color: Preferences.filterPropertyIconsCondo.contains('Condo Apt') ? kPrimaryColor : Colors.white,
+                  color: _filtersPropertyCondoState.contains('Condo Apt') ? kPrimaryColor : Colors.white,
                 ),
                 child: Column(
                   children: [
                     Icon(
                       Icons.business_outlined, size: 50.0, 
-                      color: Preferences.filterPropertyIconsCondo.contains('Condo Apt') ? Colors.white : kPrimaryColor,
+                      color: _filtersPropertyCondoState.contains('Condo Apt') ? Colors.white : kPrimaryColor,
                     ),
                     Text('CONDO \n APARTMENT', style: TextStyle( 
-                      color: Preferences.filterPropertyIconsCondo.contains('Condo Apt') ?  Colors.white : kPrimaryColor , 
+                      color: _filtersPropertyCondoState.contains('Condo Apt') ?  Colors.white : kPrimaryColor , 
                       fontSize: 14.0, 
                     ), textAlign: TextAlign.center, ),
                   ]
@@ -46,7 +56,8 @@ class _FiltersPropertyCondoState extends State<FiltersPropertyCondo> {
               ),
               onTap: () {
                 setState(() {
-                  Preferences.filterPropertyIconsCondo.contains('Condo Apt') ? Preferences.filterPropertyIconsCondo.remove('Condo Apt') : Preferences.filterPropertyIconsCondo.add('Condo Apt');
+                  _filtersPropertyCondoState.contains('Condo Apt') ? _filtersPropertyCondoState.remove('Condo Apt') : _filtersPropertyCondoState.add('Condo Apt');
+                  Preferences.filterPropertyIconsCondo = _filtersPropertyCondoState;
                 });
               },
             ), 
@@ -59,16 +70,16 @@ class _FiltersPropertyCondoState extends State<FiltersPropertyCondo> {
                   border: Border.all(
                     color: kPrimaryColor,
                   ),
-                  color: Preferences.filterPropertyIconsCondo.contains('Co-Op Apt') ? kPrimaryColor : Colors.white,
+                  color: _filtersPropertyCondoState.contains('Co-Op Apt') ? kPrimaryColor : Colors.white,
                 ),
                 child: Column(
                   children: [
                     Icon(
                       Icons.domain_add_outlined, size: 50.0, 
-                      color: Preferences.filterPropertyIconsCondo.contains('Co-Op Apt') ? Colors.white : kPrimaryColor,
+                      color: _filtersPropertyCondoState.contains('Co-Op Apt') ? Colors.white : kPrimaryColor,
                     ),
                     Text('CO-OP \n APARTMENT', style: TextStyle( 
-                      color: Preferences.filterPropertyIconsCondo.contains('Co-Op Apt') ? Colors.white : kPrimaryColor , 
+                      color: _filtersPropertyCondoState.contains('Co-Op Apt') ? Colors.white : kPrimaryColor , 
                       fontSize: 14.0, 
                     ), textAlign: TextAlign.center,)
                   ]
@@ -76,7 +87,8 @@ class _FiltersPropertyCondoState extends State<FiltersPropertyCondo> {
               ),
               onTap: () {
                 setState(() {
-                  Preferences.filterPropertyIconsCondo.contains('Co-Op Apt') ? Preferences.filterPropertyIconsCondo.remove('Co-Op Apt') : Preferences.filterPropertyIconsCondo.add('Co-Op Apt');
+                  _filtersPropertyCondoState.contains('Co-Op Apt') ? _filtersPropertyCondoState.remove('Co-Op Apt') : _filtersPropertyCondoState.add('Co-Op Apt');
+                  Preferences.filterPropertyIconsCondo = _filtersPropertyCondoState;
                 });
               },
             ), 
@@ -89,16 +101,16 @@ class _FiltersPropertyCondoState extends State<FiltersPropertyCondo> {
                   border: Border.all(
                     color: kPrimaryColor,
                   ),
-                  color: Preferences.filterPropertyIconsCondo.contains('Condo Townhouse') ? kPrimaryColor : Colors.white,
+                  color: _filtersPropertyCondoState.contains('Condo Townhouse') ? kPrimaryColor : Colors.white,
                 ),
                 child: Column(
                   children: [
                     Icon(
                       Icons.maps_home_work_outlined, size: 50.0, 
-                      color: Preferences.filterPropertyIconsCondo.contains('Condo Townhouse') ? Colors.white : kPrimaryColor,
+                      color: _filtersPropertyCondoState.contains('Condo Townhouse') ? Colors.white : kPrimaryColor,
                     ),
                     Text('CONDO \n TOWNHOUSE', style: TextStyle( 
-                      color: Preferences.filterPropertyIconsCondo.contains('Condo Townhouse') ? Colors.white : kPrimaryColor , 
+                      color: _filtersPropertyCondoState.contains('Condo Townhouse') ? Colors.white : kPrimaryColor , 
                       fontSize: 14.0, 
                     ), textAlign: TextAlign.center, )
                   ]
@@ -106,7 +118,8 @@ class _FiltersPropertyCondoState extends State<FiltersPropertyCondo> {
               ),
               onTap: () {
                 setState(() {
-                  Preferences.filterPropertyIconsCondo.contains('Condo Townhouse') ? Preferences.filterPropertyIconsCondo.remove('Condo Townhouse') : Preferences.filterPropertyIconsCondo.add('Condo Townhouse');       
+                  _filtersPropertyCondoState.contains('Condo Townhouse') ? _filtersPropertyCondoState.remove('Condo Townhouse') : _filtersPropertyCondoState.add('Condo Townhouse'); 
+                  Preferences.filterPropertyIconsCondo = _filtersPropertyCondoState;      
                 });
               },
             ),             
@@ -124,12 +137,12 @@ class _FiltersPropertyCondoState extends State<FiltersPropertyCondo> {
                   border: Border.all(
                     color: kPrimaryColor,
                   ),
-                  color: Preferences.filterPropertyIconsCondo.contains('Parking Space') ? kPrimaryColor : Colors.white,
+                  color: _filtersPropertyCondoState.contains('Parking Space') ? kPrimaryColor : Colors.white,
                 ),
                 child: Column(
                   children: [
                     Text('OTHER', style: TextStyle( 
-                      color: Preferences.filterPropertyIconsCondo.contains('Parking Space') ?  Colors.white : kPrimaryColor , 
+                      color: _filtersPropertyCondoState.contains('Parking Space') ?  Colors.white : kPrimaryColor , 
                       fontSize: 14.0, 
                     ), textAlign: TextAlign.center, ),
                   ]
@@ -137,7 +150,9 @@ class _FiltersPropertyCondoState extends State<FiltersPropertyCondo> {
               ),
               onTap: () {
                 setState(() {
-                  Preferences.filterPropertyIconsCondo.contains('Parking Space') ? Preferences.filterPropertyIconsCondo.remove('Parking Space') : Preferences.filterPropertyIconsCondo.add('Parking Space');
+                  _filtersPropertyCondoState.contains('Parking Space') ? _filtersPropertyCondoState.remove('Parking Space') : _filtersPropertyCondoState.add('Parking Space');
+                  _filtersPropertyCondoState.contains('Comm Element Condo') ? _filtersPropertyCondoState.remove('Comm Element Condo') : _filtersPropertyCondoState.add('Comm Element Condo');
+                  Preferences.filterPropertyIconsCondo = _filtersPropertyCondoState;
                 });
               },
             ),                
