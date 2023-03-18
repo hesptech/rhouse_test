@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 
@@ -17,7 +19,22 @@ class _FiltersGtaNorthState extends State<FiltersGtaNorth> {
   late List<PropertiesGtaNorthOther> _propertiesGtaNorthOther;
   late List<String> _filtersGtaNorth;
 
-  bool citySelectAll = Preferences.filtersGtaNorth.length == 9;
+  bool citySelectAll = Preferences.filtersGtaNorth.length == 9 ? true : false ;
+
+  List<List<String>> gtaNorthDistricts = [
+    ['Vaughan'],
+    ['Markham'],
+    ['Richmond Hill'],
+  ];
+
+  List<List<String>> gtaNorthOtherDistricts = [
+    ['Newmarket'],
+    ['Aurora'],
+    ['King'],
+    ['Whitchurch-Stouffville'],
+    ['Georgina'],
+    ['East Gwillimbury'],
+  ];
 
   @override
   void initState() {
@@ -40,6 +57,7 @@ class _FiltersGtaNorthState extends State<FiltersGtaNorth> {
       const PropertiesGtaNorthOther('Georgina'),
       const PropertiesGtaNorthOther('East Gwillingbury'),
     ];
+
     _filtersGtaNorth = Preferences.filtersGtaNorth;
   }
 
@@ -67,24 +85,45 @@ class _FiltersGtaNorthState extends State<FiltersGtaNorth> {
                     for (var element in _propertiesGtaNorthOther) {
                       _filtersGtaNorth.remove(element.name) ;
                     }
+
                     if(citySelectAll) {
                       citySelectAll = false;
                       for (var element in _propertiesGtaNorth) {
                         _filtersGtaNorth.remove(element.name) ;
+
+                        for(int i = 0; i < gtaNorthDistricts[_propertiesGtaNorth.indexOf(element)].length; ++i){
+                          if(Provider.of<FilterProvider>(context, listen: false).filtersLocation.contains(gtaNorthDistricts[_propertiesGtaNorth.indexOf(element)][i])){
+                            Provider.of<FilterProvider>(context, listen: false).filtersLocation.removeWhere((String name) => name == gtaNorthDistricts[_propertiesGtaNorth.indexOf(element)][i]);
+                          }
+                        }
+
                       }
                       for (var element in _propertiesGtaNorthOther) {
                         _filtersGtaNorth.remove(element.name) ;
+
+                        for(int i = 0; i < gtaNorthOtherDistricts[_propertiesGtaNorthOther.indexOf(element)].length; ++i){
+                          if(Provider.of<FilterProvider>(context, listen: false).filtersLocation.contains(gtaNorthOtherDistricts[_propertiesGtaNorthOther.indexOf(element)][i])){
+                            Provider.of<FilterProvider>(context, listen: false).filtersLocation.removeWhere((String name) => name == gtaNorthOtherDistricts[_propertiesGtaNorthOther.indexOf(element)][i]);
+                          }
+                        }
+
                       }
                     } else {
                       citySelectAll = true;
                       for (var element in _propertiesGtaNorth) {
                         _filtersGtaNorth.add(element.name) ;
+                        Provider.of<FilterProvider>(context, listen: false).filtersLocation = [...Provider.of<FilterProvider>(context, listen: false).filtersLocation, ...gtaNorthDistricts[_propertiesGtaNorth.indexOf(element)]];
                       }
                       for (var element in _propertiesGtaNorthOther) {
                         _filtersGtaNorth.add(element.name) ;
+                        Provider.of<FilterProvider>(context, listen: false).filtersLocation = [...Provider.of<FilterProvider>(context, listen: false).filtersLocation, ...gtaNorthOtherDistricts[_propertiesGtaNorthOther.indexOf(element)]];
                       }
                     }
                     Preferences.filtersGtaNorth = _filtersGtaNorth ;
+                    Preferences.userFiltersCity = Provider.of<FilterProvider>(context, listen: false).filtersLocation;
+
+                    //print(Preferences.userFiltersCity);
+                    //print(Provider.of<FilterProvider>(context, listen: false).filtersLocation);
                   });  
                 }, 
                 style: TextButton.styleFrom(
@@ -139,6 +178,20 @@ class _FiltersGtaNorthState extends State<FiltersGtaNorth> {
             setState(() {
                 selected ? _filtersGtaNorth.add(propertiesGtaNorth.name) : _filtersGtaNorth.removeWhere((String name) => name == propertiesGtaNorth.name) ;
                 Preferences.filtersGtaNorth = _filtersGtaNorth;
+
+                if(selected){
+                  Provider.of<FilterProvider>(context, listen: false).filtersLocation = [...Provider.of<FilterProvider>(context, listen: false).filtersLocation,  ...gtaNorthDistricts[_propertiesGtaNorth.indexOf(propertiesGtaNorth)]];
+                } else {
+                  for(int i = 0; i < gtaNorthDistricts[_propertiesGtaNorth.indexOf(propertiesGtaNorth)].length; ++i){
+                    if(Provider.of<FilterProvider>(context, listen: false).filtersLocation.contains(gtaNorthDistricts[_propertiesGtaNorth.indexOf(propertiesGtaNorth)][i])){
+                      Provider.of<FilterProvider>(context, listen: false).filtersLocation.removeWhere((String name) => name == gtaNorthDistricts[_propertiesGtaNorth.indexOf(propertiesGtaNorth)][i]);
+                    }
+                  }                
+                }
+                Preferences.userFiltersCity = Provider.of<FilterProvider>(context, listen: false).filtersLocation;
+
+                //print(Provider.of<FilterProvider>(context, listen: false).filtersLocation);
+                //print(Preferences.userFiltersCity);
             });            
           },
         )
@@ -147,25 +200,39 @@ class _FiltersGtaNorthState extends State<FiltersGtaNorth> {
   }
 
   Iterable<Widget> get propertiesGtaNorthOtherWidgets sync* {
-    for (PropertiesGtaNorthOther propertiesGtaWestOther in _propertiesGtaNorthOther) {
+    for (PropertiesGtaNorthOther propertiesGtaNorthOther in _propertiesGtaNorthOther) {
       yield Padding(
         padding: const EdgeInsets.symmetric( horizontal: 5.0, ),
         child: ChoiceChip(
           label: Container(
             width: 150,
             alignment: Alignment.center,
-            child: Text(propertiesGtaWestOther.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: _filtersGtaNorth.contains(propertiesGtaWestOther.name) ? Colors.white : kPrimaryColor),),
+            child: Text(propertiesGtaNorthOther.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: _filtersGtaNorth.contains(propertiesGtaNorthOther.name) ? Colors.white : kPrimaryColor),),
           ),
           labelPadding: const EdgeInsets.all(0.0),
           backgroundColor: const Color(0xFFFFFFFF),
           selectedColor: kPrimaryColor,
           shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
           side: const BorderSide( color: kPrimaryColor ),
-          selected: _filtersGtaNorth.contains(propertiesGtaWestOther.name),
+          selected: _filtersGtaNorth.contains(propertiesGtaNorthOther.name),
           onSelected: ( bool selected ) {
             setState(() {
-                selected ? _filtersGtaNorth.add(propertiesGtaWestOther.name) : _filtersGtaNorth.removeWhere((String name) => name == propertiesGtaWestOther.name) ;
-                Preferences.filtersGtaWest = _filtersGtaNorth;
+                selected ? _filtersGtaNorth.add(propertiesGtaNorthOther.name) : _filtersGtaNorth.removeWhere((String name) => name == propertiesGtaNorthOther.name) ;
+                Preferences.filtersGtaNorth = _filtersGtaNorth;
+
+                if(selected){
+                  Provider.of<FilterProvider>(context, listen: false).filtersLocation = [...Provider.of<FilterProvider>(context, listen: false).filtersLocation,  ...gtaNorthOtherDistricts[_propertiesGtaNorthOther.indexOf(propertiesGtaNorthOther)]];
+                } else {
+                  for(int i = 0; i < gtaNorthOtherDistricts[_propertiesGtaNorthOther.indexOf(propertiesGtaNorthOther)].length; ++i){
+                    if(Provider.of<FilterProvider>(context, listen: false).filtersLocation.contains(gtaNorthOtherDistricts[_propertiesGtaNorthOther.indexOf(propertiesGtaNorthOther)][i])){
+                      Provider.of<FilterProvider>(context, listen: false).filtersLocation.removeWhere((String name) => name == gtaNorthOtherDistricts[_propertiesGtaNorthOther.indexOf(propertiesGtaNorthOther)][i]);
+                    }
+                  }                
+                }
+                Preferences.userFiltersCity = Provider.of<FilterProvider>(context, listen: false).filtersLocation;
+
+                //print(Provider.of<FilterProvider>(context, listen: false).filtersLocation);
+                //print(Preferences.userFiltersCity);
             });            
           },        
         ),
