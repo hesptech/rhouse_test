@@ -79,7 +79,7 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
         'district': Provider.of<FilterProvider>(context, listen: false).filtersLocation,
     };
 
-    if(Preferences.filtersClassIconsBt == 'condo'){
+    if(Preferences.filtersClassIconsBt == 'condo' && Preferences.filtersDen == 'Y'){
       filtersPrefs['den'] = Preferences.filtersDen;
     }
 
