@@ -23,6 +23,10 @@ class CardImagesScreen extends StatelessWidget {
           itemBuilder: ( _, int index ) => _CastCard( image: listing.images?[index])
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.navigate_before_outlined),
+        onPressed: () { Navigator.pop(context); } 
+      ),
     );
   }
 }

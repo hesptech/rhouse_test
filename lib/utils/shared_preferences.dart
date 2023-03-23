@@ -25,9 +25,9 @@ class Preferences {
   static List<String> _filtersGtaEast = [];
   static List<String> _filtersOther = [];  
   static int _filtersBedHouse = 0;
-  static int _filtersBedCondo = 1;
+  static int _filtersBedCondo = 0;
   static String _filtersDen = 'N';
-  static int _filtersBath = 1;
+  static int _filtersBath = 0;
   static int _filtersNumParkingSpaces = 0;
   static int _filtersNumParkingSpacesCondos = 0;
   static  int _filtersMinKitchens = 1;
