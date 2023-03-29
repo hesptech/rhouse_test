@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 import 'package:flutter_black_white/providers/repliers_provider.dart';
 import 'package:flutter_black_white/providers/repliers_filters.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
-//import 'package:flutter_black_white/utils/application_state.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/screens/screens.dart';
 import 'package:flutter_black_white/utils/constants.dart';
@@ -33,10 +32,6 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: ( _ ) => FilterProvider(), ),
         ChangeNotifierProvider( create: (_) => RepliersProvider('toronto ALL'), lazy: false,),
         ChangeNotifierProvider( create: (_) => RepliersFilters('toronto ALL'), ),
-        /* ChangeNotifierProvider(
-          create: (context) => ApplicationState(),
-          builder: (context, _) => const App(),
-        ), */
       ],
       child: const App(),
     );
@@ -57,10 +52,6 @@ class App extends StatelessWidget {
           color: kPrimaryColor,
         ),
         scaffoldBackgroundColor: kBackgroundColor,
-        /* buttonTheme: Theme.of(context).buttonTheme.copyWith(
-              highlightColor: kBackgroundColor,
-            ), */
-        //primarySwatch: Colors.deepPurple,
         textTheme: GoogleFonts.openSansTextTheme(
           Theme.of(context).textTheme,
         ),

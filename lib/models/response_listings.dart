@@ -90,7 +90,7 @@ class Timestamps {
   factory Timestamps.fronJson(String str) => Timestamps.fromMap(json.decode(str));
 
   factory Timestamps.fromMap(Map<String, dynamic> json) => Timestamps(
-    listingEntryDate: DateTime.parse(json["listingEntryDate"]),
+    listingEntryDate: json["listingEntryDate"] != null ? DateTime.parse(json["listingEntryDate"]) : DateTime.parse("2023-02-21T21:55:44.000Z"),
   );
 }
 

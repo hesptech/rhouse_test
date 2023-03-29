@@ -7,15 +7,15 @@ import 'package:flutter_black_white/widgets/widgets.dart';
 class CardsSliderFilters extends StatefulWidget {
 
   final List<Listing> listing;
-  late int? count;
+  //late int? count;
   final String? title;
   final Function onNextPage;
   final Function onInitPage;
 
-  CardsSliderFilters({
+  const CardsSliderFilters({
     Key? key, 
     required this.listing,
-    this.count,
+    //this.count,
     this.title, 
     required this.onNextPage,
     required this.onInitPage,
@@ -53,7 +53,7 @@ class _CardsSliderFiltersState extends State<CardsSliderFilters> {
         'class': Preferences.filtersClassIconsBt,
     };
     filtersResults.addAll(filtersPrefs); */
-    widget.count = 0;
+    //widget.count = 0;
   }
 
   @override

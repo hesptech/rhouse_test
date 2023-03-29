@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
-import 'package:geolocator/geolocator.dart';
 
 class FiltersClassButtons extends StatefulWidget {
   const FiltersClassButtons({Key? key}) : super(key: key);
@@ -13,57 +12,11 @@ class FiltersClassButtons extends StatefulWidget {
 class _FiltersClassButtonsState extends State<FiltersClassButtons> {
 
   late List<String> _filtersClassButtons;
-  late double _locationLat;
-  late double _locationLng;
-
-
-  String location = 'Null';
-
-  Future<Position> _determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      await Geolocator.openLocationSettings();
-      return Future.error('Location services are disabled.');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
-      }
-    }
-    
-    if (permission == LocationPermission.deniedForever) { 
-      return Future.error(
-        'Location permissions are permanently denied, we cannot request permissions.');
-    } 
-
-    return await Geolocator.getCurrentPosition();
-  }
-
-  getUserLocation() async {
-    Position position = await _determinePosition();
-    Preferences.locationLat = position.latitude;
-    Preferences.locationLng = position.longitude;
-    location = 'Lat: ${position.latitude}, Alt: ${position.longitude}';
-    _locationLat = position.latitude;
-    _locationLng = position.longitude;
-    //print(location);
-  }  
-
-
 
   @override
   void initState() {
     super.initState();
     _filtersClassButtons = Preferences.filtersClassButtons;
-    _locationLat = Preferences.locationLat;
-    _locationLng = Preferences.locationLng;
-    getUserLocation();
   }
 
   @override

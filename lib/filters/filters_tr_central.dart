@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
-import 'package:flutter_black_white/providers/filter_provider.dart';
+
 
 
 class FiltersTrCentral extends StatefulWidget {
@@ -21,15 +19,8 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
 
   bool citySelectAll = Preferences.filtersTrCentral.length == 4 ? true : false ;
 
-  List<List<String>> torontoCentral = [
-    ['Toronto C01','Toronto C08'],
-    ['Toronto C02','Toronto C03','Toronto C04','Toronto C09','Toronto C10'],
-    ['Toronto C11'],
-    ['Toronto C04','Toronto C06','Toronto C07','Toronto C11','Toronto C13','Toronto C15'],
-  ];
-  late List<List<String>> trCentral = [];
   List<String> locationsCodes = [];
-  //final List torontoCentral = [];
+
 
   @override
   void initState() {
@@ -46,15 +37,10 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
       const PropertiesTrCentral('Toronto North York'),
     ];
     _filtersTrCentral = Preferences.filtersTrCentral;
-    locationsCodes = Preferences.userFiltersCity;
-    //trCentral = [[]];
   }
 
   @override
   Widget build(BuildContext context) {
-
-    //final filterProvider = Provider.of<FilterProvider>( context );
-    //final filtersLocation = filterProvider.filtersLocation;
 
     return 
       ExpansionTile(
@@ -78,37 +64,21 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
                       citySelectAll = false;
                       for (var element in _propertiesTrCentral) {
                         _filtersTrCentral.remove(element.name);
-
-
-                        for(int i = 0; i < torontoCentral[_propertiesTrCentral.indexOf(element)].length; ++i){
-                          if(locationsCodes.contains(torontoCentral[_propertiesTrCentral.indexOf(element)][i])){
-                            locationsCodes.removeWhere((String name) => name == torontoCentral[_propertiesTrCentral.indexOf(element)][i]);
-                            Provider.of<FilterProvider>(context, listen: false).filtersLocation.removeWhere((String name) => name == torontoCentral[_propertiesTrCentral.indexOf(element)][i]);
-                          }
-                        } 
-
                       }
                       //locationsCodes = [];
                     } else {
                       citySelectAll = true;
                       for (var element in _propertiesTrCentral) {
                         _filtersTrCentral.add(element.name);
-                        locationsCodes = [...locationsCodes,  ...torontoCentral[_propertiesTrCentral.indexOf(element)]];
-                        Provider.of<FilterProvider>(context, listen: false).filtersLocation = [...Provider.of<FilterProvider>(context, listen: false).filtersLocation,  ...torontoCentral[_propertiesTrCentral.indexOf(element)]];
                       } 
                     }
-                    Preferences.filtersTrCentral = _filtersTrCentral;
-                    Preferences.userFiltersCity = locationsCodes; 
-
-                    //print(Preferences.userFiltersCity);
-                    //print(Provider.of<FilterProvider>(context, listen: false).filtersLocation);                     
+                    Preferences.filtersTrCentral = _filtersTrCentral;                     
                   });
                 },
                 style: TextButton.styleFrom(
                   padding: EdgeInsets.zero,
                   minimumSize: const Size( 50.0, 30.0 ),
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  //alignment: Alignment.centerLeft
                 ),
                 child: Text( citySelectAll ? 'Unselect all' : 'Select all', style: const TextStyle( fontSize: 14, fontWeight: FontWeight.w400, color: kSecondaryColor, ),),
               ),
@@ -119,7 +89,6 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
             children: propertiesTrCentralWidgets.toList(),
           ),
           const SizedBox( height: 16.0,),
-          //Text('Prefs.filtersTrCentral: ${Preferences.filtersTrCentral}'),
         ],
         onExpansionChanged: (bool expanded) {
           setState(() => _openCloseIcons[0] = expanded );
@@ -147,26 +116,7 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
           onSelected: ( bool selected ) {
             setState(() {
                 selected ? _filtersTrCentral.add(propertiesTrCentral.name) : _filtersTrCentral.removeWhere((String name) => name == propertiesTrCentral.name) ;
-                //Preferences.filtersTrCentral = _filtersTrCentral;
-                //selected ? trCentral.add(torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)]) : trCentral.removeWhere((String name) => name == torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)]) ;
-                selected ? trCentral.add(torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)]) : trCentral.removeWhere((List name) => name == torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)]) ;
-                //locationsCodes = [ ...locationsCodes, torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)]];
                 Preferences.filtersTrCentral = _filtersTrCentral;
-                if(selected){
-                  locationsCodes = [...locationsCodes,  ...torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)]];
-                  Provider.of<FilterProvider>(context, listen: false).filtersLocation = [...Provider.of<FilterProvider>(context, listen: false).filtersLocation,  ...torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)]];
-                } else {
-                  for(int i = 0; i < torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)].length; ++i){
-                    if(locationsCodes.contains(torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)][i])){
-                      locationsCodes.removeWhere((String name) => name == torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)][i]);
-                      Provider.of<FilterProvider>(context, listen: false).filtersLocation.removeWhere((String name) => name == torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)][i]);
-                    }
-                  }                
-                }
-                Preferences.userFiltersCity = locationsCodes;
-                
-                //print(Preferences.userFiltersCity);
-                //print(Provider.of<FilterProvider>(context, listen: false).filtersLocation);
             });            
           },
         )
