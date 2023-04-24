@@ -11,7 +11,7 @@ class Preferences {
   static List<String> _filtersClassButtons = [];
 
   static double _filterPriceRangeStart = 9.0;
-  static double _filterPriceRangeEnd = 28.0; 
+  static double _filterPriceRangeEnd = 29.0; 
   static String _filtersClassIconsBt = 'residential';
   static List<String> _filterPropertyIcons = [];
   static List<String> _filterPropertyIconsCondo = [];

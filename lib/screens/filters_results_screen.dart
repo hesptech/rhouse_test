@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/providers/repliers_filters.dart';
@@ -18,10 +19,7 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
 
   final Map<String, dynamic> filtersResults = {};
   late Map<String, dynamic> filtersPrefs;
-  final labels = ['0', '100000', '150000', '200000', '250000', '300000', '350000', '400000', '450000', '500000', '550000', '600000', '650000', '700000', '750000', '800000', '850000', '900000', '950000', 
-  '1000000', '1200000', '1300000', '1400000', '1500000', '1600000', '1700000', '1800000', '1900000', 
-  '2000000', '2250000', '2500000', '2750000', '3000000', '3250000', '3500000', '3750000', '4000000', '4250000','4500000','4750000',
-  '5000000'];
+  final labels = kLabels;
   late String filterPriceRangeStart;
   late String filterPriceRangeEnd;
   late List<String> filterPropertyIcons;
@@ -31,8 +29,6 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
   void initState () {
     super.initState();
 
-    filterPriceRangeStart = labels[Preferences.filterPriceRangeStart.round()].toString();
-    filterPriceRangeEnd = labels[Preferences.filterPriceRangeEnd.round()].toString();
     if(Preferences.filtersClassIconsBt == 'residential'){
       filterPropertyIcons = [...Preferences.filterPropertyIcons, ...Provider.of<FilterProvider>(context, listen: false).filtersPropertyTypeHouse];
     } else {
@@ -46,13 +42,18 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
         'resultsPerPage': '15',
         'type': 'sale',
         'hasImages': 'true',
-        'maxPrice': filterPriceRangeEnd,
-        'minPrice': filterPriceRangeStart,
         'class': Preferences.filtersClassIconsBt,
         'propertyType': filterPropertyIcons,
         'district': Provider.of<FilterProvider>(context, listen: false).filtersLocation,
     };
 
+    if(int.parse(labels[Preferences.filterPriceRangeStart.round()]) > 1 ) {
+      filtersPrefs['minPrice'] = labels[Preferences.filterPriceRangeStart.round()].toString();
+    } 
+
+    if(int.parse((labels[Preferences.filterPriceRangeEnd.round()])) <= 4750000 ) {
+      filtersPrefs['maxPrice'] = labels[Preferences.filterPriceRangeEnd.round()].toString();
+    }
 
     if(Preferences.filtersClassIconsBt == 'residential' && Preferences.filtersBedHouse > 1){
       filtersPrefs['minBeds'] = Preferences.filtersBedHouse.toString();

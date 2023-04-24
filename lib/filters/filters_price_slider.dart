@@ -20,26 +20,14 @@ class _FiltersPriceSliderState extends State<FiltersPriceSlider> {
   late double _filterPriceRangeStart;
   late double _filterPriceRangeEnd;
   late RangeValues selectedRange;
-  late String maxUnlimited;
 
 
   @override
   void initState() {
     super.initState();
-    //_filterPriceRangeStart = 9.0;
-    //_filterPriceRangeEnd = 28.0;
     _filterPriceRangeStart = Preferences.filterPriceRangeStart;
     _filterPriceRangeEnd = Preferences.filterPriceRangeEnd;
     selectedRange = RangeValues(_filterPriceRangeStart, _filterPriceRangeEnd);
-    //RangeValues _currentRangeValues = const RangeValues(40, 80);
-
-    if (_filterPriceRangeEnd < 4800000) {
-      maxUnlimited = '\$${_filterPriceRangeEnd.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} \n or more';
-    } else {
-      maxUnlimited = 'max';
-    }
-
-    //maxUnlimited = '\$${_filterPriceRangeEnd.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} \n or more';
   }
 
 
@@ -135,10 +123,7 @@ class _FiltersPriceSliderState extends State<FiltersPriceSlider> {
 
 
   Widget buildRangeSlider() {
-    final labels = ['0', '100000', '150000', '200000', '250000', '300000', '350000', '400000', '450000', '500000', '550000', '600000', '650000', '700000', '750000', '800000', '850000', '900000', '950000', 
-    '1000000', '1200000', '1300000', '1400000', '1500000', '1600000', '1700000', '1800000', '1900000', 
-    '2000000', '2250000', '2500000', '2750000', '3000000', '3250000', '3500000', '3750000', '4000000', '4250000','4500000','4750000',
-    '5000000'];
+    const labels = kLabels;
     double min = 0;
     double max = 40;
     //final double max = labels.length - 1.0;
