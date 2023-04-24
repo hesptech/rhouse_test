@@ -10,6 +10,8 @@ class RepliersFilters extends ChangeNotifier {
   final String _baseUrl = 'api.repliers.io';
   String citySearchParam = '';
   List<Listing> onDisplayFilters = [];
+  int onCount = 0;
+  int _displayPageFilters = 0;
 
 
   RepliersFilters( this.citySearchParam ) {
@@ -17,12 +19,10 @@ class RepliersFilters extends ChangeNotifier {
   }
 
   // FILTERS
-  Future<String> _getJsonDataFilters( String endPoint,  ) async {
+  Future<String> _getJsonDataFilters( String endPoint, Map<String, dynamic> valuesParams, [int page = 1] ) async {
     endPoint = 'listings';
-    final url = Uri.https( _baseUrl, endPoint, {
-      'hasImages': 'true',
-    });
-
+    final url = Uri.https( _baseUrl, endPoint, valuesParams);
+    print( url );
     Map<String, String>? headers = { 'REPLIERS-API-KEY': _apiKey };
 
     // Await the http get response, then decode the json-formatted response.
@@ -33,16 +33,22 @@ class RepliersFilters extends ChangeNotifier {
 
   getDisplayFilters(Map<String, dynamic> filtersResults) async {
 
-    final jsonData = await _getJsonDataFilters('listings'); 
+    _displayPageFilters++;
+    filtersResults['pageNum'] = _displayPageFilters.toString(); 
+
+    final jsonData = await _getJsonDataFilters('listings', filtersResults, _displayPageFilters); 
 
     final nowPlayingResponse = ResponseBody.fromJson(jsonData);
 
     onDisplayFilters = [ ...onDisplayFilters, ...nowPlayingResponse.listings];
+    onCount = nowPlayingResponse.count;
     notifyListeners();
   }
 
   initGetDisplay(Map<String, dynamic> filtersResults) {
+    _displayPageFilters = 0;
     onDisplayFilters = [];
+    onCount = 0;
     getDisplayFilters(filtersResults);
   }
 }

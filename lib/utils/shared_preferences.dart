@@ -1,4 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:geolocator/geolocator.dart';
 
 class Preferences {
   
@@ -23,26 +24,37 @@ class Preferences {
   static List<String> _filtersGtaNorth = [];
   static List<String> _filtersGtaEast = [];
   static List<String> _filtersOther = [];  
-  static int _filtersBedHouse = 0;
+  static int _filtersBedHouse = 1;
   static int _filtersBedCondo = 0;
   static String _filtersDen = 'N';
-  static int _filtersBath = 0;
+  static int _filtersBath = 1;
   static int _filtersNumParkingSpaces = 0;
   static int _filtersNumParkingSpacesCondos = 0;
-  static  int _filtersMinKitchens = 1;
-  static double _filterDaysMarketStart = 1.0;
+  static bool _filtersNumParkingSpacesCondos1 = false;
+  static int _filtersMinKitchens = 1;
+  
+  static List<String> _filtersStyleHouse = [];
+  static List<String> _filtersStyleCondo = [];
+  static List<String> _filtersBasement = [];
+  static List<String> _filtersAmmenities = [];
+  static const bool _filtersMaxOpenHouseDate = false;
+  static final List<String> _filtersSwimmingPool = [];
+
+  static double _filterDaysMarketStart = 0.0;
   static double _filterDaysMarketEnd = 30.0;
   static double _filterSizeStart = 10.0;
   static double _filterSizeEnd = 3000.0;
   static double _filterCondoFeeStart = 100.0;
   static double _filterCondoFeeEnd = 1500.0;
-  static List<String> _filtersStyleCondo = [];
-  static List<String> _filtersStyleHouse = [];
   static List<String> _filtersCondoExtra = [];
 
 
   static List<String> _filtersPropertyTypeHouse = [];
   static List<String> _userFiltersCity = [];
+  static final List<String> _filtersIndexStyleHouse = [];
+  static final List<String> _filtersIndexStyleCondo = [];
+  static final List<String> _filtersIndexBasement = [];
+  static final List<String> _filtersIndexAmmenities = [];
 
 
   static Future init() async {
@@ -209,6 +221,15 @@ class Preferences {
   static set filtersNumParkingSpacesCondos( int value ) {
     _filtersNumParkingSpacesCondos = value;
     _prefs.setInt('filtersNumParkingSpacesCondos', value);
+  }
+
+  static bool get filtersNumParkingSpacesCondos1 {
+    return _prefs.getBool( 'filtersNumParkingSpacesCondos1' ) ?? _filtersNumParkingSpacesCondos1;
+  }
+
+  static set filtersNumParkingSpacesCondos1( bool value ) {
+    _filtersNumParkingSpacesCondos1 = value;
+    _prefs.setBool('filtersNumParkingSpacesCondos1', value);
   }
 
   static int get filtersMinKitchens {
@@ -400,9 +421,6 @@ class Preferences {
 
 
 
-
-
-
   // Type
   static List<String> get filtersPropertyTypeHouse {
     return _prefs.getStringList( 'filtersPropertyTypeHouse') ?? _filtersPropertyTypeHouse;
@@ -423,4 +441,49 @@ class Preferences {
     _userFiltersCity = value;
     _prefs.setStringList( 'userFiltersCity', value );
   }
+
+
+
+
+  // MORE FILTERS
+  static List<String> get filtersBasement {
+    return _prefs.getStringList('filtersBasement') ?? _filtersBasement;
+  }
+
+
+  static set filtersBasement( List<String> value ) {
+    _filtersBasement = value;
+    _prefs.setStringList('filtersBasement', value);
+  } 
+
+
+  static List<String> get filtersAmmenities {
+    return _prefs.getStringList('filtersAmmenities') ?? _filtersAmmenities;
+  }
+
+
+  static set filtersAmmenities( List<String> value ) {
+    _filtersAmmenities = value;
+    _prefs.setStringList('filtersAmmenities', value);
+  } 
+
+
+  static Future setfiltersIndexStyleHouse( List<String> value ) async => await _prefs.setStringList('filtersIndexStyleHouse', value);
+  static List<String> getfiltersIndexStyleHouse() => _prefs.getStringList('filtersIndexStyleHouse') ?? _filtersIndexStyleHouse;
+
+  static Future setfiltersIndexStyleCondo( List<String> value ) async => await _prefs.setStringList('filtersIndexStyleCondo', value);
+  static List<String> getfiltersIndexStyleCondo() => _prefs.getStringList('filtersIndexStyleCondo') ?? _filtersIndexStyleCondo;
+
+  static Future setfiltersIndexBasement( List<String> value ) async => await _prefs.setStringList('filtersIndexBasement', value);
+  static List<String> getfiltersIndexBasement() => _prefs.getStringList('filtersIndexBasement') ?? _filtersIndexBasement;
+
+  static Future setfiltersIndexAmmenities( List<String> value ) async => await _prefs.setStringList('filtersIndexAmmenities', value);
+  static List<String> getfiltersIndexAmmenities() => _prefs.getStringList('filtersIndexAmmenities') ?? _filtersIndexAmmenities;
+
+  static Future setfiltersMaxOpenHouseDate( bool value ) async => await _prefs.setBool('filtersMaxOpenHouseDate', value);
+  static bool getfiltersMaxOpenHouseDate() => _prefs.getBool('filtersMaxOpenHouseDate') ?? _filtersMaxOpenHouseDate;
+
+  static Future setfiltersIndexSwimmingPool( List<String> value ) async => await _prefs.setStringList('filtersIndexSwimmingPool', value);
+  static List<String> getfiltersIndexSwimmingPool() => _prefs.getStringList('filtersIndexSwimmingPool') ?? _filtersSwimmingPool;
+
 }

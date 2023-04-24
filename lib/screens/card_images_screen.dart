@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/utils/constants.dart';
 
 class CardImagesScreen extends StatelessWidget {
   const CardImagesScreen({Key? key}) : super(key: key);
@@ -24,6 +25,7 @@ class CardImagesScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: kPrimaryColor,
         child: const Icon(Icons.navigate_before_outlined),
         onPressed: () { Navigator.pop(context); } 
       ),

@@ -22,12 +22,12 @@ class CustomAppbar extends StatelessWidget  implements PreferredSizeWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
-                      Image(image: AssetImage('assets/r_logo_112x38.png'),),
+                      Image(image: AssetImage('assets/r_logo_100x30.png'),),
                       //const Spacer(),
-                      Image(image: AssetImage('assets/play&learn_logo108x37.png'),),
+                      Image(image: AssetImage('assets/play&learn_logo100x30.png'),),
                     ],
                   ),
-                  const SizedBox( height: 7, ),
+                  const SizedBox( height: 9, ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -42,7 +42,7 @@ class CustomAppbar extends StatelessWidget  implements PreferredSizeWidget {
                             //child: const Icon( Icons.map_outlined, color: Color(0xFF0BB48B), size: 26.0,),
                             child: Row(
                               children: const [
-                                Icon( Icons.map_outlined, color: Color(0xFF0BB48B), size: 26.0,),
+                                Icon( Icons.map_outlined, color: Color(0xFF0BB48B), size: 30.0,),
                                 Text('Search by map', style: TextStyle(color: Colors.white54, fontSize: 12.0, fontWeight: FontWeight.bold),),    
                               ],
                             )
@@ -56,11 +56,11 @@ class CustomAppbar extends StatelessWidget  implements PreferredSizeWidget {
                         onTap: () {
                           Navigator.pushNamed(context, 'filters_screen');
                         },
-                        child: const Icon( Icons.tune_outlined, color: Color(0xFF0BB48B), size: 26.0,),
+                        child: const Icon( Icons.tune_outlined, color: Color(0xFF0BB48B), size: 30.0,),
                       ),
                     ],
                   ),
-                  const SizedBox( height: 6, ),
+                  const SizedBox( height: 8, ),
                   GestureDetector(
                     onTap: () {
                       if ( loggedIn == true ) {

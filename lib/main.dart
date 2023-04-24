@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_black_white/providers/repliers_provider.dart';
 import 'package:flutter_black_white/providers/repliers_filters.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
+
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/screens/screens.dart';
 import 'package:flutter_black_white/utils/constants.dart';
@@ -66,7 +67,7 @@ class App extends StatelessWidget {
         'login_screen': ( _ ) => const LoginScreen(),
         'filters_screen': ( _ ) => const FiltersScreen(),
         'filters_results_screen': ( _ ) => const FiltersResultsScreen(),
-        'card_details_screen': ( _ ) => const CardDetailsScreen(),
+        'card_details_full_screen': ( _ ) => const CardDetailsFullScreen(),
         'card_images_screen': ( _ ) => const CardImagesScreen(),
       },
     );

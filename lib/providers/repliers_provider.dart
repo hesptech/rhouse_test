@@ -13,7 +13,8 @@ class RepliersProvider extends ChangeNotifier {
   List<Listing> onDisplayProperties = [];
   List<Listing> onDisplayHouses = [];
   List<Listing> onDisplayCondo = [];
-  List<Listing> onDisplayFilters = [];
+  int _displayPageHouses = 0;
+  int _displayPageCondo = 0;
 
 
   Map<String, dynamic> valuesParams = {};
@@ -26,8 +27,13 @@ class RepliersProvider extends ChangeNotifier {
 
   }
 
-  Future<String> _getJsonData( String endPoint, String classParam ) async {
+  Future<String> _getJsonData( String endPoint, String classParam, [int page = 1] ) async {
     final url = Uri.https( _baseUrl, endPoint, {
+      'pageNum': '$page',
+      'resultsPerPage': '15',
+      'maxPrice': '2000000',
+      'minPrice': '1500000',
+      'type': 'sale',
       'hasImages': 'true',
       'class': classParam,
     });
@@ -44,7 +50,8 @@ class RepliersProvider extends ChangeNotifier {
   }
 
   getDisplayHouses() async {
-    final jsonData = await _getJsonData('listings', 'residential'); 
+    _displayPageHouses++;
+    final jsonData = await _getJsonData('listings', 'residential', _displayPageHouses); 
 
     final nowPlayingResponse = ResponseBody.fromJson(jsonData);
 
@@ -53,7 +60,8 @@ class RepliersProvider extends ChangeNotifier {
   }
 
   getDisplayCondo() async {
-    final jsonData = await _getJsonData('listings', 'condo'); 
+    _displayPageCondo++;
+    final jsonData = await _getJsonData('listings', 'condo', _displayPageCondo); 
 
     final nowPlayingResponse = ResponseBody.fromJson(jsonData);
 

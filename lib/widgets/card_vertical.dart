@@ -72,7 +72,7 @@ class CardVertical extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 if ( loggedIn == true ) {
-                  Navigator.pushNamed(context, 'card_details_screen', arguments: listing);
+                  Navigator.pushNamed(context, 'card_details_full_screen', arguments: listing);
                 } else {
                   //Navigator.restorablePopAndPushNamed(context, '/');
                 }
@@ -87,7 +87,7 @@ class CardVertical extends StatelessWidget {
                           placeholder: const AssetImage('assets/no-image.jpg'), 
                           image: NetworkImage('https://cdn.repliers.io/$images?w=500'),
                           width: double.infinity,
-                          //height: 227,
+                          height: 227,
                           fit: BoxFit.cover,
                           fadeInDuration: const Duration( milliseconds: 300), 
                         ),

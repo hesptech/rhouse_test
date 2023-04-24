@@ -98,7 +98,7 @@ class CardHor extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   if ( loggedIn == true ) {
-                    Navigator.pushNamed(context, 'card_details_screen', arguments: listing);
+                    Navigator.pushNamed(context, 'card_details_full_screen', arguments: listing);
                   } else {
                     //Navigator.restorablePopAndPushNamed(context, '/');
                   }
