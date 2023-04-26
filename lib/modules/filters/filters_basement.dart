@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/utils/constants.dart';
+import 'package:provider/provider.dart';
 
+import 'package:flutter_black_white/providers/filter_provider.dart';
+import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 
 
 class FiltersBasement extends StatefulWidget {
@@ -16,13 +19,10 @@ class _FiltersBasementState extends State<FiltersBasement> {
   late List<PropertiesBasement> _propertiesBasement;
   late List<String> _filtersBasement;
 
-  //bool selectAllBasement = Preferences.filtersBasementLoggedOut.length == 4;
-  bool selectAllBasement = false;
-
-  List<List<String>> filterBasement = [
+  List<List<String>> indexBasement = [
     ['Finished'],
     ['Unfinished'],
-    ['Partiallyfinished'],
+    ['Apartment'],
     ['Sep Entrance'],
   ];
 
@@ -32,15 +32,13 @@ class _FiltersBasementState extends State<FiltersBasement> {
 
     _openCloseIcons = <bool>[
       false,
-      false,
-      false,
-      false,
     ];
     
     _propertiesBasement = <PropertiesBasement>[
       const PropertiesBasement('Finished'),
       const PropertiesBasement('Unfinished'),
-      const PropertiesBasement('Partially finished'),
+      const PropertiesBasement('Apartment'),
+      const PropertiesBasement('Separate Entrance'),
     ];
     _filtersBasement = [];
   }
@@ -52,7 +50,7 @@ class _FiltersBasementState extends State<FiltersBasement> {
       child: ExpansionTile(
         title: const Text('BASEMENT', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold, ),),
         trailing: Icon(
-          _openCloseIcons[2] ? Icons.remove : Icons.add,
+          _openCloseIcons[0] ? Icons.remove : Icons.add,
           //Icons.add,
           color: kPrimaryColor,
           size: 18.0,
@@ -62,44 +60,10 @@ class _FiltersBasementState extends State<FiltersBasement> {
             children: propertiesBasementWidgets.toList(),
           ),
           const SizedBox( height: 14.0, ),
-          const Divider( 
-            thickness: 1.0, 
-            color: kPrimaryColor, 
-            indent: 12.0, 
-            endIndent: 12.0, 
-            height: 0,
-          ), 
-          Padding(
-            padding: const EdgeInsets.symmetric( horizontal: 10.0, vertical: 14.0 ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                ChoiceChip(
-                  label: Container(
-                    width: 160,
-                    alignment: Alignment.center,
-                    child: Text('Separate Entrance', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: _filtersBasement.contains('Separate Entrance') ? Colors.white : kPrimaryColor),),
-                  ), 
-                  labelPadding: const EdgeInsets.all(0.0),
-                  backgroundColor: const Color(0xFFFFFFFF),
-                  selectedColor: kPrimaryColor,
-                  shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
-                  side: const BorderSide( color: kPrimaryColor ),
-                  selected: _filtersBasement.contains('Separate Entrance'),
-                  onSelected: ( bool selected ) {
-                    setState(() {
-                        selected ? _filtersBasement.add('Separate Entrance') : _filtersBasement.removeWhere((String name) => name == 'Separate Entrance') ;
-                        //Preferences.filtersBasementLoggedOut = _filtersBasement;
-                    });            
-                  },
-                ),
-          
-              ]
-            ),
-          )       
+       
         ],
         onExpansionChanged: (bool expanded) {
-          setState(() => _openCloseIcons[2] = expanded );
+          setState(() => _openCloseIcons[0] = expanded );
         },
       ),
     );    
@@ -124,7 +88,22 @@ class _FiltersBasementState extends State<FiltersBasement> {
           onSelected: ( bool selected ) {
             setState(() {
                 selected ? _filtersBasement.add(propertiesBasement.name) : _filtersBasement.removeWhere((String name) => name == propertiesBasement.name) ;
-                //Preferences.filtersBasementLoggedOut = _filtersBasement;
+                Preferences.filtersBasement = _filtersBasement;
+
+                if(selected){
+                  Provider.of<FilterProvider>(context, listen: false).filtersBasement = [...Provider.of<FilterProvider>(context, listen: false).filtersBasement,  ...indexBasement[_propertiesBasement.indexOf(propertiesBasement)]];
+                } else {
+                  for(int i = 0; i < indexBasement[_propertiesBasement.indexOf(propertiesBasement)].length; ++i){
+                    if(Provider.of<FilterProvider>(context, listen: false).filtersBasement.contains(indexBasement[_propertiesBasement.indexOf(propertiesBasement)][i])){
+                      Provider.of<FilterProvider>(context, listen: false).filtersBasement.removeWhere((String name) => name == indexBasement[_propertiesBasement.indexOf(propertiesBasement)][i]);
+                    }
+                  }                
+                }
+                Preferences.setfiltersIndexBasement(Provider.of<FilterProvider>(context, listen: false).filtersBasement);
+
+                /* print(Provider.of<FilterProvider>(context, listen: false).filtersBasement);
+                print(Preferences.filtersBasement); */
+                //print(Preferences.getfiltersIndexBasement());
             });            
           },
         )

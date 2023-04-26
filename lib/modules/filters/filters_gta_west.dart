@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 
@@ -18,7 +21,19 @@ class _FiltersGtaWestState extends State<FiltersGtaWest> {
 
   bool citySelectAll = Preferences.filtersGtaWest.length == 8 ? true : false ;
 
+  List<List<String>> gtaWestDistricts = [
+  ['Toronto W07','Toronto W08','Toronto W09','Toronto W10'],
+  ['Mississauga'],
+  ['Brampton'],
+  ['Oakville'],
+  ['Milton'],
+  ['Burlington'],
+  ];
 
+  List<List<String>> gtaWestOtherDistricts = [
+  ['Halton Hills'],
+  ['Caledon'],
+  ];
 
   @override
   void initState() {
@@ -73,22 +88,41 @@ class _FiltersGtaWestState extends State<FiltersGtaWest> {
                       citySelectAll = false;
                       for (var element in _propertiesGtaWest) {
                         _filtersGtaWest.remove(element.name) ;
+
+                        for(int i = 0; i < gtaWestDistricts[_propertiesGtaWest.indexOf(element)].length; ++i){
+                          if(Provider.of<FilterProvider>(context, listen: false).filtersLocation.contains(gtaWestDistricts[_propertiesGtaWest.indexOf(element)][i])){
+                            Provider.of<FilterProvider>(context, listen: false).filtersLocation.removeWhere((String name) => name == gtaWestDistricts[_propertiesGtaWest.indexOf(element)][i]);
+                          }
+                        } 
+
                       }
                       for (var element in _propertiesGtaWestOther) {
                         _filtersGtaWest.remove(element.name) ;
+
+                        for(int i = 0; i < gtaWestOtherDistricts[_propertiesGtaWestOther.indexOf(element)].length; ++i){
+                          if(Provider.of<FilterProvider>(context, listen: false).filtersLocation.contains(gtaWestOtherDistricts[_propertiesGtaWestOther.indexOf(element)][i])){
+                            Provider.of<FilterProvider>(context, listen: false).filtersLocation.removeWhere((String name) => name == gtaWestOtherDistricts[_propertiesGtaWestOther.indexOf(element)][i]);
+                          }
+                        }
+
                       }
                       
                     } else {
                       citySelectAll = true;
                       for (var element in _propertiesGtaWest) {
                         _filtersGtaWest.add(element.name);
+                        Provider.of<FilterProvider>(context, listen: false).filtersLocation = [...Provider.of<FilterProvider>(context, listen: false).filtersLocation, ...gtaWestDistricts[_propertiesGtaWest.indexOf(element)]];
                       }
                       for (var element in _propertiesGtaWestOther) {
                         _filtersGtaWest.add(element.name);
+                        Provider.of<FilterProvider>(context, listen: false).filtersLocation = [...Provider.of<FilterProvider>(context, listen: false).filtersLocation, ...gtaWestOtherDistricts[_propertiesGtaWestOther.indexOf(element)]];
                       }
                     }
                     Preferences.filtersGtaWest = _filtersGtaWest ;
+                    Preferences.userFiltersCity = Provider.of<FilterProvider>(context, listen: false).filtersLocation;
 
+                    //print(Preferences.userFiltersCity);
+                    //print(Provider.of<FilterProvider>(context, listen: false).filtersLocation);
                   });  
                 }, 
                 style: TextButton.styleFrom(
@@ -144,6 +178,20 @@ class _FiltersGtaWestState extends State<FiltersGtaWest> {
             setState(() {
                 selected ? _filtersGtaWest.add(propertiesGtaWest.name) : _filtersGtaWest.removeWhere((String name) => name == propertiesGtaWest.name) ;
                 Preferences.filtersGtaWest = _filtersGtaWest;
+
+                if(selected){
+                  Provider.of<FilterProvider>(context, listen: false).filtersLocation = [...Provider.of<FilterProvider>(context, listen: false).filtersLocation,  ...gtaWestDistricts[_propertiesGtaWest.indexOf(propertiesGtaWest)]];
+                } else {
+                  for(int i = 0; i < gtaWestDistricts[_propertiesGtaWest.indexOf(propertiesGtaWest)].length; ++i){
+                    if(Provider.of<FilterProvider>(context, listen: false).filtersLocation.contains(gtaWestDistricts[_propertiesGtaWest.indexOf(propertiesGtaWest)][i])){
+                      Provider.of<FilterProvider>(context, listen: false).filtersLocation.removeWhere((String name) => name == gtaWestDistricts[_propertiesGtaWest.indexOf(propertiesGtaWest)][i]);
+                    }
+                  }                
+                }
+                Preferences.userFiltersCity = Provider.of<FilterProvider>(context, listen: false).filtersLocation;
+
+                //print(Provider.of<FilterProvider>(context, listen: false).filtersLocation);
+                //print(Preferences.userFiltersCity);
             });            
           },
         )
@@ -172,6 +220,19 @@ class _FiltersGtaWestState extends State<FiltersGtaWest> {
                 selected ? _filtersGtaWest.add(propertiesGtaWestOther.name) : _filtersGtaWest.removeWhere((String name) => name == propertiesGtaWestOther.name) ;
                 Preferences.filtersGtaWest = _filtersGtaWest;
 
+                if(selected){
+                  Provider.of<FilterProvider>(context, listen: false).filtersLocation = [...Provider.of<FilterProvider>(context, listen: false).filtersLocation,  ...gtaWestOtherDistricts[_propertiesGtaWestOther.indexOf(propertiesGtaWestOther)]];
+                } else {
+                  for(int i = 0; i < gtaWestOtherDistricts[_propertiesGtaWestOther.indexOf(propertiesGtaWestOther)].length; ++i){
+                    if(Provider.of<FilterProvider>(context, listen: false).filtersLocation.contains(gtaWestOtherDistricts[_propertiesGtaWestOther.indexOf(propertiesGtaWestOther)][i])){
+                      Provider.of<FilterProvider>(context, listen: false).filtersLocation.removeWhere((String name) => name == gtaWestOtherDistricts[_propertiesGtaWestOther.indexOf(propertiesGtaWestOther)][i]);
+                    }
+                  }                
+                }
+                Preferences.userFiltersCity = Provider.of<FilterProvider>(context, listen: false).filtersLocation;
+
+                //print(Provider.of<FilterProvider>(context, listen: false).filtersLocation);
+                //print(Preferences.userFiltersCity);
             });            
           },        
         ),

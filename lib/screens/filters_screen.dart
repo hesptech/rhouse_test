@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/widgets_formatting.dart';
-import 'package:flutter_black_white/filters/filters.dart';
+import 'package:flutter_black_white/modules/filters/filters.dart';
 
 
 class FiltersScreen extends StatelessWidget {
@@ -23,48 +23,28 @@ class FiltersScreen extends StatelessWidget {
         ),
         title: const Text('Personalize Listing'),
       ),
-      body: const FiltersExpansionTiles(),
-      bottomNavigationBar: const FiltersBottomBar(),
-    );
-  }
-}
-
-
-class FiltersExpansionTiles extends StatefulWidget {
-  const FiltersExpansionTiles({ Key? key }) : super(key: key);
-
-  @override
-  State<FiltersExpansionTiles> createState() => _FiltersExpansionTilesState();
-}
-
-class _FiltersExpansionTilesState extends State<FiltersExpansionTiles> {
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Column(
-        children: <Widget>[
-          Container(
-            height: 5,
-            color: kSecondaryColor,
-          ),
-          //const FiltersPriceMinmax(),
-          const FiltersPriceSlider(),
-          //const FiltersPriceRange(),
-          const FiltersClassIconsBt(),
-          const SizedBox( height: 28.0,),
-          const GreenDivider(),
-          const FiltersPropertyType(),
-          const GreenDivider(),
-          const FiltersLocation(),
-          const GreenDivider(),
-          const FiltersBathbedpark(),
-          //const FiltersBedrooms(),
-          //const FiltersBathrooms(),
-          const FiltersMore(),
-        ],
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 5,
+              color: kSecondaryColor,
+            ),
+            const FiltersPriceSlider(),
+            const FiltersClassIconBt(),
+            const SizedBox( height: 28.0,),
+            const GreenDivider(),
+            const FiltersPropertyType(),
+            const GreenDivider(),
+            const FiltersLocation(),
+            const GreenDivider(),
+            const FiltersBathbedpark(),
+            const FiltersMore(),
+          ],
+        ),
       ),
+      bottomNavigationBar: const FiltersBottomBar(),
     );
   }
 }

@@ -5,16 +5,14 @@ import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 
-
-class FiltersClassIconsBt extends StatefulWidget {
-  const FiltersClassIconsBt({Key? key}) : super(key: key);
+class FiltersClassIconBt extends StatefulWidget {
+  const FiltersClassIconBt({Key? key}) : super(key: key);
 
   @override
-  State<FiltersClassIconsBt> createState() => _FiltersClassIconsBtState();
+  State<FiltersClassIconBt> createState() => _FiltersClassIconBtState();
 }
 
-class _FiltersClassIconsBtState extends State<FiltersClassIconsBt> {
-
+class _FiltersClassIconBtState extends State<FiltersClassIconBt> {
   late String _filtersClassIconsBt;
 
   @override

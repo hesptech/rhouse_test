@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 
@@ -77,6 +80,12 @@ class _FiltersOtherState extends State<FiltersOther> {
             setState(() {
                 selected ? _filtersOther.add(propertiesOther.name) : _filtersOther.removeWhere((String name) => name == propertiesOther.name) ;
                 Preferences.filtersOther = _filtersOther;
+
+                selected ? Provider.of<FilterProvider>(context, listen: false).filtersLocation.add(propertiesOther.name) : Provider.of<FilterProvider>(context, listen: false).filtersLocation.removeWhere((String name) => name == propertiesOther.name) ;
+                Preferences.userFiltersCity = Provider.of<FilterProvider>(context, listen: false).filtersLocation;
+
+                //print(Provider.of<FilterProvider>(context, listen: false).filtersLocation);
+                //print(Preferences.userFiltersCity);
             });            
           },
         )

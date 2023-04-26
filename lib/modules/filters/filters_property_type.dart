@@ -3,10 +3,8 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-import 'package:flutter_black_white/filters/filters_property_condo.dart';
-import 'package:flutter_black_white/filters/filters_property_house.dart';
-//import 'package:flutter_black_white/utils/shared_preferences.dart';
-
+import 'package:flutter_black_white/modules/filters/filters_property_condo.dart';
+import 'package:flutter_black_white/modules/filters/filters_property_house.dart';
 
 class FiltersPropertyType extends StatefulWidget {
   const FiltersPropertyType({Key? key}) : super(key: key);
@@ -37,19 +35,6 @@ class _FiltersPropertyTypeState extends State<FiltersPropertyType> {
   @override
   Widget build(BuildContext context) {
 
-    final filterProvider = Provider.of<FilterProvider>( context, listen: false );
-    final currentFilter = filterProvider.filterProvider;
-
-    if(currentFilter == "residential") {
-      bodyExpansionTile = [
-        const FiltersPropertyHouse()
-      ];
-    } else if (currentFilter == "condo") {
-      bodyExpansionTile = [
-        const FiltersPropertyCondo()
-      ];
-    }
-
     return SizedBox(
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
@@ -64,7 +49,7 @@ class _FiltersPropertyTypeState extends State<FiltersPropertyType> {
                   _openCloseIcons[0] ? Icons.remove : Icons.add,
                   color: kSecondaryColor,
                 ),
-                children: filterProvider.filterProvider == "residential" ? [const FiltersPropertyHouse()] : [const FiltersPropertyCondo()],
+                children: currentFilter.filterProvider == "residential" ? [const FiltersPropertyHouse()] : [const FiltersPropertyCondo()],
                 onExpansionChanged: (bool expanded) {
                   setState(() => _openCloseIcons[0] = expanded );
                   if (expanded == false) {
@@ -73,7 +58,7 @@ class _FiltersPropertyTypeState extends State<FiltersPropertyType> {
                   }
                 },
               ),
-            ),            
+            ),
           ],
         )
       ),

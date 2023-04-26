@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:flutter_black_white/filters/filters_condo_extra.dart';
-import 'package:flutter_black_white/filters/filters_condo_fee.dart';
-import 'package:flutter_black_white/filters/filters_size.dart';
-
 import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-import 'package:flutter_black_white/utils/widgets_formatting.dart';
-//import 'package:b_w0/helpers/shared_preferences.dart';
-import 'package:flutter_black_white/filters/filters_style_condo.dart';
-import 'package:flutter_black_white/filters/filters_style_house.dart';
-import '../filters/filters_more_extra.dart';
-import '../filters/filters_parking.dart';
-import '../filters/filters_kitchens.dart';
-import '../filters/filters_basement.dart';
-import '../filters/filters_days_market.dart';
+import 'package:flutter_black_white/modules/filters/filters_style_house.dart';
+import 'package:flutter_black_white/modules/filters/filters_basement.dart';
+import 'package:flutter_black_white/modules/filters/filters_days_market.dart';
+import 'package:flutter_black_white/modules/filters/filters_more_extra.dart';
+import 'package:flutter_black_white/modules/filters/filters_parking.dart';
+import 'package:flutter_black_white/modules/filters/filters_kitchens.dart';
+import 'package:flutter_black_white/modules/filters/filters_style_condo.dart';
+import 'package:flutter_black_white/modules/filters/filters_size.dart';
+import 'package:flutter_black_white/modules/filters/filters_condo_fee.dart';
+import 'package:flutter_black_white/modules/filters/filters_condo_extra.dart';
 
 class FiltersMore extends StatefulWidget {
   const FiltersMore({Key? key}) : super(key: key);
@@ -35,9 +32,6 @@ class _FiltersMoreState extends State<FiltersMore> {
 
     _openCloseIcons = <bool>[
       false,
-      false,
-      false,
-      false,
     ];
   }
 
@@ -50,25 +44,9 @@ class _FiltersMoreState extends State<FiltersMore> {
     if(currentFilter == "residential") {
       bodyExpansionTile = const <Widget>[
         FiltersStyleHouse(),
-        Padding(
-          padding: EdgeInsets.symmetric( horizontal: 12.0 ),
-          child: BlueDivider()
-        ),
         FiltersBasement(),
-        Padding(
-          padding: EdgeInsets.symmetric( horizontal: 12.0 ),
-          child: BlueDivider()
-        ),
         FiltersDaysMarket(),
-        Padding(
-          padding: EdgeInsets.symmetric( horizontal: 12.0 ),
-          child: BlueDivider()
-        ),
         FiltersMoreExtra(),
-        Padding(
-          padding: EdgeInsets.symmetric( horizontal: 12.0 ),
-          child: BlueDivider()
-        ),
         FiltersParking(),
         FiltersKitchens(),
         SizedBox( height: 24.0, ),
@@ -76,7 +54,6 @@ class _FiltersMoreState extends State<FiltersMore> {
     } else if (currentFilter == "condo") {
       bodyExpansionTile = const <Widget>[
         FiltersStyleCondo(),
-        //BlueDivider(),
         FiltersDaysMarket(),
         FiltersSize(),
         FiltersCondoFee(),
@@ -108,10 +85,6 @@ class _FiltersMoreState extends State<FiltersMore> {
               children: bodyExpansionTile,
               onExpansionChanged: (bool expanded) {
                 setState(() => _openCloseIcons[0] = expanded );
-                if (expanded == false) {
-                  //setState(() => _openCloseIcons[1] = false );
-                  //setState(() => _openCloseIcons[2] = false );
-                }
               },
             ),            
           ],
@@ -119,10 +92,4 @@ class _FiltersMoreState extends State<FiltersMore> {
       ),
     );
   }
-}
-
-
-class PropertiesStyle {
-  const PropertiesStyle(this.name);
-  final String name;
 }

@@ -103,7 +103,6 @@ class _FiltersDaysMarketState extends State<FiltersDaysMarket> {
         ),
         const SizedBox( height: 6.0,),
 
-
         /* Padding(
           padding: const EdgeInsets.fromLTRB(18.0, 24.0, 18.0, 0.0),
           child: Row(

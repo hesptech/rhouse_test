@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 
@@ -13,6 +16,19 @@ class _FiltersCondoExtraState extends State<FiltersCondoExtra> {
 
   late List<PropertiesCondoExtra> _propertiesCondoExtra;
   late List<String> _filtersCondoExtra;
+
+  List<List<String>> indexAmmenities = [
+    ['Concierge'],
+    ['Gym'],
+    ['Indoor Pool'],
+    ['Outdoor Pool'],
+    ['Visitor Parking'],
+    ['Bbqs Allowed'],
+    ['Guest Suites'],
+    ['Rooftop Deck/Garden'],
+    ['Squash/Racquet Court'],
+    ['Tennis Court'],
+  ];  
 
   @override
   void initState() {
@@ -30,6 +46,7 @@ class _FiltersCondoExtraState extends State<FiltersCondoExtra> {
       const PropertiesCondoExtra('Squash/Racket Court'),
       const PropertiesCondoExtra('Tennis Court'),
     ];
+
     _filtersCondoExtra = Preferences.filtersCondoExtra;
   }
 
@@ -76,6 +93,21 @@ class _FiltersCondoExtraState extends State<FiltersCondoExtra> {
             setState(() {
                 selected ? _filtersCondoExtra.add(propertiesStyle.name) : _filtersCondoExtra.removeWhere((String name) => name == propertiesStyle.name) ;
                 Preferences.filtersCondoExtra = _filtersCondoExtra;
+
+                if(selected){
+                  Provider.of<FilterProvider>(context, listen: false).filtersAmmenities = [...Provider.of<FilterProvider>(context, listen: false).filtersAmmenities,  ...indexAmmenities[_propertiesCondoExtra.indexOf(propertiesStyle)]];
+                } else {
+                  for(int i = 0; i < indexAmmenities[_propertiesCondoExtra.indexOf(propertiesStyle)].length; ++i){
+                    if(Provider.of<FilterProvider>(context, listen: false).filtersAmmenities.contains(indexAmmenities[_propertiesCondoExtra.indexOf(propertiesStyle)][i])){
+                      Provider.of<FilterProvider>(context, listen: false).filtersAmmenities.removeWhere((String name) => name == indexAmmenities[_propertiesCondoExtra.indexOf(propertiesStyle)][i]);
+                    }
+                  }                
+                }
+                Preferences.setfiltersIndexAmmenities(Provider.of<FilterProvider>(context, listen: false).filtersAmmenities);
+
+                //print(Provider.of<FilterProvider>(context, listen: false).filtersAmmenities);
+                //print(Preferences.filtersCondoExtra);
+                //print(Preferences.getfiltersIndexAmmenities());
             });            
           },
         )

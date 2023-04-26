@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 
-
 class FiltersPropertyCondo extends StatefulWidget {
   const FiltersPropertyCondo({Key? key}) : super(key: key);
 
@@ -12,7 +11,6 @@ class FiltersPropertyCondo extends StatefulWidget {
 }
 
 class _FiltersPropertyCondoState extends State<FiltersPropertyCondo> {
-
   late List<String> _filtersPropertyCondoState;
 
   @override

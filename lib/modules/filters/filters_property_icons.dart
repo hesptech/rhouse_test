@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 
-
 class FiltersPropertyIcons extends StatefulWidget {
   const FiltersPropertyIcons({Key? key}) : super(key: key);
 

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/widgets_formatting.dart';
-import 'package:flutter_black_white/filters/filters_property_icons.dart';
-
+import 'package:flutter_black_white/modules/filters/filters_property_icons.dart';
 
 class FiltersPropertyHouse extends StatefulWidget {
   const FiltersPropertyHouse({Key? key}) : super(key: key);
@@ -18,6 +20,18 @@ class _FiltersPropertyHouseState extends State<FiltersPropertyHouse> {
   late List<PropertiesHouse> _propertiesHouse;
   late List<PropertiesHouseOthers> _propertiesHouseOthers;
   late List<String> _filtersPropertyHouse;
+
+  List<List<String>> propertyTypeHouse = [
+    ['Duplex'],
+    ['Triplex'],
+    ['Fourplex'],
+    ['Multiplex'],
+  ];
+
+  List<List<String>> propertyTypeHouseOther = [
+    ['Vacant Land'],
+    ['Cottage','Farm','Link','Land','Rural Resid','Mobile/Trailer','Other'],
+  ];
 
   @override
   void initState() {
@@ -90,7 +104,12 @@ class _FiltersPropertyHouseState extends State<FiltersPropertyHouse> {
                 const SizedBox( height: 18.0,)
               ],
               onExpansionChanged: (bool expanded) {
-                setState(() => _openCloseIcons[1] = expanded );
+                setState(() { 
+                  _openCloseIcons[1] = expanded; 
+                  if ( expanded == false ) {
+                    _openCloseIcons[2] = expanded;
+                  }
+                });
               },
             ),            
           ],
@@ -119,6 +138,21 @@ class _FiltersPropertyHouseState extends State<FiltersPropertyHouse> {
             setState(() {
                 selected ? _filtersPropertyHouse.add(propertiesHouse.name) : _filtersPropertyHouse.removeWhere((String name) => name == propertiesHouse.name) ;
                 Preferences.filterPropertyType = _filtersPropertyHouse; 
+
+
+                if(selected){
+                  Provider.of<FilterProvider>(context, listen: false).filtersPropertyTypeHouse = [...Provider.of<FilterProvider>(context, listen: false).filtersPropertyTypeHouse,  ...propertyTypeHouse[_propertiesHouse.indexOf(propertiesHouse)]];
+                } else {
+                  for(int i = 0; i < propertyTypeHouse[_propertiesHouse.indexOf(propertiesHouse)].length; ++i){
+                    if(Provider.of<FilterProvider>(context, listen: false).filtersPropertyTypeHouse.contains(propertyTypeHouse[_propertiesHouse.indexOf(propertiesHouse)][i])){
+                      Provider.of<FilterProvider>(context, listen: false).filtersPropertyTypeHouse.removeWhere((String name) => name == propertyTypeHouse[_propertiesHouse.indexOf(propertiesHouse)][i]);
+                    }
+                  }                
+                }  
+                Preferences.filtersPropertyTypeHouse = Provider.of<FilterProvider>(context, listen: false).filtersPropertyTypeHouse;
+          
+                //print(Provider.of<FilterProvider>(context, listen: false).filtersPropertyTypeHouse);
+
             });
           },
         )
@@ -145,6 +179,19 @@ class _FiltersPropertyHouseState extends State<FiltersPropertyHouse> {
             setState(() {
                 selected ? _filtersPropertyHouse.add(propertiesHouseOthers.name) : _filtersPropertyHouse.removeWhere((String name) => name == propertiesHouseOthers.name) ;
                 Preferences.filterPropertyType = _filtersPropertyHouse;
+
+                if(selected){
+                  Provider.of<FilterProvider>(context, listen: false).filtersPropertyTypeHouse = [...Provider.of<FilterProvider>(context, listen: false).filtersPropertyTypeHouse,  ...propertyTypeHouseOther[_propertiesHouseOthers.indexOf(propertiesHouseOthers)]];
+                } else {
+                  for(int i = 0; i < propertyTypeHouseOther[_propertiesHouseOthers.indexOf(propertiesHouseOthers)].length; ++i){
+                    if(Provider.of<FilterProvider>(context, listen: false).filtersPropertyTypeHouse.contains(propertyTypeHouseOther[_propertiesHouseOthers.indexOf(propertiesHouseOthers)][i])){
+                      Provider.of<FilterProvider>(context, listen: false).filtersPropertyTypeHouse.removeWhere((String name) => name == propertyTypeHouseOther[_propertiesHouseOthers.indexOf(propertiesHouseOthers)][i]);
+                    }
+                  }                
+                } 
+                Preferences.filtersPropertyTypeHouse = Provider.of<FilterProvider>(context, listen: false).filtersPropertyTypeHouse;
+
+                //print(Provider.of<FilterProvider>(context, listen: false).filtersPropertyTypeHouse);
             });
           },
         )

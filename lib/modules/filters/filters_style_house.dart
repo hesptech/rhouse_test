@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/utils/widgets_formatting.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 
 
@@ -16,17 +20,18 @@ class _FiltersStyleHouseState extends State<FiltersStyleHouse> {
   late List<PropertiesStyleHouse> _propertiesStyleHouse;
   late List<String> _filtersStyleHouse;
 
-  //bool selectAllStyle = Preferences.filtersStyleLoggedOut.length == 4;
-  bool selectAllStyle = false;
+  List<List<String>> indexStyleHouse = [
+    ['Bungalow'],
+    ['2-Storey','3-Storey'],
+    ['Sidesplit 4'],
+    ['Backsplit 3'],
+  ];
 
   @override
   void initState() {
     super.initState();
 
     _openCloseIcons = <bool>[
-      false,
-      false,
-      false,
       false,
     ];
     
@@ -36,6 +41,7 @@ class _FiltersStyleHouseState extends State<FiltersStyleHouse> {
       const PropertiesStyleHouse('Sidesplit'),
       const PropertiesStyleHouse('Backsplit'),
     ];
+
     _filtersStyleHouse = Preferences.filtersStyleHouse;
   }
 
@@ -43,22 +49,27 @@ class _FiltersStyleHouseState extends State<FiltersStyleHouse> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric( horizontal: 12.0 ),
-      child: ExpansionTile(
-        title: const Text('STYLE', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold, ),),
-        trailing: Icon(
-          _openCloseIcons[1] ? Icons.remove : Icons.add,
-          color: kPrimaryColor,
-          size: 18.0,
-        ),
+      child: Column(
         children: [
-          Wrap(
-            children: propertiesStyleHouseWidgets.toList(),
+          ExpansionTile(
+            title: const Text('STYLE', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold, ),),
+            trailing: Icon(
+              _openCloseIcons[0] ? Icons.remove : Icons.add,
+              color: kPrimaryColor,
+              size: 18.0,
+            ),
+            children: [
+              Wrap(
+                children: propertiesStyleHouseWidgets.toList(),
+              ),
+              const SizedBox( height: 14.0,)
+            ],
+            onExpansionChanged: (bool expanded) {
+              setState(() => _openCloseIcons[0] = expanded );
+            },
           ),
-          const SizedBox( height: 14.0,)
+          const BlueDivider(),
         ],
-        onExpansionChanged: (bool expanded) {
-          setState(() => _openCloseIcons[1] = expanded );
-        },
       ),
     );     
   }
@@ -84,6 +95,21 @@ class _FiltersStyleHouseState extends State<FiltersStyleHouse> {
             setState(() {
                 selected ? _filtersStyleHouse.add(propertiesStyle.name) : _filtersStyleHouse.removeWhere((String name) => name == propertiesStyle.name) ;
                 Preferences.filtersStyleHouse = _filtersStyleHouse;
+
+                if(selected){
+                  Provider.of<FilterProvider>(context, listen: false).filtersStyleHouse = [...Provider.of<FilterProvider>(context, listen: false).filtersStyleHouse,  ...indexStyleHouse[_propertiesStyleHouse.indexOf(propertiesStyle)]];
+                } else {
+                  for(int i = 0; i < indexStyleHouse[_propertiesStyleHouse.indexOf(propertiesStyle)].length; ++i){
+                    if(Provider.of<FilterProvider>(context, listen: false).filtersStyleHouse.contains(indexStyleHouse[_propertiesStyleHouse.indexOf(propertiesStyle)][i])){
+                      Provider.of<FilterProvider>(context, listen: false).filtersStyleHouse.removeWhere((String name) => name == indexStyleHouse[_propertiesStyleHouse.indexOf(propertiesStyle)][i]);
+                    }
+                  }                
+                }
+                Preferences.setfiltersIndexStyleHouse(Provider.of<FilterProvider>(context, listen: false).filtersStyleHouse);
+
+                //print(Provider.of<FilterProvider>(context, listen: false).filtersStyleHouse);
+                //print(Preferences.filtersStyleHouse);
+                //print(Preferences.getfiltersIndexStyleHouse());
             });            
           },
         )

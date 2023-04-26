@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 
@@ -16,17 +19,19 @@ class _FiltersStyleCondoState extends State<FiltersStyleCondo> {
   late List<PropertiesStyleCondo> _propertiesStyleCondo;
   late List<String> _filtersStyleCondo;
 
-  //bool selectAllStyle = Preferences.filtersStyleLoggedOut.length == 4;
-  bool selectAllStyle = false;
+  List<List<String>> indexStyleCondo = [
+    ['Apartment'],
+    ['Loft'],
+    ['Stacked Townhse'],
+    ['Multi-Level'],
+    ['2-Storey','3-Storey','Bungalow']
+  ];
 
   @override
   void initState() {
     super.initState();
 
     _openCloseIcons = <bool>[
-      false,
-      false,
-      false,
       false,
     ];
     
@@ -37,6 +42,7 @@ class _FiltersStyleCondoState extends State<FiltersStyleCondo> {
       const PropertiesStyleCondo('Multi-level'),
       const PropertiesStyleCondo('Other'),
     ];
+    
     _filtersStyleCondo = Preferences.filtersStyleCondo;
   }
 
@@ -47,7 +53,7 @@ class _FiltersStyleCondoState extends State<FiltersStyleCondo> {
       child: ExpansionTile(
         title: const Text('STYLE', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold, ),),
         trailing: Icon(
-          _openCloseIcons[1] ? Icons.remove : Icons.add,
+          _openCloseIcons[0] ? Icons.remove : Icons.add,
           color: kPrimaryColor,
           size: 18.0,
         ),
@@ -58,7 +64,7 @@ class _FiltersStyleCondoState extends State<FiltersStyleCondo> {
           const SizedBox( height: 14.0,),
         ],
         onExpansionChanged: (bool expanded) {
-          setState(() => _openCloseIcons[1] = expanded );
+          setState(() => _openCloseIcons[0] = expanded );
         },
       ),
     );     
@@ -84,6 +90,21 @@ class _FiltersStyleCondoState extends State<FiltersStyleCondo> {
             setState(() {
                 selected ? _filtersStyleCondo.add(propertiesStyle.name) : _filtersStyleCondo.removeWhere((String name) => name == propertiesStyle.name) ;
                 Preferences.filtersStyleCondo = _filtersStyleCondo;
+
+                if(selected){
+                  Provider.of<FilterProvider>(context, listen: false).filtersStyleCondo = [...Provider.of<FilterProvider>(context, listen: false).filtersStyleCondo,  ...indexStyleCondo[_propertiesStyleCondo.indexOf(propertiesStyle)]];
+                } else {
+                  for(int i = 0; i < indexStyleCondo[_propertiesStyleCondo.indexOf(propertiesStyle)].length; ++i){
+                    if(Provider.of<FilterProvider>(context, listen: false).filtersStyleCondo.contains(indexStyleCondo[_propertiesStyleCondo.indexOf(propertiesStyle)][i])){
+                      Provider.of<FilterProvider>(context, listen: false).filtersStyleCondo.removeWhere((String name) => name == indexStyleCondo[_propertiesStyleCondo.indexOf(propertiesStyle)][i]);
+                    }
+                  }                
+                }
+                Preferences.setfiltersIndexStyleCondo(Provider.of<FilterProvider>(context, listen: false).filtersStyleCondo);
+
+                //print(Provider.of<FilterProvider>(context, listen: false).filtersStyleCondo);
+                //print(Preferences.filtersStyleCondo);
+                //print(Preferences.getfiltersIndexStyleCondo());
             });            
           },
         )

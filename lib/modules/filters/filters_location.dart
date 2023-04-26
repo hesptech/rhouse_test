@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/widgets_formatting.dart';
-import 'package:flutter_black_white/filters/filters_location_topbts.dart';
-import 'package:flutter_black_white/filters/filters_tr_central.dart';
-import 'package:flutter_black_white/filters/filters_tr_east.dart';
-import 'package:flutter_black_white/filters/filters_tr_west.dart';
-import 'package:flutter_black_white/filters/filters_gta_west.dart';
-import 'package:flutter_black_white/filters/filters_gta_north.dart';
-import 'package:flutter_black_white/filters/filters_gta_east.dart';
-import 'package:flutter_black_white/filters/filters_other.dart';
+import 'package:flutter_black_white/modules/filters/filters_location_topbts.dart';
+import 'package:flutter_black_white/modules/filters/filters_tr_central.dart';
+import 'package:flutter_black_white/modules/filters/filters_tr_east.dart';
+import 'package:flutter_black_white/modules/filters/filters_tr_west.dart';
+import 'package:flutter_black_white/modules/filters/filters_gta_west.dart';
+import 'package:flutter_black_white/modules/filters/filters_gta_north.dart';
+import 'package:flutter_black_white/modules/filters/filters_gta_east.dart';
+import 'package:flutter_black_white/modules/filters/filters_other.dart';
+
 
 class FiltersLocation extends StatefulWidget {
   const FiltersLocation({Key? key}) : super(key: key);
@@ -19,6 +20,7 @@ class FiltersLocation extends StatefulWidget {
 }
 
 class _FiltersLocationState extends State<FiltersLocation> {
+
 
   late List<bool> _openCloseIcons;
 
@@ -35,7 +37,6 @@ class _FiltersLocationState extends State<FiltersLocation> {
       false,
     ];     
   }
-
 
   @override
   Widget build(BuildContext context) {

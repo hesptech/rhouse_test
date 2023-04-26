@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/utils/widgets_formatting.dart';
 
 
 class FiltersMoreExtra extends StatefulWidget {
@@ -26,6 +28,10 @@ class _FiltersMoreExtraState extends State<FiltersMoreExtra> {
   Widget build(BuildContext context) {
     return Wrap(
       children: [
+        const Padding(
+          padding: EdgeInsets.symmetric( vertical: 0.0, horizontal: 12.0),
+          child: BlueDivider()
+        ),
         Padding(
           padding: const EdgeInsets.symmetric( horizontal: 10.0, vertical: 14.0 ),
           child: Row(
@@ -46,8 +52,7 @@ class _FiltersMoreExtraState extends State<FiltersMoreExtra> {
                 onSelected: ( bool selected ) {
                   setState(() {
                     _selectedBt1 = selected;
-                      //selected ? _filtersBasement.add(propertiesBasement.name) : _filtersBasement.removeWhere((String name) => name == propertiesBasement.name) ;
-                      //Preferences.filtersBasementLoggedOut = _filtersBasement;
+                    Preferences.setfiltersMaxOpenHouseDate(selected);
                   });            
                 },
               ),
@@ -67,14 +72,17 @@ class _FiltersMoreExtraState extends State<FiltersMoreExtra> {
                 onSelected: ( bool selected ) {
                   setState(() {
                     _selectedBt2 = selected;
-                      //selected ? _filtersBasement.add(propertiesBasement.name) : _filtersBasement.removeWhere((String name) => name == propertiesBasement.name) ;
-                      //Preferences.filtersBasementLoggedOut = _filtersBasement;
+                    _selectedBt2 ? Preferences.setfiltersIndexSwimmingPool(['Inground','Indoor','Abv Grnd']) : Preferences.setfiltersIndexSwimmingPool([]);
                   });            
                 },
               ),              
             ],
           ),
-        )
+        ),
+        const Padding(
+          padding: EdgeInsets.symmetric( vertical: 0.0, horizontal: 12.0),
+          child: BlueDivider()
+        ), 
       ],
     );
   }

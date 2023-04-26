@@ -11,8 +11,8 @@ class FiltersCondoFee extends StatefulWidget {
 
 class _FiltersCondoFeeState extends State<FiltersCondoFee> {
 
-  late double _filterCondoFeeStart;
-  late double _filterCondoFeeEnd;
+  //late double _filterCondoFeeStart;
+  //late double _filterCondoFeeEnd;
   late RangeValues selectedRange;
 
   double sliderValue = 100;
@@ -21,9 +21,11 @@ class _FiltersCondoFeeState extends State<FiltersCondoFee> {
   void initState() {
     super.initState();
 
-    _filterCondoFeeStart = Preferences.filterCondoFeeStart;
-    _filterCondoFeeEnd = Preferences.filterCondoFeeEnd;
-    selectedRange = RangeValues(_filterCondoFeeStart, _filterCondoFeeEnd);
+    //_filterCondoFeeStart = Preferences.filterCondoFeeStart;
+    //_filterCondoFeeEnd = Preferences.filterCondoFeeEnd;
+    //selectedRange = RangeValues(_filterCondoFeeStart, _filterCondoFeeEnd);
+
+    sliderValue = Preferences.filterCondoFeeEnd;
   }
 
   @override
@@ -103,7 +105,12 @@ class _FiltersCondoFeeState extends State<FiltersCondoFee> {
             //activeColor: kPrimaryColor,
             //inactiveColor: kSecondaryColor,
             label: sliderValue.round().toString(),
-            onChanged: (value) => setState(() => sliderValue = value) 
+            onChanged: (value) { 
+              setState(() { 
+                sliderValue = value;
+                Preferences.filterCondoFeeEnd = sliderValue;
+              });
+            }
           ),
         ),
 
