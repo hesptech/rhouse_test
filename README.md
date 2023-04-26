@@ -57,3 +57,11 @@ Once the key is generated, there are two ways on how to use it within the applic
 final String _apiKey = 'ENTER YOUR BEST BUY API KEY HERE';
 ...
 ```
+
+## Folder Structure Pattern
+
+assets contain all the assets used in the application like images;
+lib/config stores general configuration files like theme data, routes, and environment configuration;
+lib/constants contain all the general-purpose constants, e.g. colours, common layout spacing values, texts, paths to files, etc.;
+lib/utils are used for common helpers used across the app, for instance, helper functions, and extension methods;
+lib/widgets contain Flutter widgets used in more than one module (common Widgets).
