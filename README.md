@@ -16,8 +16,6 @@ An Application prototype built with Dart and Flutter.
 
 | Package               | Purpose                                                                                                                    |
 | --------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-
-
 | cached_network_image  | To load and cache network images.                                                                                          |
 | provider              | State management solution implementing the Provider pattern.                                                               |
 | flutter_cache_manager | Generic cache manager for flutter. Used by CachedNetworkImage.                                                             |
