@@ -97,6 +97,18 @@ class GreenDivider extends StatelessWidget {
   );
 }
 
+class GreenDividerSlim extends StatelessWidget {
+  const GreenDividerSlim({Key? key}) : super(key: key);
+  
+  @override
+  Widget build(BuildContext context) => const Divider( 
+    thickness: 0.8, 
+    color: kSecondaryColor, 
+    indent: 20.0, 
+    endIndent: 20.0, 
+    height: 0.0,
+  );
+}
 
 class BlueDivider extends StatelessWidget {
   const BlueDivider({Key? key}) : super(key: key);

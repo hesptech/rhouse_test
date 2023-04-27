@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-import 'package:flutter_black_white/modules/cards/card_details_expansions.dart';
-import 'package:flutter_black_white/modules/cards/card_details_map.dart';
-import 'package:flutter_black_white/modules/cards/card_details_top.dart';
+import 'package:flutter_black_white/modules/cards/cards.dart';
 
 
 
@@ -41,7 +40,26 @@ class CardDetailsFullScreen extends StatelessWidget {
             const SizedBox( height: 22.0, ),
             const CardDetailsMap(),
             const SizedBox( height: 22.0, ),
-            CardDetailsExpansions( listing ),           
+            CardDetailsExpansions( listing ), 
+            /* Consumer<FilterProvider>(
+              builder: (context, currentFilter, child) => ExpansionTile(
+                tilePadding: const EdgeInsets.symmetric(horizontal: 24.0),
+                childrenPadding: const EdgeInsets.symmetric(horizontal: 12.0),
+                title: const Text('PROPERTY TYPE', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kSecondaryColor),),
+                trailing: Icon(
+                  _openCloseIcons[0] ? Icons.remove : Icons.add,
+                  color: kSecondaryColor,
+                ),
+                children: currentFilter.filterProvider == "residential" ? [const FiltersPropertyHouse()] : [const FiltersPropertyCondo()],
+                onExpansionChanged: (bool expanded) {
+                  setState(() => _openCloseIcons[0] = expanded );
+                  if (expanded == false) {
+                    setState(() => _openCloseIcons[1] = false );
+                    setState(() => _openCloseIcons[2] = false );
+                  }
+                },
+              ),
+            ), */         
           ],
         ),
       ),

@@ -26,7 +26,7 @@ class CardDetailsBox extends StatelessWidget {
               children: [
                 Row(
                   children: const [
-                    Text('Listed for: ', style: TextStyle(fontSize: 16, color: Color(0xFF666597), ), ),   
+                    Text('Listed for: ', style: TextStyle(fontSize: 16, ), ),   
                     Text('\$1,500.000', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF2E3191), ), ),
                   ],
                 ),
@@ -126,8 +126,8 @@ class CardDetailsBox extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
-                Text('Fronting On: ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: kSecondaryColor),),
-                Text('North', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: kPrimaryColor),),
+                Text('Listing #: ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: kSecondaryColor),),
+                Text('W5922867', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: kPrimaryColor),),
               ],
             ),
           ),

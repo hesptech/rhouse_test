@@ -36,6 +36,7 @@ class CardDetailsTop extends StatelessWidget {
                         fit: BoxFit.cover,
                         fadeInDuration: Duration( milliseconds: 300),
                       ),
+                      //child: const Placeholder( fallbackHeight: 300.0, ),
                     ),
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14.0),
@@ -61,11 +62,33 @@ class CardDetailsTop extends StatelessWidget {
                           //const Divider( height: 28,  thickness: 0.8, color: Color(0xFF0BB48B), ),
                           const SizedBox( height: 28,),
                           const CardDetailsBox(),
-
-
-
-
-
+                          const SizedBox( height: 28,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Text('PROPERTY LISTING HISTORY', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: kSecondaryColor),),
+                            ],
+                          ),
+                          const SizedBox( height: 10.0, ),
+                          Row(
+                            children: const [
+                              Text('2022-02-22 ', style: TextStyle(fontSize: 20, ), ),
+                              Text('\$1,825,000', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),),
+                              SizedBox( width: 10.0, ),
+                              Text('SOLD', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: kPrimaryColor),),
+                            ],
+                          ),
+                          const Divider( height: 14.0,  thickness: 0.8, color: kPrimaryColor, ),
+                          Row(
+                            children: const [
+                              Text('2022-02-22 ', style: TextStyle(fontSize: 20, ), ),
+                              Text('\$1,825,000', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),),
+                              SizedBox( width: 10.0, ),
+                              Text('TERMINATED', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: kPrimaryColor),),
+                              Divider( height: 28,  thickness: 0.8, color: Color(0xFF0BB48B), ),
+                            ],
+                          ),
+                          const Divider( height: 14.0,  thickness: 0.8, color: kPrimaryColor, ),
                         ],
                       ),
                     ),
