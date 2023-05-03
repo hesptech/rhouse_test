@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 
 class RepliersProvider extends ChangeNotifier {
 
-  final String _apiKey = 'AiMUNTXACg2hJOWyy1FJFx4yqtA3Hw';
   final String _baseUrl = 'api.repliers.io';
   String citySearchParam = '';
   List<Listing> onDisplayProperties = [];
@@ -37,7 +37,10 @@ class RepliersProvider extends ChangeNotifier {
       'hasImages': 'true',
       'class': classParam,
     });
-    Map<String, String>? headers = { 'REPLIERS-API-KEY': _apiKey };
+
+    String envApiKey = dotenv.get('REPLIERS-API-KEY');
+
+    Map<String, String>? headers = { 'REPLIERS-API-KEY': envApiKey };
 
     // Await the http get response, then decode the json-formatted response.
     final response = await http.get(url, headers: headers);

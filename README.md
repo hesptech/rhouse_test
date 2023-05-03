@@ -50,11 +50,13 @@ Before using/testing the application, you need a new API key. Instructions on ho
 
 Once the key is generated, there are two ways on how to use it within the application:
 
-1. Add the API key as a default value for the REPLIERS-API-KEY environment variable in `lib/config/const.dart`, e.g:
+1. Create a .env File in the Project Folder either on lib or asset
+
+2. Add Variable to .env file:
 
 ```
 ...
-final String _apiKey = 'ENTER YOUR BEST BUY API KEY HERE';
+REPLIERS-API-KEY='ENTER YOUR API KEY HERE'
 ...
 ```
 

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_black_white/providers/repliers_provider.dart';
@@ -12,7 +13,8 @@ import 'package:flutter_black_white/config/theme.dart';
 import 'package:flutter_black_white/config/routes.dart';
 
 void main() async {
-  
+
+  await dotenv.load();
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
   await Preferences.init();
