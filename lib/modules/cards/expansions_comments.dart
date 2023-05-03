@@ -28,9 +28,12 @@ class _ExpansionCommentsState extends State<ExpansionComments> {
 
   @override
   Widget build(BuildContext context) {
+
+    final String description = widget.listing.details?.description?? '';
+
     return ExpansionTile(
       tilePadding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-      childrenPadding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+      childrenPadding: const EdgeInsets.fromLTRB( 5.0, 0, 5.0, 0, ),
       title: const Text('COMMENTS', 
         style: TextStyle(
           fontSize: 18, 
@@ -48,8 +51,14 @@ class _ExpansionCommentsState extends State<ExpansionComments> {
             children: [
               //const SizedBox( height: 5.0, ),
               Row(
-                children: const [
-                  Text('Property', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
+                children: [
+                  Flexible(
+                    child: Text(
+                      description, 
+                      style: const TextStyle(fontSize: 16, color: Color(0xFF231F20), height: 1.3, ), 
+                      textAlign: TextAlign.end, 
+                    )
+                  ),
                 ]
               ),
 

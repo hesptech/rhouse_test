@@ -26,6 +26,17 @@ class _ExpansionsAmountsDatesState extends State<ExpansionsAmountsDates> {
 
   @override
   Widget build(BuildContext context) {
+
+    final String annualAmount = widget.listing.taxes?.annualAmount?? '';
+    final double formatDoubleAnnualAmount = double.parse(annualAmount);
+    final String formattedAnnualAmount = '\$${formatDoubleAnnualAmount.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}';
+
+    final String assessmentYear = widget.listing.taxes?.assessmentYear?? '';
+    final double formatDoubleAssessmentYear = double.parse(assessmentYear);
+    final String formattedAssessmentYear = '\$${formatDoubleAssessmentYear.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}';
+
+    final String occupancy = widget.listing.occupancy?? '';
+
     return ExpansionTile(
       tilePadding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
       childrenPadding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
@@ -45,15 +56,21 @@ class _ExpansionsAmountsDatesState extends State<ExpansionsAmountsDates> {
           child: Column(
             children: [
               Row(
-                children: const [
-                      Text('Taxes: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
-                      Text('\$7,079.65', style: TextStyle(fontSize: 16, height: 1.3), ),
+                children: [
+                  const Text('Taxes: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
+                  Text(formattedAnnualAmount, style: const TextStyle(fontSize: 16, height: 1.3), ),
                 ]
               ),
               Row(
-                children: const [
-                      Text('Taxes: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
-                      Text('\$7,079.65', style: TextStyle(fontSize: 16, height: 1.3), ),
+                children: [
+                  const Text('Tax year: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
+                  Text(formattedAssessmentYear, style: const TextStyle(fontSize: 16, height: 1.3), ),
+                ]
+              ),
+              Row(
+                children: [
+                  const Text('Possesion remarks: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
+                  Text(occupancy, style: const TextStyle(fontSize: 16, height: 1.3), ),
                 ]
               ),
               const SizedBox( height: 25.0,),               

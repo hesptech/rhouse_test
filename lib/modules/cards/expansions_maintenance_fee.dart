@@ -44,15 +44,73 @@ class _ExpansionMaintenanceState extends State<ExpansionMaintenance> {
           child: Column(
             children: [
               Row(
-                children: const [
-                      Text('Taxes: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
-                      Text('\$7,079.65', style: TextStyle(fontSize: 16, height: 1.3), ),
+                children: [
+                  const Text('Maintenance Fee: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
+                  Text( 
+                    '\$${widget.listing.condominium?.fees.maintenance?? ''}' , 
+                    style: const TextStyle(fontSize: 16, height: 1.3), 
+                  ),
                 ]
               ),
               Row(
                 children: const [
-                      Text('Taxes: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
-                      Text('\$7,079.65', style: TextStyle(fontSize: 16, height: 1.3), ),
+                  Text(
+                    'Included in Maintenance Costs', 
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 2.3, ), ),
+                ]
+              ),
+              Row(
+                children: [
+                  const Text('Heat Included: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
+                  Text( 
+                    widget.listing.condominium?.fees.heatIncl?? '' , 
+                    style: const TextStyle(fontSize: 16, height: 1.3), 
+                  ),
+                ]
+              ),
+              Row(
+                children: [
+                  const Text('Hydro Included: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
+                  Text( 
+                    widget.listing.condominium?.fees.hydroIncl?? '' , 
+                    style: const TextStyle(fontSize: 16, height: 1.3), 
+                  ),
+                ]
+              ),
+              Row(
+                children: [
+                  const Text('Water Included: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
+                  Text( 
+                    widget.listing.condominium?.fees.waterIncl?? '' , 
+                    style: const TextStyle(fontSize: 16, height: 1.3), 
+                  ),
+                ]
+              ),
+              Row(
+                children: [
+                  const Text('Cable T.V. Included: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
+                  Text( 
+                    widget.listing.condominium?.fees.cableInlc?? '' , 
+                    style: const TextStyle(fontSize: 16, height: 1.3), 
+                  ),
+                ]
+              ),
+              Row(
+                children: [
+                  const Text('Condo Taxes Included: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
+                  Text( 
+                    widget.listing.condominium?.fees.taxesIncl?? '' , 
+                    style: const TextStyle(fontSize: 16, height: 1.3), 
+                  ),
+                ]
+              ),
+              Row(
+                children: [
+                  const Text('Parking Included: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
+                  Text( 
+                    widget.listing.condominium?.fees.taxesIncl?? '' , 
+                    style: const TextStyle(fontSize: 16, height: 1.3), 
+                  ),
                 ]
               ),
               const SizedBox( height: 25.0,),               

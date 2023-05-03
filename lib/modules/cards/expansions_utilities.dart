@@ -25,6 +25,13 @@ class _ExpansionUtilitiesState extends State<ExpansionUtilities> {
 
   @override
   Widget build(BuildContext context) {
+
+    // Properties descriptions formatting
+    final String waterSource = widget.listing.details?.waterSource?? '';
+    final String heating = widget.listing.details?.heating?? '';
+    final String airConditioning = widget.listing.details?.airConditioning?? '';
+
+
     return ExpansionTile(
       tilePadding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
       childrenPadding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
@@ -44,15 +51,21 @@ class _ExpansionUtilitiesState extends State<ExpansionUtilities> {
           child: Column(
             children: [
               Row(
-                children: const [
-                      Text('Taxes: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
-                      Text('\$7,079.65', style: TextStyle(fontSize: 16, height: 1.3), ),
+                children: [
+                  const Text('Water: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
+                  Text(waterSource, style: const TextStyle(fontSize: 16, height: 1.3), ),
                 ]
               ),
               Row(
-                children: const [
-                      Text('Taxes: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
-                      Text('\$7,079.65', style: TextStyle(fontSize: 16, height: 1.3), ),
+                children: [
+                  const Text('Heat Type: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
+                  Text(heating, style: const TextStyle(fontSize: 16, height: 1.3), ),
+                ]
+              ),
+              Row(
+                children: [
+                  const Text('Air Conditioning: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
+                  Text(airConditioning, style: const TextStyle(fontSize: 16, height: 1.3), ),
                 ]
               ),
               const SizedBox( height: 25.0,),               

@@ -19,6 +19,10 @@ class CardDetailsMap extends StatelessWidget {
               image: AssetImage('assets/house_map.png'),
               fit: BoxFit.cover,
             ),
+            /* child: const Placeholder(
+              fallbackWidth: 230.0,
+              fallbackHeight: 200.0,
+            ), */
           );
   }
 }

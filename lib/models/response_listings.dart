@@ -13,6 +13,11 @@ class Listing {
     this.details,
     this.rooms,
     this.lot,
+    this.taxes,
+    this.occupancy,
+    this.nearby,
+    this.condominium,
+    this.office,
   });
 
   String? mlsNumber;
@@ -26,6 +31,11 @@ class Listing {
   Details? details;
   Map<String, Room>? rooms;
   Lot? lot;
+  Taxes? taxes;
+  String? occupancy;
+  Nearby? nearby;
+  Condominium? condominium;
+  Office? office;
 
   factory Listing.fromJson(String str) => Listing.fromMap(json.decode(str));
 
@@ -41,6 +51,11 @@ class Listing {
     details: Details.fromMap(json["details"]),
     rooms: Map.from(json["rooms"]).map((k, v) => MapEntry<String, Room>(k, Room.fromMap(v))),
     lot: Lot.fromMap(json["lot"]),
+    taxes: Taxes.fromMap(json["taxes"]),
+    occupancy: json["occupancy"],
+    nearby: Nearby.fromMap(json["nearby"]),
+    condominium: Condominium.fromMap(json["condominium"]),
+    office: Office.fromMap(json["office"]),
   );
 }
 
@@ -105,6 +120,7 @@ class Address {
     this.neighborhood,
     this.city,
     this.area,
+    this.majorIntersection,
   });
 
   String? unitNumber;
@@ -115,6 +131,7 @@ class Address {
   String? neighborhood;
   String? city;
   String? area;
+  String? majorIntersection;
 
   factory Address.fromJson(String str) => Address.fromMap(json.decode(str));
 
@@ -127,6 +144,7 @@ class Address {
     neighborhood: json["neighborhood"],
     city: json["city"],
     area: json["area"],
+    majorIntersection: json['majorIntersection'],
   );
 }
 
@@ -139,6 +157,26 @@ class Details {
     this.numBathrooms,
     this.numParkingSpaces,
     this.sqft,
+    this.description,
+    this.style,
+    this.exteriorConstruction1,
+    this.garage,
+    this.numGarageSpaces,
+    this.swimmingPool,
+    this.waterSource,
+    this.handicappedEquipped,
+    this.yearBuilt,
+    this.heating,
+    this.airConditioning,
+    this.numKitchens,
+    this.basement1,
+    this.numFireplaces,
+    this.laundryLevel,
+    this.elevator,
+    this.balcony,
+    this.ensuiteLaundry,
+    this.centralVac,
+    this.locker,
   });
 
   String? propertyType;
@@ -147,6 +185,26 @@ class Details {
   String? numBathrooms;
   String? numParkingSpaces;
   String? sqft;
+  String? description;
+  String? style;
+  String? exteriorConstruction1;
+  String? garage;
+  String? numGarageSpaces;
+  String? swimmingPool;
+  String? waterSource;
+  String? handicappedEquipped;
+  String? yearBuilt;
+  String? heating;
+  String? airConditioning;
+  String? numKitchens;
+  String? basement1;
+  String? numFireplaces;
+  String? laundryLevel;
+  String? elevator;
+  String? balcony;
+  String? ensuiteLaundry;
+  String? centralVac;
+  String? locker;
 
   factory Details.fromJson(String str) => Details.fromMap(json.decode(str));
 
@@ -157,6 +215,26 @@ class Details {
     numBathrooms: json["numBathrooms"],
     numParkingSpaces: json["numParkingSpaces"],
     sqft: json["sqft"],
+    description: json["description"],
+    style: json["style"],
+    exteriorConstruction1: json["exteriorConstruction1"],
+    garage: json["garage"],
+    numGarageSpaces: json["numGarageSpaces"],
+    swimmingPool: json["swimmingPool"],
+    waterSource: json["waterSource"],
+    handicappedEquipped: json["handicappedEquipped"],
+    yearBuilt: json["yearBuilt"],
+    heating: json["heating"],
+    airConditioning: json["airConditioning"],
+    numKitchens: json["numKitchens"],
+    basement1: json["basement1"],
+    numFireplaces: json["numFireplaces"],
+    laundryLevel: json["laundryLevel"],
+    elevator: json["elevator"],
+    balcony: json["balcony"],
+    ensuiteLaundry: json["ensuiteLaundry"],
+    centralVac: json["centralVac"],
+    locker: json["locker"],
   );
 }
 
@@ -175,5 +253,149 @@ class Lot {
   factory Lot.fromMap(Map<String, dynamic> json) => Lot(
     depth: json["depth"],
     width: json["width"],
+  );
+}
+
+
+class Taxes {
+  Taxes({
+    this.annualAmount,
+    this.assessmentYear,
+  });
+
+  String? annualAmount;
+  String? assessmentYear;
+
+  factory Taxes.fromJson(String str) => Taxes.fromMap(json.decode(str));
+
+  factory Taxes.fromMap(Map<String, dynamic> json) => Taxes(
+    annualAmount: json["annualAmount"],
+    assessmentYear: json["assessmentYear"],
+  );
+}
+
+
+class Nearby {
+    List<String> ammenities;
+
+    Nearby({
+        required this.ammenities,
+    });
+
+    factory Nearby.fromJson(String str) => Nearby.fromMap(json.decode(str));
+
+    factory Nearby.fromMap(Map<String, dynamic> json) => Nearby(
+        ammenities: List<String>.from(json["ammenities"].map((x) => x)),
+    );
+}
+
+
+class Condominium {
+    dynamic pets;
+    dynamic condoCorpNum;
+    dynamic parkingType;
+    Fees fees;
+    dynamic stories;
+    dynamic propertyMgr;
+    dynamic lockerLevel;
+    dynamic unitNumber;
+    dynamic buildingInsurance;
+    dynamic locker;
+    dynamic condoCorp;
+    dynamic sharesPercentage;
+    dynamic ensuiteLaundry;
+    dynamic exposure;
+    String lockerNumber;
+    dynamic lockerUnitNumber;
+    List<dynamic> ammenities;
+
+    Condominium({
+        this.pets,
+        this.condoCorpNum,
+        this.parkingType,
+        required this.fees,
+        this.stories,
+        this.propertyMgr,
+        this.lockerLevel,
+        this.unitNumber,
+        this.buildingInsurance,
+        this.locker,
+        this.condoCorp,
+        this.sharesPercentage,
+        this.ensuiteLaundry,
+        this.exposure,
+        required this.lockerNumber,
+        this.lockerUnitNumber,
+        required this.ammenities,
+    });
+
+    factory Condominium.fromJson(String str) => Condominium.fromMap(json.decode(str));
+
+    factory Condominium.fromMap(Map<String, dynamic> json) => Condominium(
+        pets: json["pets"],
+        condoCorpNum: json["condoCorpNum"],
+        parkingType: json["parkingType"],
+        fees: Fees.fromMap(json["fees"]),
+        stories: json["stories"],
+        propertyMgr: json["propertyMgr"],
+        lockerLevel: json["lockerLevel"],
+        unitNumber: json["unitNumber"],
+        buildingInsurance: json["buildingInsurance"],
+        locker: json["locker"],
+        condoCorp: json["condoCorp"],
+        sharesPercentage: json["sharesPercentage"],
+        ensuiteLaundry: json["ensuiteLaundry"],
+        exposure: json["exposure"],
+        lockerNumber: json["lockerNumber"],
+        lockerUnitNumber: json["lockerUnitNumber"],
+        ammenities: List<dynamic>.from(json["ammenities"].map((x) => x)),
+    );
+}
+
+
+class Fees {
+    String cableInlc;
+    String waterIncl;
+    String heatIncl;
+    dynamic taxesIncl;
+    String parkingIncl;
+    dynamic maintenance;
+    String hydroIncl;
+
+    Fees({
+        required this.cableInlc,
+        required this.waterIncl,
+        required this.heatIncl,
+        this.taxesIncl,
+        required this.parkingIncl,
+        this.maintenance,
+        required this.hydroIncl,
+    });
+
+    factory Fees.fromJson(String str) => Fees.fromMap(json.decode(str));
+
+    factory Fees.fromMap(Map<String, dynamic> json) => Fees(
+        cableInlc: json["cableInlc"],
+        waterIncl: json["waterIncl"],
+        heatIncl: json["heatIncl"],
+        taxesIncl: json["taxesIncl"],
+        parkingIncl: json["parkingIncl"],
+        maintenance: json["maintenance"],
+        hydroIncl: json["hydroIncl"],
+    );
+}
+
+
+class Office {
+  Office({
+    this.brokerageName,
+  });
+
+  String? brokerageName;
+
+  factory Office.fromJson(String str) => Office.fromMap(json.decode(str));
+
+  factory Office.fromMap(Map<String, dynamic> json) => Office (
+    brokerageName: json["brokerageName"]
   );
 }

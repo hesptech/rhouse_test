@@ -30,6 +30,7 @@ class CardDetailsFullScreen extends StatelessWidget {
         ],
       ),
       body: SingleChildScrollView(
+        physics: const ScrollPhysics(),
         child: Column(
           children: [
             Container(

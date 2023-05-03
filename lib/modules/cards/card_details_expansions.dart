@@ -34,6 +34,34 @@ class CardDetailsExpansions extends StatelessWidget {
             if ( listing.listingClass.toString().toString() == "ResidentialProperty" ) ExpansionUtilities(listing),
             if ( listing.listingClass.toString().toString() == "ResidentialProperty" ) const GreenDividerSlim(),
             const SizedBox( height: 30.0,),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 26.0),
+              child: Column(
+                children: [
+                  Row(
+                    children: const [
+                      Text('Broker and Agent info'),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      ConstrainedBox(
+                        constraints: const BoxConstraints( maxWidth: 300 ),
+                        child: Text(
+                          listing.office?.brokerageName?? '',              
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox( height: 30.0,),
+
+
+
+
+
           ],
         ),
       ),

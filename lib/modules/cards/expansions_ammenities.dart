@@ -25,6 +25,14 @@ class _ExpansionAmmenitiesState extends State<ExpansionAmmenities> {
 
   @override
   Widget build(BuildContext context) {
+
+    List<dynamic>? ammenities = widget.listing.condominium?.ammenities?? [];
+    List filteredAmmenities = [];
+    for (var value in ammenities) {
+      if(value.isNotEmpty) filteredAmmenities.add(value);
+    }
+    final String ammenitiesCondo = filteredAmmenities.join(', '); 
+
     return ExpansionTile(
       tilePadding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
       childrenPadding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
@@ -44,15 +52,11 @@ class _ExpansionAmmenitiesState extends State<ExpansionAmmenities> {
           child: Column(
             children: [
               Row(
-                children: const [
-                      Text('Taxes: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
-                      Text('\$7,079.65', style: TextStyle(fontSize: 16, height: 1.3), ),
-                ]
-              ),
-              Row(
-                children: const [
-                      Text('Taxes: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
-                      Text('\$7,079.65', style: TextStyle(fontSize: 16, height: 1.3), ),
+                children: [
+                  ConstrainedBox(
+                    constraints: const BoxConstraints( maxWidth: 280 ),
+                    child: Text(ammenitiesCondo, style: const TextStyle(fontSize: 16, height: 1.3), ),
+                  )
                 ]
               ),
               const SizedBox( height: 25.0,),               
