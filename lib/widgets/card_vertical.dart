@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/utils/data_formatter.dart';
 import 'package:flutter_black_white/widgets/widgets.dart';
 
 class CardVertical extends StatelessWidget {
@@ -12,52 +13,16 @@ class CardVertical extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final dataFormatted = DataFormatter(listing);
+
     const loggedIn = true;
     final String images = listing.images?.first?? '';
     const blurImg = loggedIn == false ? 5.0 : 0.0;
     final screenSize = MediaQuery.of(context).size;
-    final listingClass = listing.listingClass?? '';
 
-    final listPrice = listing.listPrice?? '' ;
-    double doubleString = double.parse(listPrice);
-    String formattedPrice = '\$${doubleString.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}';
     final String propertyType = listing.details?.propertyType?? '';
-
-    // Address
-    final String unitNumber = listing.address?.unitNumber?? '';
-    final String unitNumberHyphen = unitNumber == '' ? '' : '$unitNumber - ' ;
-    final String streetNumber = listing.address?.streetNumber?? ''; 
-    final String streetName = listing.address?.streetName?? '';
-    final String streetSuffix = listing.address?.streetSuffix?? '';
-    final String streetDirection = listing.address?.streetDirection?? '';
-    String neighborhood = listing.address?.neighborhood?? '';
-    final String city = listing.address?.city?? '';
-    //final String area = listing.address?.area?? '';
-    final String cityArea = listing.address?.area == 'Toronto' ? 'Toronto' : city ;
-
-    final String finalAddress2 = '$neighborhood, $cityArea';
-    String finalAddress3 = '';
-    if ( finalAddress2.length > 40 ) {
-      finalAddress3 = '${finalAddress2.substring(0, 35)}...';
-    } else {
-      finalAddress3 = finalAddress2;
-    }
-
-    // Details
-    final String numBedrooms = listing.details?.numBedrooms?? '';
-    final String numBedroomsPlus = listing.details?.numBedroomsPlus == '' ? '' : '+${listing.details?.numBedroomsPlus}' ;
     final String numBathrooms = listing.details?.numBathrooms?? '';
-    final String numParkingSpacesString = listing.details?.numParkingSpaces?? '';
-    final List arrayParkingSpaces = numParkingSpacesString.split('.');
-    final String newParkingSpaces = arrayParkingSpaces[0];
-    final String depth = listing.lot?.depth?? '';
-    final List newDepth = depth.split('.');
-    final String noZerosDepth = newDepth[0];
-    final String width = listing.lot?.width?? ''; 
-    final List newWidth = width.split('.');
-    final String noZerosWidth = newWidth[0];
-    final String sqft = listing.details?.sqft?? '';
-    final String sizeLot = listingClass == 'ResidentialProperty' ? '$noZerosDepth x $noZerosWidth ft.' : '$sqft sqft' ;
 
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -91,88 +56,6 @@ class CardVertical extends StatelessWidget {
                           fit: BoxFit.cover,
                           fadeInDuration: const Duration( milliseconds: 300), 
                         ),
-
-
-                        /* Container(
-                          width: 170,
-                          padding: const EdgeInsets.only( left: 15.0, top: 5.0, ),
-                          alignment: Alignment.topLeft,
-                          child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: const Color(0xFF2E3191),
-                            minimumSize: const Size(140.0, 28.0),
-                            padding: const EdgeInsets.fromLTRB(7.0, 0.0, 0.0, 0.0),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                          ),
-                          onPressed: () {
-                            //Navigator.pushNamed(context, 'details', arguments: movie);
-                          },
-                          child: Row(
-                            children: const [
-                              Icon(Icons.calendar_month_outlined, size: 16,),
-                              SizedBox(width: 5,),
-                              Text('Listed 7 days ago', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400))
-                            ],
-                          ),
-                          ), 
-                        ), */
-
-
-                        /* Container(
-                          width: double.infinity,
-                          //height: 207, 
-                          padding: const EdgeInsets.fromLTRB( 0, 15, 10, 0),
-                          alignment: Alignment.topRight,  
-                          child: Stack(
-                            children: [
-                              const Positioned(
-                                left: 1.0,
-                                top: 2.0,
-                                child: Icon(Icons.filter_9_plus_outlined, color: Colors.black26, size: 30),
-                              ),
-                              InkWell(
-                                child: const Icon(Icons.filter_9_plus_outlined, color: Color(0xFFffffff), size: 30),
-                                onTap: () {
-                                  Navigator.pushNamed(context, 'card_images_screen', arguments: listing);
-                                  //print('object');
-                                },
-                              )                              
-                            ],
-                          ),                          
-                        ), */
-                        /* Container(
-                          width: double.infinity,
-                          //height: 207, 
-                          padding: const EdgeInsets.fromLTRB( 0, 15, 50, 0),
-                          alignment: Alignment.topRight,  
-                          child: Stack(
-                            children: [
-                              /* const Positioned(
-                                left: 1.0,
-                                top: 2.0,
-                                child: Icon(Icons.favorite_outlined, color: Colors.black26, size: 30),
-                              ), */
-                              InkWell(
-                                child: const Icon(Icons.favorite_border_outlined, color: Color(0xFFffffff), size: 30),
-                                onTap: () {
-                                  //print('object');
-                                },
-                              )                              
-                            ],
-                          ),                          
-                        ), */
-                        /* Container(
-                          width: double.infinity,
-                          height: 207,
-                          padding: const EdgeInsets.all(10.0),
-                          alignment: Alignment.bottomRight,
-                          child: InkWell(
-                            child: const Image(image: AssetImage('assets/play&learn_chip_53h.png'), ),
-                            onTap: () {
-                              //print('object');
-                            },
-                          ),
-                        ), */
                       ],
                     ),
                   ),
@@ -189,9 +72,7 @@ class CardVertical extends StatelessWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                    //Icon(Icons.attach_money_outlined, color: Color(0xFF90A4AE),),
-                                    Text(' $formattedPrice', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF2E3191)),),
-                                    //Container( width: 70,),
+                                    Text(' ${dataFormatted.listPrice}', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF2E3191)),),
                                     Container(
                                       padding: const EdgeInsets.symmetric( vertical: 2, horizontal: 5.0 ),
                                       decoration: BoxDecoration(
@@ -208,7 +89,7 @@ class CardVertical extends StatelessWidget {
                                   const SizedBox(width: 2,),
                                   ConstrainedBox(
                                     constraints: BoxConstraints( maxWidth: screenSize.width - 100 ),
-                                    child: Text('$unitNumberHyphen$streetNumber $streetName $streetSuffix $streetDirection', style: const TextStyle( fontSize: 16, color: Color(0xFF58595B)), overflow: TextOverflow.ellipsis,)
+                                    child: Text(dataFormatted.address, style: const TextStyle( fontSize: 16, color: Color(0xFF58595B)), overflow: TextOverflow.ellipsis,)
                                   ),                              
                                 ],
                               ),
@@ -222,7 +103,7 @@ class CardVertical extends StatelessWidget {
                                     child: const Text('18 Wanstead Ave. Scarborough Oakridge', style: TextStyle( fontSize: 18, color: Color(0xFF58595B)), overflow: TextOverflow.ellipsis,)
                                   ), */  
                                   const SizedBox( width: 25.0 ),
-                                  Text(finalAddress3, style: const TextStyle( fontSize: 16, color: Color(0xFF58595B)), ),                          
+                                  Text(dataFormatted.addressCity, style: const TextStyle( fontSize: 16, color: Color(0xFF58595B)), ),                          
                                 ],
                               ),                              
                             ],
@@ -251,7 +132,10 @@ class CardVertical extends StatelessWidget {
                                   const SizedBox(width: 9,),
                                   const Icon(Icons.king_bed_outlined, color: Color(0xFF0BB48B), size: 30,),
                                   const SizedBox(width: 5,),
-                                  Text('$numBedrooms$numBedroomsPlus', style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), ),                                  
+                                  Text(
+                                    dataFormatted.numBedrooms, 
+                                    style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), 
+                                  ),                                  
                                 ],
                               ),
                             ),
@@ -261,8 +145,6 @@ class CardVertical extends StatelessWidget {
                               //padding: const EdgeInsets.all(3.0),
                               decoration: const BoxDecoration(
                                 border: Border(
-                                  //top: BorderSide(color: Color(0xFF0BB48B)),
-                                  //bottom: BorderSide(color: Color(0xFF0BB48B)),
                                   left: BorderSide(color: Color(0xFF0BB48B)),
                                 ),
                               ),
@@ -293,7 +175,10 @@ class CardVertical extends StatelessWidget {
                                   const SizedBox(width: 9,),
                                   const Icon(Icons.directions_car_filled_outlined, color: Color(0xFF0BB48B), size: 28,),
                                   const SizedBox(width: 5,),
-                                  Text(newParkingSpaces, style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), ),                                    
+                                  Text(
+                                    dataFormatted.numParkingSpaces, 
+                                    style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), 
+                                  ),                                    
                                 ],
                               ),
                             ),
@@ -314,7 +199,7 @@ class CardVertical extends StatelessWidget {
                                 children: [
                                   //const Icon(Icons.square_foot, color: Color(0xFF0BB48B), size: 24,),
                                   //const SizedBox(width: 5,),
-                                  Text(sizeLot, style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), )                                    
+                                  Text(dataFormatted.lotSqft, style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), )                                    
                                 ],
                               ),
                             ),                          
@@ -331,93 +216,19 @@ class CardVertical extends StatelessWidget {
 
           if ( loggedIn == true )
           CardStackItems(listing),
-
-
-                        /* if ( loggedIn == true )
-                        Container(
-                          width: 170,
-                          padding: const EdgeInsets.only( left: 20.0, top: 10.0, ),
-                          alignment: Alignment.topLeft,
-                          child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: const Color(0xFF2E3191),
-                            minimumSize: const Size(140.0, 28.0),
-                            padding: const EdgeInsets.fromLTRB(7.0, 0.0, 0.0, 0.0),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                          ),
-                          onPressed: () {
-                            //Navigator.pushNamed(context, 'details', arguments: movie);
-                          },
-                          child: Row(
-                            children: const [
-                              Icon(Icons.calendar_month_outlined, size: 16,),
-                              SizedBox(width: 5,),
-                              Text('Listed 7 days ago', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400))
-                            ],
-                          ),
-                          ), 
-                        ),
-                        if ( loggedIn == true )
-                        Container(
-                          width: double.infinity,
-                          //height: 207, 
-                          padding: const EdgeInsets.fromLTRB( 0, 20, 20, 0),
-                          alignment: Alignment.topRight,  
-                          child: Stack(
-                            children: [
-                              const Positioned(
-                                left: 1.0,
-                                top: 2.0,
-                                child: Icon(Icons.filter_9_plus_outlined, color: Colors.black26, size: 30),
-                              ),
-                              InkWell(
-                                child: const Icon(Icons.filter_9_plus_outlined, color: Color(0xFFffffff), size: 30),
-                                onTap: () {
-                                  Navigator.pushNamed(context, 'card_images_screen', arguments: listing);
-                                  //print('object');
-                                },
-                              )                              
-                            ],
-                          ),                          
-                        ),
-                        if ( loggedIn == true )
-                        Container(
-                          width: double.infinity,
-                          //height: 207, 
-                          padding: const EdgeInsets.fromLTRB( 0, 20, 60, 0),
-                          alignment: Alignment.topRight,  
-                          child: Stack(
-                            children: [
-                              /* const Positioned(
-                                left: 1.0,
-                                top: 2.0,
-                                child: Icon(Icons.favorite_outlined, color: Colors.black26, size: 30),
-                              ), */
-                              InkWell(
-                                child: const Icon(Icons.favorite_border_outlined, color: Color(0xFFffffff), size: 30),
-                                onTap: () {
-                                  //print('object');
-                                },
-                              )                              
-                            ],
-                          ),                          
-                        ), */
-                        if ( loggedIn == true )
-                        Container(
-                          width: double.infinity,
-                          height: 207,
-                          padding: const EdgeInsets.fromLTRB( 0, 0, 20, 0),
-                          alignment: Alignment.bottomRight,
-                          child: InkWell(
-                            child: const Image(image: AssetImage('assets/play&learn_chip_53h.png'), ),
-                            onTap: () {
-                              //print('object');
-                            },
-                          ),
-                        ),
-
-
-
+            if ( loggedIn == true )
+            Container(
+              width: double.infinity,
+              height: 207,
+              padding: const EdgeInsets.fromLTRB( 0, 0, 20, 0),
+              alignment: Alignment.bottomRight,
+              child: InkWell(
+                child: const Image(image: AssetImage('assets/play&learn_chip_53h.png'), ),
+                onTap: () {
+                  //print('object');
+                },
+              ),
+            ),
           if ( loggedIn == false )
           Container(
             width: 310,

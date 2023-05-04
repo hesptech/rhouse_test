@@ -135,7 +135,7 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
   Widget build(BuildContext context) {
 
     final repliersFilters = Provider.of<RepliersFilters>(context);
-    print(repliersFilters.onCount);
+    //print(repliersFilters.onCount);
 
     return Scaffold(
       appBar: AppBar(

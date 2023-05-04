@@ -22,7 +22,7 @@ class RepliersFilters extends ChangeNotifier {
   Future<String> _getJsonDataFilters( String endPoint, Map<String, dynamic> valuesParams, [int page = 1] ) async {
     endPoint = 'listings';
     final url = Uri.https( _baseUrl, endPoint, valuesParams);
-    print( url );
+    //print( url );
 
     String envApiKey = dotenv.get('REPLIERS-API-KEY');
 

@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/utils/data_formatter.dart';
 
 class CardHor extends StatelessWidget {
 
@@ -14,35 +15,17 @@ class CardHor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    final dataFormatted = DataFormatter(listing);
+
     const loggedIn = true;
     const blurImg = loggedIn == false ? 5.0 : 0.0 ; 
     final screenSize = MediaQuery.of(context).size;
 
     // Gen. Info
-    final listingClass = listing.listingClass?? '';
-    //final Map mlsNumber = { 'mlsNumber': listing.mlsNumber };
     final String images = listing.images?.first?? '';
-    //final String daysOnMarket = listing.daysOnMarket?? '';
-
-    // days on market
-    DateTime listingEntryDate = listing.timestamps?.listingEntryDate?? DateTime.now();
-    DateTime addDt = DateTime.now();
-    Duration diffDt = addDt.difference(listingEntryDate); 
-    final finalDiffDt = diffDt.inDays == 0 ? 'Listed today' : 'Listed ${diffDt.inDays} day(s) ago';
-
-
-    final listPrice = listing.listPrice?? '' ;
-    double doubleString = double.parse(listPrice);
-    String formattedPrice = '\$${doubleString.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}';
     final String propertyType = listing.details?.propertyType?? '';
+    final String numBathrooms = listing.details?.numBathrooms?? '';
 
-    // Address
-    final String unitNumber = listing.address?.unitNumber?? '';
-    final String unitNumberHyphen = unitNumber == '' ? '' : '$unitNumber - ' ;
-    final String streetNumber = listing.address?.streetNumber?? ''; 
-    final String streetName = listing.address?.streetName?? '';
-    final String streetSuffix = listing.address?.streetSuffix?? '';
-    final String streetDirection = listing.address?.streetDirection?? '';
     String neighborhood = listing.address?.neighborhood?? '';
     final String city = listing.address?.city?? '';
     //final String area = listing.address?.area?? '';
@@ -63,24 +46,6 @@ class CardHor extends StatelessWidget {
     } else {
       finalAddress3 = finalAddress2;
     }
-
-    // Details
-    final String numBedrooms = listing.details?.numBedrooms?? '';
-    final String numBedroomsPlus = listing.details?.numBedroomsPlus == '' ? '' : '+${listing.details?.numBedroomsPlus}' ;
-    final String numBathrooms = listing.details?.numBathrooms?? '';
-    final String numParkingSpacesString = listing.details?.numParkingSpaces?? '';
-    final List arrayParkingSpaces = numParkingSpacesString.split('.');
-    final String newParkingSpaces = arrayParkingSpaces[0];
-    final String depth = listing.lot?.depth?? '';
-    final List newDepth = depth.split('.');
-    final String noZerosDepth = newDepth[0];
-    final String width = listing.lot?.width?? ''; 
-    final List newWidth = width.split('.');
-    final String noZerosWidth = newWidth[0];
-    final String sqft = listing.details?.sqft?? '';
-    final String sizeLot = listingClass == 'ResidentialProperty' ? '$noZerosDepth x $noZerosWidth ft' : '$sqft sqft' ;
-    //print(diffDt.inDays);
-
 
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -191,10 +156,9 @@ class CardHor extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  ' $formattedPrice', 
+                                  ' ${dataFormatted.listPrice}', 
                                   style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF2E3191)),
                                 ),
-                                //Container( width: 70,),
                                 Container(
                                   padding: const EdgeInsets.symmetric( vertical: 2, horizontal: 5.0 ),
                                   decoration: BoxDecoration(
@@ -214,7 +178,7 @@ class CardHor extends StatelessWidget {
                                 const SizedBox(width: 2,),
                                 ConstrainedBox(
                                   constraints: BoxConstraints( maxWidth: screenSize.width - 120 ),
-                                  child: Text('$unitNumberHyphen$streetNumber $streetName $streetSuffix $streetDirection', style:const TextStyle( fontSize: 16, color: Color(0xFF58595B)), overflow: TextOverflow.ellipsis,)
+                                  child: Text(dataFormatted.address, style:const TextStyle( fontSize: 16, color: Color(0xFF58595B)), overflow: TextOverflow.ellipsis,)
                                 ),                            
                               ],
                             ),
@@ -225,50 +189,7 @@ class CardHor extends StatelessWidget {
                             child: Row(
                               children: [
                                 const SizedBox( width: 25.0 ),
-
-                                /* Text(cityArea, style: const TextStyle( fontSize: 16, color: Color(0xFF58595B), fontWeight: FontWeight.bold, ), ),  
-                                const Text(', ', style: TextStyle( fontSize: 16, color: Color(0xFF58595B), fontWeight: FontWeight.bold, ), ),
-                                Text(neighborhood, style: const TextStyle( fontSize: 16, color: Color(0xFF58595B)), ), */
-
-
-                                /* Text(cityArea, style: const TextStyle( fontSize: 16, color: Color(0xFF58595B), fontWeight: FontWeight.bold, ), ),
-                                const Text(', ', style: TextStyle( fontSize: 16, color: Color(0xFF58595B), fontWeight: FontWeight.bold, ), ),
-                                ConstrainedBox(
-                                  constraints: BoxConstraints( maxWidth: screenSize.width - 265 ),
-                                  child: Text(neighborhood, style: const TextStyle( fontSize: 16, color: Color(0xFF58595B)), overflow: TextOverflow.ellipsis,),
-                                ), */
-
- 
-                                /* ConstrainedBox(
-                                  constraints: BoxConstraints( maxWidth: screenSize.width - 100 ),
-                                  child: Text(finalAddress3, style: const TextStyle( fontSize: 16, color: Color(0xFF58595B)), overflow: TextOverflow.ellipsis,),
-                                ), */
-
-                                Text(finalAddress3, style: const TextStyle( fontSize: 16, color: Color(0xFF58595B), ), ),
-
-                                /* Container(
-                                  //width: 100,
-                                  margin: EdgeInsets.all(0.0),
-                                  padding: EdgeInsets.all(0.0),
-                                  alignment: Alignment.centerLeft,
-                                  constraints: BoxConstraints(maxWidth: 150.0),
-                                  child: ChoiceChip(
-                                    selected: false,
-                                    labelPadding: const EdgeInsets.all(0.0),
-                                    label: Text(neighborhood, style: const TextStyle( fontSize: 16, color: Color(0xFF58595B))),
-                                  ),
-                                ), */
-
-
-
-
-                                /* ConstrainedBox(
-                                  constraints: BoxConstraints( maxWidth: screenSize.width - 120 ),
-                                  child: Text('$cityArea, $neighborhood', style: const TextStyle( fontSize: 16, color: Color(0xFF58595B)), overflow: TextOverflow.ellipsis, ),
-                                ) */
-
-                                //Text(' - ', style: TextStyle( fontSize: 16, color: Color(0xFF58595B), fontWeight: FontWeight.bold, ), ),
-                                //Text('$city', style: TextStyle( fontSize: 16, color: Color(0xFF58595B), fontWeight: FontWeight.bold, ), ),                          
+                                Text(finalAddress3, style: const TextStyle( fontSize: 16, color: Color(0xFF58595B), ), ),                          
                               ],
                             ),
                           ), 
@@ -288,7 +209,10 @@ class CardHor extends StatelessWidget {
                                   children: [
                                     const Icon(Icons.king_bed_outlined, color: Color(0xFF0BB48B), size: 30,),
                                     const SizedBox(width: 5,),
-                                    Text('$numBedrooms$numBedroomsPlus' , style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), ),                                  
+                                    Text(
+                                      dataFormatted.numBedrooms , 
+                                      style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), 
+                                    ),                                  
                                   ],
                                 ),
                               ),
@@ -326,7 +250,10 @@ class CardHor extends StatelessWidget {
                                   children: [
                                     const Icon(Icons.directions_car_filled_outlined, color: Color(0xFF0BB48B), size: 28,),
                                     const SizedBox(width: 5,),
-                                    Text(newParkingSpaces, style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), ),                                    
+                                    Text(
+                                      dataFormatted.numParkingSpaces, 
+                                      style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), 
+                                    ),                                    
                                   ],
                                 ),
                               ),
@@ -344,7 +271,7 @@ class CardHor extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     //const SizedBox(width: 5,),
-                                    Text(sizeLot, style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), textAlign: TextAlign.center,)                                    
+                                    Text(dataFormatted.lotSqft, style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), textAlign: TextAlign.center,)                                    
                                   ],
                                 ),
                               ),
@@ -380,7 +307,7 @@ class CardHor extends StatelessWidget {
                   children: [
                     const Icon(Icons.calendar_month_outlined, size: 16,),
                     const SizedBox(width: 5,),
-                    Text(finalDiffDt, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400))
+                    Text(dataFormatted.listEntryDate, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400))
                   ],
                 ),
               )

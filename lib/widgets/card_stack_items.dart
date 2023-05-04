@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/models/models.dart';
-
+import 'package:flutter_black_white/utils/data_formatter.dart';
 
 class CardStackItems extends StatefulWidget {
 
@@ -17,11 +17,7 @@ class _CardStackItemsState extends State<CardStackItems> {
   @override
   Widget build(BuildContext context) {
 
-    // days on market
-    DateTime listingEntryDate = widget.listing.timestamps?.listingEntryDate?? DateTime.now();
-    DateTime addDt = DateTime.now();
-    Duration diffDt = addDt.difference(listingEntryDate); 
-    final finalDiffDt = diffDt.inDays == 0 ? 'Listed today' : 'Listed ${diffDt.inDays} day(s) ago';
+    final dataFormatted = DataFormatter(widget.listing);
 
     return Container(
       alignment: Alignment.topLeft,
@@ -48,7 +44,7 @@ class _CardStackItemsState extends State<CardStackItems> {
                   width: 5,
                 ),
                 Text(
-                  finalDiffDt,
+                  dataFormatted.listEntryDate,
                   style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400,),
                 ),
               ],
