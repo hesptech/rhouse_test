@@ -28,7 +28,6 @@ class CardHor extends StatelessWidget {
 
     String neighborhood = listing.address?.neighborhood?? '';
     final String city = listing.address?.city?? '';
-    //final String area = listing.address?.area?? '';
     final String cityArea = listing.address?.area == 'Toronto' ? 'Toronto' : city ;
 
      
@@ -36,9 +35,8 @@ class CardHor extends StatelessWidget {
       neighborhood == 'Waterfront Communities West';
     } else if ( neighborhood == 'Waterfront Communities C8' ) {
       neighborhood == 'Waterfront Communities East';
-    } else {
-      neighborhood == 'xxxxxxxx';
-    }
+    } 
+
     final String finalAddress2 = '$neighborhood, $cityArea';
     String finalAddress3 = '';
     if ( finalAddress2.length > 30 ) {
@@ -177,7 +175,7 @@ class CardHor extends StatelessWidget {
                                 const Icon(Icons.location_on_outlined, color: Color(0xFF0BB48B), size: 22,),
                                 const SizedBox(width: 2,),
                                 ConstrainedBox(
-                                  constraints: BoxConstraints( maxWidth: screenSize.width - 120 ),
+                                  constraints: BoxConstraints( maxWidth: screenSize.width - 130 ),
                                   child: Text(dataFormatted.address, style:const TextStyle( fontSize: 16, color: Color(0xFF58595B)), overflow: TextOverflow.ellipsis,)
                                 ),                            
                               ],
@@ -295,7 +293,7 @@ class CardHor extends StatelessWidget {
               alignment: Alignment.topLeft,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: const Color(0xFF2E3191),
+                  backgroundColor: const Color(0xFF2E3191),
                   minimumSize: const Size(140.0, 28.0),
                   padding: const EdgeInsets.symmetric(horizontal: 5),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),

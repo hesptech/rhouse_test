@@ -27,7 +27,7 @@ class _CardStackItemsState extends State<CardStackItems> {
         children: [
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: const Color(0xFF2E3191),
+              backgroundColor: const Color(0xFF2E3191),
               minimumSize: const Size(140.0, 28.0),
               padding: const EdgeInsets.fromLTRB(7.0, 0.0, 7.0, 0.0),
               shape: RoundedRectangleBorder(

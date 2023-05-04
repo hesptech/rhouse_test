@@ -289,7 +289,7 @@ class CardDetailsScreen extends StatelessWidget {
                         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(const EdgeInsets.fromLTRB(10, 0, 10, 0)),
                       ), */
                       style: ElevatedButton.styleFrom(
-                        primary: const Color(0xFF2E3191),
+                        backgroundColor: const Color(0xFF2E3191),
                         minimumSize: const Size(140.0, 28.0),
                         padding: const EdgeInsets.fromLTRB(7.0, 0.0, 0.0, 0.0),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),

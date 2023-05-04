@@ -56,7 +56,7 @@ class _ExpansionCommentsState extends State<ExpansionComments> {
                     child: Text(
                       description, 
                       style: const TextStyle(fontSize: 16, color: Color(0xFF231F20), height: 1.3, ), 
-                      textAlign: TextAlign.end, 
+                      textAlign: TextAlign.start, 
                     )
                   ),
                 ]
