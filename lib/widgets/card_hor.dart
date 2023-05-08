@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 
 class CardHor extends StatelessWidget {
@@ -105,7 +106,7 @@ class CardHor extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Container(
+                          /* Container(
                             width: 310,
                             height: 207, 
                             padding: const EdgeInsets.fromLTRB( 0, 15, 50, 0),
@@ -125,6 +126,32 @@ class CardHor extends StatelessWidget {
                                 )
                               ],
                             ),                        
+                          ), */
+                          Container(
+                            width: 310,
+                            height: 207, 
+                            padding: const EdgeInsets.fromLTRB( 15, 0, 50, 15),
+                            alignment: Alignment.bottomLeft,  
+                            /* child: Stack(
+                              children: [
+                                InkWell(
+                                  child: const Icon(Icons.map_outlined, color: kSecondaryColor, size: 30),
+                                  onTap: () {
+                                    //print('object');
+                                  },
+                                )
+                              ],
+                            ), */ 
+                            child: InkWell(
+                              child: const CircleAvatar(
+                                backgroundColor: Colors.white,
+                                radius: 18,
+                                child: Icon(Icons.map_outlined, color: kSecondaryColor, size: 30),
+                              ),
+                              onTap: () {
+                                Navigator.pushNamed(context, 'map_screen', arguments: listing.map);
+                              },
+                            ),                      
                           ),
                           Container(
                             width: 310,

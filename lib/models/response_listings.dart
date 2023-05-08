@@ -18,6 +18,7 @@ class Listing {
     this.nearby,
     this.condominium,
     this.office,
+    this.map,
   });
 
   String? mlsNumber;
@@ -36,6 +37,7 @@ class Listing {
   Nearby? nearby;
   Condominium? condominium;
   Office? office;
+  MapClass? map;
 
   factory Listing.fromJson(String str) => Listing.fromMap(json.decode(str));
 
@@ -56,6 +58,7 @@ class Listing {
     nearby: Nearby.fromMap(json["nearby"]),
     condominium: Condominium.fromMap(json["condominium"]),
     office: Office.fromMap(json["office"]),
+    map: MapClass.fromMap(json["map"]),
   );
 }
 
@@ -399,3 +402,33 @@ class Office {
     brokerageName: json["brokerageName"]
   );
 }
+
+
+class MapClass {
+    String latitude;
+    String point;
+    String longitude;
+
+    MapClass({
+        required this.latitude,
+        required this.point,
+        required this.longitude,
+    });
+
+    factory MapClass.fromJson(String str) => MapClass.fromMap(json.decode(str));
+
+    String toJson() => json.encode(toMap());
+
+    factory MapClass.fromMap(Map<String, dynamic> json) => MapClass(
+        latitude: json["latitude"],
+        point: json["point"],
+        longitude: json["longitude"],
+    );
+
+    Map<String, dynamic> toMap() => {
+        "latitude": latitude,
+        "point": point,
+        "longitude": longitude,
+    };
+}
+
