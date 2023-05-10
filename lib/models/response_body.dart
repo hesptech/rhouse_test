@@ -58,7 +58,7 @@ class ListPrice {
     factory ListPrice.fromJson(String str) => ListPrice.fromMap(json.decode(str));
 
     factory ListPrice.fromMap(Map<String, dynamic> json) => ListPrice(
-        min: json["min"].toInt(),
-        max: json["max"].toInt(),
+        min: json["min"],
+        max: json["max"],
     );
 }
