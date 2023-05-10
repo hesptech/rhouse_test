@@ -405,14 +405,14 @@ class Office {
 
 
 class MapClass {
-    String latitude;
-    String point;
-    String longitude;
+    String? latitude;
+    String? point;
+    String? longitude;
 
     MapClass({
-        required this.latitude,
-        required this.point,
-        required this.longitude,
+        this.point,
+        this.longitude,
+        this.latitude,
     });
 
     factory MapClass.fromJson(String str) => MapClass.fromMap(json.decode(str));
