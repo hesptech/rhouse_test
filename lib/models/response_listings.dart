@@ -11,6 +11,7 @@ class Listing {
     this.listPrice,
     this.address,
     this.details,
+    this.mapCoordinates,
     this.rooms,
     this.lot,
     this.taxes,
@@ -29,6 +30,7 @@ class Listing {
   String? listPrice;
   Address? address;
   Details? details;
+  MapCoordinates? mapCoordinates;
   Map<String, Room>? rooms;
   Lot? lot;
   Taxes? taxes;
@@ -39,24 +41,27 @@ class Listing {
 
   factory Listing.fromJson(String str) => Listing.fromMap(json.decode(str));
 
-  factory Listing.fromMap(Map<String, dynamic> json) => Listing(
+  factory Listing.fromMap(Map<String, dynamic> json) {
+    return Listing(
     mlsNumber: json["mlsNumber"],
     listingClass: json["class"],
     images: List<String>.from(json["images"].map((x) => x)),
-    listDate: DateTime.parse(json["listDate"]),
-    timestamps: Timestamps.fromMap(json["timestamps"]),
+    listDate: json["listDate"] != null ? DateTime.parse(json["listDate"]) : null,
+    timestamps: json["timestamps"] != null ?  Timestamps.fromMap(json["timestamps"]) : null,
     daysOnMarket: json["daysOnMarket"],
     listPrice: json["listPrice"],
-    address: Address.fromMap(json["address"]),
-    details: Details.fromMap(json["details"]),
-    rooms: Map.from(json["rooms"]).map((k, v) => MapEntry<String, Room>(k, Room.fromMap(v))),
-    lot: Lot.fromMap(json["lot"]),
-    taxes: Taxes.fromMap(json["taxes"]),
+    address: json["address"] != null ? Address.fromMap(json["address"]) : null,
+    details: json["details"] != null ? Details.fromMap(json["details"]) : null,
+    mapCoordinates: json["map"] != null ? MapCoordinates.fromJson(json["map"]) : null,
+    rooms: json["rooms"] != null ? Map.from(json["rooms"]).map((k, v) => MapEntry<String, Room>(k, Room.fromMap(v))) : null,
+    lot: json["lot"] != null ? Lot.fromMap(json["lot"]) : null,
+    taxes: json["taxes"] != null ? Taxes.fromMap(json["taxes"]) : null,
     occupancy: json["occupancy"],
-    nearby: Nearby.fromMap(json["nearby"]),
-    condominium: Condominium.fromMap(json["condominium"]),
-    office: Office.fromMap(json["office"]),
+    nearby: json["nearby"] != null ? Nearby.fromMap(json["nearby"]) : null,
+    condominium: json["condominium"] != null ? Condominium.fromMap(json["condominium"]) : null,
+    office: json["office"] != null ? Office.fromMap(json["office"]) : null,
   );
+  }
 }
 
 
@@ -285,8 +290,7 @@ class Nearby {
     factory Nearby.fromJson(String str) => Nearby.fromMap(json.decode(str));
 
     factory Nearby.fromMap(Map<String, dynamic> json) => Nearby(
-        ammenities: List<String>.from(json["ammenities"].map((x) => x)),
-    );
+        ammenities: List<String>.from(json["ammenities"].map((x) => x ?? "")));
 }
 
 
@@ -348,7 +352,7 @@ class Condominium {
         exposure: json["exposure"],
         lockerNumber: json["lockerNumber"],
         lockerUnitNumber: json["lockerUnitNumber"],
-        ammenities: List<dynamic>.from(json["ammenities"].map((x) => x)),
+        ammenities: List<dynamic>.from(json["ammenities"].map((x) => x ?? "")),
     );
 }
 
@@ -375,13 +379,13 @@ class Fees {
     factory Fees.fromJson(String str) => Fees.fromMap(json.decode(str));
 
     factory Fees.fromMap(Map<String, dynamic> json) => Fees(
-        cableInlc: json["cableInlc"],
-        waterIncl: json["waterIncl"],
-        heatIncl: json["heatIncl"],
-        taxesIncl: json["taxesIncl"],
-        parkingIncl: json["parkingIncl"],
-        maintenance: json["maintenance"],
-        hydroIncl: json["hydroIncl"],
+        cableInlc: json["cableInlc"] ?? "",
+        waterIncl: json["waterIncl"] ?? "",
+        heatIncl: json["heatIncl"] ?? "",
+        taxesIncl: json["taxesIncl"] ?? "",
+        parkingIncl: json["parkingIncl"] ?? "",
+        maintenance: json["maintenance"] ?? "",
+        hydroIncl: json["hydroIncl"] ?? "",
     );
 }
 
@@ -398,4 +402,23 @@ class Office {
   factory Office.fromMap(Map<String, dynamic> json) => Office (
     brokerageName: json["brokerageName"]
   );
+}
+
+
+class MapCoordinates {
+    double latitude;
+    String point;
+    double longitude;
+
+    MapCoordinates({
+        this.latitude = 0,
+        this.longitude = 0,
+        required this.point,
+    });
+
+    factory MapCoordinates.fromJson(Map<String, dynamic> json) => MapCoordinates(
+        latitude: double.parse(json["latitude"] ?? "0") ,
+        point: json["point"] ?? "",
+        longitude: double.parse(json["longitude"] ?? "0"),
+    );
 }
