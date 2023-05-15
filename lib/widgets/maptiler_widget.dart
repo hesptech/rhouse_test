@@ -7,17 +7,29 @@ import '../models/models.dart';
 
 class MapTilerWidget extends StatefulWidget {
   final VectorTileLayer Function(BuildContext, VectorTileLayerMode mode) layerFactory;
+  final void Function(MarkerClusterNode markerClusred)? onClusterTap;
+  final void Function(List<Marker> mapMarkers)? onTapMarker;
+  final void Function(MapEvent mapEvent)? changeZoom;
+  final Widget? cards;
   final LatLng? center;
   final List<Listing> listCoordinates;
+  final List<Marker> selectedCluster;
   final double zoom;
   final bool isMultiple;
+  final bool isCloseCards;
 
   const MapTilerWidget(
       {super.key,
       required this.layerFactory,
+      this.onClusterTap,
+      this.changeZoom,
+      this.onTapMarker,
+      this.cards,
       this.center,
       this.zoom = 18,
       this.isMultiple = true,
+      this.isCloseCards = false,
+      this.selectedCluster = const [],
       this.listCoordinates = const []});
 
   @override
@@ -31,15 +43,47 @@ class _MapWidget extends State<MapTilerWidget> {
   final double _maxZoom = 15;
   late double _zoomValue;
   final List<Marker> markers = [];
+  late List<Marker> _selectedCluster;
+  Marker? currentMarker;
+
 
   @override
   void initState() {
     _zoomValue = widget.zoom;
     if (widget.isMultiple) {
       _setMarkers();
+
+      _selectedCluster = widget.selectedCluster;
+
+      _controller.mapEventStream.listen((event) {
+        if (widget.changeZoom == null) {
+          return;
+        }
+
+        if (_zoomValue != event.zoom) {
+          _zoomValue = event.zoom;
+          widget.changeZoom!(event);
+          setState(() {
+            currentMarker = null;            
+          });
+        }
+      });
     }
 
+
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(MapTilerWidget oldWidget) {
+    if (widget.isMultiple) {
+      setState(() {
+        _selectedCluster = widget.selectedCluster;
+        currentMarker = widget.selectedCluster.isEmpty ? null : currentMarker;
+      });
+    }
+    _zoomValue =  _controller.zoom;
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -58,9 +102,6 @@ class _MapWidget extends State<MapTilerWidget> {
               onMapReady: () {
                 _controller.move(widget.center!, _zoomValue);
               },
-              onMapEvent: (p0) {
-                print("ZOOM: ${p0.zoom}");
-              },
               interactiveFlags: InteractiveFlag.drag |
                   InteractiveFlag.flingAnimation |
                   InteractiveFlag.pinchMove |
@@ -72,27 +113,41 @@ class _MapWidget extends State<MapTilerWidget> {
           ],
         ),
       ])),
+      widget.isMultiple ? widget.cards! : Container()
     ]);
   }
 
   Widget _markers() {
-    return MarkerClusterLayerWidget(
+    return MarkerClusterLayerWidget(            
       options: MarkerClusterLayerOptions(
-        maxClusterRadius: 80,
         size: const Size(50, 50),
+        maxClusterRadius: 80,     
         anchor: AnchorPos.align(AnchorAlign.center),
         fitBoundsOptions: FitBoundsOptions(padding: const EdgeInsets.all(50), maxZoom: _maxZoom),
-        spiderfyCluster: false,        
+        spiderfyCluster: false,
         markers: markers,
+        zoomToBoundsOnClick: false,
+        onClusterTap: (MarkerClusterNode markerClusterNode) {
+          if (widget.onClusterTap == null) {
+            return;
+          }
+          currentMarker = null;
+          widget.onClusterTap!(markerClusterNode);
+        },
         builder: (context, markers) {
+          bool isSelected = false;
+
+          if (_selectedCluster.isNotEmpty) {
+            isSelected = _selectedCluster.every((marker) => markers.contains(marker)) == true;
+          }
           return Container(
             width: 100.0,
             height: 100.0,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: const Color(0XFF214497),
+              color: !isSelected ? const Color(0XFF214497) : const Color(0XFFED1C24),
               border: Border.all(
-                color: const Color(0XFF09B68D),
+                color: !isSelected ? const Color(0XFF09B68D) : Colors.white,
                 width: 5.0,
               ),
             ),
@@ -109,15 +164,47 @@ class _MapWidget extends State<MapTilerWidget> {
   }
 
   void _setMarkers() {
+
     for (var item in widget.listCoordinates) {
       markers.add(
         Marker(
+          key: Key(item.mlsNumber ?? ""),
           height: 30,
-          width: 30,          
+          width: 30,
+
           point: LatLng(item.mapCoordinates!.latitude, item.mapCoordinates!.longitude),
-          builder: (ctx) =>  const Icon(Icons.location_on_outlined, color:Color(0XFF02B68C), size: 50),
+          builder: (ctx) {
+            var color = const Color(0XFF02B68C);
+            if (currentMarker != null) {
+              if (currentMarker!.key == Key(item.mlsNumber ?? "")) {
+                color = Colors.red;                
+              }
+            }
+            return GestureDetector(
+                onTap: () {
+                  if (widget.onTapMarker == null) {
+                    return;
+                  }
+
+                  var keyItem = Key(item.mlsNumber ?? "");
+
+                  var markerItem = markers.where((element) => element.key == keyItem).toList();
+
+                  if (markerItem.isNotEmpty) {
+                    setState(() {
+                      currentMarker = markerItem.first; // asigna el marcador seleccionado
+                    });
+
+                    widget.onTapMarker!(markerItem);
+                  }
+                },
+                child: Icon(Icons.location_on_outlined, color: color, size: 50));
+          },
         ),
       );
     }
   }
+
+
+
 }

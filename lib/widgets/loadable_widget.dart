@@ -44,17 +44,17 @@ class _LoadableWidget<T> extends State<LoadableWidget<T>> {
   }
 }
 
-
 class LoadWidget extends StatelessWidget {
   const LoadWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Column(children: [
+    return Center(
+        child: Column(children: [
       Expanded(child: Container()),
       const CircularProgressIndicator(),
       const Text("Loading"),
       Expanded(child: Container())
-      ]));
+    ]));
   }
 }

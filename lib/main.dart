@@ -34,6 +34,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: ( _ ) => FilterProvider(), ),
         ChangeNotifierProvider( create: (_) => RepliersProvider('toronto ALL'), lazy: false,),
         ChangeNotifierProvider( create: (_) => RepliersFilters('toronto ALL'), ),
+        ChangeNotifierProvider(create: (_) => MapListProvider())
       ],
       child: const App(),
     );

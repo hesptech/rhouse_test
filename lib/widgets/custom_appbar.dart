@@ -42,7 +42,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                               /* onTap: () => displayDialog( context ),
                             child: const Image(image: AssetImage('assets/play&learn_logo108x37.png'),) */
                               onTap: () {
-                                GeolocationApp().getPosition().then((value) {
+                                GeolocationApp().requestLocalization().then((value) {
                                   Navigator.pushNamed(context, 'map_screen');
                                 }, onError: (value) {
                                   _dialogGeolocation(context);
@@ -149,6 +149,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                 TextButton(
                     onPressed: () async {
                       Navigator.of(context).pop();
+                      Navigator.pushNamed(context, 'map_screen');
                     },
                     child: const Text("Ok")),                    
               ]);
