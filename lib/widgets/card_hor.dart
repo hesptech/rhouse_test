@@ -149,7 +149,7 @@ class CardHor extends StatelessWidget {
                                 child: Icon(Icons.map_outlined, color: kSecondaryColor, size: 30),
                               ),
                               onTap: () {
-                                Navigator.pushNamed(context, 'map_screen', arguments: listing.map);
+                                Navigator.pushNamed(context, 'map_screen', arguments: listing.mapCoordinates);
                               },
                             ),                      
                           ),
