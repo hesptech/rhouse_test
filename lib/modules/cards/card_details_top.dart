@@ -59,7 +59,7 @@ class CardDetailsTop extends StatelessWidget {
                             children: [
                               ConstrainedBox(
                                 constraints: BoxConstraints( maxWidth: screenSize.width - 110 ),
-                                child: Text( dataFormatted.address, textAlign: TextAlign.left ,maxLines: 3, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: kPrimaryColor, overflow: TextOverflow.ellipsis, ),),
+                                child: Text( dataFormatted.address, textAlign: TextAlign.left ,maxLines: 3, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kPrimaryColor, overflow: TextOverflow.ellipsis, ),),
                               ),
                             ],
                           ),
@@ -72,7 +72,6 @@ class CardDetailsTop extends StatelessWidget {
                           ),
                           const SizedBox( height: 28,),
                           CardDetailsBox( listing ),
-                          const SizedBox( height: 28,),
                         ],
                       ),
                     ),

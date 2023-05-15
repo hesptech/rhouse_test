@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/providers/repliers_listing_mls.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/modules/cards/cards.dart';
 
@@ -14,6 +16,7 @@ class CardDetailsFullScreen extends StatelessWidget {
 
     final Listing listing = ModalRoute.of(context)?.settings.arguments! as Listing;
     //print(listing.listingClass);
+    final repliersHistory = Provider.of<RepliersListingMls>(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -38,7 +41,13 @@ class CardDetailsFullScreen extends StatelessWidget {
               color: kSecondaryColor,        
             ),
             CardDetailsTop( listing ),
-            const SizedBox( height: 22.0, ),
+            const SizedBox( height: 14,),
+            CardDetailsHistory( 
+              //listing, 
+              //listing.mlsNumber, 
+              onHistory: () => repliersHistory.getListingHistory( listing.mlsNumber ), 
+            ),
+            const SizedBox( height: 28,),
             const CardDetailsMap(),
             const SizedBox( height: 22.0, ),
             CardDetailsExpansions( listing ), 

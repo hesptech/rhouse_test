@@ -13,7 +13,7 @@ class CardDetailsMap extends StatelessWidget {
               side: const BorderSide( color: kSecondaryColor, width: 2.0 ) 
             ),
             borderOnForeground: true,
-            margin: const EdgeInsets.symmetric(horizontal: 14),
+            margin: const EdgeInsets.symmetric(horizontal: 20),
             child: const FadeInImage(
               placeholder: AssetImage('assets/loading.gif'),
               image: AssetImage('assets/house_map.png'),

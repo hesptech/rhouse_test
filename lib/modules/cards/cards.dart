@@ -1,5 +1,6 @@
 export 'package:flutter_black_white/modules/cards/card_details_top.dart';
 export 'package:flutter_black_white/modules/cards/card_details_map.dart';
+export 'package:flutter_black_white/modules/cards/card_details_history.dart';
 export 'package:flutter_black_white/modules/cards/card_details_expansions.dart';
 export 'package:flutter_black_white/modules/cards/expansions_ammenities.dart';
 export 'package:flutter_black_white/modules/cards/expansions_amounts_dates.dart';

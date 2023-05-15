@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/providers/repliers_listing_mls.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
@@ -30,9 +31,10 @@ class AppState extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: ( _ ) => FilterProvider(), ),
+        ChangeNotifierProvider( create: (_) => FilterProvider(), ),
         ChangeNotifierProvider( create: (_) => RepliersProvider('toronto ALL'), lazy: false,),
         ChangeNotifierProvider( create: (_) => RepliersFilters('toronto ALL'), ),
+        ChangeNotifierProvider( create: (_) => RepliersListingMls(), ),
       ],
       child: const App(),
     );

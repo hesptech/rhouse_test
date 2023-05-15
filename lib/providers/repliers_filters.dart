@@ -5,6 +5,7 @@ import 'package:flutter_black_white/models/models.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
+
 class RepliersFilters extends ChangeNotifier {
 
   final String _baseUrl = 'api.repliers.io';
@@ -13,6 +14,7 @@ class RepliersFilters extends ChangeNotifier {
   int onCount = 0;
   int _displayPageFilters = 0;
   bool loaded = false;
+
 
   RepliersFilters( this.citySearchParam ) {
     citySearchParam == 'toronto' ? 'toronto' : citySearchParam ;

@@ -100,15 +100,24 @@ class Room {
 
 class Timestamps {
   Timestamps({
-    this.listingEntryDate
+    this.listingEntryDate,
+    this.terminatedDate,
+    this.suspendedDate,
+    this.expiryDate,
   });
 
   DateTime? listingEntryDate;
+  DateTime? terminatedDate;
+  DateTime? suspendedDate;
+  DateTime? expiryDate;
 
   factory Timestamps.fronJson(String str) => Timestamps.fromMap(json.decode(str));
 
   factory Timestamps.fromMap(Map<String, dynamic> json) => Timestamps(
     listingEntryDate: json["listingEntryDate"] != null ? DateTime.parse(json["listingEntryDate"]) : DateTime.parse("2023-02-21T21:55:44.000Z"),
+    terminatedDate: json['terminatedDate'] != null ? DateTime.parse(json["terminatedDate"]) : DateTime.parse("0000-00-00T21:55:44.000Z"),
+    suspendedDate: json['suspendedDate'] != null ? DateTime.parse(json["suspendedDate"]) : DateTime.parse("0000-00-00T21:55:44.000Z"),
+    expiryDate: json['expiryDate'] != null ? DateTime.parse(json["expiryDate"]) : DateTime.parse("0000-00-00T21:55:44.000Z"),
   );
 }
 
