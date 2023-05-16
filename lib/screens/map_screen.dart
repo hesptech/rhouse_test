@@ -5,7 +5,11 @@ import 'package:flutter_black_white/widgets/loadable_widget.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 import 'package:vector_tile_renderer/vector_tile_renderer.dart';
 
+import '../providers/filter_provider.dart';
+import '../utils/shared_preferences.dart';
+
 class MapScreen extends StatefulWidget {
+  static String path = "mapSearch_screen";
   const MapScreen({Key? key}) : super(key: key);
 
   @override
@@ -15,18 +19,79 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
+
+    var arguments = _checkArguments(context);
+    bool isFilter = arguments["filter"];
+
+
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Search by Map'),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              const Text('Map search', style: TextStyle(fontSize: 26)),
+              SizedBox(
+                width: 140,
+                child: TextButton(
+                    onPressed: () {
+                      FilterProvider().cleanFilter();
+                      Navigator.pushNamed(context, MapScreen.path, arguments: {'filter': "false", 'mlsNumber': ''});
+                    },
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.replay,
+                          color: Color(0XFF09B68D),
+                          size: 22,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          "Reset Filters",
+                          style: TextStyle(fontSize: 17, color: Colors.white),
+                        ),
+                      ],
+                    )),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
+          leading: IconButton(onPressed: () {
+              FilterProvider().cleanFilter();
+              Navigator.pushNamed(context, '/');
+          }, icon: const Icon(Icons.arrow_back, color: Colors.white, size: 34,)),
+          toolbarHeight: 90,
           backgroundColor: const Color(0xFF2E3191),
           centerTitle: true,
           actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.tune_outlined,
-                color: Color(0xFF0BB48B),
-                size: 30,
+            GestureDetector(
+              onTap: () {
+                Preferences.isCleanFilter = false;
+                Navigator.pushNamed(context, 'filters_screen', arguments: {'screenPath': MapScreen.path});
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children:  [
+                  Icon(
+                      Icons.tune_outlined, 
+                      color: isFilter ? const Color(0XFFED1C24) : Colors.white,
+                      size: 35,
+                    ),
+                  const Text(
+                    "Filters",
+                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
+                  ),
+                ],
               ),
             ),
             const SizedBox(
@@ -34,12 +99,25 @@ class _MapScreenState extends State<MapScreen> {
             )
           ],
         ),
-        body: LoadableWidget(
-            loader: () => StyleReader(
-                    uri: MapListProvider().getMapTilerUrl,
-                    apiKey: MapListProvider().getApiKey,
-                    logger: const Logger.console())
-                .read(),
-            builder: (_, Style remoteTheme) => MapResidencesSearch(style: remoteTheme)));
+        body: SafeArea(
+          child: LoadableWidget(
+              loader: () => StyleReader(
+                      uri: MapListProvider().getMapTilerUrl,
+                      apiKey: MapListProvider().getApiKey,
+                      logger: const Logger.console())
+                  .read(),
+              builder: (_, Style remoteTheme) => MapResidencesSearch(style: remoteTheme, isFilter: isFilter,)),
+        ));
   }
+
+  Map<String, dynamic> _checkArguments(BuildContext context) {
+    final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
+
+    bool isFilter = arguments["filter"].toString() == "true" ? true : false;
+    Map<String, dynamic> results = {
+      'filter': isFilter,
+    };
+    
+    return results;
+  }  
 }

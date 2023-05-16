@@ -1,24 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/screens/map_screen.dart';
 
 import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/utils/widgets_formatting.dart';
 import 'package:flutter_black_white/modules/filters/filters.dart';
 
-
 class FiltersScreen extends StatelessWidget {
-  const FiltersScreen({ Key? key }) : super(key: key);
+  const FiltersScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var pathArgument = _checkArguments(context);
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       appBar: AppBar(
         elevation: 0.0,
         centerTitle: true,
         leading: IconButton(
-          onPressed: () { 
-            Navigator.pushNamed(context, '/');
-          }, 
+          onPressed: () {
+            if (pathArgument == MapScreen.path) {
+              if (Preferences.isCleanFilter) {
+                Navigator.pushNamed(context, MapScreen.path, arguments: {'filter': "false", 'mlsNumber': ''});
+                Preferences.isCleanFilter = false;
+              } else {
+                Navigator.of(context).pop();
+              }
+            } else {
+              Navigator.pushNamed(context, '/');
+            }
+          },
           icon: const Icon(Icons.close_outlined),
         ),
         title: const Text('Personalize Listing'),
@@ -33,18 +44,27 @@ class FiltersScreen extends StatelessWidget {
             ),
             const FiltersPriceSlider(),
             const FiltersClassIconBt(),
-            const SizedBox( height: 28.0,),
+            const SizedBox(
+              height: 28.0,
+            ),
             const GreenDivider(),
             const FiltersPropertyType(),
             const GreenDivider(),
-            const FiltersLocation(),
+            pathArgument != MapScreen.path ? const FiltersLocation() : Container(),
             const GreenDivider(),
             const FiltersBathbedpark(),
             const FiltersMore(),
           ],
         ),
       ),
-      bottomNavigationBar: const FiltersBottomBar(),
+      bottomNavigationBar: FiltersBottomBar(pathScreen: pathArgument),
     );
+  }
+
+  String _checkArguments(BuildContext context) {
+    final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
+
+    return arguments["screenPath"].toString() == MapScreen.path ? MapScreen.path : "/";
+    
   }
 }

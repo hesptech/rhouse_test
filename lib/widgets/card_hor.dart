@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/screens/map_screen.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 
@@ -149,7 +150,7 @@ class CardHor extends StatelessWidget {
                                 child: Icon(Icons.map_outlined, color: kSecondaryColor, size: 30),
                               ),
                               onTap: () {
-                                Navigator.pushNamed(context, 'map_screen', arguments: listing.mapCoordinates);
+                                Navigator.pushNamed(context, MapScreen.path, arguments: {'filter': "false", 'mlsNumber': listing.mlsNumber});
                               },
                             ),                      
                           ),

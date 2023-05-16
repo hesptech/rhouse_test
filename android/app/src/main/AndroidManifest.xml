@@ -9,7 +9,7 @@
 
 
    <application
-        android:label="flutter_black_white"
+        android:label="Rhouze"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 

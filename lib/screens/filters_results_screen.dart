@@ -141,30 +141,6 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text('Filters Results'),
-        actions: [
-          Row(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, 'map_screen');
-                },
-                //child: const Icon( Icons.map_outlined, color: Color(0xFF0BB48B), size: 26.0,),
-                child: Row(
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.only( right: 5.0 ),
-                      child: Text('Map', style: TextStyle(color: Colors.white54, fontSize: 12.0, fontWeight: FontWeight.bold),)
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only( right: 15.0 ),
-                      child: Icon( Icons.map_outlined, color: Color(0xFF0BB48B), size: 26.0,)
-                    ),   
-                  ],
-                )
-              ),              
-            ],
-          )
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(

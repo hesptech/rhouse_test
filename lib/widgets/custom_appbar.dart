@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/screens/map_screen.dart';
 import 'package:flutter_black_white/utils/geolocation_app.dart';
+
+import '../providers/filter_provider.dart';
 //import 'package:flutter_black_white/search/search_delegate.dart';
 
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
@@ -43,7 +46,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                             child: const Image(image: AssetImage('assets/play&learn_logo108x37.png'),) */
                               onTap: () {
                                 GeolocationApp().requestLocalization().then((value) {
-                                  Navigator.pushNamed(context, 'map_screen');
+                                  _goToMapSearch(context);
                                 }, onError: (value) {
                                   _dialogGeolocation(context);
                                 });
@@ -124,7 +127,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
 
   Future<dynamic> _dialogGeolocation(context) async {
     return showDialog(
-        barrierDismissible: true,        
+        barrierDismissible: true,
         context: context,
         builder: (context) {
           return AlertDialog(
@@ -135,8 +138,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                 height: 120,
                 child: Center(
                   child: SingleChildScrollView(
-                    child: Text(
-                          "Location permissions are necessary to provide you with a better experience"),
+                    child: Text("Location permissions are necessary to provide you with a better experience"),
                   ),
                 ),
               ),
@@ -149,11 +151,16 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                 TextButton(
                     onPressed: () async {
                       Navigator.of(context).pop();
-                      Navigator.pushNamed(context, 'map_screen');
+                      _goToMapSearch(context);
                     },
-                    child: const Text("Ok")),                    
+                    child: const Text("Ok")),
               ]);
         });
+  }
+
+  void _goToMapSearch(BuildContext context) {
+    FilterProvider().cleanFilter();
+    Navigator.pushNamed(context, MapScreen.path, arguments: {'filter': "false", 'mlsNumber': ''});
   }
 
   @override

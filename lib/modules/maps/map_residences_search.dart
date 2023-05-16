@@ -14,8 +14,9 @@ import 'package:vector_map_tiles/vector_map_tiles.dart';
 class MapResidencesSearch extends StatefulWidget {
   final Style style;
   final TileOffset tileOffset;
+  final bool isFilter;
 
-  const MapResidencesSearch({super.key, required this.style, this.tileOffset = TileOffset.DEFAULT});
+  const MapResidencesSearch({super.key, required this.style, this.tileOffset = TileOffset.DEFAULT, this.isFilter = false});
 
   @override
   State<MapResidencesSearch> createState() => _MapResidencesSearchState();
@@ -24,11 +25,14 @@ class MapResidencesSearch extends StatefulWidget {
 class _MapResidencesSearchState extends State<MapResidencesSearch> {
   late List<Listing> listingsData;
   late List<Marker> markersList;
+  late MapListProvider mapListProvider;
+
   @override
   void initState() {
     listingsData = [];
     markersList = [];
     super.initState();
+    MapListProvider.intiConfig(context);
   }
 
   @override
@@ -59,7 +63,7 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
 
   Widget _mapWidget(LatLng coordinates, BuildContext context) {
     return FutureBuilder<List<Listing>>(
-        future: MapListProvider().getLocationsResidences(),
+        future: MapListProvider().getLocationsResidences(widget.isFilter),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const LoadWidget();
