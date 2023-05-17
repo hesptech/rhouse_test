@@ -56,9 +56,6 @@ class Preferences {
   static final List<String> _filtersIndexBasement = [];
   static final List<String> _filtersIndexAmmenities = [];
 
-  static bool _isCleanFilter = false;
-
-
   static Future init() async {
     _prefs = await SharedPreferences.getInstance();
   }
@@ -475,7 +472,6 @@ class Preferences {
 
 
   static set isCleanFilter(bool value ) {
-    _isCleanFilter = value;
     _prefs.setBool('isCleanFilter', value);
   } 
 

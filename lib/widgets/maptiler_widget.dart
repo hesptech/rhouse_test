@@ -10,9 +10,10 @@ class MapTilerWidget extends StatefulWidget {
   final void Function(MarkerClusterNode markerClusred)? onClusterTap;
   final void Function(List<Marker> mapMarkers)? onTapMarker;
   final void Function(MapEvent mapEvent)? changeZoom;
-  final Widget? cards;
+  final Widget cards;
   final LatLng? center;
   final List<Listing> listCoordinates;
+  final Listing? listingSingle;
   final List<Marker> selectedCluster;
   final double zoom;
   final bool isMultiple;
@@ -21,15 +22,16 @@ class MapTilerWidget extends StatefulWidget {
   const MapTilerWidget(
       {super.key,
       required this.layerFactory,
+      required this.cards,
       this.onClusterTap,
       this.changeZoom,
       this.onTapMarker,
-      this.cards,
       this.center,
       this.zoom = 18,
       this.isMultiple = true,
       this.isCloseCards = false,
       this.selectedCluster = const [],
+      this.listingSingle,
       this.listCoordinates = const []});
 
   @override
@@ -40,12 +42,14 @@ class _MapWidget extends State<MapTilerWidget> {
   final MapController _controller = MapController();
   final _layerMode = VectorTileLayerMode.raster;
   final double _minZoom = 6;
-  final double _maxZoom = 15;
+  final double _maxZoomList = 15;
+  final double _maxZoomsingle = 18;
+  final double _maxZoom = 20;
   late double _zoomValue;
   final List<Marker> markers = [];
+  late Marker markerSingle;
   late List<Marker> _selectedCluster;
   Marker? currentMarker;
-
 
   @override
   void initState() {
@@ -64,12 +68,13 @@ class _MapWidget extends State<MapTilerWidget> {
           _zoomValue = event.zoom;
           widget.changeZoom!(event);
           setState(() {
-            currentMarker = null;            
+            currentMarker = null;
           });
         }
       });
+    } else {
+      _setMarker();
     }
-
 
     super.initState();
   }
@@ -82,12 +87,36 @@ class _MapWidget extends State<MapTilerWidget> {
         currentMarker = widget.selectedCluster.isEmpty ? null : currentMarker;
       });
     }
-    _zoomValue =  _controller.zoom;
+    _zoomValue = _controller.zoom;
     super.didUpdateWidget(oldWidget);
   }
 
   @override
   Widget build(BuildContext context) {
+    // return Stack(children: [
+    //   FlutterMap(
+    //     mapController: _controller,
+    //     options: MapOptions(
+    //         bounds: LatLngBounds.fromPoints([widget.center!]),
+    //         center: widget.center!,                      
+    //         zoom: _zoomValue,
+    //         minZoom: _minZoom,
+    //         maxZoom: widget.isMultiple ? _maxZoomList : _maxZoomsingle,
+    //         onMapReady: () {
+    //           _controller.move(widget.center!, _zoomValue);
+    //         },
+    //         interactiveFlags: InteractiveFlag.drag |
+    //             InteractiveFlag.flingAnimation |
+    //             InteractiveFlag.pinchMove |
+    //             InteractiveFlag.pinchZoom |
+    //             InteractiveFlag.doubleTapZoom),
+    //     children: [widget.layerFactory(context, _layerMode), _markers()],
+
+    //   ),
+    //   Align(
+    //     alignment: Alignment.bottomCenter,
+    //     child: widget.cards)
+    // ]);
     return Column(children: [
       Expanded(
           child: Stack(children: [
@@ -98,7 +127,7 @@ class _MapWidget extends State<MapTilerWidget> {
               center: widget.center!,
               zoom: _zoomValue,
               minZoom: _minZoom,
-              maxZoom: _maxZoom,
+              maxZoom: widget.isMultiple ? _maxZoomList : _maxZoomsingle,
               onMapReady: () {
                 _controller.move(widget.center!, _zoomValue);
               },
@@ -109,23 +138,23 @@ class _MapWidget extends State<MapTilerWidget> {
                   InteractiveFlag.doubleTapZoom),
           children: [
             widget.layerFactory(context, _layerMode),
-            _markers(),
+            _markers()
           ],
         ),
       ])),
-      widget.isMultiple ? widget.cards! : Container()
+      // widget.cards
     ]);
   }
 
   Widget _markers() {
-    return MarkerClusterLayerWidget(            
+    return MarkerClusterLayerWidget(
       options: MarkerClusterLayerOptions(
         size: const Size(50, 50),
-        maxClusterRadius: 80,     
+        maxClusterRadius: 80,
         anchor: AnchorPos.align(AnchorAlign.center),
         fitBoundsOptions: FitBoundsOptions(padding: const EdgeInsets.all(50), maxZoom: _maxZoom),
         spiderfyCluster: false,
-        markers: markers,
+        markers: widget.isMultiple ? markers : [markerSingle],
         zoomToBoundsOnClick: false,
         onClusterTap: (MarkerClusterNode markerClusterNode) {
           if (widget.onClusterTap == null) {
@@ -164,20 +193,18 @@ class _MapWidget extends State<MapTilerWidget> {
   }
 
   void _setMarkers() {
-
     for (var item in widget.listCoordinates) {
       markers.add(
         Marker(
           key: Key(item.mlsNumber ?? ""),
           height: 30,
           width: 30,
-
           point: LatLng(item.mapCoordinates!.latitude, item.mapCoordinates!.longitude),
           builder: (ctx) {
             var color = const Color(0XFF02B68C);
             if (currentMarker != null) {
               if (currentMarker!.key == Key(item.mlsNumber ?? "")) {
-                color = Colors.red;                
+                color = Colors.red;
               }
             }
             return GestureDetector(
@@ -205,6 +232,21 @@ class _MapWidget extends State<MapTilerWidget> {
     }
   }
 
-
-
+  void _setMarker() {
+    var listing = widget.listingSingle ?? Listing();
+    markerSingle = Marker(
+        key: Key(listing.mlsNumber ?? ""),
+        height: 60,
+        width: 60,
+        point: LatLng(listing.mapCoordinates!.latitude, listing.mapCoordinates!.longitude),
+        anchorPos: AnchorPos.align(AnchorAlign.bottom),
+        builder: (ctx) {
+          return GestureDetector(
+              onTap: () {
+                _zoomValue = widget.zoom;
+                _controller.move(widget.center!, _zoomValue);
+              },
+              child: const Icon(Icons.location_on_outlined, color: Color(0XFF02B68C), size: 80));
+        });
+  }
 }

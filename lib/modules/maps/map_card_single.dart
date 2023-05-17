@@ -7,12 +7,12 @@ import 'package:flutter_black_white/screens/map_property_screen.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 
-class CardHor extends StatelessWidget {
+class MapCardSingle extends StatelessWidget {
 
   final Listing listing;
   final bool loggedIn = true;
 
-  const CardHor(this.listing, {Key? key, }) : super(key: key);
+  const MapCardSingle(this.listing, {Key? key, }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +49,11 @@ class CardHor extends StatelessWidget {
 
     return Card(
       clipBehavior: Clip.antiAlias,
+      color: Colors.transparent,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(0),
+        borderRadius: BorderRadius.circular(0),        
       ),
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),      
       child: Padding(
         padding: const EdgeInsets.all(0),
         child: Stack(

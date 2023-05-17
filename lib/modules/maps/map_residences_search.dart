@@ -117,7 +117,7 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
       visible: markersList.isNotEmpty,
       child: Container(
         width: double.infinity,
-        height: 230,
+        height: 270,
         color: const Color(0XFF09B68D),
         child: Padding(
           padding: const EdgeInsets.only(top: 2, bottom: 15, left: 15, right: 15),

@@ -19,9 +19,9 @@ class FiltersScreen extends StatelessWidget {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            if (pathArgument == MapScreen.path) {
+            if (pathArgument == MapScreen.pathScreen) {
               if (Preferences.isCleanFilter) {
-                Navigator.pushNamed(context, MapScreen.path, arguments: {'filter': "false", 'mlsNumber': ''});
+                Navigator.pushNamed(context, MapScreen.pathScreen, arguments: {'filter': "false", 'mlsNumber': ''});
                 Preferences.isCleanFilter = false;
               } else {
                 Navigator.of(context).pop();
@@ -50,7 +50,7 @@ class FiltersScreen extends StatelessWidget {
             const GreenDivider(),
             const FiltersPropertyType(),
             const GreenDivider(),
-            pathArgument != MapScreen.path ? const FiltersLocation() : Container(),
+            pathArgument != MapScreen.pathScreen ? const FiltersLocation() : Container(),
             const GreenDivider(),
             const FiltersBathbedpark(),
             const FiltersMore(),
@@ -64,7 +64,7 @@ class FiltersScreen extends StatelessWidget {
   String _checkArguments(BuildContext context) {
     final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
 
-    return arguments["screenPath"].toString() == MapScreen.path ? MapScreen.path : "/";
+    return arguments["screenPath"].toString() == MapScreen.pathScreen ? MapScreen.pathScreen : "/";
     
   }
 }
