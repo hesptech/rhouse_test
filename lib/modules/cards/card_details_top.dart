@@ -112,7 +112,7 @@ class CardDetailsTop extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width: 170,
+                  width: 180,
                   padding: const EdgeInsets.only( left: 20.0, top: 10.0, ),
                   alignment: Alignment.topLeft,
                   child: ElevatedButton(
