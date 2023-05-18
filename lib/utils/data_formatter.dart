@@ -12,7 +12,7 @@ class DataFormatter {
     DateTime listingEntryDate = listing.timestamps?.listingEntryDate?? DateTime.now();
     DateTime addDt = DateTime.now();
     Duration diffDt = addDt.difference(listingEntryDate); 
-    final formattedEntryDate = diffDt.inDays == 0 ? 'Listed today' : 'Listed ${diffDt.inDays} day(s) ago';
+    final formattedEntryDate = diffDt.inDays == 0 ? 'Listed today' : diffDt.inDays == 1 ? 'Listed ${diffDt.inDays} day ago' : 'Listed ${diffDt.inDays} days ago';
     return formattedEntryDate;
   }
 
