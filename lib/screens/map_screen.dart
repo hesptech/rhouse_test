@@ -23,7 +23,6 @@ class _MapScreenState extends State<MapScreen> {
     var arguments = _checkArguments(context);
     bool isFilter = arguments["filter"];
 
-    //TODO: VERIFICAR QUE EL COLOR GRIS NO SE VERIFICAR
     return Scaffold(
         appBar: AppBar(
           title: Column(

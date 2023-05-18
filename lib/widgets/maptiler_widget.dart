@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:latlong2/latlong.dart';
@@ -10,6 +11,7 @@ class MapTilerWidget extends StatefulWidget {
   final void Function(MarkerClusterNode markerClusred)? onClusterTap;
   final void Function(List<Marker> mapMarkers)? onTapMarker;
   final void Function(MapEvent mapEvent)? changeZoom;
+  final void Function()? onTapMap;
   final Widget cards;
   final LatLng? center;
   final List<Listing> listCoordinates;
@@ -17,6 +19,7 @@ class MapTilerWidget extends StatefulWidget {
   final List<Marker> selectedCluster;
   final double zoom;
   final bool isMultiple;
+  final bool isMiniature;
   final bool isCloseCards;
 
   const MapTilerWidget(
@@ -30,8 +33,10 @@ class MapTilerWidget extends StatefulWidget {
       this.zoom = 18,
       this.isMultiple = true,
       this.isCloseCards = false,
+      this.isMiniature = false,
       this.selectedCluster = const [],
       this.listingSingle,
+      this.onTapMap,
       this.listCoordinates = const []});
 
   @override
@@ -98,25 +103,31 @@ class _MapWidget extends State<MapTilerWidget> {
     //     mapController: _controller,
     //     options: MapOptions(
     //         bounds: LatLngBounds.fromPoints([widget.center!]),
-    //         center: widget.center!,                      
+    //         center: widget.center!,
     //         zoom: _zoomValue,
     //         minZoom: _minZoom,
+    //         onTap: (tapPosition, point) {
+    //           if (widget.onTapMap == null) {
+    //             return;
+    //           }
+    //           widget.onTapMap!();
+    //         },
     //         maxZoom: widget.isMultiple ? _maxZoomList : _maxZoomsingle,
     //         onMapReady: () {
     //           _controller.move(widget.center!, _zoomValue);
+
+    //           // _controller.latLngToScreenPoint(widget.center!);
     //         },
-    //         interactiveFlags: InteractiveFlag.drag |
+    //         interactiveFlags: !widget.isMiniature ? InteractiveFlag.drag |
     //             InteractiveFlag.flingAnimation |
     //             InteractiveFlag.pinchMove |
     //             InteractiveFlag.pinchZoom |
-    //             InteractiveFlag.doubleTapZoom),
+    //             InteractiveFlag.doubleTapZoom : InteractiveFlag.none),
     //     children: [widget.layerFactory(context, _layerMode), _markers()],
-
     //   ),
-    //   Align(
-    //     alignment: Alignment.bottomCenter,
-    //     child: widget.cards)
+    //   Align(alignment: Alignment.bottomCenter, child: widget.cards)
     // ]);
+
     return Column(children: [
       Expanded(
           child: Stack(children: [
@@ -127,22 +138,29 @@ class _MapWidget extends State<MapTilerWidget> {
               center: widget.center!,
               zoom: _zoomValue,
               minZoom: _minZoom,
+              onTap: (tapPosition, point) {
+                if (widget.onTapMap == null) {
+                  return;
+                }
+
+                widget.onTapMap!();
+              },
               maxZoom: widget.isMultiple ? _maxZoomList : _maxZoomsingle,
               onMapReady: () {
                 _controller.move(widget.center!, _zoomValue);
               },
-              interactiveFlags: InteractiveFlag.drag |
-                  InteractiveFlag.flingAnimation |
-                  InteractiveFlag.pinchMove |
-                  InteractiveFlag.pinchZoom |
-                  InteractiveFlag.doubleTapZoom),
-          children: [
-            widget.layerFactory(context, _layerMode),
-            _markers()
-          ],
+              interactiveFlags: widget.isMiniature
+                  ? InteractiveFlag.none
+                  : InteractiveFlag.drag |
+                      InteractiveFlag.flingAnimation |
+                      InteractiveFlag.pinchMove |
+                      InteractiveFlag.pinchZoom |
+                      InteractiveFlag.doubleTapZoom),
+          children: [widget.layerFactory(context, _layerMode), _markers()],
         ),
+        // widget.cards
       ])),
-      // widget.cards
+      widget.cards
     ]);
   }
 
@@ -152,10 +170,12 @@ class _MapWidget extends State<MapTilerWidget> {
         size: const Size(50, 50),
         maxClusterRadius: 80,
         anchor: AnchorPos.align(AnchorAlign.center),
-        fitBoundsOptions: FitBoundsOptions(padding: const EdgeInsets.all(50), maxZoom: _maxZoom),
+        fitBoundsOptions: widget.isMultiple
+            ? FitBoundsOptions(padding: const EdgeInsets.all(50), maxZoom: _maxZoom)
+            : FitBoundsOptions(padding: const EdgeInsets.only(top: 500), maxZoom: _maxZoom),
         spiderfyCluster: false,
-        markers: widget.isMultiple ? markers : [markerSingle],
         zoomToBoundsOnClick: false,
+        markers: widget.isMultiple ? markers : [markerSingle],
         onClusterTap: (MarkerClusterNode markerClusterNode) {
           if (widget.onClusterTap == null) {
             return;
@@ -236,17 +256,19 @@ class _MapWidget extends State<MapTilerWidget> {
     var listing = widget.listingSingle ?? Listing();
     markerSingle = Marker(
         key: Key(listing.mlsNumber ?? ""),
-        height: 60,
-        width: 60,
+        height: 50,
+        width: 50,
         point: LatLng(listing.mapCoordinates!.latitude, listing.mapCoordinates!.longitude),
-        anchorPos: AnchorPos.align(AnchorAlign.bottom),
+        anchorPos: AnchorPos.align(AnchorAlign.top),
         builder: (ctx) {
           return GestureDetector(
               onTap: () {
                 _zoomValue = widget.zoom;
                 _controller.move(widget.center!, _zoomValue);
               },
-              child: const Icon(Icons.location_on_outlined, color: Color(0XFF02B68C), size: 80));
+              child: Icon(Icons.location_on_outlined,
+                  color: widget.isMiniature ? kPrimaryColor : const Color(0XFF02B68C),
+                  size: widget.isMiniature ? 50 : 80));
         });
   }
 }
