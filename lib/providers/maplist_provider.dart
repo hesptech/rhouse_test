@@ -130,7 +130,7 @@ class MapListProvider extends ChangeNotifier {
     }
   }
 
-  void getfilteredListings(List<Marker> mapMarkers, List<Listing> listCoordinates) {
+  void getFilterListings(List<Marker> mapMarkers, List<Listing> listCoordinates) {
     listingSelected = [];
 
     var keys = mapMarkers.map((marker) => ValueKey(marker.key).value).toSet();
