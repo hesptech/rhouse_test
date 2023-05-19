@@ -18,9 +18,11 @@ class CardImagesScreen extends StatelessWidget {
         context: context,
         removeTop: true,
         removeBottom: true,
-        //child: Text('${listing.listDate}'),
-        child: ListView.builder(
-          itemCount: listing.images?.length,
+        child: ListView.separated(
+          separatorBuilder: (context, index) => const Divider(
+            height: 0,  thickness: 5.0, color: Colors.black,
+          ),
+          itemCount: listing.images!.length,
           scrollDirection: Axis.vertical,
           itemBuilder: ( _, int index ) => _CastCard( image: listing.images?[index])
         ),
