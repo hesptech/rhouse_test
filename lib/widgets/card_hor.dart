@@ -183,14 +183,14 @@ class CardHor extends StatelessWidget {
                               children: [
                                 Text(
                                   ' ${dataFormatted.listPrice}', 
-                                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF2E3191)),
+                                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: kPrimaryColor),
                                 ),
                                 Container(
                                   padding: const EdgeInsets.symmetric( vertical: 2, horizontal: 5.0 ),
                                   decoration: BoxDecoration(
-                                     border: Border.all(color: const Color(0xFF2E3191)),
+                                     border: Border.all(color: kPrimaryColor),
                                   ),
-                                  child: Text(propertyType, style: const TextStyle(fontSize: 14, color: Color(0xFF2E3191),),),
+                                  child: Text(propertyType, style: const TextStyle(fontSize: 14, color: kPrimaryColor,),),
                                 ),                          
                               ],   
                             ),
@@ -321,7 +321,7 @@ class CardHor extends StatelessWidget {
               alignment: Alignment.topLeft,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF2E3191),
+                  backgroundColor: kPrimaryColor,
                   minimumSize: const Size(140.0, 28.0),
                   padding: const EdgeInsets.symmetric(horizontal: 5),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),

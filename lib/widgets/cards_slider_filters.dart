@@ -67,7 +67,7 @@ class _CardsSliderFiltersState extends State<CardsSliderFilters> {
     
     return Container(
       height: screenSize.height - 60,
-      color: const Color(0xFFE6E7E8),
+      color: kBackgroundColor,
       child: !widget.loaded!
         ? const Center(
             child: CircularProgressIndicator( color: kPrimaryColor, ),
@@ -80,7 +80,7 @@ class _CardsSliderFiltersState extends State<CardsSliderFilters> {
                   heightFactor: 5.0,
                   child: Text(
                     'sorry, \n no Properties found', 
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF2E3191)),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: kPrimaryColor),
                     textAlign: TextAlign.center,
                   ),
                 ),

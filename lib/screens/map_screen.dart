@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/modules/maps/map_residences_search.dart';
 import 'package:flutter_black_white/providers/maplist_provider.dart';
+import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/widgets/loadable_widget.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 import 'package:vector_tile_renderer/vector_tile_renderer.dart';
@@ -70,7 +71,7 @@ class _MapScreenState extends State<MapScreen> {
               Navigator.pushNamed(context, '/');
           }, icon: const Icon(Icons.arrow_back, color: Colors.white, size: 34,)),
           toolbarHeight: 90,
-          backgroundColor: const Color(0xFF2E3191),
+          backgroundColor: kPrimaryColor,
           centerTitle: true,
           actions: [
             GestureDetector(

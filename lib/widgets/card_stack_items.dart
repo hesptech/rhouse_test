@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 
 class CardStackItems extends StatefulWidget {
@@ -27,7 +28,7 @@ class _CardStackItemsState extends State<CardStackItems> {
         children: [
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF2E3191),
+              backgroundColor: kPrimaryColor,
               minimumSize: const Size(140.0, 28.0),
               padding: const EdgeInsets.fromLTRB(7.0, 0.0, 7.0, 0.0),
               shape: RoundedRectangleBorder(

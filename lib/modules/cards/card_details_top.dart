@@ -117,7 +117,7 @@ class CardDetailsTop extends StatelessWidget {
                   alignment: Alignment.topLeft,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF2E3191),
+                      backgroundColor: kPrimaryColor,
                       minimumSize: const Size(140.0, 28.0),
                       padding: const EdgeInsets.fromLTRB(7.0, 0.0, 0.0, 0.0),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
