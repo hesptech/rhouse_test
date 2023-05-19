@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/screens/map_screen.dart';
 import 'package:flutter_black_white/utils/constants.dart';
@@ -78,7 +79,7 @@ class CardHor extends StatelessWidget {
                           FadeInImage(
                             placeholder: const AssetImage('assets/no-image.jpg'), 
                             //image: AssetImage('assets/house_340x227.jpg'),
-                            image: NetworkImage('https://cdn.repliers.io/$images?w=500'),
+                            image: NetworkImage('$kRepliersCdn$images?w=500'),
                             width: 310,
                             height: 207,
                             fit: BoxFit.cover,
