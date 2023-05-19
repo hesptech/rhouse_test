@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/widgets/widgets.dart';
 import 'package:flutter_black_white/models/models.dart';
 
@@ -46,7 +47,7 @@ class _CardsSliderVerticalState extends State<CardsSliderVertical> {
     return Container(
       //width: double.infinity,
       height: 680,
-      color: const Color(0xFFE6E7E8),
+      color: kBackgroundColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

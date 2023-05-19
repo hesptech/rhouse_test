@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/screens/map_screen.dart';
+import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/geolocation_app.dart';
 
 import '../providers/filter_provider.dart';
@@ -105,7 +106,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                         filled: true,
                         suffixIcon: Icon(
                           Icons.search_outlined,
-                          color: Color(0xFF2E3191),
+                          color: kPrimaryColor,
                           size: 30.0,
                         ),
                         enabled: false,

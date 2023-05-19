@@ -93,14 +93,14 @@ class CardDetailsScreen extends StatelessWidget {
                               children: [
                                 ConstrainedBox(
                                   constraints: BoxConstraints( maxWidth: screenSize.width - 110 ),
-                                  child: const Text('18 Wanstead Ave.', textAlign: TextAlign.left ,maxLines: 3, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF2E3191), overflow: TextOverflow.ellipsis, ),),
+                                  child: const Text('18 Wanstead Ave.', textAlign: TextAlign.left ,maxLines: 3, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: kPrimaryColor, overflow: TextOverflow.ellipsis, ),),
                                 ),
                               ],
                             ),
                             //const SizedBox( height: 5.0 ,),
                             Row(
                               children: const [
-                                Text('Scarborough Oakridge, ON', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: Color(0xFF2E3191)),),
+                                Text('Scarborough Oakridge, ON', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: kPrimaryColor),),
                                 SizedBox( width: 10.0, ),
                                 Icon(Icons.map_outlined, color: Color(0xFF0BB48B), size: 32,),
                               ],
@@ -114,15 +114,15 @@ class CardDetailsScreen extends StatelessWidget {
                                 Row(
                                   children: const [
                                     Text('Listed for: ', style: TextStyle(fontSize: 16, color: Color(0xFF666597), ), ),   
-                                    Text('\$1,500.000', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF2E3191), ), ),
+                                    Text('\$1,500.000', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: kPrimaryColor, ), ),
                                   ],
                                 ),
                                 Container(
                                   padding: const EdgeInsets.symmetric( vertical: 2, horizontal: 5.0 ),
                                   decoration: BoxDecoration(
-                                    border: Border.all(color: const Color(0xFF2E3191)),
+                                    border: Border.all(color: kPrimaryColor),
                                   ),
-                                  child: const Text('Detached', style: TextStyle(fontSize: 14, color: Color(0xFF2E3191),),),
+                                  child: const Text('Detached', style: TextStyle(fontSize: 14, color: kPrimaryColor,),),
                                 ),                         
                               ],                   
                             ),
@@ -284,12 +284,12 @@ class CardDetailsScreen extends StatelessWidget {
                     alignment: Alignment.topLeft,
                     child: ElevatedButton(
                       /* style: ButtonStyle( 
-                        backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF2E3191)),
+                        backgroundColor: MaterialStateProperty.all<Color>(kPrimaryColor),
                         shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))),
                         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(const EdgeInsets.fromLTRB(10, 0, 10, 0)),
                       ), */
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF2E3191),
+                        backgroundColor: kPrimaryColor,
                         minimumSize: const Size(140.0, 28.0),
                         padding: const EdgeInsets.fromLTRB(7.0, 0.0, 0.0, 0.0),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -378,11 +378,11 @@ class _DetailsExpansionsState extends State<DetailsExpansions> {
                 style: TextStyle(
                   fontSize: 20, 
                   fontWeight: FontWeight.bold, 
-                  color: _openCloseIcons[0] ? const Color(0xFF2E3191) : const Color(0xFF58595B),
+                  color: _openCloseIcons[0] ? kPrimaryColor : const Color(0xFF58595B),
                 ),),
               trailing: Icon(
                 _openCloseIcons[0] ? Icons.remove : Icons.add,
-                color: _openCloseIcons[0] ? const Color(0xFF2E3191) : const Color(0xFF58595B),
+                color: _openCloseIcons[0] ? kPrimaryColor : const Color(0xFF58595B),
               ),
               children: <Widget>[
                 Container(
@@ -498,12 +498,12 @@ class _DetailsExpansionsState extends State<DetailsExpansions> {
                 style: TextStyle(
                   fontSize: 20, 
                   fontWeight: FontWeight.bold, 
-                  color: _openCloseIcons[1] ? const Color(0xFF2E3191) : const Color(0xFF58595B),
+                  color: _openCloseIcons[1] ? kPrimaryColor : const Color(0xFF58595B),
                 ),
               ),
               trailing: Icon(
                 _openCloseIcons[1] ? Icons.remove : Icons.add,
-                color: _openCloseIcons[1] ? const Color(0xFF2E3191) : const Color(0xFF58595B),
+                color: _openCloseIcons[1] ? kPrimaryColor : const Color(0xFF58595B),
               ),
               children: const <Widget>[
                 ListTile( title: Text('This is tile number 1'), ),
@@ -521,12 +521,12 @@ class _DetailsExpansionsState extends State<DetailsExpansions> {
                 style: TextStyle(
                   fontSize: 20, 
                   fontWeight: FontWeight.bold, 
-                  color: _openCloseIcons[2] ? const Color(0xFF2E3191) : const Color(0xFF58595B),
+                  color: _openCloseIcons[2] ? kPrimaryColor : const Color(0xFF58595B),
                 ),
               ),
               trailing: Icon(
                 _openCloseIcons[2] ? Icons.remove : Icons.add,
-                color: _openCloseIcons[2] ? const Color(0xFF2E3191) : const Color(0xFF58595B),
+                color: _openCloseIcons[2] ? kPrimaryColor : const Color(0xFF58595B),
               ),
               children: const <Widget>[
                 ListTile( title: Text('This is tile number 2'), ),
@@ -544,12 +544,12 @@ class _DetailsExpansionsState extends State<DetailsExpansions> {
                 style: TextStyle(
                   fontSize: 20, 
                   fontWeight: FontWeight.bold, 
-                  color: _openCloseIcons[3] ? const Color(0xFF2E3191) : const Color(0xFF58595B),
+                  color: _openCloseIcons[3] ? kPrimaryColor : const Color(0xFF58595B),
                 ),
               ),
               trailing: Icon(
                 _openCloseIcons[3] ? Icons.remove : Icons.add,
-                color: _openCloseIcons[3] ? const Color(0xFF2E3191) : const Color(0xFF58595B),
+                color: _openCloseIcons[3] ? kPrimaryColor : const Color(0xFF58595B),
               ),
               children: const <Widget>[
                 ListTile( title: Text('This is tile number 3'), ),

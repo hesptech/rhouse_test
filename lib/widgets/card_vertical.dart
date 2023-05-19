@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 import 'package:flutter_black_white/widgets/widgets.dart';
 
@@ -72,13 +73,13 @@ class CardVertical extends StatelessWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                    Text(' ${dataFormatted.listPrice}', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF2E3191)),),
+                                    Text(' ${dataFormatted.listPrice}', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: kPrimaryColor),),
                                     Container(
                                       padding: const EdgeInsets.symmetric( vertical: 2, horizontal: 5.0 ),
                                       decoration: BoxDecoration(
-                                        border: Border.all(color: const Color(0xFF2E3191)),
+                                        border: Border.all(color: kPrimaryColor),
                                       ),
-                                      child: Text(propertyType, style: const TextStyle(fontSize: 14, color: Color(0xFF2E3191),),),
+                                      child: Text(propertyType, style: const TextStyle(fontSize: 14, color: kPrimaryColor,),),
                                     ),                          
                                 ],   
                               ),

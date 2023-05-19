@@ -32,7 +32,7 @@ class CardDetailsBox extends StatelessWidget {
                     const Text('Listed for: ', style: TextStyle(fontSize: 16, ), ),   
                     Text( 
                       dataFormatted.listPrice, 
-                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF2E3191), ), 
+                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: kPrimaryColor, ), 
                     ),                   
                   ],
                 ),
