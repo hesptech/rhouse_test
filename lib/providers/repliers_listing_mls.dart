@@ -12,7 +12,9 @@ class RepliersListingMls extends ChangeNotifier {
 
   Future<String> _getJsonData( dynamic endPoint ) async {
 
-    final url = Uri.https( kBaseUrl, endPoint);
+    final url = Uri.https( kBaseUrl, endPoint, {
+      'fields': 'history',
+    });
     //print( url );
 
     Map<String, String>? headers = { 'REPLIERS-API-KEY': dotenv.get('REPLIERS-API-KEY') };
