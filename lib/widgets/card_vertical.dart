@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
@@ -51,7 +52,7 @@ class CardVertical extends StatelessWidget {
                       children: <Widget>[
                         FadeInImage(
                           placeholder: const AssetImage('assets/no-image.jpg'), 
-                          image: NetworkImage('https://cdn.repliers.io/$images?w=500'),
+                          image: NetworkImage('$kRepliersCdn$images?w=500'),
                           width: double.infinity,
                           height: 227,
                           fit: BoxFit.cover,
