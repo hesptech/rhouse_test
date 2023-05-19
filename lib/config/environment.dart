@@ -1,5 +1,10 @@
 import 'package:http/http.dart';
 
+
+const kBaseUrl = 'api.repliers.io';
+const kRepliersCdn = 'https://cdn.repliers.io/';
+
+
 String processResponse(Response response) {
   if (response.statusCode == 200 || response.statusCode == 201) {
     return response.body;
@@ -23,6 +28,3 @@ String processResponse(Response response) {
     throw Exception("Unknown response status");
   }
 }
-
-
-const kBaseUrl = 'api.repliers.io';
