@@ -45,6 +45,7 @@ class CardDetailsFullScreen extends StatelessWidget {
             CardDetailsHistory( 
               //listing, 
               //listing.mlsNumber, 
+              onInit: () => repliersHistory.initGetDisplay(),
               onHistory: () => repliersHistory.getListingHistory( listing.mlsNumber ), 
             ),
             const SizedBox( height: 28,),
