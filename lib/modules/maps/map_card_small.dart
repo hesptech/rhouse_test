@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 
 class MapCardSmall extends StatelessWidget {
@@ -122,7 +123,7 @@ class MapCardSmall extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 5.0),
             decoration: BoxDecoration(
-              border: Border.all(color: const Color(0xFF2E3191)),
+              border: Border.all(color: kPrimaryColor),
             ),
             child: Text(
               propertyType,
@@ -131,7 +132,7 @@ class MapCardSmall extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 fontSize: 12,
-                color: Color(0xFF2E3191),
+                color: kPrimaryColor,
               ),
             ),
           ),

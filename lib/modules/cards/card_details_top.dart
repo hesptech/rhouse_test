@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/screens/map_property_screen.dart';
 import 'package:flutter_black_white/utils/constants.dart';
@@ -42,7 +43,7 @@ class CardDetailsTop extends StatelessWidget {
                   height: 300,
                   placeholder: const AssetImage('assets/no-image.jpg'),
                   //image: AssetImage('assets/house_500x300.jpg'),
-                  image: NetworkImage('https://cdn.repliers.io/$images?w=500'),
+                  image: NetworkImage('$kRepliersCdn$images?w=500'),
                   fit: BoxFit.cover,
                   fadeInDuration: const Duration(milliseconds: 300),
                 ),
@@ -127,7 +128,7 @@ class CardDetailsTop extends StatelessWidget {
             ),
           ),
           Container(
-              width: 220,
+              width: 200,
               padding: const EdgeInsets.only(
                 left: 20.0,
                 top: 10.0,
@@ -135,7 +136,7 @@ class CardDetailsTop extends StatelessWidget {
               alignment: Alignment.topLeft,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF2E3191),
+                  backgroundColor: kPrimaryColor,
                   minimumSize: const Size(140.0, 28.0),
                   padding: const EdgeInsets.fromLTRB(7.0, 0.0, 0.0, 0.0),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -152,8 +153,12 @@ class CardDetailsTop extends StatelessWidget {
                     const SizedBox(
                       width: 5,
                     ),
-                    Text(dataFormatted.listEntryDate,
+                    Text(
+                      dataFormatted.listEntryDate,                  
                         style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400)),
+                    const SizedBox(
+                      width: 5,
+                    ),
                   ],
                 ),
               )),
