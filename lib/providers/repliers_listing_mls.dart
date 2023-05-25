@@ -37,7 +37,10 @@ class RepliersListingMls extends ChangeNotifier {
     final mlsListingResponse = ResponseListing.fromJson(jsonData);
 
     onDisplayHistory = mlsListingResponse.history;
-
     notifyListeners();
   }
+
+  initGetDisplay() {
+    onDisplayHistory = [];
+  }  
 }

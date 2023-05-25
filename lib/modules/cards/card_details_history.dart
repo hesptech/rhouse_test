@@ -15,9 +15,10 @@ class CardDetailsHistory extends StatefulWidget {
   //final Listing listing;
   //final String? mlsNumber;
   final Function onHistory;
+  final Function onInit;
 
   //const CardDetailsHistory( this.listing, this.mlsNumber, {super.key, required this.onHistory, });
-  const CardDetailsHistory({super.key, required this.onHistory, });
+  const CardDetailsHistory({super.key, required this.onHistory, required this.onInit, });
 
   @override
   State<CardDetailsHistory> createState() => _CardDetailsHistoryState();
@@ -30,6 +31,7 @@ class _CardDetailsHistoryState extends State<CardDetailsHistory> {
     super.initState();
 
     widget.onHistory();
+    widget.onInit();
   }
 
   @override
