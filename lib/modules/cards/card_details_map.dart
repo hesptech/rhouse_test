@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/models/response_listings.dart';
 import 'package:flutter_black_white/providers/maplist_provider.dart';
+import 'package:flutter_black_white/screens/map_property_screen.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/widgets/maptiler_widget.dart';
 import 'package:latlong2/latlong.dart';
@@ -57,7 +58,7 @@ class CardDetailsMap extends StatelessWidget {
           zoom: 15,
           isMultiple: false,
           onTapMap: () {
-            Navigator.pushNamed(context, 'card_details_full_screen', arguments: listing);
+            Navigator.pushNamed(context, MapPropertyScreen.pathScreen, arguments: {'listing': listing});
           },
           layerFactory: (context, layerMode) => VectorTileLayer(
               tileProviders: style.providers, theme: style.theme, layerMode: layerMode, tileOffset: tileOffset)),
