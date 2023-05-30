@@ -101,6 +101,7 @@ class _MapScreenState extends State<MapScreen> {
           ],
         ),
         body: SafeArea(
+          bottom: false,
           child: LoadableWidget(
               loader: () => StyleReader(
                       uri: MapListProvider().getMapTilerUrl,

@@ -83,25 +83,36 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
     if (markersList.isEmpty) {
       markersList = Provider.of<MapListProvider>(context).selectedCluster;      
     }
-    return MapTilerWidget(
-        center: coordinates,
-        listCoordinates: data,
-        selectedCluster: markersList,
-        cards: _scrollListing(context),
-        onClusterTap: (markerClusred) {
-          onTapMarkers(markerClusred.mapMarkers, data, context);
-        },
-        onTapMarker: (mapMarkers) {
-          onTapMarkers(mapMarkers, data, context);
-        },
-        changeZoom: (mapEvent) {
-          Provider.of<MapListProvider>(context, listen: false).selectedCluster = [];          
-          markersList = [];
-        },
-        zoom: 5,
-        isMultiple: true,
-        layerFactory: (context, layerMode) => VectorTileLayer(
-            tileProviders: widget.style.providers, theme: widget.style.theme, layerMode: layerMode, tileOffset: widget.tileOffset));
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        double screenWidth = constraints.maxWidth;
+        double screenHeight = constraints.maxHeight;
+
+        // Calcular los tamaños proporcionales para adaptarse a diferentes resoluciones
+        double cardWidth = screenWidth * 0.8;
+        double cardHeight = screenHeight * 0.25;
+
+        return MapTilerWidget(
+            center: coordinates,
+            listCoordinates: data,
+            selectedCluster: markersList,
+            cards: _scrollListing(context, cardWidth, cardHeight),
+            onClusterTap: (markerClusred) {
+              onTapMarkers(markerClusred.mapMarkers, data, context);
+            },
+            onTapMarker: (mapMarkers) {
+              onTapMarkers(mapMarkers, data, context);
+            },
+            changeZoom: (mapEvent) {
+              Provider.of<MapListProvider>(context, listen: false).selectedCluster = [];          
+              markersList = [];
+            },
+            zoom: 5,
+            isMultiple: true,
+            layerFactory: (context, layerMode) => VectorTileLayer(
+                tileProviders: widget.style.providers, theme: widget.style.theme, layerMode: layerMode, tileOffset: widget.tileOffset));
+      }
+    );
   }
 
   void onTapMarkers(List<Marker>  mapMarkers, List<Listing> listCoordinates, BuildContext context) async {
@@ -110,59 +121,71 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
     markersList = [];
   }
 
-  Widget _scrollListing(BuildContext context) {
+  Widget _scrollListing(BuildContext context, double cardWidth, double cardHeight) {
     var providerMapList = Provider.of<MapListProvider>(context);
 
     return Visibility(
       visible: markersList.isNotEmpty,
-      child: Container(
-        width: double.infinity,
-        height: 230,
-        color: const Color(0XFF09B68D),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 2, bottom: 15, left: 15, right: 15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "${providerMapList.listingSelected.length} listings in total",
-                    style: const TextStyle(color: Colors.white, fontSize: 14.8),
+      child: AspectRatio(
+        aspectRatio: 16 / 9,
+        child: Container(
+          width: double.infinity,
+          height: cardHeight * 1.5,
+          color: const Color(0XFF09B68D),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 2, bottom: 15, left: 15, right: 15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Flexible(
+                  flex: 1,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "${providerMapList.listingSelected.length} listings in total",
+                        style: const TextStyle(color: Colors.white, fontSize: 14.8),
+                      ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.close,
+                          color: Colors.white,
+                          size: 25,                          
+                        ),
+                        onPressed: () {
+                          Provider.of<MapListProvider>(context, listen: false).selectedCluster = [];
+                          markersList = [];
+                        },
+                      ),
+                    ],
                   ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.close,
-                      color: Colors.white,
-                      size: 32,
-                    ),
-                    onPressed: () {
-                      Provider.of<MapListProvider>(context, listen: false).selectedCluster = [];
-                      markersList = [];
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 155,
-                child: ListView.builder(
-                    padding: const EdgeInsets.all(0),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: providerMapList.listingSelected.length,
-                    itemBuilder: (_, index) {
-                      return Container(
-                        padding: const EdgeInsets.all(0),
-                        width: 320,
-                        height: 137,
-                        margin: const EdgeInsets.only(right: 10),
-                        child: MapCardSmall(providerMapList.listingSelected[index]),
-                      );
-                    }),
-              ),
-              Expanded(child: Container())
-            ],
+                ),
+                const SizedBox(height: 10),
+                Flexible(   
+                  flex: 3,             
+                  child: ListView.builder(
+                      padding: const EdgeInsets.all(0),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: providerMapList.listingSelected.length,
+                      itemBuilder: (_, index) {
+                        return FittedBox(
+                          alignment: Alignment.topCenter,
+                          fit: BoxFit.scaleDown,
+                          child: Container(
+                            padding: const EdgeInsets.all(0),
+                            width: 320,
+                            height: 150,
+                            margin: const EdgeInsets.only(right: 8),
+                            child: MapCardSmall(providerMapList.listingSelected[index]),
+                          ),
+                        );
+                      }),
+                ),
+                // Expanded(child: Container())
+              ],
+            ),
           ),
         ),
       ),

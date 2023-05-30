@@ -33,20 +33,23 @@ class _FiltersParkingState extends State<FiltersParking> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB( 28.0, 28.0, 28.0, 14.0 ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text('PARKING', style: TextStyle(fontSize: 18,  color: kPrimaryColor),),
-            ],
-          ),
-          Wrap(
-            children: propertiesParkingWidgets.toList(),
-          ),
-        ],
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Text('PARKING', style: TextStyle(fontSize: 18,  color: kPrimaryColor),),
+              ],
+            ),
+            Wrap(
+              children: propertiesParkingWidgets.toList(),
+            ),
+          ],
+        ),
       ),
     );
   }

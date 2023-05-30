@@ -27,69 +27,82 @@ class _FiltersClassIconBtState extends State<FiltersClassIconBt> {
 
     final filterProvider = Provider.of<FilterProvider>( context );
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        GestureDetector(
-          child: Container(
-            padding: const EdgeInsets.symmetric( vertical: 20.0, horizontal: 30.0 ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0), 
-              border: Border.all(
-                color: kPrimaryColor,
-              ),
-              color: _filtersClassIconsBt == 'residential' ? kPrimaryColor : Colors.white,
-            ),
-            child: Column(
-              children: [
-                Icon(
-                  Icons.home_outlined, size: 100.0, 
-                  color: _filtersClassIconsBt == 'residential' ? Colors.white : kPrimaryColor,
+    return AspectRatio(
+      aspectRatio: 19 / 6,
+      child: FittedBox(
+        fit: BoxFit.fitWidth,
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                child: FittedBox(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric( vertical: 20.0, horizontal: 30.0 ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0), 
+                      border: Border.all(
+                        color: kPrimaryColor,
+                      ),
+                      color: _filtersClassIconsBt == 'residential' ? kPrimaryColor : Colors.white,
+                    ),
+                    child: Column(
+                      children: [
+                        Icon(
+                          Icons.home_outlined, size: 100.0, 
+                          color: _filtersClassIconsBt == 'residential' ? Colors.white : kPrimaryColor,
+                        ),
+                        Text('HOUSE', style: TextStyle( color: _filtersClassIconsBt == 'residential' ? Colors.white : kPrimaryColor , fontSize: 18.0, fontWeight: FontWeight.w500 ), )
+                      ]
+                    ),
+                  ),
                 ),
-                Text('HOUSE', style: TextStyle( color: _filtersClassIconsBt == 'residential' ? Colors.white : kPrimaryColor , fontSize: 18.0, fontWeight: FontWeight.w500 ), )
-              ]
-            ),
-          ),
-          onTap: () {
-            _filtersClassIconsBt = "residential";
-            filterProvider.filterProvider = "residential";
-
-            setState(() {
-              Preferences.filtersClassIconsBt = 'residential';
-            });
-          },
-        ), 
-        const SizedBox( width: 18.0,),
-        GestureDetector(
-          child: Container(
-            padding: const EdgeInsets.symmetric( vertical: 20.0, horizontal: 30.0 ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0), 
-              border: Border.all(
-                color: kPrimaryColor,
-              ),
-              color: _filtersClassIconsBt == 'condo' ? kPrimaryColor : Colors.white,
-            ),
-            child: Column(
-              children: [
-                Icon(
-                  Icons.apartment, size: 100.0, 
-                  color: _filtersClassIconsBt == 'condo' ? Colors.white : kPrimaryColor,
+                onTap: () {
+                  _filtersClassIconsBt = "residential";
+                  filterProvider.filterProvider = "residential";
+            
+                  setState(() {
+                    Preferences.filtersClassIconsBt = 'residential';
+                  });
+                },
+              ), 
+              const SizedBox( width: 18.0,),
+              GestureDetector(
+                child: FittedBox(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric( vertical: 20.0, horizontal: 30.0 ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0), 
+                      border: Border.all(
+                        color: kPrimaryColor,
+                      ),
+                      color: _filtersClassIconsBt == 'condo' ? kPrimaryColor : Colors.white,
+                    ),
+                    child: Column(
+                      children: [
+                        Icon(
+                          Icons.apartment, size: 100.0, 
+                          color: _filtersClassIconsBt == 'condo' ? Colors.white : kPrimaryColor,
+                        ),
+                        Text('CONDO', style: TextStyle( color: _filtersClassIconsBt == 'condo' ? Colors.white : kPrimaryColor , fontSize: 18.0, fontWeight: FontWeight.w500 ), )
+                      ]
+                    ),
+                  ),
                 ),
-                Text('CONDO', style: TextStyle( color: _filtersClassIconsBt == 'condo' ? Colors.white : kPrimaryColor , fontSize: 18.0, fontWeight: FontWeight.w500 ), )
-              ]
-            ),
+                onTap: () {
+                  _filtersClassIconsBt = "condo";
+                  filterProvider.filterProvider = "condo";
+            
+                  setState(() {
+                    Preferences.filtersClassIconsBt = 'condo';
+                  });
+                },
+              ),
+            ],
           ),
-          onTap: () {
-            _filtersClassIconsBt = "condo";
-            filterProvider.filterProvider = "condo";
-
-            setState(() {
-              Preferences.filtersClassIconsBt = 'condo';
-            });
-          },
-        ),              
-      ],
+        ),
+      ),
     );
   }
 }
