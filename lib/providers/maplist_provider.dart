@@ -16,7 +16,9 @@ class MapListProvider extends ChangeNotifier {
   final String _baseUrl = 'api.repliers.io';
   final String _maptilerUrl = 'https://api.maptiler.com/maps/basic-v2/style.json?key={key}';
   List<Listing> listingSelected = [];
+  List<Listing> listingMaps = [];
   List<Marker> _selectedCluster = [];
+  // int totalProperties = 0;
   static late BuildContext _context;
 
   MapListProvider();
@@ -41,32 +43,25 @@ class MapListProvider extends ChangeNotifier {
     return dotenv.get('API-KEY-MAPTILER');
   }
 
-  Future<List<Listing>> getLocationsResidences(bool isFilter) async {
-    List<Listing> residences = [];
+  // List<Listing> get getListingMaps {
+  //   return _listingMaps;
+  // }
+
+  Future<void> getLocationsResidences(bool isFilter, LatLng coordinates) async {
     try {
       if (!await ConnectivityInternet.hasConnection()) {
-        return residences = [];
+        return;
       }
 
-      var latLng = await GeolocationApp().getPosition();
-      var response = await _getlistingsByRadius('listings', isFilter, latLng, 500);
-      residences = response.where((element) {
-        String listingClass = element.listingClass!.toLowerCase();
-        return listingClass == "residentialproperty" || listingClass == "condoproperty";
-      }).toList();
-
-      return residences;
-    } catch (e) {
-      return residences = [];
-    }
+      await _getlistingsByRadius('listings', isFilter, coordinates, 200);
+    } catch (_) {}
   }
 
-  Future<List<Listing>> _getlistingsByRadius(String endPoint, bool isFilter, [LatLng? latLng, int radius = 0]) async {
+  Future<void> _getlistingsByRadius(String endPoint, bool isFilter, [LatLng? latLng, int radius = 0]) async {
     try {
       int pageListings = 1;
       String envApiKey = dotenv.get('REPLIERS-API-KEY');
       bool isMorePages = true;
-      List<Listing> responseResidences = [];
 
       Map<String, dynamic> queryParamsLoop = {};
       Map<String, dynamic> filters = {};
@@ -78,7 +73,7 @@ class MapListProvider extends ChangeNotifier {
       while (isMorePages) {
         queryParamsLoop = {
           'pageNum': '$pageListings',
-          'resultsPerPage': '700',
+          'resultsPerPage': '800',
           'type': 'sale',
           'hasImages': 'true',
           'fields':
@@ -115,18 +110,29 @@ class MapListProvider extends ChangeNotifier {
 
         final bodyResidences = ResponseBody.fromJson(response.body);
 
+        // if (pageListings == 1) {
+        //   totalProperties = bodyResidences.count;
+        //   notifyListeners()
+        // }
+
         if (pageListings < bodyResidences.numPages) {
           pageListings++;
         } else {
           isMorePages = false;
         }
 
-        responseResidences.addAll(bodyResidences.listings);
-      }
+        var listingsFilter = bodyResidences.listings.where((element) {
+          String listingClass = element.listingClass!.toLowerCase();
+          return listingClass == "residentialproperty" || listingClass == "condoproperty";
+        }).toList();
 
-      return responseResidences;
-    } catch (e) {
-      return [];
+        listingMaps.addAll(listingsFilter);
+        notifyListeners();
+      }
+    } catch (_) {
+      listingMaps = [];
+      notifyListeners();
+      return;
     }
   }
 
@@ -173,8 +179,8 @@ class MapListProvider extends ChangeNotifier {
 
     if (Preferences.filtersClassIconsBt == 'residential' && Preferences.filtersBedHouse > 1) {
       filtersPrefs['minBeds'] = Preferences.filtersBedHouse.toString();
-    } 
-    
+    }
+
     if (Preferences.filtersClassIconsBt == 'condo' && Preferences.filtersBedCondo > 0) {
       filtersPrefs['minBeds'] = Preferences.filtersBedCondo.toString();
     }
@@ -185,8 +191,8 @@ class MapListProvider extends ChangeNotifier {
 
     if (Preferences.filtersClassIconsBt == 'residential' && Preferences.filtersNumParkingSpaces > 0) {
       filtersPrefs['minParkingSpaces'] = Preferences.filtersNumParkingSpaces.toString();
-    } 
-    
+    }
+
     if (Preferences.filtersClassIconsBt == 'condo' && Preferences.filtersNumParkingSpacesCondos1 == true) {
       filtersPrefs['minParkingSpaces'] = '1';
     }

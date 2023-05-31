@@ -36,12 +36,7 @@ class FiltersScreen extends StatelessWidget {
         title: const Text('Personalize Listing'),
       ),
       body: LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
-        double screenWidth = constraints.maxWidth;
-        double screenHeight = constraints.maxHeight;
-
-        // Calcular los tamaños proporcionales para adaptarse a diferentes resoluciones
-        double cardWidth = screenWidth * 0.8;
-        double cardHeight = screenHeight * 0.25;
+        
         return SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(

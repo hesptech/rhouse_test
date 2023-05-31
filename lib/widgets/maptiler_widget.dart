@@ -113,7 +113,8 @@ class _MapWidget extends State<MapTilerWidget> {
           ],
         ),
       ])),
-      widget.isMultiple ? widget.cards! : Container()
+      widget.isMultiple ? widget.cards! : Container(),
+
     ]);
   }
 
@@ -177,7 +178,7 @@ class _MapWidget extends State<MapTilerWidget> {
             var color = const Color(0XFF02B68C);
             if (currentMarker != null) {
               if (currentMarker!.key == Key(item.mlsNumber ?? "")) {
-                color = Colors.red;                
+                color = const Color(0XFFED1C24);
               }
             }
             return GestureDetector(
