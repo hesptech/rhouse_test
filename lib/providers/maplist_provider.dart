@@ -96,10 +96,10 @@ class MapListProvider extends ChangeNotifier {
 
         Map<String, String>? headers = {'REPLIERS-API-KEY': envApiKey};
 
-        if (!await ConnectivityInternet.hasConnection()) {
-          isMorePages = false;
-          break;
-        }
+        // if (!await ConnectivityInternet.hasConnection()) {
+        //   isMorePages = false;
+        //   break;
+        // }
 
         final response = await http.get(url, headers: headers);
 
@@ -136,7 +136,7 @@ class MapListProvider extends ChangeNotifier {
     }
   }
 
-  void getFileterListings(List<Marker> mapMarkers, List<Listing> listCoordinates) {
+  void getFilterListings(List<Marker> mapMarkers, List<Listing> listCoordinates) {
     listingSelected = [];
 
     var keys = mapMarkers.map((marker) => ValueKey(marker.key).value).toSet();

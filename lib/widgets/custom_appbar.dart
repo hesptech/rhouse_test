@@ -161,7 +161,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
 
   void _goToMapSearch(BuildContext context) {
     FilterProvider().cleanFilter();
-    Navigator.pushNamed(context, MapScreen.path, arguments: {'filter': "false", 'mlsNumber': ''});
+    Navigator.pushNamed(context, MapScreen.pathScreen, arguments: {'filter': "false", 'mlsNumber': ''});
   }
 
   @override

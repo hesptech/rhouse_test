@@ -51,7 +51,8 @@ class LoadWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Column(children: [
+        child: Column(
+          children: [
       Expanded(child: Container()),
       const CircularProgressIndicator(),
       const Text("Loading"),

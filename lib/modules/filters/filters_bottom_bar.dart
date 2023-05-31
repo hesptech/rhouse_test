@@ -42,9 +42,9 @@ class _FiltersBottomBarState extends State<FiltersBottomBar> {
                     Provider.of<FilterProvider>(context, listen: false).filtersBasement = [];
                     Provider.of<FilterProvider>(context, listen: false).filtersAmmenities = [];
 
-                    if (widget.pathScreen == MapScreen.path) {
+                    if (widget.pathScreen == MapScreen.pathScreen) {
                       Navigator.pop(context);
-                      Navigator.pushNamed(context, 'filters_screen', arguments: {'screenPath': MapScreen.path});
+                      Navigator.pushNamed(context, 'filters_screen', arguments: {'screenPath': MapScreen.pathScreen});
                     } else {
                       Navigator.pushNamed(context, 'filters_screen');
                     }
@@ -65,8 +65,8 @@ class _FiltersBottomBarState extends State<FiltersBottomBar> {
                 style: OutlinedButton.styleFrom(
                     side: const BorderSide(color: kPrimaryColor), backgroundColor: kPrimaryColor),
                 onPressed: () {
-                  if (widget.pathScreen == MapScreen.path) {
-                    Navigator.pushNamed(context, MapScreen.path, arguments: {'filter': "true", 'mlsNumber': ''});
+                  if (widget.pathScreen == MapScreen.pathScreen) {
+                    Navigator.pushNamed(context, MapScreen.pathScreen, arguments: {'filter': "true", 'mlsNumber': ''});
                   } else {
                     Navigator.pushNamed(context, 'filters_results_screen', arguments: 'Filtered results');
                   }

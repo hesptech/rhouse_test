@@ -98,8 +98,8 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
     });
   }
 
-  void onTapMarkers(List<Marker> mapMarkers, List<Listing> listCoordinates, BuildContext context) async {
-    Provider.of<MapListProvider>(context, listen: false).getFileterListings(mapMarkers, listCoordinates);
+  void onTapMarkers(List<Marker>  mapMarkers, List<Listing> listCoordinates, BuildContext context) async {
+    Provider.of<MapListProvider>(context, listen: false).getFilterListings(mapMarkers, listCoordinates);
     Provider.of<MapListProvider>(context, listen: false).selectedCluster = mapMarkers;
     markersList = [];
   }

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/screens/map_property_screen.dart';
 import 'package:flutter_black_white/screens/screens.dart';
 
 var customRoutes = <String, WidgetBuilder>{
   '/': ( _ ) => const HomeScreen(),
-  MapScreen.path: ( _ ) => const MapScreen(),
+  MapScreen.pathScreen: ( _ ) => const MapScreen(),
+  MapPropertyScreen.pathScreen: ( _ ) => const MapPropertyScreen(),
   'login_screen': ( _ ) => const LoginScreen(),
   'filters_screen': ( _ ) => const FiltersScreen(),
   'filters_results_screen': ( _ ) => const FiltersResultsScreen(),

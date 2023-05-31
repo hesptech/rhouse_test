@@ -15,7 +15,7 @@ import '../utils/connectivity_internet.dart';
 import '../utils/shared_preferences.dart';
 
 class MapScreen extends StatefulWidget {
-  static String path = "mapSearch_screen";
+  static String pathScreen = "mapSearch_screen";
   const MapScreen({Key? key}) : super(key: key);
 
   @override
@@ -43,7 +43,7 @@ class _MapScreenState extends State<MapScreen> {
                 child: TextButton(
                     onPressed: () {
                       FilterProvider().cleanFilter();
-                      Navigator.pushNamed(context, MapScreen.path, arguments: {'filter': "false", 'mlsNumber': ''});
+                      Navigator.pushNamed(context, MapScreen.pathScreen, arguments: {'filter': "false", 'mlsNumber': ''});
                     },
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -86,7 +86,7 @@ class _MapScreenState extends State<MapScreen> {
             GestureDetector(
               onTap: () {
                 Preferences.isCleanFilter = false;
-                Navigator.pushNamed(context, 'filters_screen', arguments: {'screenPath': MapScreen.path});
+                Navigator.pushNamed(context, 'filters_screen', arguments: {'screenPath': MapScreen.pathScreen});
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
