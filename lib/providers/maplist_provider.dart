@@ -44,9 +44,9 @@ class MapListProvider extends ChangeNotifier {
   Future<List<Listing>> getLocationsResidences(bool isFilter) async {
     List<Listing> residences = [];
     try {
-      if (!await ConnectivityInternet.hasConnection()) {
-        return residences = [];
-      }
+      // if (!await ConnectivityInternet.hasConnection()) {
+      //   return residences = [];
+      // }
 
       var latLng = await GeolocationApp().getPosition();
       var response = await _getlistingsByRadius('listings', isFilter, latLng, 500);
@@ -101,10 +101,10 @@ class MapListProvider extends ChangeNotifier {
 
         Map<String, String>? headers = {'REPLIERS-API-KEY': envApiKey};
 
-        if (!await ConnectivityInternet.hasConnection()) {
-          isMorePages = false;
-          break;
-        }
+        // if (!await ConnectivityInternet.hasConnection()) {
+        //   isMorePages = false;
+        //   break;
+        // }
 
         final response = await http.get(url, headers: headers);
 
@@ -130,7 +130,7 @@ class MapListProvider extends ChangeNotifier {
     }
   }
 
-  void getFileterListings(List<Marker> mapMarkers, List<Listing> listCoordinates) {
+  void getFilterListings(List<Marker> mapMarkers, List<Listing> listCoordinates) {
     listingSelected = [];
 
     var keys = mapMarkers.map((marker) => ValueKey(marker.key).value).toSet();
