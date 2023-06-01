@@ -86,7 +86,7 @@ class _MapScreenState extends State<MapScreen> {
             GestureDetector(
               onTap: () {
                 Preferences.isCleanFilter = false;
-                Navigator.pushNamed(context, 'filters_screen', arguments: {'screenPath': MapScreen.pathScreen});
+                Navigator.pushReplacementNamed(context, 'filters_screen', arguments: {'screenPath': MapScreen.pathScreen});
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,

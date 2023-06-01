@@ -20,7 +20,7 @@ class MapTilerWidget extends StatefulWidget {
   final double zoom;
   final bool isMultiple;
   final bool isMiniature;
-  final bool isCloseCards;
+  final bool loadMap;
 
   const MapTilerWidget(
       {super.key,
@@ -32,7 +32,7 @@ class MapTilerWidget extends StatefulWidget {
       this.center,
       this.zoom = 18,
       this.isMultiple = true,
-      this.isCloseCards = false,
+      this.loadMap = false,
       this.isMiniature = false,
       this.selectedCluster = const [],
       this.listingSingle,
@@ -44,24 +44,31 @@ class MapTilerWidget extends StatefulWidget {
 }
 
 class _MapWidget extends State<MapTilerWidget> {
-  final MapController _controller = MapController();
-  final _layerMode = VectorTileLayerMode.raster;
-  final double _minZoom = 6;
-  final double _maxZoomList = 15;
-  final double _maxZoomsingle = 18;
-  final double _maxZoom = 20;
+  late final MapController _controller;
+  final VectorTileLayerMode _layerMode = VectorTileLayerMode.raster;
+  late double _minZoom;
+  late double _maxZoomList;
+  late double _maxZoomsingle;
+  late double _maxZoom;
   late double _zoomValue;
-  final List<Marker> markers = [];
+  late Set<Marker> markers = {};
   late Marker markerSingle;
   late List<Marker> _selectedCluster;
   Marker? currentMarker;
+  late bool _cleanMarkers;
 
   @override
   void initState() {
+    _controller = MapController();
+    _cleanMarkers = true;
+    _minZoom = 6;
+    _maxZoomList = 15;
+    _maxZoomsingle = 18;
+    _maxZoom = 20;
+
     _zoomValue = widget.zoom;
     if (widget.isMultiple) {
-      _setMarkers();
-
+      markers = {};
       _selectedCluster = widget.selectedCluster;
 
       _controller.mapEventStream.listen((event) {
@@ -87,6 +94,8 @@ class _MapWidget extends State<MapTilerWidget> {
   @override
   void didUpdateWidget(MapTilerWidget oldWidget) {
     if (widget.isMultiple) {
+      _setMarkers();
+
       setState(() {
         _selectedCluster = widget.selectedCluster;
         currentMarker = widget.selectedCluster.isEmpty ? null : currentMarker;
@@ -97,37 +106,21 @@ class _MapWidget extends State<MapTilerWidget> {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    _minZoom = 6;
+    _maxZoomList = 15;
+    _maxZoomsingle = 18;
+    _maxZoom = 20;
+    _zoomValue = 0;
+    markers = {};
+    _selectedCluster = [];
+    currentMarker = null;
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // return Stack(children: [
-    //   FlutterMap(
-    //     mapController: _controller,
-    //     options: MapOptions(
-    //         bounds: LatLngBounds.fromPoints([widget.center!]),
-    //         center: widget.center!,
-    //         zoom: _zoomValue,
-    //         minZoom: _minZoom,
-    //         onTap: (tapPosition, point) {
-    //           if (widget.onTapMap == null) {
-    //             return;
-    //           }
-    //           widget.onTapMap!();
-    //         },
-    //         maxZoom: widget.isMultiple ? _maxZoomList : _maxZoomsingle,
-    //         onMapReady: () {
-    //           _controller.move(widget.center!, _zoomValue);
-
-    //           // _controller.latLngToScreenPoint(widget.center!);
-    //         },
-    //         interactiveFlags: !widget.isMiniature ? InteractiveFlag.drag |
-    //             InteractiveFlag.flingAnimation |
-    //             InteractiveFlag.pinchMove |
-    //             InteractiveFlag.pinchZoom |
-    //             InteractiveFlag.doubleTapZoom : InteractiveFlag.none),
-    //     children: [widget.layerFactory(context, _layerMode), _markers()],
-    //   ),
-    //   Align(alignment: Alignment.bottomCenter, child: widget.cards)
-    // ]);
-
     return Column(children: [
       Expanded(
           child: Stack(children: [
@@ -161,7 +154,6 @@ class _MapWidget extends State<MapTilerWidget> {
         // widget.cards
       ])),
       widget.isMultiple ? widget.cards : Container(),
-
     ]);
   }
 
@@ -176,7 +168,7 @@ class _MapWidget extends State<MapTilerWidget> {
             : FitBoundsOptions(padding: const EdgeInsets.only(top: 500), maxZoom: _maxZoom),
         spiderfyCluster: false,
         zoomToBoundsOnClick: false,
-        markers: widget.isMultiple ? markers : [markerSingle],
+        markers: widget.isMultiple ? markers.toList() : [markerSingle],
         onClusterTap: (MarkerClusterNode markerClusterNode) {
           if (widget.onClusterTap == null) {
             return;
@@ -214,43 +206,54 @@ class _MapWidget extends State<MapTilerWidget> {
   }
 
   void _setMarkers() {
+    if (_cleanMarkers) {
+      _cleanMarkers = false;
+      markers = {};
+    }
+
+    final existingMarkerKeys = markers.map((marker) => marker.key).toSet();
+    final newMarkers = <Marker>[];
+
     for (var item in widget.listCoordinates) {
-      markers.add(
-        Marker(
-          key: Key(item.mlsNumber ?? ""),
+      var key = Key(item.mlsNumber ?? "");
+
+      if (!existingMarkerKeys.contains(key)) {
+        var marker = Marker(
+          key: key,
           height: 30,
           width: 30,
           point: LatLng(item.mapCoordinates!.latitude, item.mapCoordinates!.longitude),
           builder: (ctx) {
             var color = const Color(0XFF02B68C);
-            if (currentMarker != null) {
-              if (currentMarker!.key == Key(item.mlsNumber ?? "")) {
-                color = const Color(0XFFED1C24);
-              }
+            if (currentMarker != null && currentMarker!.key == key) {
+              color = const Color(0XFFED1C24);
             }
             return GestureDetector(
-                onTap: () {
-                  if (widget.onTapMarker == null) {
-                    return;
-                  }
+              onTap: () {
+                if (widget.onTapMarker == null) {
+                  return;
+                }
 
-                  var keyItem = Key(item.mlsNumber ?? "");
+                var markerItem = markers.where((element) => element.key == key).toList();
 
-                  var markerItem = markers.where((element) => element.key == keyItem).toList();
+                if (markerItem.isNotEmpty) {
+                  setState(() {
+                    currentMarker = markerItem.first; // asigna el marcador seleccionado
+                  });
 
-                  if (markerItem.isNotEmpty) {
-                    setState(() {
-                      currentMarker = markerItem.first; // asigna el marcador seleccionado
-                    });
-
-                    widget.onTapMarker!(markerItem);
-                  }
-                },
-                child: Icon(Icons.location_on_outlined, color: color, size: 50));
+                  widget.onTapMarker!(markerItem);
+                }
+              },
+              child: Icon(Icons.location_on_outlined, color: color, size: 50),
+            );
           },
-        ),
-      );
+        );
+        newMarkers.add(marker);
+      }
     }
+
+    markers.addAll(newMarkers);
+    debugPrint("TOTAL MARKERS: ${markers.length}");
   }
 
   void _setMarker() {

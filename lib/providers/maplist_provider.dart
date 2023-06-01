@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/utils/connectivity_internet.dart';
-import 'package:flutter_black_white/utils/geolocation_app.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong2/latlong.dart';
@@ -18,12 +17,39 @@ class MapListProvider extends ChangeNotifier {
   List<Listing> listingSelected = [];
   List<Listing> listingMaps = [];
   List<Marker> _selectedCluster = [];
-  // int totalProperties = 0;
-  static late BuildContext _context;
+  bool _disposed = false;
+  bool _loadMap = true;
+
+  initData() {
+    listingSelected = [];
+    listingMaps = [];
+    _selectedCluster = [];
+    _disposed = false;
+    _loadMap = true;
+  }
+
+  close() {
+    listingSelected = [];
+    listingMaps = [];
+    _selectedCluster = [];
+    _disposed = true;
+    _loadMap = false;
+  }
+
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
+  }
+
 
   MapListProvider();
-  MapListProvider.intiConfig(BuildContext context) {
-    _context = context;
+  MapListProvider.intiConfig() {
+    initData();
+  }
+
+  bool get loadMap {
+    return _loadMap;
   }
 
   List<Marker> get selectedCluster {
@@ -43,18 +69,13 @@ class MapListProvider extends ChangeNotifier {
     return dotenv.get('API-KEY-MAPTILER');
   }
 
-  // List<Listing> get getListingMaps {
-  //   return _listingMaps;
-  // }
-
   Future<void> getLocationsResidences(bool isFilter, LatLng coordinates) async {
-    try {
-      if (!await ConnectivityInternet.hasConnection()) {
-        return;
-      }
+    initData();
+    if (!await ConnectivityInternet.hasConnection()) {
+      return;
+    }
 
-      await _getlistingsByRadius('listings', isFilter, coordinates, 200);
-    } catch (_) {}
+    await _getlistingsByRadius('listings', isFilter, coordinates, 200);
   }
 
   Future<void> _getlistingsByRadius(String endPoint, bool isFilter, [LatLng? latLng, int radius = 0]) async {
@@ -67,10 +88,10 @@ class MapListProvider extends ChangeNotifier {
       Map<String, dynamic> filters = {};
 
       if (isFilter) {
-        filters = _getFilters(_context);
+        filters = _getFilters();
       }
 
-      while (isMorePages) {
+      while (isMorePages && !_disposed) {
         queryParamsLoop = {
           'pageNum': '$pageListings',
           'resultsPerPage': '800',
@@ -96,11 +117,6 @@ class MapListProvider extends ChangeNotifier {
 
         Map<String, String>? headers = {'REPLIERS-API-KEY': envApiKey};
 
-        // if (!await ConnectivityInternet.hasConnection()) {
-        //   isMorePages = false;
-        //   break;
-        // }
-
         final response = await http.get(url, headers: headers);
 
         if (response.statusCode != 200) {
@@ -110,45 +126,50 @@ class MapListProvider extends ChangeNotifier {
 
         final bodyResidences = ResponseBody.fromJson(response.body);
 
-        // if (pageListings == 1) {
-        //   totalProperties = bodyResidences.count;
-        //   notifyListeners()
-        // }
-
         if (pageListings < bodyResidences.numPages) {
           pageListings++;
         } else {
           isMorePages = false;
         }
 
-        var listingsFilter = bodyResidences.listings.where((element) {
-          String listingClass = element.listingClass!.toLowerCase();
-          return listingClass == "residentialproperty" || listingClass == "condoproperty";
-        }).toList();
+        if (isFilter) {
+          listingMaps.addAll(bodyResidences.listings);
+        } else {
+          final listingsFilter = bodyResidences.listings.where((element) {
+            String listingClass = element.listingClass!.toLowerCase();
+            return listingClass == "residentialproperty" || listingClass == "condoproperty";
+          }).toList();
 
-        listingMaps.addAll(listingsFilter);
+          listingMaps.addAll(listingsFilter);
+        }
+
         notifyListeners();
       }
+      
+      debugPrint("TOTAL RESIDENCIAS: ${listingMaps.length}");
+      _loadMap = false;
+      notifyListeners();
     } catch (_) {
       listingMaps = [];
+      _loadMap = false;
       notifyListeners();
       return;
     }
   }
 
-  void getFilterListings(List<Marker> mapMarkers, List<Listing> listCoordinates) {
+  void getFilterListings(List<Marker> mapMarkers) {
     listingSelected = [];
 
     var keys = mapMarkers.map((marker) => ValueKey(marker.key).value).toSet();
 
-    var filteredListings = listCoordinates.where((listing) => keys.contains(Key(listing.mlsNumber!)));
+    var filteredListings = listingMaps.where((listing) => keys.contains(Key(listing.mlsNumber!)));
 
     listingSelected.addAll(filteredListings);
 
     notifyListeners();
   }
 
-  Map<String, dynamic> _getFilters(BuildContext context) {
+  Map<String, dynamic> _getFilters() {
     Map<String, dynamic> filtersResults = {};
     var labels = kLabels;
     List<String> filterPropertyIcons;
@@ -157,7 +178,7 @@ class MapListProvider extends ChangeNotifier {
     if (Preferences.filtersClassIconsBt == 'residential') {
       filterPropertyIcons = [
         ...Preferences.filterPropertyIcons,
-        ...Provider.of<FilterProvider>(context, listen: false).filtersPropertyTypeHouse
+        ...Preferences.filtersPropertyTypeHouse
       ];
     } else {
       filterPropertyIcons = Preferences.filterPropertyIconsCondo;
@@ -166,7 +187,7 @@ class MapListProvider extends ChangeNotifier {
     Map<String, dynamic> filtersPrefs = {
       'class': Preferences.filtersClassIconsBt,
       'propertyType': filterPropertyIcons,
-      'district': Provider.of<FilterProvider>(context, listen: false).filtersLocation,
+      'district': Preferences.userFiltersCity,
     };
 
     if (int.parse(labels[Preferences.filterPriceRangeStart.round()]) > 1) {
