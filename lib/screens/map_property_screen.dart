@@ -31,6 +31,7 @@ class MapPropertyScreen extends StatelessWidget {
           toolbarHeight: 60,
         ),
         body: SafeArea(
+          bottom: false,
           child: LoadableWidget(
               loader: () => StyleReader(
                       uri: MapListProvider().getMapTilerUrl,

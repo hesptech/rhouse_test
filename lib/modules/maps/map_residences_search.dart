@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' hide Theme;
-import 'package:flutter_black_white/models/response_listings.dart';
 import 'package:flutter_black_white/modules/maps/map_card_small.dart';
 import 'package:flutter_black_white/providers/maplist_provider.dart';
 import 'package:flutter_black_white/widgets/maptiler_widget.dart';

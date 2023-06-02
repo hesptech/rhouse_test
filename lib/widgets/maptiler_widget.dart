@@ -153,7 +153,7 @@ class _MapWidget extends State<MapTilerWidget> {
         ),
         // widget.cards
       ])),
-      widget.isMultiple ? widget.cards : Container(),
+      widget.cards,
     ]);
   }
 
@@ -260,7 +260,7 @@ class _MapWidget extends State<MapTilerWidget> {
     var listing = widget.listingSingle ?? Listing();
     markerSingle = Marker(
         key: Key(listing.mlsNumber ?? ""),
-        height: 50,
+        height: 150,
         width: 50,
         point: LatLng(listing.mapCoordinates!.latitude, listing.mapCoordinates!.longitude),
         anchorPos: AnchorPos.align(AnchorAlign.top),
@@ -272,7 +272,7 @@ class _MapWidget extends State<MapTilerWidget> {
               },
               child: Icon(Icons.location_on_outlined,
                   color: widget.isMiniature ? kPrimaryColor : const Color(0XFF02B68C),
-                  size: widget.isMiniature ? 50 : 80));
+                  size: widget.isMiniature ? 50 : 60));
         });
   }
 }
