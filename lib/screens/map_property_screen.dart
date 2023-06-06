@@ -29,7 +29,9 @@ class MapPropertyScreen extends StatelessWidget {
               )),
           elevation: 0,
           toolbarHeight: 60,
+          centerTitle: true,
         ),
+        
         body: SafeArea(
           bottom: false,
           child: LoadableWidget(
