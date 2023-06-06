@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/modules/maps/map_location_property.dart';
 import 'package:flutter_black_white/providers/maplist_provider.dart';
@@ -36,7 +37,7 @@ class MapPropertyScreen extends StatelessWidget {
           bottom: false,
           child: LoadableWidget(
               loader: () => StyleReader(
-                      uri: MapListProvider().getMapTilerUrl,
+                      uri: kMaptilerUrl,
                       apiKey: MapListProvider().getApiKey,
                       logger: const Logger.console())
                   .read(),

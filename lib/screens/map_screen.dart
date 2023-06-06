@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/modules/maps/map_residences_search.dart';
 import 'package:flutter_black_white/providers/maplist_provider.dart';
 import 'package:flutter_black_white/utils/constants.dart';
@@ -128,7 +129,7 @@ class _MapScreenState extends State<MapScreen> {
 
                 return LoadableWidget(
                     loader: () => StyleReader(
-                            uri: MapListProvider().getMapTilerUrl,
+                            uri: kMaptilerUrl,
                             apiKey: MapListProvider().getApiKey,
                             logger: const Logger.console())
                         .read(),

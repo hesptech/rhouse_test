@@ -4,6 +4,7 @@ import 'package:http/http.dart';
 const kBaseUrl = 'api.repliers.io';
 const kRepliersCdn = 'https://cdn.repliers.io/';
 
+const kMaptilerUrl = 'https://api.maptiler.com/maps/basic-v2/style.json?key={key}';
 
 String processResponse(Response response) {
   if (response.statusCode == 200 || response.statusCode == 201) {

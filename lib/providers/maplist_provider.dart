@@ -5,15 +5,13 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 
+import '../config/environment.dart';
 import '../utils/constants.dart';
 import '../utils/shared_preferences.dart';
-import 'filter_provider.dart';
 
 class MapListProvider extends ChangeNotifier {
-  final String _baseUrl = 'api.repliers.io';
-  final String _maptilerUrl = 'https://api.maptiler.com/maps/basic-v2/style.json?key={key}';
+  
   List<Listing> listingSelected = [];
   List<Listing> listingMaps = [];
   List<Marker> _selectedCluster = [];
@@ -61,9 +59,6 @@ class MapListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  String get getMapTilerUrl {
-    return _maptilerUrl;
-  }
 
   String get getApiKey {
     return dotenv.get('API-KEY-MAPTILER');
@@ -113,7 +108,7 @@ class MapListProvider extends ChangeNotifier {
           });
         }
 
-        final url = Uri.https(_baseUrl, endPoint, queryParamsLoop);
+        final url = Uri.https(kBaseUrl, endPoint, queryParamsLoop);
 
         Map<String, String>? headers = {'REPLIERS-API-KEY': envApiKey};
 

@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/modules/maps/widgets/map_card_single_box.dart';
+import 'package:flutter_black_white/modules/maps/widgets/map_card_single_stack.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 
 class MapCardSingle extends StatelessWidget {
@@ -55,9 +57,9 @@ class MapCardSingle extends StatelessWidget {
                 Stack(
                   children: [
                     _imageBackground(images, blurImg, context),
-                    Positioned(bottom: 155,  child: _entryDate(dataFormatted)),
-                    Positioned(left: 270, bottom: 160, child: _favorite(context)),
-                    Positioned(left: 320, bottom: 157, child: _showImages(context)),
+                    Positioned(bottom: 155,  child: MapCardSingleStack().entryDate(dataFormatted, loggedIn)),
+                    Positioned(left: 270, bottom: 160, child: MapCardSingleStack().favorite(context)),
+                    Positioned(left: 320, bottom: 157, child: MapCardSingleStack().showImages(context, listing)),
                   ],
                 ),
                 SizedBox(
@@ -93,96 +95,6 @@ class MapCardSingle extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _favorite(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(top: 10, right: 70),
-      alignment: Alignment.topRight,
-      child: Stack(
-        children: [
-          InkWell(
-            child: const Icon(Icons.favorite_rounded, color: Color(0xFFffffff), size: 35),
-            onTap: () {
-              Navigator.pushNamed(context, 'card_images_screen', arguments: listing);
-            },
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _showImages(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(top: 10, right: 20),
-      alignment: Alignment.topRight,
-      child: Stack(
-        children: [
-          const Positioned(
-            left: 1.0,
-            top: 2.0,
-            child: Icon(Icons.filter_9_plus_outlined, color: Colors.black26, size: 30),
-          ),
-          InkWell(
-            child: const Icon(Icons.filter_9_plus_outlined, color: Color(0xFFffffff), size: 35),
-            onTap: () {
-              Navigator.pushNamed(context, 'card_images_screen', arguments: listing);
-            },
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _entryDate(DataFormatter dataFormatted) {
-    return Row(
-      children: [
-        if (loggedIn == true)
-          Container(
-              padding: const EdgeInsets.only(
-                left: 20.0,
-                top: 10.0,
-              ),
-              alignment: Alignment.topLeft,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF2E3191),
-                  minimumSize: const Size(140.0, 28.0),
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-                ),
-                onPressed: () {
-                  //Navigator.pushNamed(context, 'details', arguments: listing);
-                },
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.calendar_month_outlined,
-                      size: 16,
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(dataFormatted.listEntryDate, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400))
-                  ],
-                ),
-              )),
-        if (loggedIn == false)
-          Container(
-              width: 310,
-              height: 430,
-              alignment: Alignment.center,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF5f68be)),
-                ),
-                onPressed: () {
-                  //Navigator.pushNamed(context, 'details', arguments: listing);
-                },
-                child: const Text('Login required'),
-              )),
-      ],
     );
   }
 
@@ -280,134 +192,11 @@ class MapCardSingle extends StatelessWidget {
               ),
             ),
           ),
-          _characteristicsProperty(dataFormatted, numBathrooms),
+          MapCardSingleBox(numBedrooms: dataFormatted.numBedrooms, numBathrooms: numBathrooms, numParkingSpaces: dataFormatted.numParkingSpaces)
+          // _characteristicsProperty(dataFormatted, numBathrooms),
         ],
       ),
     );
   }
 
-  Widget _characteristicsProperty(DataFormatter dataFormatted, String numBathrooms) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [        
-        Expanded(
-          flex: 3,
-          child: Container(
-            width: 68.0,
-            decoration: const BoxDecoration(
-              border: Border(
-                top: BorderSide(color: Color(0xFF0BB48B)),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.king_bed_outlined,
-                  color: Color(0xFF0BB48B),
-                  size: 35,
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Flexible(
-                  child: Text(
-                    dataFormatted.numBedrooms,
-                    maxLines: 1,
-                    softWrap: true,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: Color(0xFF666597),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 3,
-          child: Container(
-            padding: const EdgeInsets.all(3.0),
-            decoration: const BoxDecoration(
-              border: Border(
-                top: BorderSide(color: Color(0xFF0BB48B)),
-                left: BorderSide(color: Color(0xFF0BB48B)),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.shower_outlined,
-                  color: Color(0xFF0BB48B),
-                  size: 30,
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Flexible(
-                  child: Text(
-                    numBathrooms,
-                    maxLines: 1,
-                    softWrap: true,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: Color(0xFF666597),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 3,
-          child: Container(
-            width: 68.0,
-            padding: const EdgeInsets.all(3.5),
-            decoration: const BoxDecoration(
-              border: Border(
-                top: BorderSide(color: Color(0xFF0BB48B)),
-                left: BorderSide(color: Color(0xFF0BB48B)),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.directions_car_filled_outlined,
-                  color: Color(0xFF0BB48B),
-                  size: 28,
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Flexible(
-                  child: Text(
-                    dataFormatted.numParkingSpaces,
-                    maxLines: 1,
-                    softWrap: true,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: Color(0xFF666597),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 }
