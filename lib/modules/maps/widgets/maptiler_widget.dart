@@ -253,7 +253,6 @@ class _MapWidget extends State<MapTilerWidget> {
     }
 
     markers.addAll(newMarkers);
-    debugPrint("TOTAL MARKERS: ${markers.length}");
   }
 
   void _setMarker() {

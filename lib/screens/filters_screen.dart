@@ -12,7 +12,6 @@ class FiltersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var pathArgument = _checkArguments(context);
-    debugPrint("${MediaQuery.of(context).size.height} - ${MediaQuery.of(context).size.width}");
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       appBar: AppBar(
