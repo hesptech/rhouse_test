@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/widgets/error_view_widget.dart';
 
 class LoadableWidget<T> extends StatefulWidget {
   final Future<T> Function() loader;
@@ -38,7 +39,7 @@ class _LoadableWidget<T> extends State<LoadableWidget<T>> {
     }
     final errorMessage = loadError;
     if (errorMessage != null) {
-      return Expanded(child: Text(errorMessage));
+      return const ErrorViewWidget();
     }
     return const LoadWidget();
   }

@@ -12,6 +12,7 @@ class FiltersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var pathArgument = _checkArguments(context);
+    debugPrint("${MediaQuery.of(context).size.height} - ${MediaQuery.of(context).size.width}");
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       appBar: AppBar(
@@ -34,29 +35,32 @@ class FiltersScreen extends StatelessWidget {
         ),
         title: const Text('Personalize Listing'),
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 5,
-              color: kSecondaryColor,
-            ),
-            const FiltersPriceSlider(),
-            const FiltersClassIconBt(),
-            const SizedBox(
-              height: 28.0,
-            ),
-            const GreenDivider(),
-            const FiltersPropertyType(),
-            const GreenDivider(),
-            pathArgument != MapScreen.pathScreen ? const FiltersLocation() : Container(),
-            const GreenDivider(),
-            const FiltersBathbedpark(),
-            const FiltersMore(),
-          ],
-        ),
-      ),
+      body: LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+        
+        return SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: <Widget>[
+              Container(
+                height: 5,
+                color: kSecondaryColor,
+              ),
+              const FiltersPriceSlider(),
+              const FiltersClassIconBt(),
+              const SizedBox(
+                height: 28.0,
+              ),
+              const GreenDivider(),
+              const FiltersPropertyType(),
+              const GreenDivider(),
+              pathArgument != MapScreen.pathScreen ? const FiltersLocation() : Container(),
+              const GreenDivider(),
+              const FiltersBathbedpark(),
+              const FiltersMore(),
+            ],
+          ),
+        );
+      }),
       bottomNavigationBar: FiltersBottomBar(pathScreen: pathArgument),
     );
   }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/response_listings.dart';
 import 'package:flutter_black_white/providers/maplist_provider.dart';
 import 'package:flutter_black_white/screens/map_property_screen.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-import 'package:flutter_black_white/widgets/maptiler_widget.dart';
+import 'package:flutter_black_white/modules/maps/widgets/maptiler_widget.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 import 'package:vector_tile_renderer/vector_tile_renderer.dart';
@@ -25,7 +26,7 @@ class CardDetailsMap extends StatelessWidget {
         height: 300,
         child: FutureBuilder<Style>(
             future: StyleReader(
-                    uri: MapListProvider().getMapTilerUrl,
+                    uri: kMaptilerUrl,
                     apiKey: MapListProvider().getApiKey,
                     logger: const Logger.console())
                 .read(),

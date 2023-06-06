@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
@@ -25,10 +26,11 @@ class MapCardSmall extends StatelessWidget {
     final String images = listing.images?.first ?? '';
 
     return Card(
-        clipBehavior: Clip.antiAlias,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
         shape: RoundedRectangleBorder(
+          side: const BorderSide(color: Color(0XFF2D368F), width: 2),
           borderRadius: BorderRadius.circular(0),
-        ),
+        ),        
         child: Padding(
             padding: const EdgeInsets.all(0),
             child: ImageFiltered(
@@ -41,11 +43,14 @@ class MapCardSmall extends StatelessWidget {
                 },
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        _columnHead(listing, dataFormatted, images),
-                        Expanded(child: _detailsBody(dataFormatted, context)),
-                      ],
+                    Flexible(
+                      // flex: 1,
+                      child: Row(
+                        children: [
+                          _columnHead(listing, dataFormatted, images),
+                          Expanded(child: _detailsBody(dataFormatted, context)),
+                        ],
+                      ),
                     ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +59,8 @@ class MapCardSmall extends StatelessWidget {
                         _entryDateWidget(listing, dataFormatted),
                         Expanded(child: _detailsResidence(dataFormatted)),
                       ],
-                    )
+                    ),
+                    
                   ],
                 ),
               ),
@@ -90,22 +96,25 @@ class MapCardSmall extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            '${dataFormatted.listPrice} ',
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-            textAlign: TextAlign.justify,
-            softWrap: true,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF2D368F),
+          FittedBox(
+            child: Text(
+              '${dataFormatted.listPrice} ',
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              textAlign: TextAlign.justify,
+              softWrap: true,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF2D368F),
+              ),
             ),
           ),
           const SizedBox(height: 3),
           Text(
             dataFormatted.address,
-            maxLines: 1,
+            maxLines: 2,
+            softWrap: true,
             style: const TextStyle(fontSize: 12, color: Color(0xFF58595B)),
             overflow: TextOverflow.ellipsis,
           ),
@@ -193,7 +202,6 @@ class MapCardSmall extends StatelessWidget {
           decoration: const BoxDecoration(
             border: Border(
               left: BorderSide(color: Color(0xFF0BB48B)),
-              
             ),
           ),
           child: Padding(
@@ -253,9 +261,9 @@ class MapCardSmall extends StatelessWidget {
                 Expanded(
                   child: Text(
                     dataFormatted.numParkingSpaces,
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: true,
-                      maxLines: 1,                
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: true,
+                    maxLines: 1,
                     style: const TextStyle(
                       color: Color(0xFF666597),
                       fontWeight: FontWeight.bold,
@@ -277,7 +285,7 @@ class MapCardSmall extends StatelessWidget {
       padding: const EdgeInsets.only(left: 5, top: 5),
       child: FadeInImage(
         placeholder: const AssetImage('assets/no-image.jpg'),
-        image: NetworkImage('https://cdn.repliers.io/$images?w=500'),
+        image: NetworkImage('$kRepliersCdn$images?w=125'),
         width: 140,
         height: 116.8,
         fit: BoxFit.cover,
