@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/modules/maps/map_card_single.dart';
-import 'package:flutter_black_white/widgets/maptiler_widget.dart';
+import 'package:flutter_black_white/modules/maps/widgets/maptiler_widget.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 

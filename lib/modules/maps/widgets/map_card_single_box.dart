@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/utils/data_formatter.dart';
 
 
 class MapCardSingleBox extends StatelessWidget {

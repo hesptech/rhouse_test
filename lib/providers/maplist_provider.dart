@@ -141,7 +141,6 @@ class MapListProvider extends ChangeNotifier {
         notifyListeners();
       }
       
-      debugPrint("TOTAL RESIDENCIAS: ${listingMaps.length}");
       _loadMap = false;
       notifyListeners();
     } catch (_) {

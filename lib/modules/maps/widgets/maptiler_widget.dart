@@ -4,7 +4,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
-import '../models/models.dart';
+import '../../../models/models.dart';
 
 class MapTilerWidget extends StatefulWidget {
   final VectorTileLayer Function(BuildContext, VectorTileLayerMode mode) layerFactory;
