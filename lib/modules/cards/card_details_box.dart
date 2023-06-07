@@ -30,9 +30,19 @@ class CardDetailsBox extends StatelessWidget {
                 Row(
                   children: [
                     const Text('Listed for: ', style: TextStyle(fontSize: 16, ), ),   
-                    Text( 
-                      dataFormatted.listPrice, 
-                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: kPrimaryColor, ), 
+                    Align(
+                      //alignment: Alignment.center,
+                      child: SizedBox(
+                      
+                        //alignment: Alignment.center,
+                        height: 25,
+                        child: FittedBox(
+                          child: Text( 
+                            dataFormatted.listPrice, 
+                            style: const TextStyle(fontWeight: FontWeight.bold, color: kPrimaryColor, ), 
+                          ),
+                        ),
+                      ),
                     ),                   
                   ],
                 ),
@@ -64,7 +74,7 @@ class CardDetailsBox extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Icon(Icons.king_bed_outlined, color: Color(0xFF0BB48B), size: 30,),
-                      const SizedBox(width: 5,),
+                      const SizedBox(width: 3,),
                       Text( 
                         dataFormatted.numBedrooms, 
                         style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), 
@@ -86,7 +96,7 @@ class CardDetailsBox extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Icon(Icons.shower_outlined, color: Color(0xFF0BB48B), size: 30,),
-                      const SizedBox(width: 5,),
+                      const SizedBox(width: 3,),
                       Text( 
                         listing.details?.numBathrooms?? '', 
                         style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), 
@@ -122,12 +132,15 @@ class CardDetailsBox extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox( width: 20.0,),
-                      Text( 
+                    //const SizedBox( width: 15.0,),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                      child: Text( 
                         dataFormatted.lotSqft, 
                         style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), 
                       ),
-                    const SizedBox( width: 20.0,),  
+                    ),
+                    //const SizedBox( width: 15.0,),  
                   ],
                 )                   
               ),

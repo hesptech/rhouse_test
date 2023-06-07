@@ -45,9 +45,12 @@ class FiltersScreen extends StatelessWidget {
                 color: kSecondaryColor,
               ),
               const FiltersPriceSlider(),
+              const SizedBox(
+                height: 24.0,
+              ),
               const FiltersClassIconBt(),
               const SizedBox(
-                height: 28.0,
+                height: 56.0,
               ),
               const GreenDivider(),
               const FiltersPropertyType(),

@@ -96,7 +96,7 @@ class CardVertical extends StatelessWidget {
                                 ],
                               ),
                               const SizedBox(height: 2,),
-                              Row(
+                              /* Row(
                                 children: <Widget>[
                                   /* const Icon(Icons.location_on_outlined, color: Color(0xFF0BB48B), size: 26,),
                                   const SizedBox(width: 2,),
@@ -107,7 +107,17 @@ class CardVertical extends StatelessWidget {
                                   const SizedBox( width: 25.0 ),
                                   Text(dataFormatted.addressCity, style: const TextStyle( fontSize: 16, color: Color(0xFF58595B)), ),                          
                                 ],
-                              ),                              
+                              ), */
+                              Align(
+                                alignment: Alignment.bottomLeft,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric( horizontal: 5.0),
+                                  height: 25,
+                                  child: FittedBox(
+                                    child: Text(dataFormatted.addressCity, style: const TextStyle( color: Color(0xFF58595B)),),
+                                  ),
+                                ),
+                              ),                             
                             ],
                           ),
                         ),
