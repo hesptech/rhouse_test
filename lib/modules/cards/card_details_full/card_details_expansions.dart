@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/utils/widgets_formatting.dart';
-import 'package:flutter_black_white/modules/cards/cards.dart';
+import 'package:flutter_black_white/modules/cards/card_details_full/cards.dart';
 
 class CardDetailsExpansions extends StatelessWidget {
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/models/models.dart';
-import 'package:flutter_black_white/modules/cards/expansions_rooms.dart';
+import 'package:flutter_black_white/modules/cards/card_details_full/expansions_rooms.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 
 

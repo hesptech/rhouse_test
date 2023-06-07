@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/providers/repliers_listing_mls.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-import 'package:flutter_black_white/modules/cards/cards.dart';
+import 'package:flutter_black_white/modules/cards/card_details_full/cards.dart';
 
 
 

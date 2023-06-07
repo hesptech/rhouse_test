@@ -3,7 +3,7 @@ import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/screens/map_property_screen.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-import 'package:flutter_black_white/modules/cards/card_details_box.dart';
+import 'package:flutter_black_white/modules/cards/card_details_full/card_details_box.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 
 class CardDetailsTop extends StatelessWidget {
