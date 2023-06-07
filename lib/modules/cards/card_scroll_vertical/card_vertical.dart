@@ -5,7 +5,8 @@ import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
-import 'package:flutter_black_white/widgets/widgets.dart';
+import 'package:flutter_black_white/modules/cards/card_scroll_vertical/card_stack_items.dart';
+//import 'package:flutter_black_white/widgets/widgets.dart';
 
 class CardVertical extends StatelessWidget {
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_black_white/models/models.dart';
-import 'package:flutter_black_white/widgets/card_hor.dart';
+import 'package:flutter_black_white/modules/cards/card_scroll_horizontal/card_hor.dart';
 
 
 class CardsSliderHor extends StatefulWidget {

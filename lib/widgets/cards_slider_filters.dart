@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/modules/cards/card_scroll_vertical/card_vertical.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-import 'package:flutter_black_white/widgets/widgets.dart';
+//import 'package:flutter_black_white/widgets/widgets.dart';
 
 
 class CardsSliderFilters extends StatefulWidget {
