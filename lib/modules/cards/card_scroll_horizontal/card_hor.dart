@@ -4,6 +4,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/modules/cards/card_scroll_horizontal/card_horizontal_box.dart';
+import 'package:flutter_black_white/modules/cards/card_scroll_horizontal/card_horizontal_stack.dart';
 import 'package:flutter_black_white/screens/map_property_screen.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
@@ -27,7 +29,7 @@ class CardHor extends StatelessWidget {
     // Gen. Info
     final String images = listing.images?.first?? '';
     final String propertyType = listing.details?.propertyType?? '';
-    final String numBathrooms = listing.details?.numBathrooms?? '';
+    //final String numBathrooms = listing.details?.numBathrooms?? '';
 
     String neighborhood = listing.address?.neighborhood?? '';
     final String city = listing.address?.city?? '';
@@ -88,62 +90,8 @@ class CardHor extends StatelessWidget {
                           Container(
                             width: 310,
                             height: 207, 
-                            padding: const EdgeInsets.fromLTRB( 0, 15, 10, 0),
-                            alignment: Alignment.topRight,  
-                            child: Stack(
-                              children: [
-                                const Positioned(
-                                  left: 1.0,
-                                  top: 2.0,
-                                  child: Icon(Icons.filter_9_plus_outlined, color: Colors.black26, size: 30),
-                                ),
-                                InkWell(
-                                  child: const Icon(Icons.filter_9_plus_outlined, color: Color(0xFFffffff), size: 30),
-                                  onTap: () {
-                                    //Navigator.pushNamed(context, 'card_images_screen', arguments: mlsNumber);
-                                    Navigator.pushNamed(context, 'card_images_screen', arguments: listing);
-                                    //print('object');
-                                  },
-                                )
-                              ],
-                            ),
-                          ),
-                          /* Container(
-                            width: 310,
-                            height: 207, 
-                            padding: const EdgeInsets.fromLTRB( 0, 15, 50, 0),
-                            alignment: Alignment.topRight,  
-                            child: Stack(
-                              children: [
-                                const Positioned(
-                                  left: 1.0,
-                                  top: 2.0,
-                                  child: Icon(Icons.favorite_border_outlined, color: Colors.black26, size: 30),
-                                ),
-                                InkWell(
-                                  child: const Icon(Icons.favorite_border_outlined, color: Color(0xFFffffff), size: 30),
-                                  onTap: () {
-                                    //print('object');
-                                  },
-                                )
-                              ],
-                            ),                        
-                          ), */
-                          Container(
-                            width: 310,
-                            height: 207, 
                             padding: const EdgeInsets.fromLTRB( 15, 0, 50, 15),
                             alignment: Alignment.bottomLeft,  
-                            /* child: Stack(
-                              children: [
-                                InkWell(
-                                  child: const Icon(Icons.map_outlined, color: kSecondaryColor, size: 30),
-                                  onTap: () {
-                                    //print('object');
-                                  },
-                                )
-                              ],
-                            ), */ 
                             child: InkWell(
                               child: const CircleAvatar(
                                 backgroundColor: Colors.white,
@@ -220,142 +168,15 @@ class CardHor extends StatelessWidget {
                               ],
                             ),
                           ), 
-                          Row(
-                            children: [
-                              Container(
-                                width: 80.0,
-                                height: 35.0,
-                                decoration: const BoxDecoration(
-                                  // border: Border.all(color: const Color(0xFF0BB48B))
-                                  border: Border(
-                                    top: BorderSide(color: Color(0xFF0BB48B)),
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(Icons.king_bed_outlined, color: Color(0xFF0BB48B), size: 30,),
-                                    const SizedBox(width: 5,),
-                                    Text(
-                                      dataFormatted.numBedrooms , 
-                                      style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), 
-                                    ),                                  
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: 68.0,
-                                height: 35.0,
-                                padding: const EdgeInsets.all(3.0),
-                                decoration: const BoxDecoration(
-                                  border: Border(
-                                    top: BorderSide(color: Color(0xFF0BB48B)),
-                                    left: BorderSide(color: Color(0xFF0BB48B)),
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(Icons.shower_outlined, color: Color(0xFF0BB48B), size: 30,),
-                                    const SizedBox(width: 5,),
-                                    Text(numBathrooms, style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), ),                                  
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: 68.0,
-                                height: 35.0,
-                                padding: const EdgeInsets.all(3.0),
-                                decoration: const BoxDecoration(
-                                  border: Border(
-                                    top: BorderSide(color: Color(0xFF0BB48B)),
-                                    left: BorderSide(color: Color(0xFF0BB48B)),
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(Icons.directions_car_filled_outlined, color: Color(0xFF0BB48B), size: 28,),
-                                    const SizedBox(width: 5,),
-                                    Text(
-                                      dataFormatted.numParkingSpaces, 
-                                      style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), 
-                                    ),                                    
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                height: 35.0,
-                                width: 112.0,
-                                padding: const EdgeInsets.all(0.0),
-                                decoration: const BoxDecoration(
-                                  border: Border(
-                                    top: BorderSide(color: Color(0xFF0BB48B)),
-                                    left: BorderSide(color: Color(0xFF0BB48B)),
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    //const SizedBox(width: 5,),
-                                    Text(dataFormatted.lotSqft, style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), textAlign: TextAlign.center,)                                    
-                                  ],
-                                ),
-                              ),
-                            ],                          
-                          ),                        
+                          CardHorizontalBox(listing),                        
                         ],
                       ),
                     ),
-
-                    //Text('\n ${listing.listingClass}')
-            
                   ],
                 ),              
               ),
             ),
-
-
-            if ( loggedIn == true )
-            Container(
-              padding: const EdgeInsets.only(left: 20.0, top: 10.0,),
-              alignment: Alignment.topLeft,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: kPrimaryColor,
-                  minimumSize: const Size(140.0, 28.0),
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                ),
-                onPressed: () {
-                  //Navigator.pushNamed(context, 'details', arguments: listing);
-                },
-                child: Row(
-                  children: [
-                    const Icon(Icons.calendar_month_outlined, size: 16,),
-                    const SizedBox(width: 5,),
-                    Text(dataFormatted.listEntryDate, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400))
-                  ],
-                ),
-              )
-            ),
-
-            if ( loggedIn == false )
-            Container(
-              width: 310,
-              height: 430,
-              //color: Colors.grey.withOpacity(0.1),
-              alignment: Alignment.center,
-              child: ElevatedButton(
-                style: ButtonStyle( 
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF5f68be)),
-                ),
-                onPressed: () {
-                  //Navigator.pushNamed(context, 'details', arguments: listing);
-                },
-                child: const Text('Login required'),
-              )
-            ),
+            CardHorizontalStack(listing),
           ],
         )
       )

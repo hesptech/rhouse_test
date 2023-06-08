@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/modules/cards/card_scroll_vertical/card_vertical_box.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 import 'package:flutter_black_white/modules/cards/card_scroll_vertical/card_stack_items.dart';
@@ -25,7 +26,7 @@ class CardVertical extends StatelessWidget {
     final screenSize = MediaQuery.of(context).size;
 
     final String propertyType = listing.details?.propertyType?? '';
-    final String numBathrooms = listing.details?.numBathrooms?? '';
+    //final String numBathrooms = listing.details?.numBathrooms?? '';
 
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -124,7 +125,8 @@ class CardVertical extends StatelessWidget {
                         ),
                         const SizedBox(height: 5,),
                         const Divider(  thickness: 0.8, color: Color(0xFF0BB48B), height: 0.0,),
-                        Row(
+                        CardVerticalBox(listing),
+                        /* Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [ 
@@ -217,7 +219,7 @@ class CardVertical extends StatelessWidget {
                               ),
                             ),                          
                           ],                          
-                        ),                        
+                        ), */                        
                       ],
                     ),
                   )
