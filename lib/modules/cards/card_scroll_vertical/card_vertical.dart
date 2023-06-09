@@ -55,6 +55,9 @@ class CardVertical extends StatelessWidget {
                         FadeInImage(
                           placeholder: const AssetImage('assets/no-image.jpg'), 
                           image: NetworkImage('$kRepliersCdn$images?w=500'),
+                          imageErrorBuilder: (context, error, stackTrace) {
+                            return Image.asset('assets/no-image.jpg', fit: BoxFit.fitWidth);
+                          },
                           width: double.infinity,
                           height: 227,
                           fit: BoxFit.cover,

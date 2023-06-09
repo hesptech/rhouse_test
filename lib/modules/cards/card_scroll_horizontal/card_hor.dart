@@ -82,6 +82,9 @@ class CardHor extends StatelessWidget {
                             placeholder: const AssetImage('assets/no-image.jpg'), 
                             //image: AssetImage('assets/house_340x227.jpg'),
                             image: NetworkImage('$kRepliersCdn$images?w=500'),
+                            imageErrorBuilder: (context, error, stackTrace) {
+                              return Image.asset('assets/no-image.jpg', fit: BoxFit.fitWidth);
+                            },
                             width: 310,
                             height: 207,
                             fit: BoxFit.cover,

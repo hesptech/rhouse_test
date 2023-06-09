@@ -44,6 +44,9 @@ class CardDetailsTop extends StatelessWidget {
                   placeholder: const AssetImage('assets/no-image.jpg'),
                   //image: AssetImage('assets/house_500x300.jpg'),
                   image: NetworkImage('$kRepliersCdn$images?w=500'),
+                  imageErrorBuilder: (context, error, stackTrace) {
+                    return Image.asset('assets/no-image.jpg', fit: BoxFit.fitWidth);
+                  },
                   fit: BoxFit.cover,
                   fadeInDuration: const Duration(milliseconds: 300),
                 ),

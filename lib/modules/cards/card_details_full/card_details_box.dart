@@ -171,14 +171,14 @@ class CardDetailsBox extends StatelessWidget {
                     Text('Direction/main: ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: kSecondaryColor),),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text( 
+                SizedBox(
+                  height: 25,
+                  child: FittedBox(
+                    child: Text( 
                       listing.address?.majorIntersection ?? '', 
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: kPrimaryColor),
+                      style: const TextStyle(fontWeight: FontWeight.w400, color: kPrimaryColor),
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),
