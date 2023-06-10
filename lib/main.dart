@@ -11,8 +11,8 @@ import 'package:flutter_black_white/providers/repliers_filters.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
 
 import 'package:flutter_black_white/utils/shared_preferences.dart';
-import 'package:flutter_black_white/config/theme.dart';
-import 'package:flutter_black_white/config/routes.dart';
+import 'package:flutter_black_white/config/config.dart';
+
 
 void main() async {
 
@@ -36,7 +36,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider( create: (_) => RepliersProvider('toronto ALL'), lazy: false,),
         ChangeNotifierProvider( create: (_) => RepliersFilters('toronto ALL'), ),
         ChangeNotifierProvider( create: (_) => RepliersListingMls(), ),
-        ChangeNotifierProvider(create: (_) => MapListProvider())
+        ChangeNotifierProvider( create: (_) => MapListProvider()),
       ],
       child: const App(),
     );

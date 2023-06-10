@@ -13,20 +13,8 @@ class CardDetailsTop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final dataFormatted = DataFormatter(listing);
-
-    String neighborhood = listing.address?.neighborhood ?? '';
-    final String city = listing.address?.city ?? '';
-    //final String area = listing.address?.area?? '';
-    final String cityArea = listing.address?.area == 'Toronto' ? 'Toronto' : city;
-    final String finalAddress2 = '$neighborhood, $cityArea';
-    String finalAddress3 = '';
-    if (finalAddress2.length > 25) {
-      finalAddress3 = '${finalAddress2.substring(0, 25)}...';
-    } else {
-      finalAddress3 = finalAddress2;
-    }
-
     final screenSize = MediaQuery.of(context).size;
     final String images = listing.images?.first ?? '';
 
@@ -74,16 +62,19 @@ class CardDetailsTop extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          finalAddress3,
-                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: kPrimaryColor),
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: SizedBox(
+                        height: 30,
+                        child: FittedBox(
+                          child: Text(
+                            dataFormatted.addressCity, 
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w400, 
+                              color: kPrimaryColor),
+                          ),
                         ),
-                        const SizedBox(
-                          width: 10.0,
-                        ),
-                      ],
+                      ),
                     ),
                     const SizedBox(
                       height: 28,
