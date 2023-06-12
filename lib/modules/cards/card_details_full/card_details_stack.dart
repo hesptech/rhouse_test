@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
 //import 'package:flutter_black_white/screens/map_property_screen.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-//import 'package:flutter_black_white/modules/cards/card_details_full/card_details_box.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 
 class CardDetailsStack extends StatelessWidget {
@@ -15,16 +13,14 @@ class CardDetailsStack extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final dataFormatted = DataFormatter(listing);
-    //final screenSize = MediaQuery.of(context).size;
-    //final String images = listing.images?.first ?? '';
 
     return Stack(
       children: [
         Container(
           width: 200,
           padding: const EdgeInsets.only(
-            left: 20.0,
-            top: 10.0,
+            left: 10.0,
+            top: 5.0,
           ),
           alignment: Alignment.topLeft,
           child: ElevatedButton(
@@ -54,6 +50,28 @@ class CardDetailsStack extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+        ),
+        Container(
+          //width: 310,
+          //height: 207,
+          padding: const EdgeInsets.fromLTRB(0, 15, 50, 0),
+          alignment: Alignment.topRight,
+          child: Stack(
+            children: [
+              const Positioned(
+                left: 1.0,
+                top: 2.0,
+                child: Icon(Icons.favorite_border_outlined, color: Colors.black26, size: 32),
+              ),
+              InkWell(
+                child: const Icon(Icons.favorite_border_outlined, color: Color(0xFFffffff), size: 32),
+                onTap: () {
+                  Navigator.pushNamed(context, 'card_images_screen', arguments: listing);
+                  //print('object');
+                },
+              )
+            ],
           ),
         ),
         Container(
