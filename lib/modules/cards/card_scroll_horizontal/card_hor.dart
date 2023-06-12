@@ -32,8 +32,8 @@ class CardHor extends StatelessWidget {
     //final String numBathrooms = listing.details?.numBathrooms?? '';
 
     String neighborhood = listing.address?.neighborhood?? '';
-    final String city = listing.address?.city?? '';
-    final String cityArea = listing.address?.area == 'Toronto' ? 'Toronto' : city ;
+
+
 
      
     if ( neighborhood == 'Waterfront Communities C1' ) {
@@ -42,13 +42,8 @@ class CardHor extends StatelessWidget {
       neighborhood == 'Waterfront Communities East';
     } 
 
-    final String finalAddress2 = '$neighborhood, $cityArea';
-    String finalAddress3 = '';
-    if ( finalAddress2.length > 30 ) {
-      finalAddress3 = '${finalAddress2.substring(0, 30)}...';
-    } else {
-      finalAddress3 = finalAddress2;
-    }
+
+
 
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -154,23 +149,48 @@ class CardHor extends StatelessWidget {
                               children: [
                                 const Icon(Icons.location_on_outlined, color: Color(0xFF0BB48B), size: 22,),
                                 const SizedBox(width: 2,),
-                                ConstrainedBox(
+                                /* ConstrainedBox(
                                   constraints: BoxConstraints( maxWidth: screenSize.width - 130 ),
                                   child: Text(dataFormatted.address, style:const TextStyle( fontSize: 16, color: Color(0xFF58595B)), overflow: TextOverflow.ellipsis,)
-                                ),                            
+                                ), */   
+
+                                SizedBox(
+                                  height: 22,
+                                  child: FittedBox(
+                                    child: Text(
+                                      dataFormatted.address, 
+                                      style: const TextStyle( 
+                                        color: Color(0xFF58595B),
+                                      ), 
+                                        //overflow: TextOverflow.ellipsis,
+                                    ),
+                                  )
+                                ),
+
                               ],
                             ),
                           ), 
-                          Container(
-                            width: 328.0,
-                            padding: const EdgeInsets.only(left: 10.0, top: 3, right: 10.0, bottom: 10),
-                            child: Row(
-                              children: [
-                                const SizedBox( width: 25.0 ),
-                                Text(finalAddress3, style: const TextStyle( fontSize: 16, color: Color(0xFF58595B), ), ),                          
-                              ],
+ 
+
+                          Align(
+                            alignment: Alignment.bottomLeft,
+                            child: Container(
+                              width: 328.0,
+                              padding: const EdgeInsets.only(left: 15.0, right: 5.0,),
+                              height: 25,
+                              child: FittedBox(
+                                alignment: Alignment.bottomLeft,
+                                child: Text(
+                                  dataFormatted.addressCity, 
+                                  style: const TextStyle( 
+                                    color: Color(0xFF58595B),
+                                  ),
+                                ),
+                              ),
                             ),
                           ), 
+                          const SizedBox(height: 5,),
+
                           CardHorizontalBox(listing),                        
                         ],
                       ),
