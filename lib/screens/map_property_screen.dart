@@ -32,15 +32,16 @@ class MapPropertyScreen extends StatelessWidget {
           toolbarHeight: 60,
           centerTitle: true,
         ),
-        
+        backgroundColor: 
+            listingArgument.mapCoordinates?.latitude == null || listingArgument.mapCoordinates?.longitude == null
+                ? Colors.white
+                : null,
         body: SafeArea(
           bottom: false,
           child: LoadableWidget(
-              loader: () => StyleReader(
-                      uri: kMaptilerUrl,
-                      apiKey: MapListProvider().getApiKey,
-                      logger: const Logger.console())
-                  .read(),
+              loader: () =>
+                  StyleReader(uri: kMaptilerUrl, apiKey: MapListProvider().getApiKey, logger: const Logger.console())
+                      .read(),
               builder: (_, Style remoteTheme) => MapLocationProperty(
                     listing: listingArgument,
                     style: remoteTheme,
