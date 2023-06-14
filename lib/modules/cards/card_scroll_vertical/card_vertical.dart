@@ -3,11 +3,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
-import 'package:flutter_black_white/modules/cards/card_scroll_vertical/card_vertical_box.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 import 'package:flutter_black_white/modules/cards/card_scroll_vertical/card_stack_items.dart';
-//import 'package:flutter_black_white/widgets/widgets.dart';
+import 'package:flutter_black_white/modules/cards/card_scroll_vertical/card_vertical_box.dart';
+import 'package:flutter_black_white/screens/map_property_screen.dart';
 
 class CardVertical extends StatelessWidget {
 
@@ -26,7 +26,6 @@ class CardVertical extends StatelessWidget {
     final screenSize = MediaQuery.of(context).size;
 
     final String propertyType = listing.details?.propertyType?? '';
-    //final String numBathrooms = listing.details?.numBathrooms?? '';
 
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -42,8 +41,6 @@ class CardVertical extends StatelessWidget {
               onTap: () {
                 if ( loggedIn == true ) {
                   Navigator.pushNamed(context, 'card_details_full_screen', arguments: listing);
-                } else {
-                  //Navigator.restorablePopAndPushNamed(context, '/');
                 }
               }, 
               child: Column(
@@ -63,6 +60,37 @@ class CardVertical extends StatelessWidget {
                           fit: BoxFit.cover,
                           fadeInDuration: const Duration( milliseconds: 300), 
                         ),
+
+                        Container(
+                          width: 310,
+                          height: 217, 
+                          padding: const EdgeInsets.fromLTRB( 15, 0, 50, 0),
+                          alignment: Alignment.bottomLeft,  
+                          child: InkWell(
+                            child: const CircleAvatar(
+                              backgroundColor: Colors.white,
+                              radius: 18,
+                              child: Icon(Icons.map_outlined, color: kSecondaryColor, size: 30),
+                            ),
+                            onTap: () {
+                              Navigator.pushNamed(context, MapPropertyScreen.pathScreen, arguments: {'listing': listing});
+                            },
+                          ),                      
+                        ),
+
+                        Container(
+                          width: double.infinity,
+                          height: 217,
+                          padding: const EdgeInsets.fromLTRB( 0, 0, 10, 0),
+                          alignment: Alignment.bottomRight,
+                          child: InkWell(
+                            child: const Image(image: AssetImage('assets/play&learn_chip_53h.png'), ),
+                            onTap: () {
+                              //print('object');
+                            },
+                          ),
+                        ),
+
                       ],
                     ),
                   ),
@@ -101,18 +129,6 @@ class CardVertical extends StatelessWidget {
                                 ],
                               ),
                               const SizedBox(height: 2,),
-                              /* Row(
-                                children: <Widget>[
-                                  /* const Icon(Icons.location_on_outlined, color: Color(0xFF0BB48B), size: 26,),
-                                  const SizedBox(width: 2,),
-                                  ConstrainedBox(
-                                    constraints: BoxConstraints( maxWidth: screenSize.width - 140),
-                                    child: const Text('18 Wanstead Ave. Scarborough Oakridge', style: TextStyle( fontSize: 18, color: Color(0xFF58595B)), overflow: TextOverflow.ellipsis,)
-                                  ), */  
-                                  const SizedBox( width: 25.0 ),
-                                  Text(dataFormatted.addressCity, style: const TextStyle( fontSize: 16, color: Color(0xFF58595B)), ),                          
-                                ],
-                              ), */
                               Align(
                                 alignment: Alignment.bottomLeft,
                                 child: Container(
@@ -128,101 +144,7 @@ class CardVertical extends StatelessWidget {
                         ),
                         const SizedBox(height: 5,),
                         const Divider(  thickness: 0.8, color: Color(0xFF0BB48B), height: 0.0,),
-                        CardVerticalBox(listing),
-                        /* Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [ 
-                            Container(
-                              width: 80.0,
-                              height: 35.0,
-                              decoration: const BoxDecoration(
-                                // border: Border.all(color: const Color(0xFF0BB48B))
-                                border: Border(
-                                  //top: BorderSide(color: Color(0xFF0BB48B)),
-                                  //bottom: BorderSide(color: Color(0xFF0BB48B)),
-                                  //left: BorderSide(color: Color(0xFF0BB48B)),
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const SizedBox(width: 9,),
-                                  const Icon(Icons.king_bed_outlined, color: Color(0xFF0BB48B), size: 30,),
-                                  const SizedBox(width: 5,),
-                                  Text(
-                                    dataFormatted.numBedrooms, 
-                                    style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), 
-                                  ),                                  
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: 68.0,
-                              height: 35.0,
-                              //padding: const EdgeInsets.all(3.0),
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                  left: BorderSide(color: Color(0xFF0BB48B)),
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const SizedBox(width: 9,),
-                                  const Icon(Icons.shower_outlined, color: Color(0xFF0BB48B), size: 30,),
-                                  const SizedBox(width: 5,),
-                                  Text(numBathrooms, style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), ),                                  
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: 68.0,
-                              height: 35.0,
-                              //padding: const EdgeInsets.all(3.0),
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                  //top: BorderSide(color: Color(0xFF0BB48B)),
-                                  //bottom: BorderSide(color: Color(0xFF0BB48B)),
-                                  left: BorderSide(color: Color(0xFF0BB48B)),
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const SizedBox(width: 9,),
-                                  const Icon(Icons.directions_car_filled_outlined, color: Color(0xFF0BB48B), size: 28,),
-                                  const SizedBox(width: 5,),
-                                  Text(
-                                    dataFormatted.numParkingSpaces, 
-                                    style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), 
-                                  ),                                    
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: 120.0,
-                              height: 35.0,
-                              //width: 104.0,
-                              //padding: const EdgeInsets.all(3.0),
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                  //top: BorderSide(color: Color(0xFF0BB48B)),
-                                  //bottom: BorderSide(color: Color(0xFF0BB48B)),
-                                  left: BorderSide(color: Color(0xFF0BB48B)),
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  //const Icon(Icons.square_foot, color: Color(0xFF0BB48B), size: 24,),
-                                  //const SizedBox(width: 5,),
-                                  Text(dataFormatted.lotSqft, style: const TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), )                                    
-                                ],
-                              ),
-                            ),                          
-                          ],                          
-                        ), */                        
+                        CardVerticalBox(listing),                       
                       ],
                     ),
                   )
@@ -233,36 +155,24 @@ class CardVertical extends StatelessWidget {
 
 
           if ( loggedIn == true )
-          CardStackItems(listing),
-            if ( loggedIn == true )
-            Container(
-              width: double.infinity,
-              height: 207,
-              padding: const EdgeInsets.fromLTRB( 0, 0, 20, 0),
-              alignment: Alignment.bottomRight,
-              child: InkWell(
-                child: const Image(image: AssetImage('assets/play&learn_chip_53h.png'), ),
-                onTap: () {
-                  //print('object');
-                },
-              ),
-            ),
+            CardStackItems(listing),
+
           if ( loggedIn == false )
-          Container(
-            width: 310,
-            height: 430,
-            //color: Colors.grey.withOpacity(0.1),
-            alignment: Alignment.center,
-            child: ElevatedButton(
-              style: ButtonStyle( 
-                backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF5f68be)),
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, 'details', arguments: listing);
-              },
-              child: const Text('Login required'),
-            )
-          ),          
+            Container(
+              width: 310,
+              height: 430,
+              //color: Colors.grey.withOpacity(0.1),
+              alignment: Alignment.center,
+              child: ElevatedButton(
+                style: ButtonStyle( 
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF5f68be)),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, 'details', arguments: listing);
+                },
+                child: const Text('Login required'),
+              )
+            ),          
         ]
       ),
     );
