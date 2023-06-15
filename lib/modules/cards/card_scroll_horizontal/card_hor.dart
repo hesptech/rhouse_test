@@ -76,7 +76,7 @@ class CardHor extends StatelessWidget {
                           FadeInImage(
                             placeholder: const AssetImage('assets/no-image.jpg'), 
                             //image: AssetImage('assets/house_340x227.jpg'),
-                            image: NetworkImage('$kRepliersCdn$images?w=500'),
+                            image: NetworkImage('$kRepliersCdn$images?w=1080'),
                             imageErrorBuilder: (context, error, stackTrace) {
                               return Image.asset('assets/no-image.jpg', fit: BoxFit.fitWidth);
                             },

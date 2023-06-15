@@ -54,7 +54,7 @@ class _CastCard extends StatelessWidget {
           height: 260,
           fit: BoxFit.cover,
           placeholder: const AssetImage('assets/no-image.jpg'), 
-          image: NetworkImage('$kRepliersCdn$image?w=500'),
+          image: NetworkImage('$kRepliersCdn$image?w=1080'),
           //image: AssetImage('assets/house_500x300.jpg'),
         ),
       ],

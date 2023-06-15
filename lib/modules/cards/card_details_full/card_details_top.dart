@@ -32,7 +32,7 @@ class CardDetailsTop extends StatelessWidget {
                   height: 300,
                   placeholder: const AssetImage('assets/no-image.jpg'),
                   //image: AssetImage('assets/house_500x300.jpg'),
-                  image: NetworkImage('$kRepliersCdn$images?w=500'),
+                  image: NetworkImage('$kRepliersCdn$images?w=1080'),
                   imageErrorBuilder: (context, error, stackTrace) {
                     return Image.asset('assets/no-image.jpg', fit: BoxFit.fitWidth);
                   },
