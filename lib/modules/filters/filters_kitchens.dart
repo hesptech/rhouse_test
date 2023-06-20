@@ -33,23 +33,20 @@ class _FiltersKitchensState extends State<FiltersKitchens> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB( 28.0, 0, 28.0, 28.0 ),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text('KITCHENS', style: TextStyle(fontSize: 18, color: kPrimaryColor),),
-              ],
-            ),
-            Wrap(
-              children: propertiesKitchensWidgets.toList(),
-            ),
-          ],
-        ),
+      child: Wrap(
+        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const [
+              Text('KITCHENS', style: TextStyle(fontSize: 18, color: kPrimaryColor),),
+            ],
+          ),
+          Row(
+            children: propertiesKitchensWidgets.toList(),
+          ),
+        ],
       ),
     );
   }

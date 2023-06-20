@@ -34,51 +34,49 @@ class _FiltersMoreExtraState extends State<FiltersMoreExtra> {
         ),
         Padding(
           padding: const EdgeInsets.symmetric( horizontal: 10.0, vertical: 14.0 ),
-          child: FittedBox(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ChoiceChip(
-                  label: Container(
-                    width: 150,
-                    alignment: Alignment.center,
-                    child: Text('OPEN HOUSE', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: _selectedBt1 ? Colors.white : kPrimaryColor ),),
-                  ), 
-                  labelPadding: const EdgeInsets.all(0.0),
-                  backgroundColor: const Color(0xFFFFFFFF),
-                  selectedColor: kPrimaryColor,
-                  shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
-                  side: const BorderSide( color: kPrimaryColor ),
-                  selected: _selectedBt1,
-                  onSelected: ( bool selected ) {
-                    setState(() {
-                      _selectedBt1 = selected;
-                      Preferences.setfiltersMaxOpenHouseDate(selected);
-                    });            
-                  },
-                ),
-                const SizedBox( width: 10.0, ),
-                ChoiceChip(
-                  label: Container(
-                    width: 150,
-                    alignment: Alignment.center,
-                    child: Text('POOL', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: _selectedBt2 ? Colors.white : kPrimaryColor ),),
-                  ), 
-                  labelPadding: const EdgeInsets.all(0.0),
-                  backgroundColor: const Color(0xFFFFFFFF),
-                  selectedColor: kPrimaryColor,
-                  shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
-                  side: const BorderSide( color: kPrimaryColor ),
-                  selected: _selectedBt2,
-                  onSelected: ( bool selected ) {
-                    setState(() {
-                      _selectedBt2 = selected;
-                      _selectedBt2 ? Preferences.setfiltersIndexSwimmingPool(['Inground','Indoor','Abv Grnd']) : Preferences.setfiltersIndexSwimmingPool([]);
-                    });            
-                  },
-                ),              
-              ],
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ChoiceChip(
+                label: Container(
+                  width: 150,
+                  alignment: Alignment.center,
+                  child: Text('OPEN HOUSE', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: _selectedBt1 ? Colors.white : kPrimaryColor ),),
+                ), 
+                labelPadding: const EdgeInsets.all(0.0),
+                backgroundColor: const Color(0xFFFFFFFF),
+                selectedColor: kPrimaryColor,
+                shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
+                side: const BorderSide( color: kPrimaryColor ),
+                selected: _selectedBt1,
+                onSelected: ( bool selected ) {
+                  setState(() {
+                    _selectedBt1 = selected;
+                    Preferences.setfiltersMaxOpenHouseDate(selected);
+                  });            
+                },
+              ),
+              const SizedBox( width: 10.0, ),
+              ChoiceChip(
+                label: Container(
+                  width: 150,
+                  alignment: Alignment.center,
+                  child: Text('POOL', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: _selectedBt2 ? Colors.white : kPrimaryColor ),),
+                ), 
+                labelPadding: const EdgeInsets.all(0.0),
+                backgroundColor: const Color(0xFFFFFFFF),
+                selectedColor: kPrimaryColor,
+                shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
+                side: const BorderSide( color: kPrimaryColor ),
+                selected: _selectedBt2,
+                onSelected: ( bool selected ) {
+                  setState(() {
+                    _selectedBt2 = selected;
+                    _selectedBt2 ? Preferences.setfiltersIndexSwimmingPool(['Inground','Indoor','Abv Grnd']) : Preferences.setfiltersIndexSwimmingPool([]);
+                  });            
+                },
+              ),              
+            ],
           ),
         ),
         const Padding(

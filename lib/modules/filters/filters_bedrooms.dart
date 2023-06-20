@@ -38,24 +38,21 @@ class _FiltersBedroomsState extends State<FiltersBedrooms> {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB( 24.0, 28.0, 24.0, 0.0 ),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text('MINIMUM', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: kSecondaryColor),),
-                        Text('BEDROOMS', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kSecondaryColor),),
-                      ],
-                    ),
-                    Wrap(
-                      children: propertiesRoomsWidgets.toList(),
-                    ),
-                  ],
-                ),
+              child: Wrap(
+                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text('MINIMUM', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: kSecondaryColor),),
+                      Text('BEDROOMS', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kSecondaryColor),),
+                    ],
+                  ),
+                  Row(
+                    children: propertiesRoomsWidgets.toList(),
+                  ),
+                ],
               ),
             ),        
           ],
