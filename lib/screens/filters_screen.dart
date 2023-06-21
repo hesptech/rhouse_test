@@ -6,12 +6,15 @@ import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/utils/widgets_formatting.dart';
 import 'package:flutter_black_white/modules/filters/filters.dart';
 
+
 class FiltersScreen extends StatelessWidget {
   const FiltersScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     var pathArgument = _checkArguments(context);
+    
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       appBar: AppBar(
@@ -45,12 +48,9 @@ class FiltersScreen extends StatelessWidget {
                 color: kSecondaryColor,
               ),
               const FiltersPriceSlider(),
-              const SizedBox(
-                height: 24.0,
-              ),
               const FiltersClassIconBt(),
               const SizedBox(
-                height: 56.0,
+                height: 28.0,
               ),
               const GreenDivider(),
               const FiltersPropertyType(),
