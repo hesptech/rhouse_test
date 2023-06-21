@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/utils/filters_preferences.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_black_white/utils/constants.dart';
-import 'package:flutter_black_white/utils/shared_preferences.dart';
+//import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/providers/repliers_filters.dart';
 import 'package:flutter_black_white/widgets/widgets.dart';
@@ -29,11 +30,11 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
   void initState () {
     super.initState();
 
-    if(Preferences.filtersClassIconsBt == 'residential'){
+    /* if(Preferences.filtersClassIconsBt == 'residential'){
       filterPropertyIcons = [...Preferences.filterPropertyIcons, ...Provider.of<FilterProvider>(context, listen: false).filtersPropertyTypeHouse];
     } else {
       filterPropertyIcons = Preferences.filterPropertyIconsCondo;
-    }
+    } */
 
     //print(filterPropertyIcons);
 
@@ -42,10 +43,22 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
         'resultsPerPage': '15',
         'type': 'sale',
         'hasImages': 'true',
-        'class': Preferences.filtersClassIconsBt,
-        'propertyType': filterPropertyIcons,
+        //'class': Preferences.filtersClassIconsBt,
+        //'propertyType': filterPropertyIcons,
         'district': Provider.of<FilterProvider>(context, listen: false).filtersLocation,
     };
+
+
+    /* filtersPrefs['class'] = Preferences.filtersClassIconsBt;
+
+    if(Preferences.filtersClassIconsBt == 'residential'){
+      filterPropertyIcons = [...Preferences.filterPropertyIcons, ...Provider.of<FilterProvider>(context, listen: false).filtersPropertyTypeHouse];
+      filtersPrefs['propertyType'] = filterPropertyIcons;
+    } else {
+      filterPropertyIcons = Preferences.filterPropertyIconsCondo;
+      filtersPrefs['propertyType'] = filterPropertyIcons;
+    }
+
 
     if(int.parse(labels[Preferences.filterPriceRangeStart.round()]) > 1 ) {
       filtersPrefs['minPrice'] = labels[Preferences.filterPriceRangeStart.round()].toString();
@@ -118,10 +131,12 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
 
     if(Preferences.filtersClassIconsBt == 'condo') {
       filtersPrefs['amenities'] = Preferences.getfiltersIndexAmmenities();
-    } 
+    }  */
+
+
+    filtersPrefs.addAll(FiltersPreferences(Provider.of<FilterProvider>(context, listen: false).filtersPropertyTypeHouse).setFilterQueryParams());
 
     filtersResults.addAll(filtersPrefs);
-
   }
 
 
