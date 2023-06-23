@@ -43,29 +43,6 @@ class _ExpansionsExteriorState extends State<ExpansionsExterior> {
     final String sqft = widget.listing.details?.sqft?? '';
     final String balcony = widget.listing.details?.balcony?? '';
 
-    /* Map<String,List<dynamic>> nearby3 = {
-      'ammenities': [
-        "Clear View",
-        "Park",
-        "Public Transit",
-        "School",
-        "",
-        "",
-      ]
-    };
-
-    List nearbyList = [
-        "Clear View",
-        "Park",
-        "Public Transit",
-        "School",
-        "",
-                    ""
-      ];
-
-    List? nearbyList2 = nearby3['ammenities']; */
-
-    // Property Features/Area Influences: Ammenities
     List<dynamic>? ammenities = widget.listing.nearby?.ammenities?? [];
     List filteredAmmenities = [];
     for (var value in ammenities) {

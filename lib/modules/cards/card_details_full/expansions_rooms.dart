@@ -22,9 +22,6 @@ class ExpansionRoom extends StatelessWidget {
           shrinkWrap: true,
           itemCount: listing.rooms?.length,
           scrollDirection: Axis.vertical,
-          //itemBuilder: ( _, int index ) => Text( index.toString(), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: kSecondaryColor, height: 1.3, ), )
-          //itemBuilder: ( _, int index ) => Text( listing.rooms?[(index + 1).toString()]?.features?? '-', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: kSecondaryColor, height: 1.3, ), )
-          //itemBuilder: ( _, int index ) => _RoomDescription( room: listing.rooms?[index])
           itemBuilder: ( _, int index ) => Column(
             children: [
               const SizedBox( height: 10.0, ),
@@ -84,40 +81,3 @@ class ExpansionRoom extends StatelessWidget {
     }
   }
 }
-
-
-/* class _RoomDescription extends StatelessWidget {
-  
-  final dynamic room;
-
-  const _RoomDescription({ Key? key, required this.room }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-
-    print(room.toString());
-
-    return Column(
-      children: const [
-        Text('data')
-      ],
-    );
-  }
-} */
-
-
-
-    /* return Column(
-      children: [
-        ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: listing.rooms?.length,
-          scrollDirection: Axis.vertical,
-          itemBuilder: ( _, int index )  
-            {
-              return Text( index.toString(), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: kSecondaryColor, height: 1.3, ), );
-            }
-        ),
-      ],
-    ); */

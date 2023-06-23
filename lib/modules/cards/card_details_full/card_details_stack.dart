@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/models/models.dart';
-//import 'package:flutter_black_white/screens/map_property_screen.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 
@@ -68,7 +67,6 @@ class CardDetailsStack extends StatelessWidget {
                 child: const Icon(Icons.favorite_border_outlined, color: Color(0xFFffffff), size: 32),
                 onTap: () {
                   Navigator.pushNamed(context, 'card_images_screen', arguments: listing);
-                  //print('object');
                 },
               )
             ],

@@ -16,6 +16,7 @@ class CardDetailsBox extends StatelessWidget {
     final dataFormatted = DataFormatter(listing);
 
     return Container(
+      margin: const EdgeInsets.fromLTRB(24.0, 0, 24.0, 20.0),
       decoration: BoxDecoration(
         border: Border.all(color: kSecondaryColor),
       ),

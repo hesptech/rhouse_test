@@ -21,29 +21,11 @@ class CardHor extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final dataFormatted = DataFormatter(listing);
-
     const loggedIn = true;
     const blurImg = loggedIn == false ? 5.0 : 0.0 ; 
-    final screenSize = MediaQuery.of(context).size;
-
-    // Gen. Info
+    //final screenSize = MediaQuery.of(context).size;
     final String images = listing.images?.first?? '';
     final String propertyType = listing.details?.propertyType?? '';
-    //final String numBathrooms = listing.details?.numBathrooms?? '';
-
-    String neighborhood = listing.address?.neighborhood?? '';
-
-
-
-     
-    if ( neighborhood == 'Waterfront Communities C1' ) {
-      neighborhood == 'Waterfront Communities West';
-    } else if ( neighborhood == 'Waterfront Communities C8' ) {
-      neighborhood == 'Waterfront Communities East';
-    } 
-
-
-
 
     return Card(
       clipBehavior: Clip.antiAlias,

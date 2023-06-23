@@ -7,7 +7,6 @@ import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/modules/cards/card_details_full/cards.dart';
 
 
-
 class CardDetailsFullScreen extends StatelessWidget {
   const CardDetailsFullScreen({Key? key}) : super(key: key);
 
@@ -15,7 +14,6 @@ class CardDetailsFullScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final Listing listing = ModalRoute.of(context)?.settings.arguments! as Listing;
-    //print(listing.listingClass);
     final repliersHistory = Provider.of<RepliersListingMls>(context);
 
     return Scaffold(
@@ -41,10 +39,9 @@ class CardDetailsFullScreen extends StatelessWidget {
               color: kSecondaryColor,        
             ),
             CardDetailsTop( listing ),
+            CardDetailsBox(listing),
             const SizedBox( height: 14,),
             CardDetailsHistory( 
-              //listing, 
-              //listing.mlsNumber, 
               onInit: () => repliersHistory.initGetDisplay(),
               onHistory: () => repliersHistory.getListingHistory( listing.mlsNumber ), 
             ),
