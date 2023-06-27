@@ -66,8 +66,8 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
             const SizedBox( height: 4, ),
             CardsSliderFilters(
               listing: repliersFilters.onDisplayFilters,
-              loaded: repliersFilters.loaded,
-              countListings: repliersFilters.onCount,
+              //loaded: repliersFilters.loaded,
+              //countListings: repliersFilters.onCount,
               onNextPage: () => repliersFilters.getDisplayFilters(filtersResults),
               onInitPage: () => repliersFilters.initGetDisplay(filtersResults),
             ),

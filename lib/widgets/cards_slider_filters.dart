@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/modules/cards/card_scroll_vertical/card_vertical.dart';
+import 'package:flutter_black_white/providers/repliers_filters.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 //import 'package:flutter_black_white/widgets/widgets.dart';
 
@@ -8,16 +10,17 @@ import 'package:flutter_black_white/utils/constants.dart';
 class CardsSliderFilters extends StatefulWidget {
 
   final List<Listing> listing;
-  bool? loaded;
-  int? countListings;
+  //bool? loaded;
+  //int? countListings;
+  //late final int countListings;
   final Function onNextPage;
   final Function onInitPage;
 
-  CardsSliderFilters({
+  const CardsSliderFilters({
     Key? key, 
     required this.listing,
-    this.loaded,
-    this.countListings, 
+    //this.loaded,
+    //this.countListings = 0, 
     required this.onNextPage,
     required this.onInitPage,
   }) : super(key: key);
@@ -41,8 +44,8 @@ class _CardsSliderFiltersState extends State<CardsSliderFilters> {
         widget.onNextPage();
       }
     });
-    widget.countListings = 0;
-    widget.loaded = false;
+    //widget.countListings = 0;
+    //widget.loaded = false;
   }
 
   @override
@@ -64,12 +67,14 @@ class _CardsSliderFiltersState extends State<CardsSliderFilters> {
   Widget build(BuildContext context) {
 
     final screenSize = MediaQuery.of(context).size;
-    bool countEmpty = (widget.countListings! > 0) ? false : true  ; 
+    final repliersFilters = Provider.of<RepliersFilters>(context);
+    bool countEmpty = (repliersFilters.onCount > 0) ? false : true  ; 
+
     
     return Container(
       height: screenSize.height - 60,
       color: kBackgroundColor,
-      child: !widget.loaded!
+      child: !repliersFilters.loaded
         ? const Center(
             child: CircularProgressIndicator( color: kPrimaryColor, ),
           )
