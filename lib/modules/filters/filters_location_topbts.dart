@@ -15,6 +15,8 @@ class FiltersLocationTopbts extends StatefulWidget {
 
 class _FiltersLocationTopbtsState extends State<FiltersLocationTopbts> {
   late List<PropertiesTopbts> _propertiesTopbts;
+  late List<String> _filtersTopbts;
+
 
   List<String> torontoBts = [
     'Toronto C01',
@@ -87,6 +89,9 @@ class _FiltersLocationTopbtsState extends State<FiltersLocationTopbts> {
       const PropertiesTopbts('TORONTO'),
       const PropertiesTopbts('Suburbs - Outskirts'),
     ];
+
+    _filtersTopbts = Preferences.filtersLocationTopbts;
+
   }
 
 
@@ -125,18 +130,20 @@ class _FiltersLocationTopbtsState extends State<FiltersLocationTopbts> {
           selected: Preferences.filtersLocationTopbts.contains(propertiesTopbts.name),
           onSelected: ( bool selected ) {
             setState(() {
-              Preferences.filtersLocationTopbts.contains(propertiesTopbts.name) ? Preferences.filtersLocationTopbts.remove(propertiesTopbts.name) : Preferences.filtersLocationTopbts.add(propertiesTopbts.name) ;
+              _filtersTopbts.contains(propertiesTopbts.name) ? _filtersTopbts.remove(propertiesTopbts.name) : _filtersTopbts.add(propertiesTopbts.name) ;
 
-              if (Preferences.filtersLocationTopbts.contains('TORONTO') && Preferences.filtersLocationTopbts.contains('Suburbs - Outskirts')) {
+              Preferences.filtersLocationTopbts = _filtersTopbts;
+
+              if (_filtersTopbts.contains('TORONTO') && _filtersTopbts.contains('Suburbs - Outskirts')) {
                 for(int i = 0; i < torontoBts.length; ++i){
                     Provider.of<FilterProvider>(context, listen: false).filtersLocation.removeWhere((String name) => name == torontoBts[i]);
                 }
                 for(int i = 0; i < suburbsBts.length; ++i){
                     Provider.of<FilterProvider>(context, listen: false).filtersLocation.removeWhere((String name) => name == suburbsBts[i]);
                 }
-              } else if (Preferences.filtersLocationTopbts.contains('TORONTO')) {
+              } else if (_filtersTopbts.contains('TORONTO')) {
                 Provider.of<FilterProvider>(context, listen: false).filtersLocation = [...Provider.of<FilterProvider>(context, listen: false).filtersLocation,  ...torontoBts];
-              } else if (Preferences.filtersLocationTopbts.contains('Suburbs - Outskirts')){
+              } else if (_filtersTopbts.contains('Suburbs - Outskirts')){
                 Provider.of<FilterProvider>(context, listen: false).filtersLocation = [...Provider.of<FilterProvider>(context, listen: false).filtersLocation,  ...suburbsBts];
               } else {
                 for(int i = 0; i < torontoBts.length; ++i){
