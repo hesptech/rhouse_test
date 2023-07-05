@@ -129,7 +129,7 @@ class _MapScreenState extends State<MapScreen> {
                   return const ErrorViewWidget();
                 }
 
-                if (snapshot.data == false) {
+                if (snapshot.data != false) {
                   return const NoInternetWidget();
                 }
 
