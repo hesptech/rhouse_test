@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 
+///Widget that displays a view to indicate that there is no internet
 class NoInternetWidget extends StatelessWidget {
   const NoInternetWidget({super.key});
 
