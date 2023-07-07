@@ -53,13 +53,69 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_native_splash: ^2.2.19
   flutter_launcher_icons: ^0.13.1
 
-flutter_launcher_icons:
-  android: "launcher_icon"
+
+flutter_icons:
   ios: true
-  image_path: "assets/iconapp.png"
-  min_sdk_android: 20
+  android: true
+  image_path: "assets/icon_app_main.png"
+  min_sdk_android: 20  
+
+
+# flutter_native_splash:
+#   color: "#2E3191"
+#   image: assets/splashapp.png
+#   branding: assets/splashapp.png
+#   color_dark: "#2E3191"
+#   image_dark: assets/splashapp.png
+#   branding_dark: assets/splashapp.png
+
+#   android_12:
+#     image: assets/splash_app.png
+#     icon_background_color: "#2E3191"
+#     image_dark: assets/splash_app.png
+#     icon_background_color_dark: "#2E3191"
+
+#   web: false  
+
+# flutter_native_splash:
+#   image: assets/splashapp.png
+#   image_dark: assets/splashapp.png
+#   icon_background_color: "#2E3191"
+#   icon_background_color_dark: "#2E3191"
+#   color: "#2E3191"
+#   color_dark: "#2E3191"
+#   ios: true
+#   android: true
+#   web: false
+  
+# # flutter_native_splash:
+# #   image: assets/rhouzespash_main.png
+# #   icon_background_color: assets/rhouzespash_background.png
+# #   color: "#2E3191"
+# #   ios: true
+# #   web: false
+#   # background_image: assets/rhouzespash_background.png
+#   # fullscreen: true
+#   # android_gravity: center
+#   # color_dark: "#2E3191"
+#   # fill: true
+#   # image_dark: assets/rhouzeicono.png
+#   # branding: assets/rhouzeicono.png
+#   # branding_dark: assets/rhouzeicono.png
+
+#   android_12:
+#     image: assets/splashapp.png
+#     image_dark: assets/splashapp.png
+#     color: "#2E3191"
+#     color_dark: "#2E3191"
+#     icon_background_color: "#2E3191"
+#     icon_background_color_dark: "#2E3191"    
+#     # icon_background_color_dark: assets/splashapp.png
+#     # icon_background_color: "#2E3191"
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

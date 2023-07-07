@@ -15,7 +15,7 @@ class NoInternetWidget extends StatelessWidget {
           children: const [
             SizedBox(height: 80.0),
             Icon(
-              Icons.cloud_off_outlined,
+              Icons.wifi_off,
               size: 200.0,
               color:  Color(0XFF09B68D),
             ),
