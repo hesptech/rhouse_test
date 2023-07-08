@@ -64,57 +64,23 @@ flutter_icons:
   min_sdk_android: 20  
 
 
-# flutter_native_splash:
-#   color: "#2E3191"
-#   image: assets/splashapp.png
-#   branding: assets/splashapp.png
-#   color_dark: "#2E3191"
-#   image_dark: assets/splashapp.png
-#   branding_dark: assets/splashapp.png
+flutter_native_splash:
+  color: "#2E3191"
+  image: assets/splash_app_main_6.png
+  color_dark: "#2E3191"
+  image_dark: assets/splash_app_main_6.png
+  fullscreen: true
+  # branding: assets/splash_app_main.png
+  # branding_dark: assets/splash_app_main.png
 
-#   android_12:
-#     image: assets/splash_app.png
-#     icon_background_color: "#2E3191"
-#     image_dark: assets/splash_app.png
-#     icon_background_color_dark: "#2E3191"
+  android_12:
+    image: assets/splash_app_main_6.png
+    icon_background_color: "#2E3191"
+    image_dark: assets/splash_app_main_6.png
+    icon_background_color_dark: "#2E3191"
+    fullscreen: true
 
-#   web: false  
-
-# flutter_native_splash:
-#   image: assets/splashapp.png
-#   image_dark: assets/splashapp.png
-#   icon_background_color: "#2E3191"
-#   icon_background_color_dark: "#2E3191"
-#   color: "#2E3191"
-#   color_dark: "#2E3191"
-#   ios: true
-#   android: true
-#   web: false
-  
-# # flutter_native_splash:
-# #   image: assets/rhouzespash_main.png
-# #   icon_background_color: assets/rhouzespash_background.png
-# #   color: "#2E3191"
-# #   ios: true
-# #   web: false
-#   # background_image: assets/rhouzespash_background.png
-#   # fullscreen: true
-#   # android_gravity: center
-#   # color_dark: "#2E3191"
-#   # fill: true
-#   # image_dark: assets/rhouzeicono.png
-#   # branding: assets/rhouzeicono.png
-#   # branding_dark: assets/rhouzeicono.png
-
-#   android_12:
-#     image: assets/splashapp.png
-#     image_dark: assets/splashapp.png
-#     color: "#2E3191"
-#     color_dark: "#2E3191"
-#     icon_background_color: "#2E3191"
-#     icon_background_color_dark: "#2E3191"    
-#     # icon_background_color_dark: assets/splashapp.png
-#     # icon_background_color: "#2E3191"
+  web: false  
 
 
   # The "flutter_lints" package below contains a set of recommended lints to
