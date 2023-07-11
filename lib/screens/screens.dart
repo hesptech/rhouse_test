@@ -5,3 +5,7 @@ export 'package:flutter_black_white/screens/map_screen.dart';
 export 'package:flutter_black_white/screens/filters_results_screen.dart';
 export 'package:flutter_black_white/screens/filters_screen.dart';
 export 'package:flutter_black_white/screens/login_screen.dart';
+export 'package:flutter_black_white/screens/register_screen.dart';
+export 'package:flutter_black_white/screens/register_pin_screen.dart';
+export 'package:flutter_black_white/screens/register_terms_use_screen.dart';
+export 'package:flutter_black_white/screens/register_finish_screen.dart';
