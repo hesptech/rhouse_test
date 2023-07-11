@@ -7,6 +7,7 @@ import 'package:flutter_black_white/widgets/loadable_widget.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 import 'package:vector_tile_renderer/vector_tile_renderer.dart';
 
+///Screen showing a property on a map
 class MapPropertyScreen extends StatelessWidget {
   static String pathScreen = "mapProperty_screen";
 
@@ -33,7 +34,7 @@ class MapPropertyScreen extends StatelessWidget {
           centerTitle: true,
         ),
         backgroundColor: 
-            listingArgument.mapCoordinates?.latitude == null || listingArgument.mapCoordinates?.longitude == null
+            listingArgument.mapCoordinates?.latitude == 0 || listingArgument.mapCoordinates?.longitude == 0
                 ? Colors.white
                 : null,
         body: SafeArea(

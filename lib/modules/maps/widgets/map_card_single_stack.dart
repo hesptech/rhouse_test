@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_black_white/models/response_listings.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 
+///Widget used to display the icons to see more pictures of the residence.
 class MapCardSingleStack  {
-  
-
   Widget favorite(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(top: 10, right: 70),

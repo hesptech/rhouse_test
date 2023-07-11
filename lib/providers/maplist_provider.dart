@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/connectivity_internet.dart';
+import 'package:flutter_black_white/utils/filters_preferences.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:http/http.dart' as http;
 
 import '../config/environment.dart';
-import '../utils/constants.dart';
 import '../utils/shared_preferences.dart';
 
+///Provider class providing a list of properties
 class MapListProvider extends ChangeNotifier {
-  
   List<Listing> listingSelected = [];
   List<Listing> listingMaps = [];
   List<Marker> _selectedCluster = [];
@@ -40,7 +41,6 @@ class MapListProvider extends ChangeNotifier {
     super.dispose();
   }
 
-
   MapListProvider();
   MapListProvider.intiConfig() {
     initData();
@@ -59,21 +59,20 @@ class MapListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   String get getApiKey {
     return dotenv.get('API-KEY-MAPTILER');
   }
 
-  Future<void> getLocationsResidences(bool isFilter, LatLng coordinates) async {
+  Future<void> getLocationsResidences(LatLng coordinates) async {
     initData();
     if (!await ConnectivityInternet.hasConnection()) {
       return;
     }
 
-    await _getlistingsByRadius('listings', isFilter, coordinates, 200);
+    await _getlistingsByRadius('listings', coordinates, 200);
   }
 
-  Future<void> _getlistingsByRadius(String endPoint, bool isFilter, [LatLng? latLng, int radius = 0]) async {
+  Future<void> _getlistingsByRadius(String endPoint, [LatLng? latLng, int radius = 0]) async {
     try {
       int pageListings = 1;
       String envApiKey = dotenv.get('REPLIERS-API-KEY');
@@ -81,6 +80,8 @@ class MapListProvider extends ChangeNotifier {
 
       Map<String, dynamic> queryParamsLoop = {};
       Map<String, dynamic> filters = {};
+
+      var isFilter = Preferences.isFilter;
 
       if (isFilter) {
         filters = _getFilters();
@@ -92,8 +93,7 @@ class MapListProvider extends ChangeNotifier {
           'resultsPerPage': '800',
           'type': 'sale',
           'hasImages': 'true',
-          'fields':
-              'details,mlsNumber,class,images,listDate,timestamps,daysOnMarket,listPrice,address,details,map,rooms,lot,taxes,occupancy,nearby,condominium,office',
+          'fields': 'details,mlsNumber,class,images,listDate,timestamps,daysOnMarket,listPrice,address,details,map,rooms,lot,taxes,occupancy,nearby,condominium,office',
           'lat': '${latLng?.latitude}',
           'long': '${latLng?.longitude}',
           'radius': '$radius'
@@ -101,11 +101,6 @@ class MapListProvider extends ChangeNotifier {
 
         if (isFilter) {
           queryParamsLoop.addAll(filters);
-        } else {
-          queryParamsLoop.addAll({
-            'maxPrice': '2000000',
-            'minPrice': '1500000',
-          });
         }
 
         final url = Uri.https(kBaseUrl, endPoint, queryParamsLoop);
@@ -140,7 +135,7 @@ class MapListProvider extends ChangeNotifier {
 
         notifyListeners();
       }
-      
+
       _loadMap = false;
       notifyListeners();
     } catch (_) {
@@ -165,101 +160,10 @@ class MapListProvider extends ChangeNotifier {
 
   Map<String, dynamic> _getFilters() {
     Map<String, dynamic> filtersResults = {};
-    var labels = kLabels;
-    List<String> filterPropertyIcons;
-    DateTime todayDate = DateTime.now();
 
-    if (Preferences.filtersClassIconsBt == 'residential') {
-      filterPropertyIcons = [
-        ...Preferences.filterPropertyIcons,
-        ...Preferences.filtersPropertyTypeHouse
-      ];
-    } else {
-      filterPropertyIcons = Preferences.filterPropertyIconsCondo;
-    }
+    var filtersMaps = FiltersPreferences(FilterProvider().filtersPropertyTypeHouse).setFilterQueryParams();
 
-    Map<String, dynamic> filtersPrefs = {
-      'class': Preferences.filtersClassIconsBt,
-      'propertyType': filterPropertyIcons,
-      'district': Preferences.userFiltersCity,
-    };
-
-    if (int.parse(labels[Preferences.filterPriceRangeStart.round()]) > 1) {
-      filtersPrefs['minPrice'] = labels[Preferences.filterPriceRangeStart.round()].toString();
-    }
-
-    if (int.parse((labels[Preferences.filterPriceRangeEnd.round()])) <= 4750000) {
-      filtersPrefs['maxPrice'] = labels[Preferences.filterPriceRangeEnd.round()].toString();
-    }
-
-    if (Preferences.filtersClassIconsBt == 'residential' && Preferences.filtersBedHouse > 1) {
-      filtersPrefs['minBeds'] = Preferences.filtersBedHouse.toString();
-    }
-
-    if (Preferences.filtersClassIconsBt == 'condo' && Preferences.filtersBedCondo > 0) {
-      filtersPrefs['minBeds'] = Preferences.filtersBedCondo.toString();
-    }
-
-    if (Preferences.filtersBath > 1) {
-      filtersPrefs['minBaths'] = Preferences.filtersBath.toString();
-    }
-
-    if (Preferences.filtersClassIconsBt == 'residential' && Preferences.filtersNumParkingSpaces > 0) {
-      filtersPrefs['minParkingSpaces'] = Preferences.filtersNumParkingSpaces.toString();
-    }
-
-    if (Preferences.filtersClassIconsBt == 'condo' && Preferences.filtersNumParkingSpacesCondos1 == true) {
-      filtersPrefs['minParkingSpaces'] = '1';
-    }
-
-    if (Preferences.filtersClassIconsBt == 'residential' && Preferences.filtersMinKitchens > 1) {
-      filtersPrefs['minKitchens'] = Preferences.filtersMinKitchens.toString();
-    }
-
-    DateTime maxListDate = todayDate.subtract(Duration(days: Preferences.filterDaysMarketStart.toInt()));
-    filtersPrefs['maxListDate'] = maxListDate.toString().substring(0, 10);
-
-    if (Preferences.filterDaysMarketEnd < 90) {
-      DateTime minListDate = todayDate.subtract(Duration(days: Preferences.filterDaysMarketEnd.toInt()));
-      filtersPrefs['minListDate'] = minListDate.toString().substring(0, 10);
-    }
-
-    if (Preferences.filtersClassIconsBt == 'condo' && Preferences.filtersDen == 'Y') {
-      filtersPrefs['den'] = Preferences.filtersDen;
-    }
-
-    if (Preferences.filtersClassIconsBt == 'residential') {
-      filtersPrefs['style'] = Preferences.getfiltersIndexStyleHouse();
-      filtersPrefs['basement'] = Preferences.getfiltersIndexBasement();
-    } else {
-      filtersPrefs['style'] = Preferences.getfiltersIndexStyleCondo();
-    }
-
-    if (Preferences.filtersClassIconsBt == 'residential' && Preferences.getfiltersMaxOpenHouseDate() == true) {
-      filtersPrefs['minOpenHouseDate'] = todayDate.toString().substring(0, 10);
-    }
-
-    if (Preferences.filtersClassIconsBt == 'residential' && Preferences.getfiltersIndexSwimmingPool().isNotEmpty) {
-      filtersPrefs['swimmingPool'] = Preferences.getfiltersIndexSwimmingPool();
-    }
-
-    if (Preferences.filtersClassIconsBt == 'condo' && Preferences.filterSizeStart > 10) {
-      filtersPrefs['minSqft'] = Preferences.filterSizeStart.round().toString();
-    }
-
-    if (Preferences.filtersClassIconsBt == 'condo' && Preferences.filterSizeEnd < 2999) {
-      filtersPrefs['maxSqft'] = Preferences.filterSizeEnd.round().toString();
-    }
-
-    if (Preferences.filtersClassIconsBt == 'condo' && Preferences.filterCondoFeeEnd < 1500) {
-      filtersPrefs['maxMaintenanceFee'] = Preferences.filterCondoFeeEnd.round().toString();
-    }
-
-    if (Preferences.filtersClassIconsBt == 'condo') {
-      filtersPrefs['amenities'] = Preferences.getfiltersIndexAmmenities();
-    }
-
-    filtersResults.addAll(filtersPrefs);
+    filtersResults.addAll(filtersMaps);
 
     return filtersResults;
   }

@@ -12,18 +12,20 @@ import 'package:flutter_black_white/providers/filter_provider.dart';
 
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/config/config.dart';
-
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // await Future.delayed(const Duration(milliseconds: 500));
+  // FlutterNativeSplash.remove();
 
   await dotenv.load();
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
   await Preferences.init();
 
-  runApp( const AppState() );
+  runApp(const AppState());
 }
-
 
 class AppState extends StatelessWidget {
   const AppState({Key? key}) : super(key: key);
@@ -32,17 +34,25 @@ class AppState extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider( create: (_) => FilterProvider(), ),
-        ChangeNotifierProvider( create: (_) => RepliersProvider('toronto ALL'), lazy: false,),
-        ChangeNotifierProvider( create: (_) => RepliersFilters('toronto ALL'), ),
-        ChangeNotifierProvider( create: (_) => RepliersListingMls(), ),
-        ChangeNotifierProvider( create: (_) => MapListProvider()),
+        ChangeNotifierProvider(
+          create: (_) => FilterProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => RepliersProvider('toronto ALL'),
+          lazy: false,
+        ),
+        ChangeNotifierProvider(
+          create: (_) => RepliersFilters('toronto ALL'),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => RepliersListingMls(),
+        ),
+        ChangeNotifierProvider(create: (_) => MapListProvider()),
       ],
       child: const App(),
     );
   }
 }
-
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -59,11 +69,9 @@ class App extends StatelessWidget {
   }
 }
 
-
-class MyHttpOverrides extends HttpOverrides{
+class MyHttpOverrides extends HttpOverrides {
   @override
-  HttpClient createHttpClient(SecurityContext? context){
-    return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   }
 }
