@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/modules/maps/map_card_single.dart';
 import 'package:flutter_black_white/modules/maps/widgets/maptiler_widget.dart';
+import 'package:flutter_black_white/widgets/no_address_available_widget.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 
+///Widgete that displays and receives a configuration to display a residence on the map.
 class MapLocationProperty extends StatefulWidget {
   final Style style;
   final TileOffset tileOffset;
@@ -29,7 +31,7 @@ class _MapLocationPropertyState extends State<MapLocationProperty> {
       builder: (context, constraints) {
         return Stack(
           children: [
-            coordinates?.latitude == null || coordinates?.longitude == null ? _notFound(constraints) : _mapLocation(constraints),
+            coordinates?.latitude == 0 || coordinates?.longitude == 0 ? const NoAddressAvailableWidget() : _mapLocation(constraints),
             Align(alignment: Alignment.bottomCenter, child: _cardInformation(constraints)),
           ],
         );
@@ -70,23 +72,6 @@ class _MapLocationPropertyState extends State<MapLocationProperty> {
         layerMode: layerMode,
         tileOffset: widget.tileOffset,
       ),
-    );
-  }
-
-  Widget _notFound(BoxConstraints constraints) {
-    return Column(
-      children: [
-        SizedBox(
-          width: double.maxFinite,
-          height: constraints.maxHeight * 0.48,
-          child: const Image(
-            image: AssetImage('assets/map.png'),
-          ),
-        ),
-        const FittedBox(
-          fit: BoxFit.fitWidth,
-          child: Text("No maps cooordinates available", style: TextStyle(color:  Color(0XFF2D368F), fontSize: 13),))
-      ],
     );
   }
 }

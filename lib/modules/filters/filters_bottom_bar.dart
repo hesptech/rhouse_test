@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/screens/map_screen.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_black_white/utils/constants.dart';
@@ -16,7 +17,7 @@ class FiltersBottomBar extends StatefulWidget {
 class _FiltersBottomBarState extends State<FiltersBottomBar> {
   @override
   Widget build(BuildContext context) {
-    final filterProvider = Provider.of<FilterProvider>( context );
+    final filterProvider = Provider.of<FilterProvider>(context);
 
     return Container(
       height: 75,
@@ -33,7 +34,7 @@ class _FiltersBottomBarState extends State<FiltersBottomBar> {
                 ),
                 onPressed: () {
                   setState(() {
-                    FilterProvider().cleanFilter();
+                    FilterProvider().cleanFilter();                    
                     filterProvider.filterProvider = 'residential';
                     Provider.of<FilterProvider>(context, listen: false).filtersPropertyTypeHouse = [];
                     Provider.of<FilterProvider>(context, listen: false).filtersLocation = [];
@@ -62,11 +63,12 @@ class _FiltersBottomBarState extends State<FiltersBottomBar> {
             Expanded(
               flex: 1,
               child: OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: kPrimaryColor), backgroundColor: kPrimaryColor),
+                style: OutlinedButton.styleFrom(side: const BorderSide(color: kPrimaryColor), backgroundColor: kPrimaryColor),
                 onPressed: () {
+                  Preferences.isFilter = true;
+
                   if (widget.pathScreen == MapScreen.pathScreen) {
-                    Navigator.pushNamed(context, MapScreen.pathScreen, arguments: {'filter': "true", 'mlsNumber': ''});
+                    Navigator.pushNamed(context, MapScreen.pathScreen, arguments: {'filter': "true"});
                   } else {
                     Navigator.pushNamed(context, 'filters_results_screen', arguments: 'Filtered results');
                   }

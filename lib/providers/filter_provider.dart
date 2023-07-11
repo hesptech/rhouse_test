@@ -120,7 +120,7 @@ class FilterProvider extends ChangeNotifier {
     Preferences.setfiltersIndexStyleCondo([]);
     Preferences.setfiltersIndexBasement([]);
     Preferences.setfiltersIndexAmmenities([]);
+    Preferences.isFilter = false;
     Preferences.isCleanFilter = true;
-
   }
 }

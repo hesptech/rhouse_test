@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/widgets/error_view_widget.dart';
 
+///Widget that displays a loading to load another widget by passing as a parameter a future function
 class LoadableWidget<T> extends StatefulWidget {
   final Future<T> Function() loader;
   final Widget Function(BuildContext, T) builder;
@@ -24,10 +25,12 @@ class _LoadableWidget<T> extends State<LoadableWidget<T>> {
               state = value;
             }))
         .onError((error, stackTrace) => {
-              setState(() {
-                loadError = error?.toString();
-                debugPrint(loadError);
-              })
+              if(mounted) {
+                setState(() {
+                  loadError = error?.toString();
+                  debugPrint(loadError);
+                })
+              }
             });
   }
 

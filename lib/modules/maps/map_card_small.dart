@@ -6,6 +6,8 @@ import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 
+
+///Widget that displays a summary information card and is used to list properties on the map.
 class MapCardSmall extends StatelessWidget {
   final Listing listing;
   final bool loggedIn = true;

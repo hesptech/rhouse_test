@@ -7,6 +7,7 @@ import 'package:flutter_black_white/modules/maps/widgets/map_card_single_box.dar
 import 'package:flutter_black_white/modules/maps/widgets/map_card_single_stack.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 
+///Widget that displays an information card for use when a property is shown on the map
 class MapCardSingle extends StatelessWidget {
   final Listing listing;
   final bool loggedIn = true;
