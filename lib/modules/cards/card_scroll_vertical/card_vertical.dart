@@ -120,7 +120,7 @@ class CardVertical extends StatelessWidget {
                               const SizedBox(height: 2,),
                               Row(
                                 children: [
-                                  const Icon(Icons.location_on_outlined, color: Color(0xFF0BB48B), size: 22,),
+                                  const Icon(Icons.location_on_outlined, color: kSecondaryColor, size: 22,),
                                   const SizedBox(width: 2,),
                                   ConstrainedBox(
                                     constraints: BoxConstraints( maxWidth: screenSize.width - 100 ),
@@ -143,7 +143,7 @@ class CardVertical extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 5,),
-                        const Divider(  thickness: 0.8, color: Color(0xFF0BB48B), height: 0.0,),
+                        const Divider(  thickness: 0.8, color: kSecondaryColor, height: 0.0,),
                         CardVerticalBox(listing),                       
                       ],
                     ),

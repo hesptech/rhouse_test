@@ -52,12 +52,12 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                                   _dialogGeolocation(context);
                                 });
                               },
-                              //child: const Icon( Icons.map_outlined, color: Color(0xFF0BB48B), size: 26.0,),
+                              //child: const Icon( Icons.map_outlined, color: kSecondaryColor, size: 26.0,),
                               child: Row(
                                 children: const [
                                   Icon(
                                     Icons.map_outlined,
-                                    color: Color(0xFF0BB48B),
+                                    color: kSecondaryColor,
                                     size: 30.0,
                                   ),
                                   Text(
@@ -78,7 +78,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                         },
                         child: const Icon(
                           Icons.tune_outlined,
-                          color: Color(0xFF0BB48B),
+                          color: kSecondaryColor,
                           size: 30.0,
                         ),
                       ),
@@ -118,7 +118,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
             ),
             Container(
               height: 5,
-              color: const Color(0xFF0BB48B),
+              color: kSecondaryColor,
             )
           ],
         ),

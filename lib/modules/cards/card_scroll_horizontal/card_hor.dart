@@ -129,7 +129,7 @@ class CardHor extends StatelessWidget {
                             padding: const EdgeInsets.only(left: 10.0, top: 5, right: 10.0, bottom: 0),
                             child: Row(
                               children: [
-                                const Icon(Icons.location_on_outlined, color: Color(0xFF0BB48B), size: 22,),
+                                const Icon(Icons.location_on_outlined, color: kSecondaryColor, size: 22,),
                                 const SizedBox(width: 2,),
                                 /* ConstrainedBox(
                                   constraints: BoxConstraints( maxWidth: screenSize.width - 130 ),

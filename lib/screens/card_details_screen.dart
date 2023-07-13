@@ -53,7 +53,7 @@ class CardDetailsScreen extends StatelessWidget {
             children: [
               Container(
                 height: 5,
-                color: const Color(0xFF0BB48B),
+                color: const kSecondaryColor,
               )            
             ],
           )
@@ -102,11 +102,11 @@ class CardDetailsScreen extends StatelessWidget {
                               children: const [
                                 Text('Scarborough Oakridge, ON', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: kPrimaryColor),),
                                 SizedBox( width: 10.0, ),
-                                Icon(Icons.map_outlined, color: Color(0xFF0BB48B), size: 32,),
+                                Icon(Icons.map_outlined, color: kSecondaryColor, size: 32,),
                               ],
                               
                             ),
-                            const Divider( height: 28,  thickness: 0.8, color: Color(0xFF0BB48B), ),
+                            const Divider( height: 28,  thickness: 0.8, color: kSecondaryColor, ),
                             Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -126,7 +126,7 @@ class CardDetailsScreen extends StatelessWidget {
                                 ),                         
                               ],                   
                             ),
-                            const Divider( height: 28,  thickness: 0.8, color: Color(0xFF0BB48B), ),
+                            const Divider( height: 28,  thickness: 0.8, color: kSecondaryColor, ),
                             Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -135,17 +135,17 @@ class CardDetailsScreen extends StatelessWidget {
                                   //width: 75.0,
                                   height: 35.0,
                                   decoration: const BoxDecoration(
-                                    // border: Border.all(color: const Color(0xFF0BB48B))
+                                    // border: Border.all(color: const kSecondaryColor)
                                     border: Border(
-                                      //top: BorderSide(color: Color(0xFF0BB48B)),
-                                      //bottom: BorderSide(color: Color(0xFF0BB48B)),
-                                      //left: BorderSide(color: Color(0xFF0BB48B)),
+                                      //top: BorderSide(color: kSecondaryColor),
+                                      //bottom: BorderSide(color: kSecondaryColor),
+                                      //left: BorderSide(color: kSecondaryColor),
                                     ),
                                   ),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: const [
-                                      Icon(Icons.king_bed_outlined, color: Color(0xFF0BB48B), size: 30,),
+                                      Icon(Icons.king_bed_outlined, color: kSecondaryColor, size: 30,),
                                       SizedBox(width: 5,),
                                       Text('3', style: TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), ),                                  
                                     ],
@@ -157,16 +157,16 @@ class CardDetailsScreen extends StatelessWidget {
                                   padding: const EdgeInsets.all(3.0),
                                   decoration: const BoxDecoration(
                                     border: Border(
-                                      //top: BorderSide(color: Color(0xFF0BB48B)),
-                                      //bottom: BorderSide(color: Color(0xFF0BB48B)),
-                                      left: BorderSide(color: Color(0xFF0BB48B)),
+                                      //top: BorderSide(color: kSecondaryColor),
+                                      //bottom: BorderSide(color: kSecondaryColor),
+                                      left: BorderSide(color: kSecondaryColor),
                                     ),
                                   ),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: const [
                                       SizedBox( width: 10,),
-                                      Icon(Icons.shower_outlined, color: Color(0xFF0BB48B), size: 30,),
+                                      Icon(Icons.shower_outlined, color: kSecondaryColor, size: 30,),
                                       SizedBox(width: 5,),
                                       Text('2+1', style: TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), ),                                  
                                     ],
@@ -178,16 +178,16 @@ class CardDetailsScreen extends StatelessWidget {
                                   padding: const EdgeInsets.all(3.0),
                                   decoration: const BoxDecoration(
                                     border: Border(
-                                      //top: BorderSide(color: Color(0xFF0BB48B)),
-                                      //bottom: BorderSide(color: Color(0xFF0BB48B)),
-                                      left: BorderSide(color: Color(0xFF0BB48B)),
+                                      //top: BorderSide(color: kSecondaryColor),
+                                      //bottom: BorderSide(color: kSecondaryColor),
+                                      left: BorderSide(color: kSecondaryColor),
                                     ),
                                   ),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: const [
                                       SizedBox( width: 10,),
-                                      Icon(Icons.directions_car_filled_outlined, color: Color(0xFF0BB48B), size: 28,),
+                                      Icon(Icons.directions_car_filled_outlined, color: kSecondaryColor, size: 28,),
                                       SizedBox(width: 5,),
                                       Text('2', style: TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), ),                                    
                                     ],
@@ -200,15 +200,15 @@ class CardDetailsScreen extends StatelessWidget {
                                   padding: const EdgeInsets.all(3.0),
                                   decoration: const BoxDecoration(
                                     border: Border(
-                                      //top: BorderSide(color: Color(0xFF0BB48B)),
-                                      //bottom: BorderSide(color: Color(0xFF0BB48B)),
-                                      left: BorderSide(color: Color(0xFF0BB48B)),
+                                      //top: BorderSide(color: kSecondaryColor),
+                                      //bottom: BorderSide(color: kSecondaryColor),
+                                      left: BorderSide(color: kSecondaryColor),
                                     ),
                                   ),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: const [
-                                      Icon(Icons.straighten_outlined, color: Color(0xFF0BB48B), size: 24,),
+                                      Icon(Icons.straighten_outlined, color: kSecondaryColor, size: 24,),
                                       SizedBox(width: 5,),
                                       Text('8,900', style: TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), )                                    
                                     ],
@@ -315,7 +315,7 @@ class CardDetailsScreen extends StatelessWidget {
               clipBehavior: Clip.antiAlias,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
-                side: const BorderSide( color: Color(0xFF0BB48B), width: 2.0 ) 
+                side: const BorderSide( color: kSecondaryColor, width: 2.0 ) 
               ),
               borderOnForeground: true,
               margin: const EdgeInsets.symmetric(horizontal: 14),
@@ -326,7 +326,7 @@ class CardDetailsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox( height: 14.0, ),
-            //const Divider( thickness: 0.8, color: Color(0xFF0BB48B), indent: 20.0, endIndent: 20.0, ), 
+            //const Divider( thickness: 0.8, color: kSecondaryColor, indent: 20.0, endIndent: 20.0, ), 
             const SizedBox( height: 8.0,),
             const DetailsExpansions(),           
           ],
@@ -369,7 +369,7 @@ class _DetailsExpansionsState extends State<DetailsExpansions> {
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: Column(
           children: [
-            const Divider( thickness: 0.8, color: Color(0xFF0BB48B), indent: 20.0, endIndent: 20.0, height: 0,),
+            const Divider( thickness: 0.8, color: kSecondaryColor, indent: 20.0, endIndent: 20.0, height: 0,),
             ExpansionTile(
               tilePadding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
               childrenPadding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
@@ -489,7 +489,7 @@ class _DetailsExpansionsState extends State<DetailsExpansions> {
                 setState(() => _openCloseIcons[0] = expanded );
               },
             ),
-            const Divider( thickness: 0.8, color: Color(0xFF0BB48B), indent: 20.0, endIndent: 20.0, height: 0, ),
+            const Divider( thickness: 0.8, color: kSecondaryColor, indent: 20.0, endIndent: 20.0, height: 0, ),
             ExpansionTile(
               tilePadding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
               childrenPadding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
@@ -512,7 +512,7 @@ class _DetailsExpansionsState extends State<DetailsExpansions> {
                 setState(() => _openCloseIcons[1] = expanded );
               },
             ),
-            const Divider( thickness: 0.8, color: Color(0xFF0BB48B), indent: 20.0, endIndent: 20.0, height: 0, ),
+            const Divider( thickness: 0.8, color: kSecondaryColor, indent: 20.0, endIndent: 20.0, height: 0, ),
             ExpansionTile(
               tilePadding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
               childrenPadding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
@@ -535,7 +535,7 @@ class _DetailsExpansionsState extends State<DetailsExpansions> {
                 setState(() => _openCloseIcons[2] = expanded );
               },
             ),
-            const Divider( thickness: 0.8, color: Color(0xFF0BB48B), indent: 20.0, endIndent: 20.0, height: 0, ),
+            const Divider( thickness: 0.8, color: kSecondaryColor, indent: 20.0, endIndent: 20.0, height: 0, ),
             ExpansionTile(
               tilePadding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
               childrenPadding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
@@ -559,7 +559,7 @@ class _DetailsExpansionsState extends State<DetailsExpansions> {
                 setState(() => _openCloseIcons[3] = expanded );
               },
             ),
-            const Divider( thickness: 0.8, color: Color(0xFF0BB48B), indent: 20.0, endIndent: 20.0, height: 0.0,),
+            const Divider( thickness: 0.8, color: kSecondaryColor, indent: 20.0, endIndent: 20.0, height: 0.0,),
             const SizedBox( height: 30.0,),
 
 
