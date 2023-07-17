@@ -255,7 +255,7 @@ class _MapWidget extends State<MapTilerWidget> {
                 ),
                 child: const Center(
                   child: Text("1",
-                    style: const TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
               ),

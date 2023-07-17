@@ -12,12 +12,9 @@ import 'package:flutter_black_white/providers/filter_provider.dart';
 
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/config/config.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Future.delayed(const Duration(milliseconds: 500));
-  // FlutterNativeSplash.remove();
 
   await dotenv.load();
   HttpOverrides.global = MyHttpOverrides();

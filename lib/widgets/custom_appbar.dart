@@ -3,9 +3,6 @@ import 'package:flutter_black_white/screens/map_screen.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/modules/maps/utils/geolocation_app.dart';
 
-import '../providers/filter_provider.dart';
-//import 'package:flutter_black_white/search/search_delegate.dart';
-
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppbar({Key? key}) : super(key: key);
 
