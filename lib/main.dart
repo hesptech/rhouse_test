@@ -14,8 +14,6 @@ import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/config/config.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
   await dotenv.load();
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
