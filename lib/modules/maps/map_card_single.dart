@@ -5,6 +5,7 @@ import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/modules/maps/widgets/map_card_single_box.dart';
 import 'package:flutter_black_white/modules/maps/widgets/map_card_single_stack.dart';
+import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 
 ///Widget that displays an information card for use when a property is shown on the map
@@ -120,13 +121,13 @@ class MapCardSingle extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       softWrap: true,
-                      style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Color(0xFF2E3191)),
+                      style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: kPrimaryColor),
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 5.0),
                     decoration: BoxDecoration(
-                      border: Border.all(color: const Color(0xFF2E3191)),
+                      border: Border.all(color: kPrimaryColor),
                     ),
                     child: Text(
                       propertyType,
@@ -135,7 +136,7 @@ class MapCardSingle extends StatelessWidget {
                       softWrap: true,
                       style: const TextStyle(
                         fontSize: 14,
-                        color: Color(0xFF2E3191),
+                        color: kPrimaryColor,
                       ),
                     ),
                   ),
@@ -151,7 +152,7 @@ class MapCardSingle extends StatelessWidget {
                 children: [
                   const Icon(
                     Icons.location_on_outlined,
-                    color: Color(0xFF0BB48B),
+                    color: kSecondaryColor,
                     size: 22,
                   ),
                   const SizedBox(

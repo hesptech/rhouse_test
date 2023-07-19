@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/models/response_listings.dart';
+import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 
 ///Widget used to display the icons to see more pictures of the residence.
@@ -55,7 +56,7 @@ class MapCardSingleStack  {
               alignment: Alignment.topLeft,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF2E3191),
+                  backgroundColor: kPrimaryColor,
                   minimumSize: const Size(140.0, 28.0),
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
@@ -83,7 +84,7 @@ class MapCardSingleStack  {
               alignment: Alignment.center,
               child: ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF5f68be)),
+                  backgroundColor: MaterialStateProperty.all<Color>(kPrimaryColor),
                 ),
                 onPressed: () {
                   //Navigator.pushNamed(context, 'details', arguments: listing);

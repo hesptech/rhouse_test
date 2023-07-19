@@ -3,6 +3,7 @@ import 'package:flutter/material.dart' hide Theme;
 import 'package:flutter_black_white/modules/maps/map_card_small.dart';
 import 'package:flutter_black_white/providers/maplist_provider.dart';
 import 'package:flutter_black_white/modules/maps/widgets/maptiler_widget.dart';
+import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +42,6 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
   void dispose() {
     markersList = [];
     _mapListProvider.close();
-    // _mapListProvider.dispose();
     super.dispose();
   }
 
@@ -57,8 +57,8 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
         children: [
           _mapTilerList(context),
        _mapListProvider.loadMap ?   const LinearProgressIndicator(
-            backgroundColor: Color(0XFFED1C24),
-            valueColor: AlwaysStoppedAnimation<Color>(Color(0XFF02B68C)),
+            backgroundColor: kWarningColor,
+            valueColor: AlwaysStoppedAnimation<Color>(kSecondaryColor),
           ) : Container(),
         ],
       ),
@@ -118,7 +118,7 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
         child: Container(
           width: double.infinity,
           height: cardHeight * 1.5,
-          color: const Color(0XFF09B68D),
+          color: kSecondaryColor,
           child: Padding(
             padding: const EdgeInsets.only(top: 2, bottom: 15, left: 15, right: 15),
             child: Column(

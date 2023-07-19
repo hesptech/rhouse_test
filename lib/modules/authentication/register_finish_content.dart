@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/modules/authentication/widgets/steps_widget.dart';
-import 'package:flutter_black_white/screens/screens.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 
 class RegisterFinishContent extends StatefulWidget {

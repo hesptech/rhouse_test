@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/modules/authentication/widgets/steps_widget.dart';
 import 'package:flutter_black_white/screens/login_screen.dart';
-import 'package:flutter_black_white/screens/register_pin_screen.dart';
 import 'package:flutter_black_white/screens/register_terms_use_screen.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 

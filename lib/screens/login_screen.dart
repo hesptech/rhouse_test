@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/modules/authentication/login_content.dart';
-import 'package:flutter_black_white/utils/constants.dart';
 
 class LoginScreen extends StatelessWidget {
   static String pathScreen = "login_screen";

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/modules/maps/map_card_single.dart';
 import 'package:flutter_black_white/modules/maps/widgets/maptiler_widget.dart';
+import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/widgets/no_address_available_widget.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
@@ -40,7 +41,7 @@ class _MapLocationPropertyState extends State<MapLocationProperty> {
   }
 
   Widget _cardInformation(BoxConstraints constraints) {
-    double marginSize = constraints.maxWidth * 0.05; // Ejemplo de tamaño de margen responsive
+    double marginSize = constraints.maxWidth * 0.05;
 
     return Container(
       margin: EdgeInsets.all(marginSize),
@@ -49,7 +50,7 @@ class _MapLocationPropertyState extends State<MapLocationProperty> {
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(
-          color: const Color(0XFF2D368F),
+          color: kPrimaryColor,
         ),
       ),
       child: MapCardSingle(listing: widget.listing),

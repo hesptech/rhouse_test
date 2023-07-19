@@ -184,9 +184,9 @@ class _MapWidget extends State<MapTilerWidget> {
             height: 100.0,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: !isSelected ? const Color(0XFF214497) : const Color(0XFFED1C24),
+              color: !isSelected ? kPrimaryColor : kWarningColor,
               border: Border.all(
-                color: !isSelected ? const Color(0XFF09B68D) : Colors.white,
+                color: !isSelected ? kSecondaryColor : Colors.white,
                 width: 5.0,
               ),
             ),
@@ -247,9 +247,9 @@ class _MapWidget extends State<MapTilerWidget> {
                 height: 100.0,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: !isSelected ? const Color(0XFF214497) : const Color(0XFFED1C24),
+                  color: !isSelected ? kPrimaryColor : kWarningColor,
                   border: Border.all(
-                    color: !isSelected ? const Color(0XFF09B68D) : Colors.white,
+                    color: !isSelected ? kSecondaryColor : Colors.white,
                     width: 5.0,
                   ),
                 ),
@@ -283,7 +283,7 @@ class _MapWidget extends State<MapTilerWidget> {
                 _zoomValue = widget.zoom;
                 _controller.move(widget.center!, _zoomValue);
               },
-              child: Icon(Icons.location_on_outlined, color: widget.isMiniature ? kPrimaryColor : const Color(0XFF02B68C), size: widget.isMiniature ? 50 : 60));
+              child: Icon(Icons.location_on_outlined, color: widget.isMiniature ? kPrimaryColor : kSecondaryColor, size: widget.isMiniature ? 50 : 60));
         });
   }
 }
