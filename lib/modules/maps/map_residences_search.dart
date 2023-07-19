@@ -8,18 +8,17 @@ import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 
+///Widgete that receives a configuration to display the list of residences and maps.
 class MapResidencesSearch extends StatefulWidget {
   final Style style;
   final TileOffset tileOffset;
-  final bool isFilter;
   final LatLng coordinates;
 
   const MapResidencesSearch(
       {super.key,
       required this.style,
       required this.coordinates,
-      this.tileOffset = TileOffset.DEFAULT,
-      this.isFilter = false});
+      this.tileOffset = TileOffset.DEFAULT});
 
   @override
   State<MapResidencesSearch> createState() => _MapResidencesSearchState();
@@ -34,7 +33,7 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
     markersList = [];
     _mapListProvider = Provider.of<MapListProvider>(context, listen: false);
     MapListProvider.intiConfig();
-    _mapListProvider.getLocationsResidences(widget.isFilter, widget.coordinates);
+    _mapListProvider.getLocationsResidences(widget.coordinates);
     super.initState();
   }
 

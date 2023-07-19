@@ -6,15 +6,13 @@ import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/utils/widgets_formatting.dart';
 import 'package:flutter_black_white/modules/filters/filters.dart';
 
-
 class FiltersScreen extends StatelessWidget {
   const FiltersScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     var pathArgument = _checkArguments(context);
-    
+
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       appBar: AppBar(
@@ -24,11 +22,14 @@ class FiltersScreen extends StatelessWidget {
           onPressed: () {
             if (pathArgument == MapScreen.pathScreen) {
               if (Preferences.isCleanFilter) {
-                Navigator.pushNamed(context, MapScreen.pathScreen, arguments: {'filter': "false", 'mlsNumber': ''});
+                Navigator.pushNamed(context, MapScreen.pathScreen, arguments: {
+                  'filter': "false",
+                });
                 Preferences.isCleanFilter = false;
-              } else {
-                Navigator.of(context).pop();
+                return;
               }
+              
+              Navigator.popUntil(context, ModalRoute.withName(MapScreen.pathScreen));
             } else {
               Navigator.pushNamed(context, '/');
             }
@@ -38,7 +39,6 @@ class FiltersScreen extends StatelessWidget {
         title: const Text('Personalize Listing'),
       ),
       body: LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
-        
         return SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(
@@ -71,6 +71,5 @@ class FiltersScreen extends StatelessWidget {
     final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
 
     return arguments["screenPath"].toString() == MapScreen.pathScreen ? MapScreen.pathScreen : "/";
-    
   }
 }

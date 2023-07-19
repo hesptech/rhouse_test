@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-
+///Widget showing the characteristics of the residence
 class MapCardSingleBox extends StatelessWidget {
 final String numBedrooms;
 final String numBathrooms;

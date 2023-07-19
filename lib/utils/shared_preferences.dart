@@ -475,6 +475,15 @@ class Preferences {
     _prefs.setBool('isCleanFilter', value);
   } 
 
+  static bool get isFilter {
+    return _prefs.getBool('isFilter') ?? false;
+  }
+
+
+  static set isFilter(bool value ) {
+    _prefs.setBool('isFilter', value);
+  }   
+
 
   static Future setfiltersIndexStyleHouse( List<String> value ) async => await _prefs.setStringList('filtersIndexStyleHouse', value);
   static List<String> getfiltersIndexStyleHouse() => _prefs.getStringList('filtersIndexStyleHouse') ?? _filtersIndexStyleHouse;

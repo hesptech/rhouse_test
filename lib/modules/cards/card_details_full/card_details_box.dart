@@ -58,7 +58,7 @@ class CardDetailsBox extends StatelessWidget {
               ],                   
             ),
           ),
-          const Divider( height: 0,  thickness: 0.8, color: Color(0xFF0BB48B), ),
+          const Divider( height: 0,  thickness: 0.8, color: kSecondaryColor, ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -68,13 +68,13 @@ class CardDetailsBox extends StatelessWidget {
                   height: 40.0,
                   decoration: const BoxDecoration(
                     border: Border(
-                      right: BorderSide(color: Color(0xFF0BB48B)),
+                      right: BorderSide(color: kSecondaryColor),
                     ),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.king_bed_outlined, color: Color(0xFF0BB48B), size: 30,),
+                      const Icon(Icons.king_bed_outlined, color: kSecondaryColor, size: 30,),
                       const SizedBox(width: 3,),
                       Text( 
                         dataFormatted.numBedrooms, 
@@ -90,13 +90,13 @@ class CardDetailsBox extends StatelessWidget {
                   height: 40.0,
                   decoration: const BoxDecoration(
                     border: Border(
-                      right: BorderSide(color: Color(0xFF0BB48B)),
+                      right: BorderSide(color: kSecondaryColor),
                     ),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.shower_outlined, color: Color(0xFF0BB48B), size: 30,),
+                      const Icon(Icons.shower_outlined, color: kSecondaryColor, size: 30,),
                       const SizedBox(width: 3,),
                       Text( 
                         listing.details?.numBathrooms?? '', 
@@ -112,13 +112,13 @@ class CardDetailsBox extends StatelessWidget {
                   height: 40.0,
                   decoration: const BoxDecoration(
                     border: Border(
-                      right: BorderSide(color: Color(0xFF0BB48B)),
+                      right: BorderSide(color: kSecondaryColor),
                     ),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.directions_car_filled_outlined, color: Color(0xFF0BB48B), size: 30,),
+                      const Icon(Icons.directions_car_filled_outlined, color: kSecondaryColor, size: 30,),
                       const SizedBox(width: 5,),
                       Text( 
                         dataFormatted.numParkingSpaces, 
@@ -147,7 +147,7 @@ class CardDetailsBox extends StatelessWidget {
               ),
             ],
           ),
-          const Divider( height: 0,  thickness: 0.8, color: Color(0xFF0BB48B), ),
+          const Divider( height: 0,  thickness: 0.8, color: kSecondaryColor, ),
           Padding(
             padding: const EdgeInsets.symmetric( vertical: 10.0, horizontal: 10.0 ),
             child: Row(
@@ -161,7 +161,7 @@ class CardDetailsBox extends StatelessWidget {
               ],
             ),
           ),
-          const Divider( height: 0,  thickness: 0.8, color: Color(0xFF0BB48B), ),
+          const Divider( height: 0,  thickness: 0.8, color: kSecondaryColor, ),
           Padding(
             padding: const EdgeInsets.symmetric( vertical: 10.0, horizontal: 10.0 ),
             child: Column(

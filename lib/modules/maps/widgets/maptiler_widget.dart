@@ -6,6 +6,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 import '../../../models/models.dart';
 
+///Maptiler widget, used to display a list of properties or a single property on the map.
 class MapTilerWidget extends StatefulWidget {
   final VectorTileLayer Function(BuildContext, VectorTileLayerMode mode) layerFactory;
   final void Function(MarkerClusterNode markerClusred)? onClusterTap;
@@ -144,11 +145,7 @@ class _MapWidget extends State<MapTilerWidget> {
               },
               interactiveFlags: widget.isMiniature
                   ? InteractiveFlag.none
-                  : InteractiveFlag.drag |
-                      InteractiveFlag.flingAnimation |
-                      InteractiveFlag.pinchMove |
-                      InteractiveFlag.pinchZoom |
-                      InteractiveFlag.doubleTapZoom),
+                  : InteractiveFlag.drag | InteractiveFlag.flingAnimation | InteractiveFlag.pinchMove | InteractiveFlag.pinchZoom | InteractiveFlag.doubleTapZoom),
           children: [widget.layerFactory(context, _layerMode), _markers()],
         ),
         // widget.cards
@@ -220,14 +217,15 @@ class _MapWidget extends State<MapTilerWidget> {
       if (!existingMarkerKeys.contains(key)) {
         var marker = Marker(
           key: key,
-          height: 30,
-          width: 30,
+          height: 50,
+          width: 50,
           point: LatLng(item.mapCoordinates!.latitude, item.mapCoordinates!.longitude),
           builder: (ctx) {
-            var color = const Color(0XFF02B68C);
+            bool isSelected = false;
             if (currentMarker != null && currentMarker!.key == key) {
-              color = const Color(0XFFED1C24);
+              isSelected = true;
             }
+
             return GestureDetector(
               onTap: () {
                 if (widget.onTapMarker == null) {
@@ -244,7 +242,23 @@ class _MapWidget extends State<MapTilerWidget> {
                   widget.onTapMarker!(markerItem);
                 }
               },
-              child: Icon(Icons.location_on_outlined, color: color, size: 50),
+              child: Container(
+                width: 100.0,
+                height: 100.0,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: !isSelected ? const Color(0XFF214497) : const Color(0XFFED1C24),
+                  border: Border.all(
+                    color: !isSelected ? const Color(0XFF09B68D) : Colors.white,
+                    width: 5.0,
+                  ),
+                ),
+                child: const Center(
+                  child: Text("1",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
             );
           },
         );
@@ -269,9 +283,7 @@ class _MapWidget extends State<MapTilerWidget> {
                 _zoomValue = widget.zoom;
                 _controller.move(widget.center!, _zoomValue);
               },
-              child: Icon(Icons.location_on_outlined,
-                  color: widget.isMiniature ? kPrimaryColor : const Color(0XFF02B68C),
-                  size: widget.isMiniature ? 50 : 60));
+              child: Icon(Icons.location_on_outlined, color: widget.isMiniature ? kPrimaryColor : const Color(0XFF02B68C), size: widget.isMiniature ? 50 : 60));
         });
   }
 }

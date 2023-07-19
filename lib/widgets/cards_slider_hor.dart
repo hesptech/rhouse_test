@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/modules/cards/card_scroll_horizontal/card_hor.dart';
+import 'package:flutter_black_white/utils/constants.dart';
 
 
 class CardsSliderHor extends StatefulWidget {
@@ -68,8 +69,8 @@ class _CardsSliderHorState extends State<CardsSliderHor> {
                   onPressed: () {
                     //Navigator.pushNamed( context, 'custom-selection', arguments: widget.title );
                   }, 
-                  //child: const Text('See More', style: TextStyle(color: Color(0xFF0BB48B), fontWeight: FontWeight.w400),),
-                  child: const Text('', style: TextStyle(color: Color(0xFF0BB48B), fontWeight: FontWeight.w400),),
+                  //child: const Text('See More', style: TextStyle(color: kSecondaryColor, fontWeight: FontWeight.w400),),
+                  child: const Text('', style: TextStyle(color: kSecondaryColor, fontWeight: FontWeight.w400),),
                 ),
               ],
             ),

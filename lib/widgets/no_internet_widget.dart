@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 
+///Widget that displays a view to indicate that there is no internet
 class NoInternetWidget extends StatelessWidget {
   const NoInternetWidget({super.key});
 
@@ -10,11 +11,12 @@ class NoInternetWidget extends StatelessWidget {
       color: Colors.white,
       child: Center(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: const [
+            SizedBox(height: 80.0),
             Icon(
-              Icons.cloud_off_outlined,
-              size: 64.0,
+              Icons.wifi_off,
+              size: 200.0,
               color:  Color(0XFF09B68D),
             ),
             SizedBox(height: 16.0),
@@ -26,6 +28,15 @@ class NoInternetWidget extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            SizedBox(height: 3.0),
+            Text(
+              'Try again later',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 18.0,
+                fontWeight: FontWeight.w400,
+              ),
+            ),            
           ],
         ),
       ),

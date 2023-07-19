@@ -39,7 +39,7 @@ class _CustomBottomNavigatorState extends State<CustomBottomNavigator> {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
-      backgroundColor: const Color(0xFF0BB48B),
+      backgroundColor: kSecondaryColor,
       //selectedItemColor: const Color(0xFFe8eaf6),
       unselectedItemColor: kPrimaryColor,
       showSelectedLabels: false,

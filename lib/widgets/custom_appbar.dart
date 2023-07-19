@@ -3,9 +3,6 @@ import 'package:flutter_black_white/screens/map_screen.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/modules/maps/utils/geolocation_app.dart';
 
-import '../providers/filter_provider.dart';
-//import 'package:flutter_black_white/search/search_delegate.dart';
-
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppbar({Key? key}) : super(key: key);
 
@@ -52,12 +49,12 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                                   _dialogGeolocation(context);
                                 });
                               },
-                              //child: const Icon( Icons.map_outlined, color: Color(0xFF0BB48B), size: 26.0,),
+                              //child: const Icon( Icons.map_outlined, color: kSecondaryColor, size: 26.0,),
                               child: Row(
                                 children: const [
                                   Icon(
                                     Icons.map_outlined,
-                                    color: Color(0xFF0BB48B),
+                                    color: kSecondaryColor,
                                     size: 30.0,
                                   ),
                                   Text(
@@ -78,7 +75,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                         },
                         child: const Icon(
                           Icons.tune_outlined,
-                          color: Color(0xFF0BB48B),
+                          color: kSecondaryColor,
                           size: 30.0,
                         ),
                       ),
@@ -118,7 +115,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
             ),
             Container(
               height: 5,
-              color: const Color(0xFF0BB48B),
+              color: kSecondaryColor,
             )
           ],
         ),
@@ -160,8 +157,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   void _goToMapSearch(BuildContext context) {
-    FilterProvider().cleanFilter();
-    Navigator.pushNamed(context, MapScreen.pathScreen, arguments: {'filter': "false", 'mlsNumber': ''});
+    Navigator.pushNamed(context, MapScreen.pathScreen, arguments: {'filter': "false"});
   }
 
   @override

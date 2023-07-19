@@ -15,6 +15,7 @@ import '../providers/filter_provider.dart';
 import '../utils/connectivity_internet.dart';
 import '../utils/shared_preferences.dart';
 
+///Screen showing the property list in a map[a
 class MapScreen extends StatefulWidget {
   static String pathScreen = "mapSearch_screen";
   const MapScreen({Key? key}) : super(key: key);
@@ -24,10 +25,16 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
+  late bool isFilter = false;
+
+  @override
+  void initState() {
+    isFilter = Preferences.isFilter;
+    super.initState();
+  }
+  
   @override
   Widget build(BuildContext context) {
-    var arguments = _checkArguments(context);
-    bool isFilter = arguments["filter"];
 
     return Scaffold(
         appBar: AppBar(
@@ -44,7 +51,7 @@ class _MapScreenState extends State<MapScreen> {
                 child: TextButton(
                     onPressed: () {
                       FilterProvider().cleanFilter();
-                      Navigator.pushNamed(context, MapScreen.pathScreen, arguments: {'filter': "false", 'mlsNumber': ''});
+                      Navigator.pushNamed(context, MapScreen.pathScreen, arguments: {'filter': "false"});
                     },
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -72,7 +79,7 @@ class _MapScreenState extends State<MapScreen> {
           ),
           leading: IconButton(
               onPressed: () {
-                FilterProvider().cleanFilter();
+                // FilterProvider().cleanFilter();
                 Navigator.pushNamed(context, '/');
               },
               icon: const Icon(
@@ -86,7 +93,6 @@ class _MapScreenState extends State<MapScreen> {
           actions: [
             GestureDetector(
               onTap: () {
-                Preferences.isCleanFilter = false;
                 Navigator.pushReplacementNamed(context, 'filters_screen', arguments: {'screenPath': MapScreen.pathScreen});
               },
               child: Column(
@@ -139,23 +145,11 @@ class _MapScreenState extends State<MapScreen> {
                           builder: (_, LatLng coordinates) {
                             return MapResidencesSearch(
                               style: remoteTheme,
-                              isFilter: isFilter,
                               coordinates: coordinates,
                             );
                           });
                     });
               }),
         ));
-  }
-
-  Map<String, dynamic> _checkArguments(BuildContext context) {
-    final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
-
-    bool isFilter = arguments["filter"].toString() == "true" ? true : false;
-    Map<String, dynamic> results = {
-      'filter': isFilter,
-    };
-
-    return results;
   }
 }
