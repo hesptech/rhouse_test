@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/modules/authentication/pin_verify_content.dart';
+import 'package:flutter_black_white/modules/agent/contact_agent_content.dart';
 
-class RegisterPinScreen extends StatelessWidget {
-  static String pathScreen = "registerPinScreen";
+class ContactAgentScreen extends StatelessWidget {
+  static String pathScreen = "contactAgent_Screen";
 
-  const RegisterPinScreen({super.key});
+  const ContactAgentScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,18 +12,17 @@ class RegisterPinScreen extends StatelessWidget {
         appBar: AppBar(
           centerTitle: true,
           elevation: 0.0,
-          title: const Text('Sign Up'),
+          title: const Text('Account'),
           leading: IconButton(
               onPressed: () {
                 Navigator.pop(context);
               },
               icon: const Icon(
-                Icons.arrow_back,
+                Icons.close,
                 color: Colors.white,
                 size: 34,
               )),
         ),
-        resizeToAvoidBottomInset: false,
-        body: const SafeArea(child: PinVerifyContent()));
+        body: const SafeArea(child: ContactAgentContent()));
   }
 }

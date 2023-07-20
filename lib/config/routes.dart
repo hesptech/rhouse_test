@@ -14,5 +14,9 @@ var customRoutes = <String, WidgetBuilder>{
   RegisterScreen.pathScreen: ( _ ) => const RegisterScreen(),
   RegisterPinScreen.pathScreen: ( _ ) => const RegisterPinScreen(),
   RegisterTermsUseScreen.pathScreen: ( _ ) => const RegisterTermsUseScreen(),
-  RegisterFinishScreen.pathScreen: ( _ ) => const RegisterFinishScreen()
+  RegisterFinishScreen.pathScreen: ( _ ) => const RegisterFinishScreen(),
+  AccountScreen.pathScreen: ( _ ) => const AccountScreen(),
+  AccountChangePasswordScreen.pathScreen: ( _ ) => const AccountChangePasswordScreen(),
+  AccountDeleteScreen.pathScreen: ( _ ) => const AccountDeleteScreen(),
+  ContactAgentScreen.pathScreen: ( _ ) => const ContactAgentScreen(),
 };

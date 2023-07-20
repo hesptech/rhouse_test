@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/modules/authentication/login_content.dart';
+import 'package:flutter_black_white/modules/account/change_password_content.dart';
 
-class LoginScreen extends StatelessWidget {
-  static String pathScreen = "login_screen";
 
-  const LoginScreen({Key? key}) : super(key: key);
+class AccountChangePasswordScreen extends StatelessWidget {
+  static String pathScreen = "accountChangePasword_Screen";
+
+  const AccountChangePasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0.0,
-        title: const Text('Log in'),
+        title: const Text('Account'),
           leading: IconButton(
               onPressed: () {
                 Navigator.pop(context);
@@ -24,7 +25,7 @@ class LoginScreen extends StatelessWidget {
               )),        
       ),
       resizeToAvoidBottomInset: false,
-      body: const SafeArea(child: LoginContent())
+      body:  const SafeArea(child: ChangePasswordContent())
     );     
   }
 }

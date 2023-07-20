@@ -23,6 +23,7 @@ class RegisterScreen extends StatelessWidget {
                 size: 34,
               )),
         ),
+        resizeToAvoidBottomInset: false,
         body: const SafeArea(child: RegisterContent()));
   }
 }

@@ -9,3 +9,7 @@ export 'package:flutter_black_white/screens/register_screen.dart';
 export 'package:flutter_black_white/screens/register_pin_screen.dart';
 export 'package:flutter_black_white/screens/register_terms_use_screen.dart';
 export 'package:flutter_black_white/screens/register_finish_screen.dart';
+export 'package:flutter_black_white/screens/account_screen.dart';
+export 'package:flutter_black_white/screens/account_change_password_screen.dart';
+export 'package:flutter_black_white/screens/account_delete_screen.dart';
+export 'package:flutter_black_white/screens/contact_agent_screen.dart';

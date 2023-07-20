@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/screens/register_screen.dart';
+import 'package:flutter_black_white/screens/screens.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 
 class LoginContent extends StatelessWidget {
@@ -16,7 +16,7 @@ class LoginContent extends StatelessWidget {
           const SizedBox(height: 20.0),
           _passwordField(),
           const SizedBox(height: 20.0),
-          _buttondLogin(),
+          _buttondLogin(context),
           const SizedBox(height: 60.0),
           _orLabel(),
           const SizedBox(height: 40.0),
@@ -25,7 +25,6 @@ class LoginContent extends StatelessWidget {
       ),
     );
   }
-
 
   Widget _passwordField() {
     return TextFormField(
@@ -66,7 +65,7 @@ class LoginContent extends StatelessWidget {
   Widget _labelRegister(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children:  [
+      children: [
         const Text(
           "New user?",
           style: TextStyle(fontWeight: FontWeight.w400, color: Colors.black),
@@ -105,7 +104,7 @@ class LoginContent extends StatelessWidget {
     );
   }
 
-  Widget _buttondLogin() {
+  Widget _buttondLogin(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         elevation: 0,
@@ -115,9 +114,13 @@ class LoginContent extends StatelessWidget {
         ),
         backgroundColor: kSecondaryColor,
       ),
-      child: const Text("LOG IN", style: TextStyle(fontWeight: FontWeight.bold),),
-      onPressed: () {},
+      child: const Text(
+        "LOG IN",
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+      onPressed: () {
+        Navigator.pushNamed(context, AccountScreen.pathScreen);
+      },
     );
   }
-
 }
