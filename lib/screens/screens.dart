@@ -13,3 +13,4 @@ export 'package:flutter_black_white/screens/account_screen.dart';
 export 'package:flutter_black_white/screens/account_change_password_screen.dart';
 export 'package:flutter_black_white/screens/account_delete_screen.dart';
 export 'package:flutter_black_white/screens/contact_agent_screen.dart';
+export 'package:flutter_black_white/screens/forgot_password_screen.dart';

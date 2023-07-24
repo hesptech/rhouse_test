@@ -17,7 +17,11 @@ class LoginContent extends StatelessWidget {
           _passwordField(),
           const SizedBox(height: 20.0),
           _buttondLogin(context),
-          const SizedBox(height: 60.0),
+          const SizedBox(
+            height: 30,
+          ),
+          _labelForgotPassword(context),
+          const SizedBox(height: 40.0),
           _orLabel(),
           const SizedBox(height: 40.0),
           _labelRegister(context),
@@ -57,6 +61,21 @@ class LoginContent extends StatelessWidget {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: const BorderSide(color: Colors.grey),
+        ),
+      ),
+    );
+  }
+
+  Widget _labelForgotPassword(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, ForgotPasswordScreen.pathScreen);      
+      },
+      child: const Text(
+        "Forgot your password",
+        style: TextStyle(
+          decoration: TextDecoration.underline,
+          color: kPrimaryColor,
         ),
       ),
     );

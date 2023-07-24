@@ -19,4 +19,5 @@ var customRoutes = <String, WidgetBuilder>{
   AccountChangePasswordScreen.pathScreen: ( _ ) => const AccountChangePasswordScreen(),
   AccountDeleteScreen.pathScreen: ( _ ) => const AccountDeleteScreen(),
   ContactAgentScreen.pathScreen: ( _ ) => const ContactAgentScreen(),
+  ForgotPasswordScreen.pathScreen: ( _ ) => const ForgotPasswordScreen()
 };
