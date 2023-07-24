@@ -350,7 +350,7 @@ class _AccountContentState extends State<AccountContent> {
         backgroundColor: kSecondaryColor,
       ),
       child: const Text(
-        "SIGN UP",
+        "SIGN OUT",
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
       ),
       onPressed: () {

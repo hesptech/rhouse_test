@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/modules/agent/contact_agent_content.dart';
 
 class ContactAgentScreen extends StatelessWidget {
@@ -8,6 +9,8 @@ class ContactAgentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final listing = ModalRoute.of(context)!.settings.arguments as Listing;
+
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -23,6 +26,6 @@ class ContactAgentScreen extends StatelessWidget {
                 size: 34,
               )),
         ),
-        body: const SafeArea(child: ContactAgentContent()));
+        body: SafeArea(child: ContactAgentContent(listing: listing,)));
   }
 }

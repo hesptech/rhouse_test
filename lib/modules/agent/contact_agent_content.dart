@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/models/response_listings.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 
 class ContactAgentContent extends StatefulWidget {
-  const ContactAgentContent({super.key});
+  final Listing listing;
+  const ContactAgentContent({super.key, required this.listing});
 
   @override
   State<ContactAgentContent> createState() => _ContactAgentContentState();
@@ -15,12 +17,17 @@ class _ContactAgentContentState extends State<ContactAgentContent> {
   late final TextEditingController _messageCtrl;
   late final String textMessage = "2934W Silver Av. Collingwood, ON";
 
+  String address = "";
+
   @override
   void initState() {
     _fullNameCtrl = TextEditingController(text: "Pepito Perez");
     _phoneNumberCtrl = TextEditingController(text: "");
     _emailCtrl = TextEditingController(text: "pepito@google.com");
-    _messageCtrl = TextEditingController(text: "I am interested in this property");
+
+    var addressObject = widget.listing.address;
+    address = "${addressObject!.streetNumber} ${addressObject.streetName} ${addressObject.streetSuffix} ${addressObject.neighborhood} ${addressObject.city}";
+    _messageCtrl = TextEditingController(text: "I am interested in this property \n$address");
     super.initState();
   }
 
@@ -53,7 +60,7 @@ class _ContactAgentContentState extends State<ContactAgentContent> {
             _emailTextForm(),
             const SizedBox(
               height: 30,
-            ),            
+            ),
             _messageTextForm(),
             const SizedBox(
               height: 30,
@@ -168,7 +175,7 @@ class _ContactAgentContentState extends State<ContactAgentContent> {
         ),
       ),
     );
-  }  
+  }
 
   Widget _messageTextForm() {
     return TextFormField(
@@ -203,7 +210,7 @@ class _ContactAgentContentState extends State<ContactAgentContent> {
         ),
       ),
     );
-  }    
+  }
 
   Widget _buttonContactAgent(BuildContext context) {
     return ElevatedButton(
@@ -219,9 +226,7 @@ class _ContactAgentContentState extends State<ContactAgentContent> {
         "CONTACT AGENT",
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
-      onPressed: () {
-        
-      },
+      onPressed: () {},
     );
   }
 }

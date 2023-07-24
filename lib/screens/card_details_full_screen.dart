@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/screens/screens.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_black_white/models/models.dart';
@@ -48,26 +47,7 @@ class CardDetailsFullScreen extends StatelessWidget {
             CardDetailsBox(listing),
             const SizedBox(
               height: 14,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, ContactAgentScreen.pathScreen);
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 26.0),
-                child: Container(
-                  height: 60,
-                  width: double.maxFinite,
-                  padding: const EdgeInsets.only(left: 10, right: 5, top: 5, bottom: 5),
-                  decoration: BoxDecoration(
-                    color: kPrimaryColor,
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    border: Border.all(width: 1, style: BorderStyle.solid, color: kPrimaryColor),
-                  ),
-                  child: const Align(alignment: Alignment.center, child: Text("CONTACT AGENT", style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold))),
-                ),
-              ),
-            ),
+            ),           
             const SizedBox(
               height: 14,
             ),
