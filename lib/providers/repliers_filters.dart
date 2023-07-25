@@ -12,6 +12,7 @@ class RepliersFilters extends ChangeNotifier {
   List<Listing> onDisplayFilters = [];
   int onCount = 0;
   int _displayPageFilters = 0;
+  bool isLoading = false;
   bool loaded = false;
 
 
@@ -32,15 +33,23 @@ class RepliersFilters extends ChangeNotifier {
     // Await the http get response, then decode the json-formatted response.
     final response = await http.get(url, headers: headers);
     //return response.body;
-    if ( response.statusCode == 200 ) {
-      return response.body;
-    } else {
-      return processResponse(response);
+    try {
+      if ( response.statusCode == 200 ) {
+        return response.body;
+      } else {
+        return processResponse(response);
+      }
+    } catch (e) {
+      //print('Error: $e');
+      return 'Error: $e';
     }
   }
 
 
   getDisplayFilters(Map<String, dynamic> filtersResults) async {
+
+    if (isLoading) return;
+    isLoading = true;
 
     _displayPageFilters++;
     filtersResults['pageNum'] = _displayPageFilters.toString(); 
@@ -53,6 +62,7 @@ class RepliersFilters extends ChangeNotifier {
     onCount = nowPlayingResponse.count;
     loaded = true;
     notifyListeners();
+    isLoading = false;
   }
 
   initGetDisplay(Map<String, dynamic> filtersResults) {

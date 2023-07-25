@@ -15,6 +15,8 @@ class RepliersProvider extends ChangeNotifier {
   List<Listing> onDisplayCondo = [];
   int _displayPageHouses = 0;
   int _displayPageCondo = 0;
+  bool isLoadingHouse = false;
+  bool isLoadingCondo = false;
 
 
   Map<String, dynamic> valuesParams = {};
@@ -37,22 +39,31 @@ class RepliersProvider extends ChangeNotifier {
       'hasImages': 'true',
       'class': classParam,
     });
+    //print( url );
 
     String envApiKey = dotenv.get('REPLIERS-API-KEY');
 
     Map<String, String>? headers = { 'REPLIERS-API-KEY': envApiKey };
 
     // Await the http get response, then decode the json-formatted response.
-    final response = await http.get(url, headers: headers);
-
-    if ( response.statusCode == 200 ) {
-      return response.body;
-    } else {
-      return processResponse(response);
+    try {
+      final response = await http.get(url, headers: headers);
+      if (response.statusCode == 200) {
+        return response.body;
+      } else {
+        return processResponse(response);
+      }
+    } catch (e) {
+      //print('Error: $e');
+      return 'Error: $e';
     }
   }
 
   getDisplayHouses() async {
+
+    if (isLoadingHouse) return;
+    isLoadingHouse = true;
+
     _displayPageHouses++;
     final jsonData = await _getJsonData('listings', 'residential', _displayPageHouses); 
 
@@ -60,9 +71,14 @@ class RepliersProvider extends ChangeNotifier {
 
     onDisplayHouses = [ ...onDisplayHouses, ...nowPlayingResponse.listings];
     notifyListeners();
+    isLoadingHouse = false;
   }
 
   getDisplayCondo() async {
+
+    if (isLoadingCondo) return;
+    isLoadingCondo = true;
+
     _displayPageCondo++;
     final jsonData = await _getJsonData('listings', 'condo', _displayPageCondo); 
 
@@ -70,5 +86,6 @@ class RepliersProvider extends ChangeNotifier {
 
     onDisplayCondo = [ ...onDisplayCondo, ...nowPlayingResponse.listings];
     notifyListeners();
+    isLoadingCondo = false;
   }
 }

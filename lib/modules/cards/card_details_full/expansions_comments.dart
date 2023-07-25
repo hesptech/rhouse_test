@@ -54,7 +54,7 @@ class _ExpansionCommentsState extends State<ExpansionComments> {
                 children: [
                   Flexible(
                     child: Text(
-                      description, 
+                      description.replaceAll('. ', '.\n\n'), 
                       style: const TextStyle(fontSize: 16, color: Color(0xFF231F20), height: 1.3, ), 
                       textAlign: TextAlign.start, 
                     )

@@ -30,7 +30,6 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
     super.initState();
 
     Map<String, dynamic> filtersPrefs = {
-        'pageNum': '1',
         'resultsPerPage': '15',
         'type': 'sale',
         'hasImages': 'true',
