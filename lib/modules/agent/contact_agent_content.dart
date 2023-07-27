@@ -65,7 +65,10 @@ class _ContactAgentContentState extends State<ContactAgentContent> {
             const SizedBox(
               height: 30,
             ),
-            _buttonContactAgent(context)
+            _buttonContactAgent(context),
+            const SizedBox(
+              height: 20,
+            ),            
           ],
         ),
       ),

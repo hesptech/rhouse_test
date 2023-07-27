@@ -70,10 +70,11 @@ class RegisterTermUseContent extends StatelessWidget {
   Widget _actions(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        _rejectButton(context),
+        Expanded(child: _rejectButton(context)),
         const SizedBox(width: 15),
-        _acceptButton(context),
+        Expanded(child: _acceptButton(context)),
       ],
     );
   }

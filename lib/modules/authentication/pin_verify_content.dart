@@ -48,7 +48,7 @@ class _PinViewState extends State<PinVerifyContent> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Padding(
+      child: Container(
         padding: const EdgeInsets.only(left: 35, right: 35, top: 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -66,48 +66,47 @@ class _PinViewState extends State<PinVerifyContent> {
             const SizedBox(height: 30),
             _labelPin(),
             const SizedBox(height: 25),
-            _textPin(),
+            _textsPin(),
             const SizedBox(height: 20),
             labelPinBottom(),
             const SizedBox(height: 40,),
-            _buttondRegister()
+            _buttondRegister(),
+            const SizedBox(height: 20,),
           ],
         ),
       ),
     );
   }
 
-  Widget _textPin() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 25, right: 25),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          for (int i = 0; i < 4; i++)
-            SizedBox(
-              width: 60,
-              child: TextField(
-                controller: _controllers[i],
-                keyboardType: TextInputType.number,
-                textInputAction: TextInputAction.next,
-                maxLength: 1,
-                onChanged: (value) => _onTextChanged(i, value),
-                focusNode: _focusNodes[i],
-                textAlign: TextAlign.center,
-                decoration:  InputDecoration(
-                  counterText: '',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                    borderSide: const BorderSide(
-                      color: kClTxtInputFieldLog,
-                      width: 2
-                    )
-                  ),
+  Widget _textsPin() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        for (int i = 0; i < 4; i++)
+          SizedBox(
+            width: 60,
+            child: TextField(
+              controller: _controllers[i],
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.next,
+              maxLength: 1,
+              onChanged: (value) => _onTextChanged(i, value),
+              focusNode: _focusNodes[i],
+              textAlign: TextAlign.center,
+              decoration:  InputDecoration(
+                counterText: '',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(
+                    color: kClTxtInputFieldLog,
+                    width: 2
+                  )
                 ),
               ),
             ),
-        ],
-      ),
+          ),
+      ],
     );
   }
 

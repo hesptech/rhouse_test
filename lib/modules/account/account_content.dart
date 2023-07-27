@@ -115,10 +115,12 @@ class _AccountContentState extends State<AccountContent> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: const [
-        Icon(
-          Icons.favorite_outline,
-          color: kSecondaryColor,
-          size: 38,
+        Expanded(
+          child: Icon(
+            Icons.favorite_outline,
+            color: kSecondaryColor,
+            size: 38,
+          ),
         ),
         SizedBox(
           width: 25,
@@ -130,10 +132,12 @@ class _AccountContentState extends State<AccountContent> {
         SizedBox(
           width: 60,
         ),
-        Icon(
-          Icons.arrow_forward,
-          color: kSecondaryColor,
-          size: 38,
+        Expanded(
+          child: Icon(
+            Icons.arrow_forward,
+            color: kSecondaryColor,
+            size: 38,
+          ),
         ),
       ],
     );
@@ -143,8 +147,10 @@ class _AccountContentState extends State<AccountContent> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: const [
-        Image(
-          image: AssetImage('assets/play&learn_chip_53h.png'),
+        Expanded(
+          child: Image(
+            image: AssetImage('assets/play&learn_chip_53h.png'),
+          ),
         ),
         SizedBox(
           width: 25,
@@ -156,10 +162,12 @@ class _AccountContentState extends State<AccountContent> {
         SizedBox(
           width: 60,
         ),
-        Icon(
-          Icons.arrow_forward,
-          color: kSecondaryColor,
-          size: 38,
+        Expanded(
+          child: Icon(
+            Icons.arrow_forward,
+            color: kSecondaryColor,
+            size: 38,
+          ),
         ),
       ],
     );
@@ -268,7 +276,7 @@ class _AccountContentState extends State<AccountContent> {
       readOnly: true,
       obscureText: true,
       style: const TextStyle(
-        color: Colors.black,
+        color: Colors.black,        
         fontWeight: FontWeight.w400,
       ),
       decoration: InputDecoration(
@@ -308,7 +316,7 @@ class _AccountContentState extends State<AccountContent> {
       maxLines: 2,
       style: const TextStyle(
         color: kWarningColor,
-        fontSize: 13,
+        fontSize: 11,
         fontWeight: FontWeight.w400,
       ),
       decoration: InputDecoration(

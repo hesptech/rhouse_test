@@ -7,25 +7,28 @@ class LoginContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 30, right: 30, top: 100),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          _emailField(),
-          const SizedBox(height: 20.0),
-          _passwordField(),
-          const SizedBox(height: 20.0),
-          _buttondLogin(context),
-          const SizedBox(
-            height: 30,
-          ),
-          _labelForgotPassword(context),
-          const SizedBox(height: 40.0),
-          _orLabel(),
-          const SizedBox(height: 40.0),
-          _labelRegister(context),
-        ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 30, right: 30, top: 100),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            _emailField(),
+            const SizedBox(height: 20.0),
+            _passwordField(),
+            const SizedBox(height: 20.0),
+            _buttondLogin(context),
+            const SizedBox(
+              height: 30,
+            ),
+            _labelForgotPassword(context),
+            const SizedBox(height: 40.0),
+            _orLabel(),
+            const SizedBox(height: 40.0),
+            _labelRegister(context),
+            const SizedBox(height: 20.0),
+          ],
+        ),
       ),
     );
   }
