@@ -36,8 +36,8 @@ class History {
     factory History.fromMap(Map<String, dynamic> json) => History(
         soldDate: json["soldDate"] != null ? DateTime.parse(json["soldDate"]) : DateTime.parse("2000-01-01T21:55:44.000Z"),
         timestamps: Map.from(json["timestamps"]).map((k, v) => MapEntry<String, DateTime?>(k, v == null ? null : DateTime.parse(v))),
-        soldPrice: json["soldPrice"],
-        listPrice: json["listPrice"],
-        lastStatus: json["lastStatus"],
+        soldPrice: json["soldPrice"] ?? '',
+        listPrice: json["listPrice"] ?? '',
+        lastStatus: json["lastStatus"] ?? '',
     );
 }

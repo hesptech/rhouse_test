@@ -19,12 +19,16 @@ class RepliersListingMls extends ChangeNotifier {
 
     Map<String, String>? headers = { 'REPLIERS-API-KEY': dotenv.get('REPLIERS-API-KEY') };
 
-    final response = await http.get(url, headers: headers);
-
-    if ( response.statusCode == 200 ) {
-      return response.body;
-    } else {
-      return processResponse(response);
+    try {
+      final response = await http.get(url, headers: headers);
+      if ( response.statusCode == 200 ) {
+        return response.body;
+      } else {
+        return processResponse(response);
+      }
+    } catch (e) {
+      //print('Error: $e');
+      return 'Error: $e';
     }
   }
 
