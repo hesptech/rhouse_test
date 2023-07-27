@@ -46,7 +46,7 @@ class _MapLocationPropertyState extends State<MapLocationProperty> {
     return Container(
       margin: EdgeInsets.all(marginSize),
       height: constraints.maxHeight * 0.40,
-      padding: const EdgeInsets.all(0),
+      
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(

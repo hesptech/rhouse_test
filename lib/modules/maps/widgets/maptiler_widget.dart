@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
@@ -129,26 +130,32 @@ class _MapWidget extends State<MapTilerWidget> {
           mapController: _controller,
           options: MapOptions(
               bounds: LatLngBounds.fromPoints([widget.center!]),
-              center: widget.center!,
+              // center: widget.center!,
               zoom: _zoomValue,
               minZoom: _minZoom,
+              maxZoom: widget.isMultiple ? _maxZoomList : _maxZoomsingle,
               onTap: (tapPosition, point) {
                 if (widget.onTapMap == null) {
                   return;
                 }
-
                 widget.onTapMap!();
               },
-              maxZoom: widget.isMultiple ? _maxZoomList : _maxZoomsingle,
               onMapReady: () {
-                _controller.move(widget.center!, _zoomValue);
+                double latitudeAlfa = 0;
+
+                if (widget.isMiniature) {
+                  latitudeAlfa = widget.center!.latitude;
+                } else {
+                  latitudeAlfa = widget.center!.latitude - 0.0003;
+                }
+
+                _controller.move(LatLng(latitudeAlfa, widget.center!.longitude), _zoomValue);
               },
               interactiveFlags: widget.isMiniature
                   ? InteractiveFlag.none
                   : InteractiveFlag.drag | InteractiveFlag.flingAnimation | InteractiveFlag.pinchMove | InteractiveFlag.pinchZoom | InteractiveFlag.doubleTapZoom),
           children: [widget.layerFactory(context, _layerMode), _markers()],
         ),
-        // widget.cards
       ])),
       widget.cards,
     ]);
@@ -160,11 +167,11 @@ class _MapWidget extends State<MapTilerWidget> {
         size: const Size(50, 50),
         maxClusterRadius: 80,
         anchor: AnchorPos.align(AnchorAlign.center),
+        spiderfyCluster: false,
+        zoomToBoundsOnClick: false,
         fitBoundsOptions: widget.isMultiple
             ? FitBoundsOptions(padding: const EdgeInsets.all(50), maxZoom: _maxZoom)
             : FitBoundsOptions(padding: const EdgeInsets.only(top: 500), maxZoom: _maxZoom),
-        spiderfyCluster: false,
-        zoomToBoundsOnClick: false,
         markers: widget.isMultiple ? markers.toList() : [markerSingle],
         onClusterTap: (MarkerClusterNode markerClusterNode) {
           if (widget.onClusterTap == null) {
@@ -254,7 +261,8 @@ class _MapWidget extends State<MapTilerWidget> {
                   ),
                 ),
                 child: const Center(
-                  child: Text("1",
+                  child: Text(
+                    "1",
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
@@ -271,19 +279,25 @@ class _MapWidget extends State<MapTilerWidget> {
 
   void _setMarker() {
     var listing = widget.listingSingle ?? Listing();
+    var mapCoordinates = listing.mapCoordinates ?? MapCoordinates(point: "", latitude: 0, longitude: 0);
+    
     markerSingle = Marker(
         key: Key(listing.mlsNumber ?? ""),
-        height: 150,
-        width: 50,
-        point: LatLng(listing.mapCoordinates!.latitude, listing.mapCoordinates!.longitude),
+        height: widget.isMiniature ? 50 : 60,
+        width: widget.isMiniature ? 50 : 60,
         anchorPos: AnchorPos.align(AnchorAlign.top),
+        point: LatLng(mapCoordinates.latitude, mapCoordinates.longitude),
         builder: (ctx) {
           return GestureDetector(
               onTap: () {
                 _zoomValue = widget.zoom;
                 _controller.move(widget.center!, _zoomValue);
               },
-              child: Icon(Icons.location_on_outlined, color: widget.isMiniature ? kPrimaryColor : kSecondaryColor, size: widget.isMiniature ? 50 : 60));
+              child: Icon(
+                Icons.location_on_outlined,
+                color: widget.isMiniature ? kPrimaryColor : kSecondaryColor,
+                size: widget.isMiniature ? 50 : 70,
+              ));
         });
   }
 }
