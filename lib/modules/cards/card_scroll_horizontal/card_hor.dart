@@ -2,13 +2,13 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/utils/data_formatter.dart';
 import 'package:flutter_black_white/modules/cards/card_scroll_horizontal/card_horizontal_box.dart';
 import 'package:flutter_black_white/modules/cards/card_scroll_horizontal/card_horizontal_stack.dart';
 import 'package:flutter_black_white/screens/map_property_screen.dart';
-import 'package:flutter_black_white/utils/constants.dart';
-import 'package:flutter_black_white/utils/data_formatter.dart';
 
 class CardHor extends StatelessWidget {
 
@@ -25,7 +25,9 @@ class CardHor extends StatelessWidget {
     const blurImg = loggedIn == false ? 5.0 : 0.0 ; 
     //final screenSize = MediaQuery.of(context).size;
     final String images = listing.images?.first?? '';
-    final String propertyType = listing.details?.propertyType?? '';
+    String propertyType = listing.details?.propertyType?? '';
+    propertyType = propertyType.length > 16 ? '${propertyType.substring(0,15)}...' : propertyType ;
+    final bool statusActUna = listing.status == 'A' ? true : false ;
 
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -111,8 +113,8 @@ class CardHor extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  ' ${dataFormatted.listPrice}', 
-                                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: kPrimaryColor),
+                                  statusActUna ? ' ${dataFormatted.listPrice}' : 'SOLD ${dataFormatted.soldPrice}', 
+                                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: kPrimaryColor),
                                 ),
                                 Container(
                                   padding: const EdgeInsets.symmetric( vertical: 2, horizontal: 5.0 ),

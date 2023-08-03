@@ -1,8 +1,9 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/config/environment.dart';
 import 'package:http/http.dart' as http;
+
+import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -10,26 +11,27 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class RepliersProvider extends ChangeNotifier {
 
   String citySearchParam = '';
+  List<String> status;
   List<Listing> onDisplayProperties = [];
   List<Listing> onDisplayHouses = [];
   List<Listing> onDisplayCondo = [];
-  int _displayPageHouses = 0;
-  int _displayPageCondo = 0;
+  int displayPageHouses = 0;
+  int displayPageCondo = 0;
   bool isLoadingHouse = false;
   bool isLoadingCondo = false;
+  DateTime minSoldDate = DateTime.now().subtract(const Duration(days: 365));
 
 
   Map<String, dynamic> valuesParams = {};
 
 
-  RepliersProvider( this.citySearchParam ) {
-    citySearchParam == 'toronto' ? 'toronto' : citySearchParam ;
-    getDisplayHouses();
-    getDisplayCondo();
-
+  RepliersProvider( this.status ) {
+    status;
+    getDisplayHouses(status);
+    getDisplayCondo(status);
   }
 
-  Future<String> _getJsonData( String endPoint, String classParam, [int page = 1] ) async {
+  Future<String> _getJsonData( String endPoint, String classParam, status, [int page = 1] ) async {
     final url = Uri.https( kBaseUrl, endPoint, {
       'pageNum': '$page',
       'resultsPerPage': '15',
@@ -38,6 +40,8 @@ class RepliersProvider extends ChangeNotifier {
       'type': 'sale',
       'hasImages': 'true',
       'class': classParam,
+      'status': status,
+      'minSoldDate': minSoldDate.toString().substring(0, 10)
     });
     //print( url );
 
@@ -59,13 +63,13 @@ class RepliersProvider extends ChangeNotifier {
     }
   }
 
-  getDisplayHouses() async {
+  getDisplayHouses(status) async {
 
     if (isLoadingHouse) return;
     isLoadingHouse = true;
 
-    _displayPageHouses++;
-    final jsonData = await _getJsonData('listings', 'residential', _displayPageHouses); 
+    displayPageHouses++;
+    final jsonData = await _getJsonData('listings', 'residential', status, displayPageHouses); 
 
     final nowPlayingResponse = ResponseBody.fromJson(jsonData);
 
@@ -74,17 +78,50 @@ class RepliersProvider extends ChangeNotifier {
     isLoadingHouse = false;
   }
 
-  getDisplayCondo() async {
+
+  getDisplayCondo(status) async {
 
     if (isLoadingCondo) return;
     isLoadingCondo = true;
 
-    _displayPageCondo++;
-    final jsonData = await _getJsonData('listings', 'condo', _displayPageCondo); 
+    displayPageCondo++;
+    final jsonData = await _getJsonData('listings', 'condo', status, displayPageCondo); 
 
     final nowPlayingResponse = ResponseBody.fromJson(jsonData);
 
     onDisplayCondo = [ ...onDisplayCondo, ...nowPlayingResponse.listings];
+    notifyListeners();
+    isLoadingCondo = false;
+  }
+
+
+  getDisplayHousesStatus(status) async {
+
+    if (isLoadingHouse) return;
+    isLoadingHouse = true;
+
+    displayPageHouses = 1;
+    final jsonData = await _getJsonData('listings', 'residential', status, displayPageHouses);
+
+    final nowPlayingResponse = ResponseBody.fromJson(jsonData);
+
+    onDisplayHouses = nowPlayingResponse.listings;
+    notifyListeners();
+    isLoadingHouse = false;
+  }
+
+
+  getDisplayCondoStatus(status) async {
+
+    if (isLoadingCondo) return;
+    isLoadingCondo = true;
+
+    displayPageCondo = 1;
+    final jsonData = await _getJsonData('listings', 'condo', status, displayPageCondo);
+
+    final nowPlayingResponse = ResponseBody.fromJson(jsonData);
+
+    onDisplayCondo = nowPlayingResponse.listings;
     notifyListeners();
     isLoadingCondo = false;
   }

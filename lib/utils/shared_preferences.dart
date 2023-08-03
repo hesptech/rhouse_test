@@ -48,6 +48,7 @@ class Preferences {
   static double _filterCondoFeeEnd = 1500.0;
   static List<String> _filtersCondoExtra = [];
 
+  static List<String> _filtersStatusProperties = ['A'];
 
   static List<String> _filtersPropertyTypeHouse = [];
   static List<String> _userFiltersCity = [];
@@ -470,6 +471,15 @@ class Preferences {
     return _prefs.getBool('isCleanFilter') ?? false;
   }
 
+   // FILTERS Status Properties
+  static List<String> get filtersStatusProperties {
+    return _prefs.getStringList('filtersStatusProperties') ?? _filtersStatusProperties;
+  }
+
+  static set filtersStatusProperties( List<String> value ) {
+    _filtersStatusProperties = value;
+    _prefs.setStringList( 'filtersStatusProperties', value );
+  }
 
   static set isCleanFilter(bool value ) {
     _prefs.setBool('isCleanFilter', value);

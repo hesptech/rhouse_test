@@ -14,6 +14,7 @@ class CardDetailsBox extends StatelessWidget {
   Widget build(BuildContext context) { 
     
     final dataFormatted = DataFormatter(listing);
+    final bool statusActUna = listing.status == 'A' ? true : false;
 
     return Container(
       margin: const EdgeInsets.fromLTRB(24.0, 0, 24.0, 20.0),
@@ -30,7 +31,12 @@ class CardDetailsBox extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const Text('Listed for: ', style: TextStyle(fontSize: 16, ), ),   
+                    statusActUna
+                    ?
+                    const Text('Listed for: ', style: TextStyle(fontSize: 16, ), )
+                    :
+                    const Text('SOLD for: ', style: TextStyle(fontSize: 16, ), )
+                    ,  
                     Align(
                       //alignment: Alignment.center,
                       child: SizedBox(
@@ -39,7 +45,7 @@ class CardDetailsBox extends StatelessWidget {
                         height: 25,
                         child: FittedBox(
                           child: Text( 
-                            dataFormatted.listPrice, 
+                            statusActUna ? dataFormatted.listPrice : dataFormatted.soldPrice, 
                             style: const TextStyle(fontWeight: FontWeight.bold, color: kPrimaryColor, ), 
                           ),
                         ),

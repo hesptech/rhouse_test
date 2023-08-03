@@ -9,6 +9,7 @@ class FilterProvider extends ChangeNotifier {
   List<String> _filtersStyleCondo = Preferences.getfiltersIndexStyleCondo();
   List<String> _filtersAmmenities = Preferences.getfiltersIndexAmmenities();
   List<String> _filtersBasement = Preferences.getfiltersIndexBasement();
+  List<String> _filtersStatusProperties = Preferences.filtersStatusProperties;
 
   String get filterProvider {
     return _filterProvider;
@@ -70,6 +71,15 @@ class FilterProvider extends ChangeNotifier {
 
   set filtersAmmenities(List<String> value) {
     _filtersAmmenities = value;
+    notifyListeners();
+  }
+
+  List<String> get filtersStatusProperties {
+    return _filtersStatusProperties;
+  }
+
+  set filtersStatusProperties( List<String> value ) {
+    _filtersStatusProperties = value;
     notifyListeners();
   }
 

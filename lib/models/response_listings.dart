@@ -9,6 +9,9 @@ class Listing {
     this.timestamps,
     this.daysOnMarket,
     this.listPrice,
+    this.soldPrice,
+    this.soldDate,
+    this.status,
     this.address,
     this.details,
     this.mapCoordinates,
@@ -28,6 +31,9 @@ class Listing {
   Timestamps? timestamps;
   String? daysOnMarket;
   String? listPrice;
+  String? soldPrice;
+  DateTime? soldDate;
+  String? status;
   Address? address;
   Details? details;
   MapCoordinates? mapCoordinates;
@@ -50,6 +56,9 @@ class Listing {
     timestamps: json["timestamps"] != null ?  Timestamps.fromMap(json["timestamps"]) : null,
     daysOnMarket: json["daysOnMarket"],
     listPrice: json["listPrice"],
+    soldPrice: json["soldPrice"],
+    soldDate: json["soldDate"] != null ? DateTime.parse(json["soldDate"]) : DateTime.parse("2023-01-01T21:55:44.000Z"),
+    status: json["status"],
     address: json["address"] != null ? Address.fromMap(json["address"]) : null,
     details: json["details"] != null ? Details.fromMap(json["details"]) : null,
     mapCoordinates: json["map"] != null ? MapCoordinates.fromJson(json["map"]) : null,

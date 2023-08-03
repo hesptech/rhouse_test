@@ -12,6 +12,7 @@ class CardDetailsStack extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final dataFormatted = DataFormatter(listing);
+    final bool statusActUna = listing.status == 'A' ? true : false;
 
     return Stack(
       children: [
@@ -42,8 +43,14 @@ class CardDetailsStack extends StatelessWidget {
                   width: 5,
                 ),
                 Text(
-                  dataFormatted.listEntryDate,                  
-                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400)),
+                  statusActUna
+                  ? dataFormatted.listEntryDate
+                  : dataFormatted.listEntryDateSold,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
                 const SizedBox(
                   width: 5,
                 ),

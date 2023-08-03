@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
+
 
 class CardHorizontalStack extends StatelessWidget {
 
@@ -14,6 +16,7 @@ class CardHorizontalStack extends StatelessWidget {
 
     const loggedIn = true;
     final dataFormatted = DataFormatter(listing);
+    final bool statusActUna = listing.status == 'A' ? true : false ;
 
     return loggedIn == true
       ? 
@@ -36,7 +39,15 @@ class CardHorizontalStack extends StatelessWidget {
                 children: [
                   const Icon(Icons.calendar_month_outlined, size: 16,),
                   const SizedBox(width: 5,),
-                  Text(dataFormatted.listEntryDate, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400))
+                  Text(
+                    statusActUna
+                    ? dataFormatted.listEntryDate
+                    : dataFormatted.listEntryDateSold,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
                 ],
               ),
             )

@@ -29,20 +29,11 @@ class AppState extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => FilterProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => RepliersProvider('toronto ALL'),
-          lazy: false,
-        ),
-        ChangeNotifierProvider(
-          create: (_) => RepliersFilters('toronto ALL'),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => RepliersListingMls(),
-        ),
-        ChangeNotifierProvider(create: (_) => MapListProvider()),
+        ChangeNotifierProvider( create: (_) => FilterProvider() ),
+        ChangeNotifierProvider( create: (_) => RepliersProvider(Preferences.filtersStatusProperties), lazy: false ),
+        ChangeNotifierProvider( create: (_) => RepliersFilters('toronto ALL') ),
+        ChangeNotifierProvider( create: (_) => RepliersListingMls() ),
+        ChangeNotifierProvider( create: (_) => MapListProvider() ),
       ],
       child: const App(),
     );

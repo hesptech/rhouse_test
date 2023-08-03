@@ -20,6 +20,19 @@ class DataFormatter {
     return listingEntryDate();
   }
 
+  String listingEntryDateSold() {
+    DateTime listingSoldDate = listing.soldDate?? DateTime.now();
+    DateTime addDt = DateTime.now();
+    Duration diffDt = addDt.difference(listingSoldDate);
+    final formattedSoldDate = diffDt.inDays == 0 ? 'SOLD today' : diffDt.inDays == 1 ? 'SOLD ${diffDt.inDays} day ago' : 'SOLD ${diffDt.inDays} days ago';
+    return formattedSoldDate;
+  }
+
+
+  String get listEntryDateSold {
+    return listingEntryDateSold();
+  }
+
 
   String listingListPrice() {
     String listPrice = listing.listPrice?? '' ;
@@ -30,6 +43,18 @@ class DataFormatter {
 
   String get listPrice {
     return listingListPrice();
+  }
+
+  String listingSoldPrice() {
+    String soldPrice = listing.soldPrice?? '' ;
+    double doubleString = double.parse(soldPrice);
+    String formattedPrice = '\$${doubleString.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}';
+    return formattedPrice;
+  }
+
+
+  String get soldPrice {
+    return listingSoldPrice();
   }
 
 
