@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/modules/authentication/login_content.dart';
+import 'package:flutter_black_white/modules/authentication/forgot_password_content.dart';
 
-class LoginScreen extends StatelessWidget {
-  static String pathScreen = "login_screen";
 
-  const LoginScreen({Key? key}) : super(key: key);
+class ForgotPasswordScreen extends StatelessWidget {
+  static String pathScreen = "forgotPassword_Screen";
+
+  const ForgotPasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0.0,
-        title: const Text('Log in'),
+        title: const Text('Account'),
           leading: IconButton(
               onPressed: () {
                 Navigator.pop(context);
@@ -24,7 +25,7 @@ class LoginScreen extends StatelessWidget {
               )),        
       ),
       resizeToAvoidBottomInset: false,
-      body: const SafeArea(child: LoginContent())
+      body:  const SafeArea(child: ForgotPasswordContent())
     );     
   }
 }

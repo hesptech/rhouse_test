@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/utils/constants.dart';
 
 ///Widget showing the characteristics of the residence
 class MapCardSingleBox extends StatelessWidget {
@@ -21,7 +22,7 @@ const MapCardSingleBox({super.key, required this.numBedrooms, required this.numB
             width: 68.0,
             decoration: const BoxDecoration(
               border: Border(
-                top: BorderSide(color: Color(0xFF0BB48B)),
+                top: BorderSide(color: kSecondaryColor),
               ),
             ),
             child: Row(
@@ -30,7 +31,7 @@ const MapCardSingleBox({super.key, required this.numBedrooms, required this.numB
               children: [
                 const Icon(
                   Icons.king_bed_outlined,
-                  color: Color(0xFF0BB48B),
+                  color: kSecondaryColor,
                   size: 35,
                 ),
                 const SizedBox(
@@ -59,8 +60,8 @@ const MapCardSingleBox({super.key, required this.numBedrooms, required this.numB
             padding: const EdgeInsets.all(3.0),
             decoration: const BoxDecoration(
               border: Border(
-                top: BorderSide(color: Color(0xFF0BB48B)),
-                left: BorderSide(color: Color(0xFF0BB48B)),
+                top: BorderSide(color: kSecondaryColor),
+                left: BorderSide(color: kSecondaryColor),
               ),
             ),
             child: Row(
@@ -69,7 +70,7 @@ const MapCardSingleBox({super.key, required this.numBedrooms, required this.numB
               children: [
                 const Icon(
                   Icons.shower_outlined,
-                  color: Color(0xFF0BB48B),
+                  color: kSecondaryColor,
                   size: 30,
                 ),
                 const SizedBox(

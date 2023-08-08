@@ -24,13 +24,12 @@ class MapCardSmall extends StatelessWidget {
     const loggedIn = true;
     const blurImg = loggedIn == false ? 5.0 : 0.0;
 
-    // Gen. Info
     final String images = listing.images?.first ?? '';
 
     return Card(
           clipBehavior: Clip.antiAliasWithSaveLayer,
         shape: RoundedRectangleBorder(
-          side: const BorderSide(color: Color(0XFF2D368F), width: 2),
+          side: const BorderSide(color: kPrimaryColor, width: 2),
           borderRadius: BorderRadius.circular(0),
         ),        
         child: Padding(
@@ -108,7 +107,7 @@ class MapCardSmall extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF2D368F),
+                color: kPrimaryColor,
               ),
             ),
           ),
@@ -172,7 +171,7 @@ class MapCardSmall extends StatelessWidget {
               children: [
                 const Icon(
                   Icons.king_bed_outlined,
-                  color: Color(0xFF0BB48B),
+                  color: kSecondaryColor,
                   size: 20,
                 ),
                 const SizedBox(
@@ -203,7 +202,7 @@ class MapCardSmall extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: 5),
           decoration: const BoxDecoration(
             border: Border(
-              left: BorderSide(color: Color(0xFF0BB48B)),
+              left: BorderSide(color: kSecondaryColor),
             ),
           ),
           child: Padding(
@@ -214,7 +213,7 @@ class MapCardSmall extends StatelessWidget {
               children: [
                 const Icon(
                   Icons.shower_outlined,
-                  color: Color(0xFF0BB48B),
+                  color: kSecondaryColor,
                   size: 20,
                 ),
                 const SizedBox(
@@ -244,7 +243,7 @@ class MapCardSmall extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: 5),
           decoration: const BoxDecoration(
             border: Border(
-              left: BorderSide(color: Color(0xFF0BB48B)),
+              left: BorderSide(color: kSecondaryColor),
             ),
           ),
           child: Padding(
@@ -254,7 +253,7 @@ class MapCardSmall extends StatelessWidget {
               children: [
                 const Icon(
                   Icons.directions_car_filled_outlined,
-                  color: Color(0xFF0BB48B),
+                  color: kSecondaryColor,
                   size: 20,
                 ),
                 const SizedBox(
@@ -308,7 +307,7 @@ class MapCardSmall extends StatelessWidget {
             children: [
               const Icon(
                 Icons.calendar_month_outlined,
-                color: Color(0XFF2D368F),
+                color: kPrimaryColor,
                 size: 15,
               ),
               const SizedBox(
@@ -319,7 +318,7 @@ class MapCardSmall extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     softWrap: true,
-                    style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w400, color: Color(0XFF2D368F))),
+                    style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w400, color: kPrimaryColor)),
               )
             ],
           ));
@@ -331,7 +330,7 @@ class MapCardSmall extends StatelessWidget {
         margin: const EdgeInsets.only(top: 5, left: 10),
         child: ElevatedButton(
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF2D368F)),
+            backgroundColor: MaterialStateProperty.all<Color>(kPrimaryColor),
           ),
           onPressed: () {
             //Navigator.pushNamed(context, 'details', arguments: listing);

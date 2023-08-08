@@ -59,7 +59,7 @@ class _MapScreenState extends State<MapScreen> {
                       children: const [
                         Icon(
                           Icons.replay,
-                          color: Color(0XFF09B68D),
+                          color: kSecondaryColor,
                           size: 22,
                         ),
                         SizedBox(
@@ -101,7 +101,7 @@ class _MapScreenState extends State<MapScreen> {
                 children: [
                   Icon(
                     Icons.tune_outlined,
-                    color: isFilter ? const Color(0XFFED1C24) : Colors.white,
+                    color: isFilter ? kWarningColor : Colors.white,
                     size: 35,
                   ),
                   const Text(
