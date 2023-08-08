@@ -10,5 +10,6 @@ var customRoutes = <String, WidgetBuilder>{
   'filters_screen': ( _ ) => const FiltersScreen(),
   'filters_results_screen': ( _ ) => const FiltersResultsScreen(),
   'card_details_full_screen': ( _ ) => const CardDetailsFullScreen(),
+  'card_details_full_sold_screen': ( _ ) => const CardDetailsFullSoldScreen(),
   'card_images_screen': ( _ ) => const CardImagesScreen(),
 };
