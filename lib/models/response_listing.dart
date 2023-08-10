@@ -1,19 +1,22 @@
 import 'dart:convert';
 import 'package:flutter_black_white/models/response_listings.dart';
 
-
 class ResponseListing {
     List<History>? history;
     String? mlsNumber;
     String? listingClass;
     List<String>? images;
     DateTime? listDate;
+    Timestamps? timestamps;
     String? daysOnMarket;
     String? listPrice;
     String? soldPrice;
     DateTime? soldDate;
     String? status;
+    String? lastStatus;
     Address? address;
+    Details? details;
+    Lot? lot;
     String? occupancy;
 
     ResponseListing({
@@ -22,12 +25,16 @@ class ResponseListing {
       this.listingClass,
       this.images,
       this.listDate,
+      this.timestamps,
       this.daysOnMarket,
       this.listPrice,
       this.soldPrice,
       this.soldDate,
       this.status,
+      this.lastStatus,
       this.address,
+      this.details,
+      this.lot,
       this.occupancy,
     });
 
@@ -39,17 +46,19 @@ class ResponseListing {
       listingClass: json["class"],
       images: List<String>.from(json["images"].map((x) => x)),
       listDate: DateTime.parse(json["listDate"]),
+      timestamps: Timestamps.fromMap(json["timestamps"]),
       daysOnMarket: json["daysOnMarket"],
       listPrice: json["listPrice"],
       soldPrice: json["soldPrice"],
       soldDate: json["soldDate"] != null ? DateTime.parse(json["soldDate"]) : DateTime.parse("2023-01-01T21:55:44.000Z"),
       status: json["status"],
+      lastStatus: json["lastStatus"],
       address: Address.fromMap(json["address"]),
+      details: Details.fromMap(json["details"]),
+      lot: Lot.fromMap(json["lot"]),
       occupancy: json["occupancy"],
     );
 }
-
-
 
 
 class History {

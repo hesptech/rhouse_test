@@ -3,15 +3,15 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter_black_white/providers/repliers_listing_mls.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-
+import 'package:flutter_black_white/models/models.dart';
 
 class CardDetailsHistory extends StatefulWidget {
 
   final Function onHistory;
   final Function onInit;
+  final Listing listing;
 
-  //const CardDetailsHistory( this.listing, this.mlsNumber, {super.key, required this.onHistory, });
-  const CardDetailsHistory({super.key, required this.onHistory, required this.onInit, });
+  const CardDetailsHistory({super.key, required this.onHistory, required this.onInit, required this.listing });
 
   @override
   State<CardDetailsHistory> createState() => _CardDetailsHistoryState();
@@ -70,6 +70,7 @@ class _CardDetailsHistoryState extends State<CardDetailsHistory> {
                           repliersListingMls.onDisplayHistory[index].listPrice,
                           repliersListingMls.onDisplayHistory[index].lastStatus,
                           repliersListingMls.onDisplayHistory[index].mlsNumber.toString(),
+                          widget.listing
                         ),
                       ],
                     ),
@@ -107,7 +108,7 @@ class HistoryFormatter extends StatelessWidget {
   final String listPrice;
   final String lastStatus;  //Sld Ter Exp Sus Lsd
   final String mlsNumberStatus;
-  //final String mlsNumber;
+  final Listing listing;
 
 
   const HistoryFormatter(
@@ -119,7 +120,7 @@ class HistoryFormatter extends StatelessWidget {
     this.listPrice,
     this.lastStatus,
     this.mlsNumberStatus,
-    //this.mlsNumber,
+    this.listing,
     {super.key}
   );
 
@@ -195,13 +196,11 @@ class HistoryFormatter extends StatelessWidget {
               IconButton(
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),
-                //style: ButtonStyle(padding: MaterialStatePropertyAll(EdgeInsets.all(0.0)))),
                 onPressed: (){
-                  //Navigator.pushNamed(context, 'card_details_full_sold_screen', arguments: repliersListingMls);
-                  //repliersListing.initGetDisplay();
-                  //repliersListing.getDisplayListingHistory( mlsNumberStatus );
-                  //repliersListing.initListingMlsData();
-                  Navigator.pushNamed(context, 'card_details_full_sold_screen', arguments: mlsNumberStatus);
+                  Navigator.pushNamed(
+                    context,
+                    'card_details_full_sold_screen',
+                    arguments: ScreenArguments(listing, lastStatusHistory, dateHistory,  formattedPrice, mlsNumberStatus));
                 },
                 icon: const Icon( Icons.arrow_circle_right_outlined, size: 24, color: kSecondaryColor,),
               )
@@ -209,8 +208,19 @@ class HistoryFormatter extends StatelessWidget {
           ),
           const Divider( height: 14.0,  thickness: 0.8, color: kPrimaryColor, ),
         ],
+
       )
       : const Divider( height: 0.0,  thickness: 0.0, color: Colors.transparent, ) ;
   }
+}
+
+class ScreenArguments {
+  final Listing listing;
+  String lastStatusHistory = '';
+  String dateHistory = '';
+  String formattedPrice = '---';
+  String mlsNumberStatus = '';
+
+  ScreenArguments(this.listing, this.lastStatusHistory, this.dateHistory, this.formattedPrice, this.mlsNumberStatus);
 }
 
