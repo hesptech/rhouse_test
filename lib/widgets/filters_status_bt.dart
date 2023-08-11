@@ -137,22 +137,22 @@ class _FiltersStatusBtState extends State<FiltersStatusBt> {
                 bottomLeft: Radius.circular(5),
                 bottomRight: Radius.circular(5),
               ),
-              color: kPrimaryColor,
+              color: kWarningColor,
               border: Border(
                 left: BorderSide(
-                color: kPrimaryColor,
+                color: kWarningColor,
                 width: 2,
                 ),
                 top: BorderSide(
-                color: kPrimaryColor,
+                color: kWarningColor,
                 width: 2,
                 ),
                 right: BorderSide(
-                color: kPrimaryColor,
+                color: kWarningColor,
                 width: 2,
                 ),
                 bottom: BorderSide(
-                color: kPrimaryColor,
+                color: kWarningColor,
                 width: 2,
                 )
               )
@@ -166,19 +166,19 @@ class _FiltersStatusBtState extends State<FiltersStatusBt> {
               color: Colors.white,
               border: Border(
                 left: BorderSide(
-                color: kPrimaryColor,
+                color: kWarningColor,
                 width: 2,
                 ),
                 top: BorderSide(
-                color: kPrimaryColor,
+                color: kWarningColor,
                 width: 2,
                 ),
                 right: BorderSide(
-                color: kPrimaryColor,
+                color: kWarningColor,
                 width: 2,
                 ),
                 bottom: BorderSide(
-                color: kPrimaryColor,
+                color: kWarningColor,
                 width: 2,
                 )
               ),
@@ -199,7 +199,7 @@ class _FiltersStatusBtState extends State<FiltersStatusBt> {
               'SOLD', 
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: kPrimaryColor,
+                color: kWarningColor,
                 fontWeight: FontWeight.bold,
                 fontSize: 16.0,
               ),              

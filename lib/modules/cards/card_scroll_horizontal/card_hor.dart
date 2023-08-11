@@ -27,7 +27,7 @@ class CardHor extends StatelessWidget {
     final String images = listing.images?.first?? '';
     String propertyType = listing.details?.propertyType?? '';
     propertyType = propertyType.length > 16 ? '${propertyType.substring(0,15)}...' : propertyType ;
-    final bool statusActUna = listing.status == 'A' ? true : false ;
+    final bool statusActive = listing.status == 'A' ? true : false ;
 
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -112,9 +112,27 @@ class CardHor extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  statusActUna ? ' ${dataFormatted.listPrice}' : 'SOLD ${dataFormatted.soldPrice}', 
-                                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: kPrimaryColor),
+                                Row(
+                                  children: [
+                                    Text(
+                                      statusActive ? 'LISTED\nFOR' : 'SOLD\nFOR',
+                                      style: TextStyle(
+                                        fontSize: 13, 
+                                        fontWeight: FontWeight.bold, 
+                                        color: statusActive ? kPrimaryColor : kWarningColor,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 5.0,),
+                                    Text(
+                                      statusActive ? ' ${dataFormatted.listPrice}' : dataFormatted.soldPrice,
+                                      style: TextStyle(
+                                        fontSize: 22, 
+                                        fontWeight: FontWeight.bold, 
+                                        color: statusActive ? kPrimaryColor : kWarningColor,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ],
                                 ),
                                 Container(
                                   padding: const EdgeInsets.symmetric( vertical: 2, horizontal: 5.0 ),

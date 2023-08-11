@@ -16,7 +16,7 @@ class CardHorizontalStack extends StatelessWidget {
 
     const loggedIn = true;
     final dataFormatted = DataFormatter(listing);
-    final bool statusActUna = listing.status == 'A' ? true : false ;
+    final bool statusActive = listing.status == 'A' ? true : false ;
 
     return loggedIn == true
       ? 
@@ -27,7 +27,7 @@ class CardHorizontalStack extends StatelessWidget {
             alignment: Alignment.topLeft,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: kPrimaryColor,
+                backgroundColor: statusActive ? kPrimaryColor : kWarningColor,
                 minimumSize: const Size(140.0, 28.0),
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -40,7 +40,7 @@ class CardHorizontalStack extends StatelessWidget {
                   const Icon(Icons.calendar_month_outlined, size: 16,),
                   const SizedBox(width: 5,),
                   Text(
-                    statusActUna
+                    statusActive
                     ? dataFormatted.listEntryDate
                     : dataFormatted.listEntryDateSold,
                     style: const TextStyle(

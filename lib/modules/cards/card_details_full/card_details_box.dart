@@ -14,7 +14,8 @@ class CardDetailsBox extends StatelessWidget {
   Widget build(BuildContext context) { 
     
     final dataFormatted = DataFormatter(listing);
-    final bool statusActUna = listing.status == 'A' ? true : false;
+    final bool statusActive = listing.status == 'A' ? true : false;
+    String labelFormattedPrice = statusActive ? 'Listed for' : 'SOLD\nFOR:';
 
     return Container(
       margin: const EdgeInsets.fromLTRB(24.0, 0, 24.0, 20.0),
@@ -27,26 +28,33 @@ class CardDetailsBox extends StatelessWidget {
             padding: const EdgeInsets.symmetric( vertical: 10.0, horizontal: 10.0 ),
             child: Row(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    statusActUna
-                    ?
-                    const Text('Listed for: ', style: TextStyle(fontSize: 16, ), )
-                    :
-                    const Text('SOLD for: ', style: TextStyle(fontSize: 16, ), )
-                    ,  
+                    Text(
+                      labelFormattedPrice, 
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: statusActive ? kPrimaryColor : kWarningColor,
+                      ), 
+                    )
+                    ,
+                    const SizedBox(width: 10.0,), 
                     Align(
                       //alignment: Alignment.center,
                       child: SizedBox(
                       
                         //alignment: Alignment.center,
-                        height: 25,
+                        height: 26,
                         child: FittedBox(
                           child: Text( 
-                            statusActUna ? dataFormatted.listPrice : dataFormatted.soldPrice, 
-                            style: const TextStyle(fontWeight: FontWeight.bold, color: kPrimaryColor, ), 
+                            statusActive ? dataFormatted.listPrice : dataFormatted.soldPrice, 
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold, 
+                              color: statusActive ? kPrimaryColor : kWarningColor, 
+                            ), 
                           ),
                         ),
                       ),

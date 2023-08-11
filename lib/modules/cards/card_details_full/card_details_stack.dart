@@ -12,7 +12,7 @@ class CardDetailsStack extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final dataFormatted = DataFormatter(listing);
-    final bool statusActUna = listing.status == 'A' ? true : false;
+    final bool statusActive = listing.status == 'A' ? true : false;
 
     return Stack(
       children: [
@@ -25,7 +25,7 @@ class CardDetailsStack extends StatelessWidget {
           alignment: Alignment.topLeft,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: kPrimaryColor,
+              backgroundColor: statusActive ? kPrimaryColor : kWarningColor,
               minimumSize: const Size(140.0, 28.0),
               padding: const EdgeInsets.fromLTRB(7.0, 0.0, 0.0, 0.0),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -43,7 +43,7 @@ class CardDetailsStack extends StatelessWidget {
                   width: 5,
                 ),
                 Text(
-                  statusActUna
+                  statusActive
                   ? dataFormatted.listEntryDate
                   : dataFormatted.listEntryDateSold,
                   style: const TextStyle(

@@ -46,7 +46,7 @@ class CardHistoryBox extends StatelessWidget {
                       labelFormattedPrice,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: statusActive ? kPrimaryColor : const Color.fromARGB(255, 255, 0, 0),
+                        color: statusActive ? kPrimaryColor : kWarningColor,
                       ),
                     ),
                     const SizedBox(width: 10.0,),  
@@ -61,7 +61,7 @@ class CardHistoryBox extends StatelessWidget {
                             formattedPrice,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: statusActive ? kPrimaryColor : const Color.fromARGB(255, 255, 0, 0),
+                              color: statusActive ? kPrimaryColor : kWarningColor,
                             ),
                           ),
                         ),

@@ -44,10 +44,9 @@ class _FiltersBottomBarState extends State<FiltersBottomBar> {
                     Provider.of<FilterProvider>(context, listen: false).filtersAmmenities = [];
 
                     if (widget.pathScreen == MapScreen.pathScreen) {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, 'filters_screen', arguments: {'screenPath': MapScreen.pathScreen});
+                      Navigator.pushNamed(context, MapScreen.pathScreen, arguments: {'filter': "true"});
                     } else {
-                      Navigator.pushNamed(context, 'filters_screen');
+                      Navigator.pushNamed(context, 'filters_results_screen', arguments: 'Filtered results');
                     }
                   });
                 },
