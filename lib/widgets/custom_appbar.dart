@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/screens/map_screen.dart';
 import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/utils/search_delegate.dart';
 import 'package:flutter_black_white/modules/maps/utils/geolocation_app.dart';
 
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
@@ -86,6 +87,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                   GestureDetector(
                     onTap: () {
+                      showSearch(context: context, delegate: InputSearchDelegate());
                       if (loggedIn == true) {
                         //showSearch(context: context, delegate: MovieSearchDelegate());
                       } else {
