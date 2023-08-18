@@ -46,7 +46,7 @@ class _FiltersBottomBarState extends State<FiltersBottomBar> {
                     if (widget.pathScreen == MapScreen.pathScreen) {
                       Navigator.pushNamed(context, MapScreen.pathScreen, arguments: {'filter': "true"});
                     } else {
-                      Navigator.pushNamed(context, 'filters_results_screen', arguments: 'Filtered results');
+                      Navigator.pushNamed(context, '/');
                     }
                   });
                 },
