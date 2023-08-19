@@ -35,7 +35,7 @@ class DataFormatter {
 
 
   String listingListPrice() {
-    String listPrice = listing.listPrice?? '' ;
+    String listPrice = listing.listPrice?? '0.00' ;
     double doubleString = double.parse(listPrice);
     String formattedPrice = '\$${doubleString.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}';
     return formattedPrice;
@@ -46,7 +46,7 @@ class DataFormatter {
   }
 
   String listingSoldPrice() {
-    String soldPrice = listing.soldPrice?? '' ;
+    String soldPrice = listing.soldPrice?? '0.00' ;
     double doubleString = double.parse(soldPrice);
     String formattedPrice = '\$${doubleString.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}';
     return formattedPrice;
