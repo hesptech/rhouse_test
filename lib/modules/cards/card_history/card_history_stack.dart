@@ -12,7 +12,7 @@ class CardHistoryStack extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final bool statusActive = lastStatusHistory == 'SOLD' ? true : false;
+    //final bool statusActive = lastStatusHistory == 'SOLD' ? true : false;
 
     return Stack(
       children: [
@@ -25,7 +25,7 @@ class CardHistoryStack extends StatelessWidget {
           alignment: Alignment.topLeft,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: statusActive ? kPrimaryColor : kWarningColor,
+              backgroundColor: kWarningColor,
               minimumSize: const Size(140.0, 28.0),
               padding: const EdgeInsets.fromLTRB(7.0, 0.0, 0.0, 0.0),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),

@@ -19,7 +19,7 @@ class CardHistoryBox extends StatelessWidget {
 
 
     final dataFormatted = DataFormatter(listing);
-    final bool statusActive = lastStatusHistory == 'SOLD' ? true : false;
+    //final bool statusActive = lastStatusHistory == 'SOLD' ? true : false;
     //final Color labelFormattedPriceColor = listing.status == 'A' ? kPrimaryColor : kPrimaryColor ;
     String labelFormattedPrice = 'FOR';
     if (lastStatusHistory == 'SOLD') labelFormattedPrice = 'SOLD\nFOR';
@@ -44,9 +44,9 @@ class CardHistoryBox extends StatelessWidget {
                   children: [
                     Text(
                       labelFormattedPrice,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: statusActive ? kPrimaryColor : kWarningColor,
+                        color: kWarningColor,
                       ),
                     ),
                     const SizedBox(width: 10.0,),  
@@ -59,9 +59,9 @@ class CardHistoryBox extends StatelessWidget {
                         child: FittedBox(
                           child: Text(
                             formattedPrice,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: statusActive ? kPrimaryColor : kWarningColor,
+                              color: kWarningColor,
                             ),
                           ),
                         ),
