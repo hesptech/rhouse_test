@@ -104,6 +104,7 @@ class TypePropertyBtn extends StatelessWidget {
             stateSaleSold.onDisplayCondo = [];
             stateSaleSold.getDisplayHousesStatus(filterProvider.filtersStatusProperties);
             stateSaleSold.getDisplayCondoStatus(filterProvider.filtersStatusProperties);
+            Navigator.pushNamed(context, '/');
           }
         } else {
           if(filterProvider.filtersStatusProperties.contains('U')) {
@@ -118,6 +119,7 @@ class TypePropertyBtn extends StatelessWidget {
             stateSaleSold.onDisplayCondo = [];
             stateSaleSold.getDisplayHousesStatus(filterProvider.filtersStatusProperties);
             stateSaleSold.getDisplayCondoStatus(filterProvider.filtersStatusProperties);
+            Navigator.pushNamed(context, '/');
           }
         }
 

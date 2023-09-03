@@ -27,12 +27,14 @@ class HomeScreen extends StatelessWidget {
                   listing: repliersProvider.onDisplayHouses,
                   title: 'HOUSE Listings',
                   onNextPage: () => repliersProvider.getDisplayHouses(repliersStatusProperties),
+                  onInitPage: () => repliersProvider.initGetDisplay(repliersStatusProperties),
                 ),
 
                 CardsSliderHor(
                   listing: repliersProvider.onDisplayCondo,
                   title: 'CONDO Listings',
                   onNextPage: () => repliersProvider.getDisplayCondo(repliersStatusProperties),
+                  onInitPage: () => repliersProvider.initGetDisplay(repliersStatusProperties),
                 ),
 
               ],

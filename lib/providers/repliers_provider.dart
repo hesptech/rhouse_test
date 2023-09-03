@@ -125,4 +125,15 @@ class RepliersProvider extends ChangeNotifier {
     notifyListeners();
     isLoadingCondo = false;
   }
+
+  initGetDisplay(status) {
+    displayPageHouses = 1;
+    displayPageCondo = 1;
+    onDisplayHouses = [];
+    onDisplayCondo = [];
+    isLoadingCondo = false;
+    isLoadingHouse = false;
+    getDisplayCondoStatus(status);
+    getDisplayHousesStatus(status);
+  }
 }

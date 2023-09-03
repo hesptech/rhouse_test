@@ -37,7 +37,7 @@ class CardDetailsExpansions extends StatelessWidget {
             const SizedBox(
               height: 30.0,
             ),
-            InkWell(
+            listing.status == 'A' ? InkWell(
               onTap: () {
                 Navigator.pushNamed(context, ContactAgentScreen.pathScreen, arguments: listing);
               },
@@ -55,7 +55,7 @@ class CardDetailsExpansions extends StatelessWidget {
                   child: const Align(alignment: Alignment.center, child: Text("CONTACT AGENT", style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold))),
                 ),
               ),
-            ),
+            ) : const SizedBox( height: 0.0,),
             const SizedBox(
               height: 30,
             ),

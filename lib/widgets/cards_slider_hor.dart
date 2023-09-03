@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/modules/cards/card_scroll_horizontal/card_hor.dart';
+import 'package:flutter_black_white/providers/repliers_provider.dart';
 import 'package:flutter_black_white/utils/constants.dart';
+import 'package:provider/provider.dart';
 
 
 class CardsSliderHor extends StatefulWidget {
@@ -10,12 +12,14 @@ class CardsSliderHor extends StatefulWidget {
   final List<Listing> listing;
   final String? title;
   final Function onNextPage;
+  final Function onInitPage;
 
   const CardsSliderHor({
     Key? key, 
     required this.listing, 
     this.title, 
-    required this.onNextPage
+    required this.onNextPage, 
+    required this.onInitPage
   }) : super(key: key);
 
   @override
@@ -44,6 +48,8 @@ class _CardsSliderHorState extends State<CardsSliderHor> {
 
   @override
   Widget build(BuildContext context) {
+
+    final repliersProviders = Provider.of<RepliersProvider>(context);
 
     return SizedBox(
       width: double.infinity,
@@ -76,7 +82,13 @@ class _CardsSliderHorState extends State<CardsSliderHor> {
             ),
 
           // CARD Horizontal
-          Expanded(
+          repliersProviders.isLoadingCondo ? 
+          //const CircularProgressIndicator( color: kPrimaryColor, )
+          //const Text('data')
+          const Center(
+            child: CircularProgressIndicator( color: kPrimaryColor, ),
+          )
+          : Expanded(
             child: ListView.builder(
               controller: scrollController,
               scrollDirection: Axis.horizontal,
