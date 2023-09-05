@@ -26,7 +26,7 @@ class CardHor extends StatelessWidget {
     //final screenSize = MediaQuery.of(context).size;
     final String images = listing.images?.first?? '';
     String propertyType = listing.details?.propertyType?? '';
-    propertyType = propertyType.length > 16 ? '${propertyType.substring(0,15)}...' : propertyType ;
+    propertyType = propertyType.length > 16 ? '${propertyType.substring(0,12)}...' : propertyType ;
     final bool statusActive = listing.status == 'A' ? true : false ;
 
     return Card(

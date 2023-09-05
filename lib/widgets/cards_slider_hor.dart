@@ -86,7 +86,10 @@ class _CardsSliderHorState extends State<CardsSliderHor> {
           //const CircularProgressIndicator( color: kPrimaryColor, )
           //const Text('data')
           const Center(
-            child: CircularProgressIndicator( color: kPrimaryColor, ),
+            child: Padding(
+              padding: EdgeInsets.only(top: 100.0),
+              child: CircularProgressIndicator( color: kPrimaryColor, ),
+            ),
           )
           : Expanded(
             child: ListView.builder(

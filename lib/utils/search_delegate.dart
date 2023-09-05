@@ -40,7 +40,7 @@ class InputSearchDelegate extends SearchDelegate {
   }
 
   @override
-  String? get searchFieldLabel => 'Address, Street Name or Listing#....';
+  String? get searchFieldLabel => 'MLS #, Address, Street Name or Listing#....';
 
 
   @override
