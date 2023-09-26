@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/config/environment.dart';
+//import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 import 'package:flutter_black_white/modules/cards/card_details_full/card_details_stack.dart';
 import 'package:flutter_black_white/screens/map_property_screen.dart';
+import 'package:flutter_black_white/widgets/cards_carousel_slider.dart';
 
 class CardDetailsTop extends StatelessWidget {
   final Listing listing;
@@ -16,7 +17,7 @@ class CardDetailsTop extends StatelessWidget {
 
     final dataFormatted = DataFormatter(listing);
     final screenSize = MediaQuery.of(context).size;
-    final String images = listing.images?.first ?? '';
+    //final String images = listing.images?.first ?? '';
 
     return Container(
       margin: const EdgeInsets.all(14),
@@ -27,18 +28,7 @@ class CardDetailsTop extends StatelessWidget {
               Card(
                 clipBehavior: Clip.antiAlias,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                child: FadeInImage(
-                  height: 300,
-                  placeholder: const AssetImage('assets/no-image.jpg'),
-                  //image: AssetImage('assets/house_500x300.jpg'),
-                  image: NetworkImage('$kRepliersCdn$images?w=1080'),
-                  imageErrorBuilder: (context, error, stackTrace) {
-                    return Image.asset('assets/no-image.jpg', fit: BoxFit.fitWidth);
-                  },
-                  fit: BoxFit.cover,
-                  fadeInDuration: const Duration(milliseconds: 300),
-                ),
-                //child: const Placeholder( fallbackHeight: 300.0, ),
+                child: CardsCarouselSlider(listing),
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14.0),
