@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
+import 'package:flutter_black_white/config/filters_data_locations.dart';
 
 class FiltersTrEast extends StatefulWidget {
   const FiltersTrEast({Key? key}) : super(key: key);
@@ -19,13 +20,7 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
 
   bool citySelectAll = Preferences.filtersTrEast.length == 5  ? true : false ;
 
-  List<List<String>> torontoEastDistricts = [
-    ['Toronto E01','Toronto E02','Toronto E03'],
-    ['Toronto E02'],
-    ['Toronto E03'],
-    ['Toronto E01'],
-    ['Toronto E11','Toronto E04'],
-  ];
+  List<List<String>> torontoEastDistricts = codesTrEast;
 
 
   @override
@@ -56,6 +51,7 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
 
     return 
       ExpansionTile(
+        initiallyExpanded: true,
         title: const Text('Toronto East', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.w500, ),),
         trailing: Icon(
           _openCloseIcons[0] ? Icons.remove : Icons.add,
@@ -69,6 +65,10 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
               TextButton(
                 onPressed: () { 
                   setState(() {
+
+                    Provider.of<FilterProvider>(context, listen: false).resetLocationTopbts();
+                    _filtersTrEast = Preferences.filtersTrEast;
+
                     for (var element in _propertiesTrEast) {
                       _filtersTrEast.remove(element.name) ;
                     }
@@ -138,6 +138,10 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
           selected: _filtersTrEast.contains(propertiesTrEast.name),
           onSelected: ( bool selected ) {
             setState(() {
+
+                Provider.of<FilterProvider>(context, listen: false).resetLocationTopbts();
+                _filtersTrEast = Preferences.filtersTrEast;
+
                 selected ? _filtersTrEast.add(propertiesTrEast.name) : _filtersTrEast.removeWhere((String name) => name == propertiesTrEast.name) ;
                 Preferences.filtersTrEast = _filtersTrEast;
 

@@ -17,6 +17,13 @@ class CardDetailsFullScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(5.0),
+          child: Container(
+            height: 5.0,
+            color: kSecondaryColor,
+          )
+        ),
         elevation: 0,
         centerTitle: true,
         title: const Image(
@@ -39,10 +46,6 @@ class CardDetailsFullScreen extends StatelessWidget {
         physics: const ScrollPhysics(),
         child: Column(
           children: [
-            Container(
-              height: 5,
-              color: kSecondaryColor,
-            ),
             CardDetailsTop(listing),
             CardDetailsBox(listing),
             const SizedBox(

@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
-
+import 'package:flutter_black_white/config/filters_data_locations.dart';
 
 class FiltersTrCentral extends StatefulWidget {
   const FiltersTrCentral({Key? key}) : super(key: key);
@@ -21,12 +21,7 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
 
   bool citySelectAll = Preferences.filtersTrCentral.length == 4 ? true : false ;
 
-  List<List<String>> torontoCentral = [
-    ['Toronto C01','Toronto C08'],
-    ['Toronto C02','Toronto C03','Toronto C04','Toronto C09','Toronto C10'],
-    ['Toronto C11'],
-    ['Toronto C04','Toronto C06','Toronto C07','Toronto C11','Toronto C13','Toronto C15'],
-  ];
+  List<List<String>> torontoCentral = codesTrCentral;
   late List<List<String>> trCentral = [];
   List<String> locationsCodes = [];
   //final List torontoCentral = [];
@@ -55,6 +50,7 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
 
     return 
       ExpansionTile(
+        initiallyExpanded: true,
         title: const Text('Toronto Central', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.w500, ),),
         trailing: Icon(
           _openCloseIcons[0] ? Icons.remove : Icons.add,
@@ -68,6 +64,10 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
               TextButton(
                 onPressed: () {
                   setState(() {
+
+                    Provider.of<FilterProvider>(context, listen: false).resetLocationTopbts();
+                    _filtersTrCentral = Preferences.filtersTrCentral;
+
                     for (var element in _propertiesTrCentral) {
                       _filtersTrCentral.remove(element.name);
                     } 
@@ -141,22 +141,27 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
           selected: _filtersTrCentral.contains(propertiesTrCentral.name),
           onSelected: ( bool selected ) {
             setState(() {
-                selected ? _filtersTrCentral.add(propertiesTrCentral.name) : _filtersTrCentral.removeWhere((String name) => name == propertiesTrCentral.name) ;
-                selected ? trCentral.add(torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)]) : trCentral.removeWhere((List name) => name == torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)]) ;
 
+                Provider.of<FilterProvider>(context, listen: false).resetLocationTopbts();
+                _filtersTrCentral = Preferences.filtersTrCentral;
+
+                selected ? _filtersTrCentral.add(propertiesTrCentral.name) : _filtersTrCentral.removeWhere((String name) => name == propertiesTrCentral.name) ;
+                //selected ? trCentral.add(torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)]) : trCentral.removeWhere((List name) => name == torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)]) ;
                 Preferences.filtersTrCentral = _filtersTrCentral;
+
                 if(selected){
-                  locationsCodes = [...locationsCodes,  ...torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)]];
+                  //locationsCodes = [...locationsCodes,  ...torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)]];
                   Provider.of<FilterProvider>(context, listen: false).filtersLocation = [...Provider.of<FilterProvider>(context, listen: false).filtersLocation,  ...torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)]];
                 } else {
                   for(int i = 0; i < torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)].length; ++i){
-                    if(locationsCodes.contains(torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)][i])){
-                      locationsCodes.removeWhere((String name) => name == torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)][i]);
+                    //if(locationsCodes.contains(torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)][i])){
+                      //locationsCodes.removeWhere((String name) => name == torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)][i]);
                       Provider.of<FilterProvider>(context, listen: false).filtersLocation.removeWhere((String name) => name == torontoCentral[_propertiesTrCentral.indexOf(propertiesTrCentral)][i]);
-                    }
+                    //}
                   }                
                 }
-                Preferences.userFiltersCity = locationsCodes;
+                //Preferences.userFiltersCity = locationsCodes;
+                Preferences.userFiltersCity = Provider.of<FilterProvider>(context, listen: false).filtersLocation;
                 
                 //print(Preferences.userFiltersCity);
                 //print(Provider.of<FilterProvider>(context, listen: false).filtersLocation);

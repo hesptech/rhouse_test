@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
+import 'package:flutter_black_white/config/filters_data_locations.dart';
 
 class FilterProvider extends ChangeNotifier {
+
   String _filterProvider = Preferences.filtersClassIconsBt == 'residential' ? 'residential' : 'condo';
+  List<String> _filtersLocationTopbts = Preferences.filtersLocationTopbts;
   List<String> _filtersLocation = Preferences.userFiltersCity;
   List<String> _filtersPropertyTypeHouse = Preferences.filtersPropertyTypeHouse;
   List<String> _filtersStyleHouse = Preferences.getfiltersIndexStyleHouse();
@@ -26,6 +29,15 @@ class FilterProvider extends ChangeNotifier {
 
   set filtersLocation(List<String> value) {
     _filtersLocation = value;
+    notifyListeners();
+  }
+
+  List<String> get filtersLocationTopbts {
+    return _filtersLocationTopbts;
+  }
+
+  set filtersLocationTopbts( List<String> value ) {
+    _filtersLocationTopbts = value;
     notifyListeners();
   }
 
@@ -132,5 +144,52 @@ class FilterProvider extends ChangeNotifier {
     Preferences.setfiltersIndexAmmenities([]);
     Preferences.isFilter = false;
     Preferences.isCleanFilter = true;
+  }
+
+  void resetLocationsOnly() {
+    Preferences.filtersTrCentral = [];
+    Preferences.filtersTrEast = [];
+    Preferences.filtersTrWest = [];
+    Preferences.filtersGtaWest = [];
+    Preferences.filtersGtaNorth = [];
+    Preferences.filtersGtaEast = [];
+    Preferences.filtersOther = [];  
+  }
+
+ void resetLocationTopbts() {
+    if (Preferences.filtersLocationTopbts.contains('TORONTO') || Preferences.filtersLocationTopbts.contains('Suburbs - Outskirts')) {
+      _filtersLocationTopbts = [];
+
+      List propertiesLocationTopbtsKey = [];
+      List<List<String>> propertiesLocationTopbtsValue = [];
+
+      locationTopbt.forEach( (key, value) {
+        propertiesLocationTopbtsKey.add(key);
+      });
+
+      locationTopbt.forEach( (key, value) {
+        propertiesLocationTopbtsValue.add(value);
+      });
+
+      for (var element in propertiesLocationTopbtsKey) {
+
+        for(int i = 0; i < propertiesLocationTopbtsValue[propertiesLocationTopbtsKey.indexOf(element)].length; ++i){
+          if(Preferences.userFiltersCity.contains(propertiesLocationTopbtsValue[propertiesLocationTopbtsKey.indexOf(element)][i])){
+            Preferences.userFiltersCity.removeWhere((String name) => name == propertiesLocationTopbtsValue[propertiesLocationTopbtsKey.indexOf(element)][i]);
+            filtersLocation.removeWhere((String name) => name == propertiesLocationTopbtsValue[propertiesLocationTopbtsKey.indexOf(element)][i]);
+
+            //print(propertiesLocationTopbtsValue[propertiesLocationTopbtsKey.indexOf(element)][i]);
+          }
+        } 
+      } 
+
+      Preferences.filtersLocationTopbts = [];
+
+      //print(filtersLocationTopbts); 
+      //print('one or other');
+    } else {
+      //print('NONE');
+    }
+    //notifyListeners();
   }
 }

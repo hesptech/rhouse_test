@@ -16,7 +16,14 @@ class FiltersScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       appBar: AppBar(
-        elevation: 0.0,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(5.0),
+          child: Container(
+            height: 5.0,
+            color: kSecondaryColor,
+          )
+        ),
+        //elevation: 0.0,
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
@@ -43,10 +50,6 @@ class FiltersScreen extends StatelessWidget {
           scrollDirection: Axis.vertical,
           child: Column(
             children: <Widget>[
-              Container(
-                height: 5,
-                color: kSecondaryColor,
-              ),
               const FiltersPriceSlider(),
               const FiltersClassIconBt(),
               const SizedBox(

@@ -56,6 +56,13 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(5.0),
+          child: Container(
+            height: 5.0,
+            color: kSecondaryColor,
+          )
+        ),
         centerTitle: true,
         title: const Text('Filters Results'),
       ),

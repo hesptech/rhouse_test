@@ -5,7 +5,6 @@ import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 
-
 class FiltersOther extends StatefulWidget {
   const FiltersOther({Key? key}) : super(key: key);
 
@@ -31,7 +30,6 @@ class _FiltersOtherState extends State<FiltersOther> {
       const PropertiesOther('Hamilton'),
       const PropertiesOther('Barrie'),
       const PropertiesOther('Peterborough'),
-      const PropertiesOther('Other'),
     ];
     _filtersOther = Preferences.filtersOther;
   }
@@ -41,6 +39,7 @@ class _FiltersOtherState extends State<FiltersOther> {
 
     return 
       ExpansionTile(
+        initiallyExpanded: true,
         title: const Text('Other', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.w500, ),),
         trailing: Icon(
           _openCloseIcons[0] ? Icons.remove : Icons.add,
@@ -78,6 +77,10 @@ class _FiltersOtherState extends State<FiltersOther> {
           selected: _filtersOther.contains(propertiesOther.name),
           onSelected: ( bool selected ) {
             setState(() {
+
+                Provider.of<FilterProvider>(context, listen: false).resetLocationTopbts();
+                _filtersOther = Preferences.filtersOther;
+                
                 selected ? _filtersOther.add(propertiesOther.name) : _filtersOther.removeWhere((String name) => name == propertiesOther.name) ;
                 Preferences.filtersOther = _filtersOther;
 

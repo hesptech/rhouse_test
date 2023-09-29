@@ -93,7 +93,7 @@ class MapListProvider extends ChangeNotifier {
           'resultsPerPage': '800',
           'type': 'sale',
           'hasImages': 'true',
-          'fields': 'details,mlsNumber,class,images,listDate,timestamps,daysOnMarket,listPrice,address,details,map,rooms,lot,taxes,occupancy,nearby,condominium,office',
+          'fields': 'details,mlsNumber,class,images,listDate,timestamps,daysOnMarket,listPrice,address,details,map,rooms,lot,taxes,occupancy,nearby,condominium,office,status',
           'lat': '${latLng?.latitude}',
           'long': '${latLng?.longitude}',
           'radius': '$radius'

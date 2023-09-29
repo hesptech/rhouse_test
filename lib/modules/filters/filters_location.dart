@@ -46,6 +46,7 @@ class _FiltersLocationState extends State<FiltersLocation> {
         child: Column(
           children: [
             ExpansionTile(
+              initiallyExpanded: true,
               tilePadding: const EdgeInsets.symmetric(horizontal: 24.0),
               childrenPadding: const EdgeInsets.symmetric(horizontal: 10.0),
               title: const Text('LOCATION', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kSecondaryColor),),
@@ -57,6 +58,7 @@ class _FiltersLocationState extends State<FiltersLocation> {
                 const FiltersLocationTopbts(),
                 const SizedBox( height: 12.0, ),
                 ExpansionTile(
+                  initiallyExpanded: true,
                   title: const Text('Toronto more or specific location', style: TextStyle(color: kSecondaryColor, fontWeight: FontWeight.w500, ),),
                   trailing: Icon(
                     _openCloseIcons[4] ? Icons.remove : Icons.add,
@@ -76,6 +78,7 @@ class _FiltersLocationState extends State<FiltersLocation> {
                 ),
                 //const BlueDivider(),
                 ExpansionTile(
+                  initiallyExpanded: true,
                   title: const Text('Suburbs more or specific location', style: TextStyle(color: kSecondaryColor, fontWeight: FontWeight.w500, ),),
                   trailing: Icon(
                     _openCloseIcons[5] ? Icons.remove : Icons.add,
