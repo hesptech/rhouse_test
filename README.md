@@ -1,6 +1,6 @@
 # Flutter Real Estate prototype
 
-An Application prototype built with Dart and Flutter.
+A mobile App for Toronto Houses and Condo for sale built with Flutter and Dart.
 
 ## Overview
 
