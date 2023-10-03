@@ -11,6 +11,7 @@ A mobile App of Toronto Houses and Condo for sale built with Flutter and Dart.
 - Material Design UI.
 - Infinite scrolling Property Galleries implemented using lazy loading.
 - Search by mls#, address, details.
+- Filters by price, type, locations, listing date, amenities.
 - Repliers MLS listings API backend DB client.
 
 ### Dependencies
