@@ -71,4 +71,4 @@ lib/config/constants file: contain all the general-purpose constants, e.g. colou
 
 lib/utils: are used for common helpers used across the app, for instance, helper functions, and extension methods.
 
-Folder lib/widgets folder: contains Flutter widgets used in more than oncea (common Widgets).
+Folder lib/widgets folder: contains Flutter widgets used in more than once (common Widgets).
