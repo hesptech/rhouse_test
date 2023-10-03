@@ -6,11 +6,12 @@ A mobile App of Toronto Houses and Condo for sale built with Flutter and Dart.
 
 ### Features
 
-- State management using Provider.
+- Properties galleries, search, filters, full description, locations maps, user personal settings.
+- Dependency injection using Provider State management.
 - Material Design UI.
-- Lazy loading implemented as infinite list.
-- Clean code structure: code is separated to modules by feature.
-- Repliers API backend client.
+- Infinite scrolling Property Galleries implemented using lazy loading.
+- Search by mls#, address, details.
+- Repliers MLS listings API backend DB client.
 
 ### Dependencies
 
@@ -41,17 +42,17 @@ cd rhouse_test
 
 The `flutter run` command both builds and installs the Flutter app to your device or emulator.
 
-### Repliersy API
+### Repliers API
 
-A real-world API is used in the application to retrieve properties data - [https://docs.repliers.io/reference/getting-started-with-your-api).
+A real-world API is used in the application to retrieve properties listings data - [https://docs.repliers.io/reference/getting-started-with-your-api).
 
-Before using/testing the application, you need a new API key. Instructions on how to obtain it are provided [here](https://www.repliers.com/request-access).
+Before using/testing the application, you need to request a personal API key. Instructions on how to obtain it are provided [here](https://www.repliers.com/request-access).
 
-Once the key is generated, there are two steps needed to use it within the application:
+Once the API key is generated, there are two steps needed to use it within the application:
 
-1. Create a .env File in the Project Folder on lib
+1. Create a .env File in the Project Folder at lib level.
 
-2. Add generated API key to the variable in .env file:
+2. Add generated API key to the variable in the .env file:
 
 ```
 ...
@@ -61,12 +62,12 @@ REPLIERS-API-KEY='ENTER YOUR API KEY HERE'
 
 ## Folder Structure Pattern
 
-Assets folder contain all the assets images used in the application like images.
+assets folder: contain all the assets  used in the application like images.
 
-Folder lib/config stores general configuration files like theme data, routes, and environment configuration.
+lib/config folder: stores general configuration files like theme data, routes, environment configuration, constants.
 
-Folder lib/constants contain all the general-purpose constants, e.g. colours, common layout spacing values, texts, paths to files, etc..
+lib/config/constants file: contain all the general-purpose constants, e.g. colours, common layout spacing values, texts, paths to files, etc..
 
-Folder lib/utils are used for common helpers used across the app, for instance, helper functions, and extension methods.
+lib/utils: are used for common helpers used across the app, for instance, helper functions, and extension methods.
 
-Folder lib/widgets contain Flutter widgets used in more than one module (common Widgets).
+Folder lib/widgets folder: contains Flutter widgets used in more than oncea (common Widgets).
