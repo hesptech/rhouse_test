@@ -30,7 +30,7 @@ class _FiltersGtaNorthState extends State<FiltersGtaNorth> {
     super.initState();
 
     _openCloseIcons = <bool>[
-      false,
+      true,
     ];
     
     _propertiesGtaNorth = <PropertiesGtaNorth>[

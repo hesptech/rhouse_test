@@ -23,7 +23,7 @@ class _FiltersOtherState extends State<FiltersOther> {
     super.initState();
 
     _openCloseIcons = <bool>[
-      false,
+      true,
     ];
 
     _propertiesOther = <PropertiesOther>[

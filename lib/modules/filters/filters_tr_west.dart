@@ -28,7 +28,7 @@ class _FiltersTrWestState extends State<FiltersTrWest> {
     super.initState();
 
     _openCloseIcons = <bool>[
-      false,
+      true,
     ];
     
     _propertiesTrWest = <PropertiesTrWest>[

@@ -28,7 +28,7 @@ class _FiltersTrEastState extends State<FiltersTrEast> {
     super.initState();
 
     _openCloseIcons = <bool>[
-      false,
+      true,
     ]; 
 
     _propertiesTrEast = <PropertiesTrEast>[

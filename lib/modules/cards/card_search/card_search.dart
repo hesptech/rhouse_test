@@ -27,8 +27,11 @@ class CardSearch extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             FadeInImage(
-              placeholder: const AssetImage('assets/no-image.jpg'), 
+              placeholder: const AssetImage('assets/no-image_128_85.jpg'), 
               image: NetworkImage('$kRepliersCdn$images?w=250'),
+              imageErrorBuilder: (context, error, stackTrace) {
+                return Image.asset('assets/no-image_128_85.jpg', fit: BoxFit.fitWidth);
+              },
               width: 115,
               height: 85,
               fit: BoxFit.cover,

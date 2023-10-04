@@ -31,7 +31,7 @@ class _FiltersTrCentralState extends State<FiltersTrCentral> {
     super.initState();
 
     _openCloseIcons = <bool>[
-      false,
+      true,
     ]; 
 
     _propertiesTrCentral = <PropertiesTrCentral>[

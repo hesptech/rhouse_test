@@ -29,12 +29,12 @@ class _FiltersLocationState extends State<FiltersLocation> {
     super.initState();
 
     _openCloseIcons = <bool>[
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
     ];     
   }
 
