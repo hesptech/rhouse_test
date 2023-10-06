@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/config/filters_data_locations.dart';
 
 class FiltersTrWest extends StatefulWidget {
   const FiltersTrWest({Key? key}) : super(key: key);
@@ -20,20 +21,14 @@ class _FiltersTrWestState extends State<FiltersTrWest> {
 
   bool citySelectAll = Preferences.filtersTrWest.length == 5 ? true : false ;
 
-  List<List<String>> torontoWestDistricts = [
-    ['Toronto W01','Toronto W02'],
-    ['Toronto W02','Toronto W03'],
-    ['Toronto W07','Toronto W08','Toronto W09','Toronto W10'],
-    ['Toronto W06'],
-    ['Toronto W04','Toronto W05'],
-  ];
+  List<List<String>> torontoWestDistricts = codesTrWest;
 
   @override
   void initState() {
     super.initState();
 
     _openCloseIcons = <bool>[
-      false,
+      true,
     ];
     
     _propertiesTrWest = <PropertiesTrWest>[
@@ -52,6 +47,7 @@ class _FiltersTrWestState extends State<FiltersTrWest> {
     
     return 
       ExpansionTile(
+        initiallyExpanded: true,
         title: const Text('Toronto West', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.w500, ),),
         trailing: Icon(
           _openCloseIcons[0] ? Icons.remove : Icons.add,
@@ -65,6 +61,10 @@ class _FiltersTrWestState extends State<FiltersTrWest> {
               TextButton(
                 onPressed: () {
                   setState(() {
+
+                    Provider.of<FilterProvider>(context, listen: false).resetLocationTopbts();
+                    _filtersTrWest = Preferences.filtersTrWest;
+
                     for (var element in _propertiesTrWest) {
                       _filtersTrWest.remove(element.name) ;
                     }
@@ -134,6 +134,10 @@ class _FiltersTrWestState extends State<FiltersTrWest> {
           selected: _filtersTrWest.contains(propertiesTrWest.name),
           onSelected: ( bool selected ) {
             setState(() {
+
+                Provider.of<FilterProvider>(context, listen: false).resetLocationTopbts();
+                _filtersTrWest = Preferences.filtersTrWest;
+
                 selected ? _filtersTrWest.add(propertiesTrWest.name) : _filtersTrWest.removeWhere((String name) => name == propertiesTrWest.name) ;
                 Preferences.filtersTrWest = _filtersTrWest;
 

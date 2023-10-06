@@ -6,7 +6,7 @@ import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/modules/filters/filters_bed_condo.dart';
 import 'package:flutter_black_white/modules/filters/filters_bedrooms.dart';
 import 'package:flutter_black_white/modules/filters/filters_bathrooms.dart';
-import 'package:flutter_black_white/modules/filters/filters_park_condo.dart';
+//import 'package:flutter_black_white/modules/filters/filters_park_condo.dart';
 
 
 class FiltersBathbedpark extends StatefulWidget {
@@ -36,7 +36,8 @@ class _FiltersBathbedparkState extends State<FiltersBathbedpark> {
       filtersBathBedPark = [
         const FiltersBedCondo(),
         const FiltersBathrooms(),
-        const FiltersParkCondo(),
+        //const FiltersParkCondo(),
+        const SizedBox(height: 20.0)
       ];
     }
 

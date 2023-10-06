@@ -65,7 +65,7 @@ class CardDetailsExpansions extends StatelessWidget {
                 children: [
                   Row(
                     children: const [
-                      Text('Broker and Agent info'),
+                       Text('Listing by'),
                     ],
                   ),
                   Row(

@@ -42,6 +42,7 @@ class _FiltersBottomBarState extends State<FiltersBottomBar> {
                     Provider.of<FilterProvider>(context, listen: false).filtersStyleCondo = [];
                     Provider.of<FilterProvider>(context, listen: false).filtersBasement = [];
                     Provider.of<FilterProvider>(context, listen: false).filtersAmmenities = [];
+                    Provider.of<FilterProvider>(context, listen: false).filtersLocationTopbts = [];
 
                     if (widget.pathScreen == MapScreen.pathScreen) {
                       Navigator.pushNamed(context, MapScreen.pathScreen, arguments: {'filter': "true"});

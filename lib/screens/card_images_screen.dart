@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/utils/constants.dart';
 
 class CardImagesScreen extends StatelessWidget {
   const CardImagesScreen({Key? key}) : super(key: key);
@@ -14,6 +15,13 @@ class CardImagesScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(5.0),
+          child: Container(
+            height: 5.0,
+            color: kSecondaryColor,
+          )
+        ),
         centerTitle: true,
         title: const Text('Photo Gallery'),
       ),
