@@ -20,9 +20,9 @@ class _FiltersBottomBarState extends State<FiltersBottomBar> {
     final filterProvider = Provider.of<FilterProvider>(context);
 
     return Container(
-      height: 75,
+      height: 68,
       color: kSecondaryColor,
-      padding: const EdgeInsets.fromLTRB(22.0, 14.0, 22.0, 0),
+      padding: const EdgeInsets.fromLTRB(22.0, 10.0, 22.0, 0),
       child: Column(
         children: [
           Row(children: [
