@@ -52,8 +52,8 @@ class _ExpansionMaintenanceState extends State<ExpansionMaintenance> {
                   ),
                 ]
               ),
-              Row(
-                children: const [
+              const Row(
+                children: [
                   Text(
                     'Included in Maintenance Costs', 
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 2.3, ), ),

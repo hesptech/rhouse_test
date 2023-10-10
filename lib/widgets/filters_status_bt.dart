@@ -17,9 +17,9 @@ class _FiltersStatusBtState extends State<FiltersStatusBt> {
   @override
   Widget build(BuildContext context) {
 
-    return Row(
+    return const Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: const [
+      children: [
         TypePropertyBtn('FOR SALE'),
         SizedBox(width: 10.0,),
         TypePropertyBtn('SOLD'),

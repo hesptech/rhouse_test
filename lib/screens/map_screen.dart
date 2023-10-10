@@ -9,7 +9,6 @@ import 'package:flutter_black_white/widgets/loadable_widget.dart';
 import 'package:flutter_black_white/widgets/widgets.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
-import 'package:vector_tile_renderer/vector_tile_renderer.dart';
 
 import '../providers/filter_provider.dart';
 import '../utils/connectivity_internet.dart';
@@ -32,10 +31,9 @@ class _MapScreenState extends State<MapScreen> {
     isFilter = Preferences.isFilter;
     super.initState();
   }
-  
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
           title: Column(
@@ -53,10 +51,10 @@ class _MapScreenState extends State<MapScreen> {
                       FilterProvider().cleanFilter();
                       Navigator.pushNamed(context, MapScreen.pathScreen, arguments: {'filter': "false"});
                     },
-                    child: Row(
+                    child: const Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Icon(
                           Icons.replay,
                           color: kSecondaryColor,
@@ -134,11 +132,7 @@ class _MapScreenState extends State<MapScreen> {
                 }
 
                 return LoadableWidget(
-                    loader: () => StyleReader(
-                            uri: kMaptilerUrl,
-                            apiKey: MapListProvider().getApiKey,
-                            logger: const Logger.console())
-                        .read(),
+                    loader: () => StyleReader(uri: kMaptilerUrl, apiKey: MapListProvider().getApiKey).read(),
                     builder: (_, Style remoteTheme) {
                       return LoadableWidget(
                           loader: () => GeolocationApp().getPosition(),

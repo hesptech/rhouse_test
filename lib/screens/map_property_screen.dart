@@ -5,7 +5,6 @@ import 'package:flutter_black_white/modules/maps/map_location_property.dart';
 import 'package:flutter_black_white/providers/maplist_provider.dart';
 import 'package:flutter_black_white/widgets/loadable_widget.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
-import 'package:vector_tile_renderer/vector_tile_renderer.dart';
 
 ///Screen showing a property on a map
 class MapPropertyScreen extends StatelessWidget {
@@ -41,7 +40,7 @@ class MapPropertyScreen extends StatelessWidget {
           bottom: false,
           child: LoadableWidget(
               loader: () =>
-                  StyleReader(uri: kMaptilerUrl, apiKey: MapListProvider().getApiKey, logger: const Logger.console())
+                  StyleReader(uri: kMaptilerUrl, apiKey: MapListProvider().getApiKey)
                       .read(),
               builder: (_, Style remoteTheme) => MapLocationProperty(
                     listing: listingArgument,

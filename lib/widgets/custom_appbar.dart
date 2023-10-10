@@ -20,9 +20,9 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
               margin: const EdgeInsets.fromLTRB(30, 10, 30, 0),
               child: Column(
                 children: [
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
+                    children: [
                       Image(
                         image: AssetImage('assets/r_logo_100x30.png'),
                       ),
@@ -51,8 +51,8 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                                 });
                               },
                               //child: const Icon( Icons.map_outlined, color: kSecondaryColor, size: 26.0,),
-                              child: Row(
-                                children: const [
+                              child: const Row(
+                                children: [
                                   Icon(
                                     Icons.map_outlined,
                                     color: kSecondaryColor,

@@ -166,7 +166,6 @@ class _MapWidget extends State<MapTilerWidget> {
       options: MarkerClusterLayerOptions(
         size: const Size(50, 50),
         maxClusterRadius: 80,
-        anchor: AnchorPos.align(AnchorAlign.center),
         spiderfyCluster: false,
         zoomToBoundsOnClick: false,
         fitBoundsOptions: widget.isMultiple

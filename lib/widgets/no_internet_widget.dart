@@ -9,10 +9,10 @@ class NoInternetWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      child: Center(
+      child: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: const [
+          children: [
             SizedBox(height: 80.0),
             Icon(
               Icons.wifi_off,

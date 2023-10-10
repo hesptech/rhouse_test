@@ -40,9 +40,9 @@ class _CardDetailsHistoryState extends State<CardDetailsHistory> {
     return
     Column(
       children: [
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children: [
             Text('PROPERTY LISTING HISTORY', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: kSecondaryColor),),
           ],
         ),
@@ -83,8 +83,8 @@ class _CardDetailsHistoryState extends State<CardDetailsHistory> {
         :
         Container(
           margin: const EdgeInsets.symmetric( vertical: 14.0, horizontal: 30.0 ),
-          child: Column(
-            children: const [
+          child: const Column(
+            children: [
               SizedBox(
                 child: Center(child: Text('no info')),
               ),

@@ -7,7 +7,6 @@ import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/modules/maps/widgets/maptiler_widget.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
-import 'package:vector_tile_renderer/vector_tile_renderer.dart';
 
 class CardDetailsMap extends StatelessWidget {
   final Listing listing;
@@ -27,8 +26,7 @@ class CardDetailsMap extends StatelessWidget {
         child: FutureBuilder<Style>(
             future: StyleReader(
                     uri: kMaptilerUrl,
-                    apiKey: MapListProvider().getApiKey,
-                    logger: const Logger.console())
+                    apiKey: MapListProvider().getApiKey)
                 .read(),
             builder: ((context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
