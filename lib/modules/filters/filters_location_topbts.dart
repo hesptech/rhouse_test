@@ -99,7 +99,7 @@ class _FiltersLocationTopbtsState extends State<FiltersLocationTopbts> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox( height: 1.0, ),
+        //const SizedBox( height: 1.0, ),
         Wrap(
           children: propertiesTopbtsWidgets.toList(),
         ),     

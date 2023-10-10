@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/utils/search_delegate.dart';
 
 class CustomBottomNavigator extends StatefulWidget {
   const CustomBottomNavigator({ Key? key }) : super(key: key);
@@ -29,6 +30,8 @@ class _CustomBottomNavigatorState extends State<CustomBottomNavigator> {
         Navigator.pushNamed(context, _pages[5]);
         //Navigator.pop(context);
         //Navigator.restorablePopAndPushNamed(context, '/');
+      } else if (index == 1) {
+        showSearch(context: context, delegate: InputSearchDelegate());
       } else if (index > 0) {
         Navigator.pushNamed(context, _pages[index]);
       }
