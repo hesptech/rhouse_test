@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/connectivity_internet.dart';
@@ -164,10 +163,5 @@ class MapListProvider extends ChangeNotifier {
     filtersResults.addAll(filtersMaps);
 
     return filtersResults;
-  }
-
-  ResponseBody _processResponse(Object? data) {
-    String response = data as String;
-    return ResponseBody.fromJson(response);
   }
 }

@@ -5,19 +5,14 @@ import 'package:flutter_black_white/modules/maps/widgets/maptiler_widget.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/widgets/no_address_available_widget.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:vector_map_tiles/vector_map_tiles.dart';
 
 ///Widgete that displays and receives a configuration to display a residence on the map.
 class MapLocationProperty extends StatefulWidget {
-  final Style style;
-  final TileOffset tileOffset;
   final Listing listing;
 
   const MapLocationProperty({
     Key? key,
-    required this.style,
     required this.listing,
-    this.tileOffset = TileOffset.DEFAULT,
   }) : super(key: key);
 
   @override

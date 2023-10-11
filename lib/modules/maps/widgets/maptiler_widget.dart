@@ -1,5 +1,3 @@
-import 'dart:async';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/utils/constants.dart';
@@ -174,7 +172,7 @@ class _MapWidget extends State<MapTilerWidget> {
     return MarkerClusterLayerWidget(
       key: const Key("value"),
       options: MarkerClusterLayerOptions(
-        animationsOptions: AnimationsOptions(
+        animationsOptions: const AnimationsOptions(
           centerMarkerCurves: Curves.fastOutSlowIn,
           fitBoundCurves: Curves.fastOutSlowIn,
           centerMarker: Duration.zero,
