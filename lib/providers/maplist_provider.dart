@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
@@ -93,10 +94,12 @@ class MapListProvider extends ChangeNotifier {
           'resultsPerPage': '800',
           'type': 'sale',
           'hasImages': 'true',
-          'fields': 'details,mlsNumber,class,images,listDate,timestamps,daysOnMarket,listPrice,address,details,map,rooms,lot,taxes,occupancy,nearby,condominium,office,status',
+          'fields':
+              'details,mlsNumber,class,images,listDate,timestamps,daysOnMarket,listPrice,address,details,map,rooms,lot,taxes,occupancy,nearby,condominium,office,status',
           'lat': '${latLng?.latitude}',
           'long': '${latLng?.longitude}',
-          'radius': '$radius'
+          'radius': '$radius',
+          'class': ['condo', 'residential'],
         };
 
         if (isFilter) {
@@ -114,24 +117,23 @@ class MapListProvider extends ChangeNotifier {
           break;
         }
 
-        final bodyResidences = ResponseBody.fromJson(response.body);
+        final bodyResidences = await compute((message) {
+          return ResponseBody.fromJson(message as String);
+        }, response.body);
 
+        var commercials = bodyResidences.listings.where((element) {
+          String listingClass = element.listingClass!.toLowerCase();
+          return listingClass == "commercial";
+        });
+
+        debugPrint("En la pagina $pageListings se encontraron comerciales ${commercials.length}");
         if (pageListings < bodyResidences.numPages) {
           pageListings++;
         } else {
           isMorePages = false;
         }
 
-        if (isFilter) {
-          listingMaps.addAll(bodyResidences.listings);
-        } else {
-          final listingsFilter = bodyResidences.listings.where((element) {
-            String listingClass = element.listingClass!.toLowerCase();
-            return listingClass == "residentialproperty" || listingClass == "condoproperty";
-          }).toList();
-
-          listingMaps.addAll(listingsFilter);
-        }
+        listingMaps = bodyResidences.listings;
 
         notifyListeners();
       }
@@ -146,14 +148,10 @@ class MapListProvider extends ChangeNotifier {
     }
   }
 
-  void getFilterListings(List<Marker> mapMarkers) {
+  void getFilterListings(List<Listing> listingSelectedResult) {
     listingSelected = [];
 
-    var keys = mapMarkers.map((marker) => ValueKey(marker.key).value).toSet();
-
-    var filteredListings = listingMaps.where((listing) => keys.contains(Key(listing.mlsNumber!)));
-
-    listingSelected.addAll(filteredListings);
+    listingSelected.addAll(listingSelectedResult);
 
     notifyListeners();
   }
@@ -166,5 +164,10 @@ class MapListProvider extends ChangeNotifier {
     filtersResults.addAll(filtersMaps);
 
     return filtersResults;
+  }
+
+  ResponseBody _processResponse(Object? data) {
+    String response = data as String;
+    return ResponseBody.fromJson(response);
   }
 }

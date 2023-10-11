@@ -45,7 +45,6 @@ class CardDetailsMap extends StatelessWidget {
   }
 
   Widget _mapMiniature(Style style, BuildContext context) {
-    TileOffset tileOffset = TileOffset.DEFAULT;
     return SizedBox(
       width: 200,
       height: 300,
@@ -58,9 +57,7 @@ class CardDetailsMap extends StatelessWidget {
           isMultiple: false,
           onTapMap: () {
             Navigator.pushNamed(context, MapPropertyScreen.pathScreen, arguments: {'listing': listing});
-          },
-          layerFactory: (context, layerMode) => VectorTileLayer(
-              tileProviders: style.providers, theme: style.theme, layerMode: layerMode, tileOffset: tileOffset)),
+          },),
     );
   }
 }

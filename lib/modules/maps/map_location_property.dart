@@ -67,12 +67,6 @@ class _MapLocationPropertyState extends State<MapLocationProperty> {
       cards: Container(),
       zoom: 20,
       isMultiple: false,
-      layerFactory: (context, layerMode) => VectorTileLayer(
-        tileProviders: widget.style.providers,
-        theme: widget.style.theme,
-        layerMode: layerMode,
-        tileOffset: widget.tileOffset,
-      ),
     );
   }
 }

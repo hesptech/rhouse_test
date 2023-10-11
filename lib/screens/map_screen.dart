@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/modules/maps/map_residences_search.dart';
 import 'package:flutter_black_white/modules/maps/utils/geolocation_app.dart';
-import 'package:flutter_black_white/providers/maplist_provider.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/widgets/error_view_widget.dart';
 import 'package:flutter_black_white/widgets/loadable_widget.dart';
 import 'package:flutter_black_white/widgets/widgets.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:vector_map_tiles/vector_map_tiles.dart';
 
 import '../providers/filter_provider.dart';
 import '../utils/connectivity_internet.dart';
@@ -132,16 +129,11 @@ class _MapScreenState extends State<MapScreen> {
                 }
 
                 return LoadableWidget(
-                    loader: () => StyleReader(uri: kMaptilerUrl, apiKey: MapListProvider().getApiKey).read(),
-                    builder: (_, Style remoteTheme) {
-                      return LoadableWidget(
-                          loader: () => GeolocationApp().getPosition(),
-                          builder: (_, LatLng coordinates) {
-                            return MapResidencesSearch(
-                              style: remoteTheme,
-                              coordinates: coordinates,
-                            );
-                          });
+                    loader: () => GeolocationApp().getPosition(),
+                    builder: (_, LatLng coordinates) {
+                      return MapResidencesSearch(
+                        coordinates: coordinates,
+                      );
                     });
               }),
         ));
