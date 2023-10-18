@@ -53,7 +53,7 @@ class FiltersScreen extends StatelessWidget {
               const FiltersPriceSlider(),
               const FiltersClassIconBt(),
               const SizedBox(
-                height: 28.0,
+                height: 24.0,
               ),
               const GreenDivider(),
               const FiltersPropertyType(),
