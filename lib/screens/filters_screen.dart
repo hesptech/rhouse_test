@@ -17,12 +17,11 @@ class FiltersScreen extends StatelessWidget {
       backgroundColor: const Color(0xFFFFFFFF),
       appBar: AppBar(
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(5.0),
-          child: Container(
-            height: 5.0,
-            color: kSecondaryColor,
-          )
-        ),
+            preferredSize: const Size.fromHeight(5.0),
+            child: Container(
+              height: 5.0,
+              color: kSecondaryColor,
+            )),
         //elevation: 0.0,
         centerTitle: true,
         leading: IconButton(
@@ -35,8 +34,8 @@ class FiltersScreen extends StatelessWidget {
                 Preferences.isCleanFilter = false;
                 return;
               }
-              
-              Navigator.popUntil(context, ModalRoute.withName(MapScreen.pathScreen));
+
+              Navigator.pop(context);
             } else {
               Navigator.pushNamed(context, '/');
             }
