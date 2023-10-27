@@ -180,9 +180,9 @@ class CardDetailsBox extends StatelessWidget {
             padding: const EdgeInsets.symmetric( vertical: 10.0, horizontal: 10.0 ),
             child: Column(
               children: [
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Text('Direction/main: ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: kSecondaryColor),),
                   ],
                 ),

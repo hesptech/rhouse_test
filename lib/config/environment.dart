@@ -1,11 +1,11 @@
+import 'package:flutter_black_white/providers/maplist_provider.dart';
 import 'package:http/http.dart';
 
 
 const kBaseUrl = 'api.repliers.io';
 const kRepliersCdn = 'https://cdn.repliers.io/';
 
-const kMaptilerUrl = 'https://api.maptiler.com/maps/basic-v2/style.json?key={key}';
-
+final String kMaptilerUrl = 'https://api.maptiler.com/maps/basic-v2/{z}/{x}/{y}.png?key=${MapListProvider().getApiKey}';
 String processResponse(Response response) {
   if (response.statusCode == 200 || response.statusCode == 201) {
     return response.body;

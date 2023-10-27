@@ -42,11 +42,11 @@ class _FiltersDaysMarketState extends State<FiltersDaysMarket> {
           padding: EdgeInsets.symmetric( vertical: 0.0, horizontal: 12.0),
           child: BlueDivider()
         ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 0.0),
+        const Padding(
+          padding: EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 0.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
+            children: [
               Text('DAYS ON MARKET', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold,),),
             ],
           ),

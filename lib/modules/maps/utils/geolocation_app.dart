@@ -8,7 +8,7 @@ class GeolocationApp {
   GeolocationApp();
 
   Future<LatLng> getPosition() async {
-    var coordinatesDefault = LatLng(43.656008, -79.382189);
+    var coordinatesDefault = const LatLng(43.656008, -79.382189);
     try {
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
@@ -35,7 +35,7 @@ class GeolocationApp {
     try {
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
-        Future.error(LatLng(0, 0));
+        Future.error(const LatLng(0, 0));
         return;
       }
 
@@ -44,12 +44,12 @@ class GeolocationApp {
         permission = await Geolocator.requestPermission();
 
         if (permission == LocationPermission.denied) {
-          return Future.error(LatLng(0, 0));
+          return Future.error(const LatLng(0, 0));
         }
       }
 
       if (permission == LocationPermission.deniedForever) {
-        return Future.error(LatLng(0, 0));
+        return Future.error(const LatLng(0, 0));
       }
     } catch (e) {
       Future.error(e.toString());

@@ -112,9 +112,9 @@ class _AccountContentState extends State<AccountContent> {
   }
 
   Widget _itemFavourites() {
-    return Row(
+    return const Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: const [
+      children: [
         Expanded(
           child: Icon(
             Icons.favorite_outline,
@@ -144,9 +144,9 @@ class _AccountContentState extends State<AccountContent> {
   }
 
   Widget _itemGuesses() {
-    return Row(
+    return const Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: const [
+      children: [
         Expanded(
           child: Image(
             image: AssetImage('assets/play&learn_chip_53h.png'),
@@ -181,9 +181,9 @@ class _AccountContentState extends State<AccountContent> {
   }
 
   Widget _titleManage() {
-    return Row(
+    return const Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: const [
+      children: [
         Icon(
           Icons.manage_accounts_outlined,
           color: kSecondaryColor,
@@ -381,8 +381,8 @@ class _AccountContentState extends State<AccountContent> {
           borderRadius: const BorderRadius.only(topRight: Radius.circular(10), bottomRight: Radius.circular(10)),
           border: Border.all(width: 1, style: BorderStyle.solid, color: kPrimaryColor),
         ),
-        child: Stack(
-          children: const [
+        child: const Stack(
+          children: [
             Align(
                 alignment: Alignment.topLeft,
                 child: Text(

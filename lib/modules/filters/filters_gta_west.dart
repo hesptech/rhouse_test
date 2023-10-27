@@ -134,9 +134,9 @@ class _FiltersGtaWestState extends State<FiltersGtaWest> {
           Wrap(
             children: propertiesGtaWestWidgets.toList(),
           ),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
+            children: [
               SizedBox( width: 16.0, height: 42.0,),
               Text('Other', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.w500, ), textAlign: TextAlign.start, ),
             ],

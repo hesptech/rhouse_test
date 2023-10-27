@@ -98,8 +98,8 @@ class CardDetailsScreen extends StatelessWidget {
                               ],
                             ),
                             //const SizedBox( height: 5.0 ,),
-                            Row(
-                              children: const [
+                            const Row(
+                              children: [
                                 Text('Scarborough Oakridge, ON', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: kPrimaryColor),),
                                 SizedBox( width: 10.0, ),
                                 Icon(Icons.map_outlined, color: kSecondaryColor, size: 32,),
@@ -111,8 +111,8 @@ class CardDetailsScreen extends StatelessWidget {
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
-                                  children: const [
+                                const Row(
+                                  children: [
                                     Text('Listed for: ', style: TextStyle(fontSize: 16, color: Color(0xFF666597), ), ),   
                                     Text('\$1,500.000', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: kPrimaryColor, ), ),
                                   ],
@@ -142,9 +142,9 @@ class CardDetailsScreen extends StatelessWidget {
                                       //left: BorderSide(color: kSecondaryColor),
                                     ),
                                   ),
-                                  child: Row(
+                                  child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
+                                    children: [
                                       Icon(Icons.king_bed_outlined, color: kSecondaryColor, size: 30,),
                                       SizedBox(width: 5,),
                                       Text('3', style: TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), ),                                  
@@ -162,9 +162,9 @@ class CardDetailsScreen extends StatelessWidget {
                                       left: BorderSide(color: kSecondaryColor),
                                     ),
                                   ),
-                                  child: Row(
+                                  child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
+                                    children: [
                                       SizedBox( width: 10,),
                                       Icon(Icons.shower_outlined, color: kSecondaryColor, size: 30,),
                                       SizedBox(width: 5,),
@@ -183,9 +183,9 @@ class CardDetailsScreen extends StatelessWidget {
                                       left: BorderSide(color: kSecondaryColor),
                                     ),
                                   ),
-                                  child: Row(
+                                  child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
+                                    children: [
                                       SizedBox( width: 10,),
                                       Icon(Icons.directions_car_filled_outlined, color: kSecondaryColor, size: 28,),
                                       SizedBox(width: 5,),
@@ -205,9 +205,9 @@ class CardDetailsScreen extends StatelessWidget {
                                       left: BorderSide(color: kSecondaryColor),
                                     ),
                                   ),
-                                  child: Row(
+                                  child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
+                                    children: [
                                       Icon(Icons.straighten_outlined, color: kSecondaryColor, size: 24,),
                                       SizedBox(width: 5,),
                                       Text('8,900', style: TextStyle( color: Color(0xFF666597), fontWeight: FontWeight.bold, fontSize: 14, ), )                                    
@@ -297,8 +297,8 @@ class CardDetailsScreen extends StatelessWidget {
                       onPressed: () {
                         //Navigator.pushNamed(context, 'details', arguments: movie);
                       },
-                      child: Row(
-                        children: const [
+                      child: const Row(
+                        children: [
                           Icon(Icons.calendar_month_outlined, size: 16,),
                           SizedBox(width: 5,),
                           Text('Listed 7 days ago', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400))
@@ -387,100 +387,100 @@ class _DetailsExpansionsState extends State<DetailsExpansions> {
               children: <Widget>[
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 26.0),
-                  child: Column(
+                  child: const Column(
                     children: [
                       //const SizedBox( height: 5.0, ),
                       Row(
-                        children: const [
+                        children: [
                           Text('Property', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
                         ]
                       ),
                       Row(
-                        children: const [
+                        children: [
                           Text('Type:', style: TextStyle(fontSize: 16, height: 1.3), ),
                           Text('Residential Detached', style: TextStyle(fontSize: 16, height: 1.3), ),
                         ]
                       ),
                       Row(
-                        children: const [
+                        children: [
                           Text('Building Type:', style: TextStyle(fontSize: 16, height: 1.3), ),
                           Text('House Single/Family', style: TextStyle(fontSize: 16, height: 1.3), ),
                         ]
                       ),
                       Row(
-                        children: const [
+                        children: [
                           Text('Style:',  style: TextStyle(fontSize: 16, height: 1.3), ),
                           Text('Rancher/Bungalow w/Bsmt.',  style: TextStyle(fontSize: 16, height: 1.3), ),
                         ]
                       ),
                       Row(
-                        children: const [
+                        children: [
                           Text('Ownnership:',  style: TextStyle(fontSize: 16, height: 1.3), ),
                           Text('Freehold NonStrata',  style: TextStyle(fontSize: 16, height: 1.3), ),
                         ]
                       ),
                       Row(
-                        children: const [
+                        children: [
                           Text('Size (sq ft):',  style: TextStyle(fontSize: 16, height: 1.3), ),
                           Text('1663',  style: TextStyle(fontSize: 16, height: 1.3), ),
                         ]
                       ),
                       Row(
-                        children: const [
+                        children: [
                           Text('Year Built:',  style: TextStyle(fontSize: 16, height: 1.3), ),
                           Text('1928',  style: TextStyle(fontSize: 16, height: 1.3), ),
                         ]
                       ),
                       Row(
-                        children: const [
+                        children: [
                           Text('Age:',  style: TextStyle(fontSize: 16, height: 1.3), ),
                           Text('94',  style: TextStyle(fontSize: 16, height: 1.3), ),
                         ]
                       ),
                       Row(
-                        children: const [
+                        children: [
                           Text('Neighborhood:',  style: TextStyle(fontSize: 16, height: 1.3), ),
                           Text('Main',  style: TextStyle(fontSize: 16, height: 1.3), ),
                         ]
                       ),
                       Row(
-                        children: const [
+                        children: [
                           Text('Finished Floor Area (Main):',  style: TextStyle(fontSize: 16, height: 1.3), ),
                           Text('907',  style: TextStyle(fontSize: 16, height: 1.3), ),
                         ]
                       ),
             
-                      const SizedBox( height: 18.0, ),
+                      SizedBox( height: 18.0, ),
                       Row(
-                        children: const [
+                        children: [
                           Text('Inside', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
                         ]
                       ),
                       Row(
-                        children: const [
+                        children: [
                           Text('Levels:', style: TextStyle(fontSize: 16, height: 1.3), ),
                           Text('2', style: TextStyle(fontSize: 16, height: 1.3), ),
                         ]
                       ),
                       Row(
-                        children: const [
+                        children: [
                           Text('Bedrooms:', style: TextStyle(fontSize: 16, height: 1.3), ),
                           Text('3', style: TextStyle(fontSize: 16, height: 1.3), ),
                         ]
                       ),
                       Row(
-                        children: const [
+                        children: [
                           Text('Full Bathrooms:',  style: TextStyle(fontSize: 16, height: 1.3), ),
                           Text('2',  style: TextStyle(fontSize: 16, height: 1.3), ),
                         ]
                       ),
                       Row(
-                        children: const [
+                        children: [
                           Text('Half Bathrooms:',  style: TextStyle(fontSize: 16, height: 1.3), ),
                           Text('0',  style: TextStyle(fontSize: 16, height: 1.3), ),
                         ]
                       ),
-                      const SizedBox( height: 25.0,),               
+                      SizedBox( height: 25.0,),               
                     ]
                   ),
                 ),

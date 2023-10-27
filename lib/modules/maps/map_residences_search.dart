@@ -1,25 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' hide Theme;
+import 'package:flutter_black_white/models/response_listings.dart';
 import 'package:flutter_black_white/modules/maps/map_card_small.dart';
 import 'package:flutter_black_white/providers/maplist_provider.dart';
 import 'package:flutter_black_white/modules/maps/widgets/maptiler_widget.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_map/flutter_map.dart';
+// import 'package:flutter_map_supercluster/flutter_map_supercluster.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
-import 'package:vector_map_tiles/vector_map_tiles.dart';
 
 ///Widgete that receives a configuration to display the list of residences and maps.
 class MapResidencesSearch extends StatefulWidget {
-  final Style style;
-  final TileOffset tileOffset;
   final LatLng coordinates;
 
-  const MapResidencesSearch(
-      {super.key,
-      required this.style,
-      required this.coordinates,
-      this.tileOffset = TileOffset.DEFAULT});
+  const MapResidencesSearch({super.key, required this.coordinates});
 
   @override
   State<MapResidencesSearch> createState() => _MapResidencesSearchState();
@@ -28,10 +23,12 @@ class MapResidencesSearch extends StatefulWidget {
 class _MapResidencesSearchState extends State<MapResidencesSearch> {
   late List<Marker> markersList;
   late MapListProvider _mapListProvider;
+  late List<Listing> coordinatesMarkers;
 
   @override
   void initState() {
     markersList = [];
+    coordinatesMarkers = [];
     _mapListProvider = Provider.of<MapListProvider>(context, listen: false);
     MapListProvider.intiConfig();
     _mapListProvider.getLocationsResidences(widget.coordinates);
@@ -50,16 +47,18 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
     return WillPopScope(
       onWillPop: () async {
         _mapListProvider.listingSelected = [];
-        
+
         return true;
       },
       child: Stack(
         children: [
           _mapTilerList(context),
-       _mapListProvider.loadMap ?   const LinearProgressIndicator(
-            backgroundColor: kWarningColor,
-            valueColor: AlwaysStoppedAnimation<Color>(kSecondaryColor),
-          ) : Container(),
+          _mapListProvider.loadMap
+              ? const LinearProgressIndicator(
+                  backgroundColor: kWarningColor,
+                  valueColor: AlwaysStoppedAnimation<Color>(kSecondaryColor),
+                )
+              : Container(),
         ],
       ),
     );
@@ -75,35 +74,32 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
       double cardHeight = screenHeight * 0.25;
 
       return Consumer<MapListProvider>(builder: (context, mapListProvider, _) {
+        // generateMarkers(mapListProvider.listingMaps);
         return MapTilerWidget(
+            key: const Key("value"),
             center: widget.coordinates,
             listCoordinates: mapListProvider.listingMaps,
             loadMap: mapListProvider.loadMap,
             selectedCluster: markersList,
             cards: _scrollListing(context, cardHeight),
-            onClusterTap: (markerClusred) {
-              onTapMarkers(markerClusred.mapMarkers, context);
+            onClusterTap: (markerClusred, List<Listing> listingSelected) {
+              onTapMarkers(markerClusred, listingSelected);
             },
-            onTapMarker: (mapMarkers) {
-              onTapMarkers(mapMarkers, context);
+            onTapMarker: (mapMarkers, listingSelected) {
+              onTapMarkers(mapMarkers, listingSelected);
             },
             changeZoom: (mapEvent) {
               _mapListProvider.selectedCluster = [];
               markersList = [];
             },
             zoom: 10,
-            isMultiple: true,
-            layerFactory: (context, layerMode) => VectorTileLayer(
-                tileProviders: widget.style.providers,
-                theme: widget.style.theme,
-                layerMode: layerMode,
-                tileOffset: widget.tileOffset));
+            isMultiple: true);
       });
     });
   }
 
-  void onTapMarkers(List<Marker> mapMarkers, BuildContext context) async {
-    _mapListProvider.getFilterListings(mapMarkers);
+  void onTapMarkers(List<Marker> mapMarkers, List<Listing> listingSelected) async {
+    _mapListProvider.getFilterListings(listingSelected);
     _mapListProvider.selectedCluster = mapMarkers;
     markersList = [];
   }

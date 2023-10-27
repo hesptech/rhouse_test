@@ -129,8 +129,8 @@ class _ExpansionsExteriorState extends State<ExpansionsExterior> {
                   Text(sqft, style: const TextStyle(fontSize: 16, height: 1.3), ),
                 ]
               ),
-              Row(
-                children: const [
+              const Row(
+                children: [
                   Text('Property Features/Area Influences: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
                 ]
               ),

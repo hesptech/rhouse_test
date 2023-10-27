@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/modules/maps/map_residences_search.dart';
 import 'package:flutter_black_white/modules/maps/utils/geolocation_app.dart';
-import 'package:flutter_black_white/providers/maplist_provider.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/widgets/error_view_widget.dart';
 import 'package:flutter_black_white/widgets/loadable_widget.dart';
 import 'package:flutter_black_white/widgets/widgets.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:vector_map_tiles/vector_map_tiles.dart';
-import 'package:vector_tile_renderer/vector_tile_renderer.dart';
 
 import '../providers/filter_provider.dart';
 import '../utils/connectivity_internet.dart';
@@ -32,10 +28,9 @@ class _MapScreenState extends State<MapScreen> {
     isFilter = Preferences.isFilter;
     super.initState();
   }
-  
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
           title: Column(
@@ -53,10 +48,10 @@ class _MapScreenState extends State<MapScreen> {
                       FilterProvider().cleanFilter();
                       Navigator.pushNamed(context, MapScreen.pathScreen, arguments: {'filter': "false"});
                     },
-                    child: Row(
+                    child: const Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Icon(
                           Icons.replay,
                           color: kSecondaryColor,
@@ -93,7 +88,7 @@ class _MapScreenState extends State<MapScreen> {
           actions: [
             GestureDetector(
               onTap: () {
-                Navigator.pushReplacementNamed(context, 'filters_screen', arguments: {'screenPath': MapScreen.pathScreen});
+                Navigator.pushNamed(context, 'filters_screen', arguments: {'screenPath': MapScreen.pathScreen});
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -134,20 +129,11 @@ class _MapScreenState extends State<MapScreen> {
                 }
 
                 return LoadableWidget(
-                    loader: () => StyleReader(
-                            uri: kMaptilerUrl,
-                            apiKey: MapListProvider().getApiKey,
-                            logger: const Logger.console())
-                        .read(),
-                    builder: (_, Style remoteTheme) {
-                      return LoadableWidget(
-                          loader: () => GeolocationApp().getPosition(),
-                          builder: (_, LatLng coordinates) {
-                            return MapResidencesSearch(
-                              style: remoteTheme,
-                              coordinates: coordinates,
-                            );
-                          });
+                    loader: () => GeolocationApp().getPosition(),
+                    builder: (_, LatLng coordinates) {
+                      return MapResidencesSearch(
+                        coordinates: coordinates,
+                      );
                     });
               }),
         ));

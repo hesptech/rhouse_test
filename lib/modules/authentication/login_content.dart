@@ -110,8 +110,8 @@ class LoginContent extends StatelessWidget {
   }
 
   Widget _orLabel() {
-    return Row(
-      children: const [
+    return const Row(
+      children: [
         Expanded(
           child: Divider(color: kPrimaryColor, thickness: 1.3),
         ),

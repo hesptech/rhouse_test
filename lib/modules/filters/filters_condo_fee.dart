@@ -37,11 +37,11 @@ class _FiltersCondoFeeState extends State<FiltersCondoFee> {
 
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric( horizontal: 24.0),
+        const Padding(
+          padding: EdgeInsets.symmetric( horizontal: 24.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
+            children: [
               Text('CONDO FEE', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold,),),
               //Text('${sliderValue.round().toString()}', style: const TextStyle(fontSize: 18, color: kPrimaryColor),),
             ],

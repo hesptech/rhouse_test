@@ -23,7 +23,7 @@ class MapCardSingle extends StatelessWidget {
     final dataFormatted = DataFormatter(listing);
 
     const loggedIn = true;
-    const blurImg = loggedIn == false ? 5.0 : 0.0;
+    const blurImg = loggedIn == false ? 5.0 : 0.1;
     final screenSize = MediaQuery.of(context).size;
 
     // Gen. Info
@@ -49,59 +49,56 @@ class MapCardSingle extends StatelessWidget {
       finalAddress3 = finalAddress2;
     }
 
-    return LayoutBuilder(
-      builder: (context, constrains) {
-        return FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Stack(
-                  children: [
-                    _imageBackground(images, blurImg, context),
-                    Positioned(bottom: 155,  child: MapCardSingleStack().entryDate(dataFormatted, loggedIn)),
-                    Positioned(left: 270, bottom: 160, child: MapCardSingleStack().favorite(context)),
-                    Positioned(left: 320, bottom: 157, child: MapCardSingleStack().showImages(context, listing)),
-                  ],
-                ),
-                SizedBox(
-                  width: 410,
-                  child: _infoBasic(dataFormatted, propertyType, screenSize, finalAddress3, numBathrooms),
-                )                  
-              ],
-            ));
-      }
-    );
+    return LayoutBuilder(builder: (context, constrains) {
+      return FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Stack(
+                children: [
+                  _imageBackground(images, blurImg, context),
+                  Positioned(bottom: 155, child: MapCardSingleStack().entryDate(dataFormatted, loggedIn)),
+                  Positioned(left: 270, bottom: 160, child: MapCardSingleStack().favorite(context)),
+                  Positioned(left: 320, bottom: 157, child: MapCardSingleStack().showImages(context, listing)),
+                ],
+              ),
+              SizedBox(
+                width: 410,
+                child: _infoBasic(dataFormatted, propertyType, screenSize, finalAddress3, numBathrooms),
+              )
+            ],
+          ));
+    });
   }
 
   Widget _imageBackground(String images, double blurImg, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 15),
       child: ImageFiltered(
-        imageFilter: ImageFilter.blur(sigmaX: blurImg, sigmaY: blurImg),
+        imageFilter: ImageFilter.blur(sigmaX: 0.1, sigmaY: 0.1),
         child: GestureDetector(
-          onTap: () {
-            if (loggedIn == true) {
-              Navigator.pushNamed(context, 'card_details_full_screen', arguments: listing);
-            } else {
-              //Navigator.restorablePopAndPushNamed(context, '/');
-            }
-          },
-          child: FadeInImage(
-            placeholder: const AssetImage('assets/no-image.jpg'),
-            image: NetworkImage('$kRepliersCdn$images?w=500'),
-            width: 380,
-            height: 207,
-            fit: BoxFit.cover,
-            fadeInDuration: const Duration(milliseconds: 300),
-          ),
-        ),
+            onTap: () {
+              if (loggedIn == true) {
+                Navigator.pushNamed(context, 'card_details_full_screen', arguments: listing);
+              } else {
+                //Navigator.restorablePopAndPushNamed(context, '/');
+              }
+            },
+            child: FadeInImage(
+              placeholder: const AssetImage('assets/no-image.jpg'),
+              image: NetworkImage('$kRepliersCdn$images?w=500'),
+              width: 380,
+              height: 207,
+              fit: BoxFit.cover,
+              fadeInDuration: const Duration(milliseconds: 300),
+            ),
+            ),
       ),
     );
   }
 
-  Widget _infoBasic(
-      DataFormatter dataFormatted, String propertyType, Size screenSize, String finalAddress3, String numBathrooms) {
+  Widget _infoBasic(DataFormatter dataFormatted, String propertyType, Size screenSize, String finalAddress3, String numBathrooms) {
     return Container(
       padding: const EdgeInsets.all(0),
       height: 130,
@@ -200,5 +197,4 @@ class MapCardSingle extends StatelessWidget {
       ),
     );
   }
-
 }

@@ -63,8 +63,8 @@ class CardDetailsExpansions extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 26.0),
               child: Column(
                 children: [
-                  Row(
-                    children: const [
+                  const Row(
+                    children: [
                        Text('Listing by'),
                     ],
                   ),

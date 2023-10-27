@@ -111,10 +111,10 @@ class _PinViewState extends State<PinVerifyContent> {
   }
 
   Widget _labelSubtitle() {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
-      children: const [
+      children: [
         Text(
           "Email Address:",
           style: TextStyle(color: kPrimaryColor, fontSize: 15, fontWeight: FontWeight.w500),

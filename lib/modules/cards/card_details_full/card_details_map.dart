@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/response_listings.dart';
-import 'package:flutter_black_white/providers/maplist_provider.dart';
 import 'package:flutter_black_white/screens/map_property_screen.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/modules/maps/widgets/maptiler_widget.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:vector_map_tiles/vector_map_tiles.dart';
-import 'package:vector_tile_renderer/vector_tile_renderer.dart';
 
 class CardDetailsMap extends StatelessWidget {
   final Listing listing;
@@ -24,30 +20,12 @@ class CardDetailsMap extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         height: 300,
-        child: FutureBuilder<Style>(
-            future: StyleReader(
-                    uri: kMaptilerUrl,
-                    apiKey: MapListProvider().getApiKey,
-                    logger: const Logger.console())
-                .read(),
-            builder: ((context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                    child: Column(children: [
-                  Expanded(child: Container()),
-                  const Center(child: CircularProgressIndicator()),
-                  Expanded(child: Container())
-                ]));
-              }
-
-              return _mapMiniature(snapshot.data!, context);
-            })),
+        child: _mapMiniature(context)
       ),
     );
   }
 
-  Widget _mapMiniature(Style style, BuildContext context) {
-    TileOffset tileOffset = TileOffset.DEFAULT;
+  Widget _mapMiniature(BuildContext context) {
     return SizedBox(
       width: 200,
       height: 300,
@@ -60,9 +38,7 @@ class CardDetailsMap extends StatelessWidget {
           isMultiple: false,
           onTapMap: () {
             Navigator.pushNamed(context, MapPropertyScreen.pathScreen, arguments: {'listing': listing});
-          },
-          layerFactory: (context, layerMode) => VectorTileLayer(
-              tileProviders: style.providers, theme: style.theme, layerMode: layerMode, tileOffset: tileOffset)),
+          },),
     );
   }
 }
