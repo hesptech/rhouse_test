@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/providers/repliers_game.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
@@ -36,6 +37,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider( create: (_) => RepliersListingMls() ),
         ChangeNotifierProvider( create: (_) => RepliersSearch(), ),
         ChangeNotifierProvider( create: (_) => MapListProvider() ),
+        ChangeNotifierProvider( create: (_) => RepliersGame(), ),
       ],
       child: const App(),
     );

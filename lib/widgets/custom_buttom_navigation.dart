@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/search_delegate.dart';
+import 'package:flutter_black_white/providers/filter_provider.dart';
 
 class CustomBottomNavigator extends StatefulWidget {
   const CustomBottomNavigator({ Key? key }) : super(key: key);
@@ -12,26 +15,33 @@ class CustomBottomNavigator extends StatefulWidget {
 class _CustomBottomNavigatorState extends State<CustomBottomNavigator> {
 
   final loggedIn = false;
-  final int _selectedIndex = 0;
+  int _selectedIndex = 0;
 
   static const List<String> _pages = <String>[
     '/',
     '/',
-    '/',
+    'game_welcome_screen',
     '/',
     'login_screen',
   ];
 
   void _onItemTapped(int index) {
     setState(() {
-      //_selectedIndex = index;
+      _selectedIndex = index;
       //print(loggedIn);
-      if ( index == 4 && loggedIn ) {
-        Navigator.pushNamed(context, _pages[5]);
+      if (index == 1) {
+        showSearch(context: context, delegate: InputSearchDelegate());
+      } else if (index == 2) {
+        if (Provider.of<FilterProvider>(context, listen: false).gameWelcomeVisited == false) {
+          Provider.of<FilterProvider>(context, listen: false).gameWelcomeVisited = true;
+          Navigator.pushNamed(context, _pages[2]);
+        } else {
+          Navigator.pushNamed(context, 'game_screen');
+        }
+      } else if (index == 4 && loggedIn) {
+        Navigator.pushNamed(context, _pages[4]);
         //Navigator.pop(context);
         //Navigator.restorablePopAndPushNamed(context, '/');
-      } else if (index == 1) {
-        showSearch(context: context, delegate: InputSearchDelegate());
       } else if (index > 0) {
         Navigator.pushNamed(context, _pages[index]);
       }
