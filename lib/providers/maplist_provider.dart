@@ -5,6 +5,7 @@ import 'package:flutter_black_white/utils/connectivity_internet.dart';
 import 'package:flutter_black_white/utils/filters_preferences.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/plugin_api.dart';
+import 'package:http/http.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,6 +19,7 @@ class MapListProvider extends ChangeNotifier {
   List<Marker> _selectedCluster = [];
   bool _disposed = false;
   bool _loadMap = true;
+  bool loadView = false;
 
   initData() {
     listingSelected = [];
@@ -25,6 +27,7 @@ class MapListProvider extends ChangeNotifier {
     _selectedCluster = [];
     _disposed = false;
     _loadMap = true;
+    loadView = true;
   }
 
   close() {
@@ -33,12 +36,6 @@ class MapListProvider extends ChangeNotifier {
     _selectedCluster = [];
     _disposed = true;
     _loadMap = false;
-  }
-
-  @override
-  void dispose() {
-    _disposed = true;
-    super.dispose();
   }
 
   MapListProvider();
@@ -56,6 +53,13 @@ class MapListProvider extends ChangeNotifier {
 
   set selectedCluster(List<Marker> values) {
     _selectedCluster = values;
+    notifyListeners();
+  }
+
+  bool get getLoadView => loadView;
+
+  set setLoadView(bool loadView) {
+    loadView = loadView;
     notifyListeners();
   }
 
@@ -105,27 +109,17 @@ class MapListProvider extends ChangeNotifier {
           queryParamsLoop.addAll(filters);
         }
 
-        final url = Uri.https(kBaseUrl, endPoint, queryParamsLoop);
-
         Map<String, String>? headers = {'REPLIERS-API-KEY': envApiKey};
 
-        final response = await http.get(url, headers: headers);
-
-        if (response.statusCode != 200) {
-          isMorePages = false;
-          break;
-        }
-
+        Map<String, dynamic> params = {"endPoint": endPoint, "queryParams": queryParamsLoop, "headers": headers};
+        final responseHttp = await compute(getResponse, params);
+          
         final bodyResidences = await compute((message) {
           return ResponseBody.fromJson(message as String);
-        }, response.body);
+        }, responseHttp.body);
 
-        var commercials = bodyResidences.listings.where((element) {
-          String listingClass = element.listingClass!.toLowerCase();
-          return listingClass == "commercial";
-        });
+        debugPrint("Pagina ${bodyResidences.page} Total de paginas encontradas ${bodyResidences.numPages}");
 
-        debugPrint("En la pagina $pageListings se encontraron comerciales ${commercials.length}");
         if (pageListings < bodyResidences.numPages) {
           pageListings++;
         } else {
@@ -144,6 +138,21 @@ class MapListProvider extends ChangeNotifier {
       _loadMap = false;
       notifyListeners();
       return;
+    }
+  }
+
+  static Future<Response> getResponse(Map<String, dynamic> params) async {
+    try {
+      String endPoint = params["endPoint"] as String;
+      Map<String, dynamic> queryParams = params["queryParams"] as Map<String, dynamic>;
+      Map<String, String>? headers = params["headers"] as Map<String, String>?;
+
+      final url = Uri.https(kBaseUrl, endPoint, queryParams);
+      final response = await http.get(url, headers: headers);
+
+      return Future.value(response);
+    } catch (_) {
+      return Future.error("ERROR_CALL");
     }
   }
 

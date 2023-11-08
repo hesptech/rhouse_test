@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/modules/maps/map_residences_search.dart';
 import 'package:flutter_black_white/modules/maps/utils/geolocation_app.dart';
+import 'package:flutter_black_white/providers/maplist_provider.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/widgets/error_view_widget.dart';
 import 'package:flutter_black_white/widgets/loadable_widget.dart';
 import 'package:flutter_black_white/widgets/widgets.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:provider/provider.dart';
 
 import '../providers/filter_provider.dart';
 import '../utils/connectivity_internet.dart';
@@ -22,120 +24,140 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   late bool isFilter = false;
+  late MapListProvider _mapListProvider;
 
   @override
   void initState() {
     isFilter = Preferences.isFilter;
+
+    _mapListProvider = Provider.of<MapListProvider>(context, listen: false);
+    _mapListProvider.initData();
     super.initState();
   }
 
   @override
+  void dispose() {
+    _mapListProvider.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+    return WillPopScope(
+      onWillPop: () async {
+        _mapListProvider.close();
+        Navigator.pushReplacementNamed(context, "/");
+
+        // _mapListProvider.initData();
+        return true;
+      },
+      child: Scaffold(
+          appBar: AppBar(
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text('Map search', style: TextStyle(fontSize: 26)),
+                SizedBox(
+                  width: 140,
+                  child: TextButton(
+                      onPressed: () {
+                        FilterProvider().cleanFilter();
+                        // Navigator.pushNamedAndRemoveUntil(context, MapScreen.pathScreen, (route) => false, arguments: {'filter': "false"});
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => super.widget));
+                      },
+                      child: const Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.replay,
+                            color: kSecondaryColor,
+                            size: 22,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            "Reset Filters",
+                            style: TextStyle(fontSize: 17, color: Colors.white),
+                          ),
+                        ],
+                      )),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+              ],
+            ),
+            leading: IconButton(
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, "/");
+                },
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
+                  size: 34,
+                )),
+            toolbarHeight: 90,
+            backgroundColor: kPrimaryColor,
+            centerTitle: true,
+            actions: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, 'filters_screen', arguments: {'screenPath': MapScreen.pathScreen});
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.tune_outlined,
+                      color: isFilter ? kWarningColor : Colors.white,
+                      size: 35,
+                    ),
+                    const Text(
+                      "Filters",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
+                    ),
+                  ],
+                ),
+              ),
               const SizedBox(
-                height: 20,
-              ),
-              const Text('Map search', style: TextStyle(fontSize: 26)),
-              SizedBox(
-                width: 140,
-                child: TextButton(
-                    onPressed: () {
-                      FilterProvider().cleanFilter();
-                      Navigator.pushNamed(context, MapScreen.pathScreen, arguments: {'filter': "false"});
-                    },
-                    child: const Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.replay,
-                          color: kSecondaryColor,
-                          size: 22,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          "Reset Filters",
-                          style: TextStyle(fontSize: 17, color: Colors.white),
-                        ),
-                      ],
-                    )),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
+                width: 10,
+              )
             ],
           ),
-          leading: IconButton(
-              onPressed: () {
-                // FilterProvider().cleanFilter();
-                Navigator.pushNamed(context, '/');
-              },
-              icon: const Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-                size: 34,
-              )),
-          toolbarHeight: 90,
-          backgroundColor: kPrimaryColor,
-          centerTitle: true,
-          actions: [
-            GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, 'filters_screen', arguments: {'screenPath': MapScreen.pathScreen});
-              },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.tune_outlined,
-                    color: isFilter ? kWarningColor : Colors.white,
-                    size: 35,
-                  ),
-                  const Text(
-                    "Filters",
-                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            )
-          ],
-        ),
-        body: SafeArea(
-          bottom: false,
-          child: FutureBuilder<bool>(
-              future: ConnectivityInternet.hasConnection(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const LoadWidget();
-                }
+          body: SafeArea(
+            bottom: false,
+            child: FutureBuilder<bool>(
+                future: ConnectivityInternet.hasConnection(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const LoadWidget();
+                  }
 
-                if (snapshot.hasError || !snapshot.hasData) {
-                  return const ErrorViewWidget();
-                }
+                  if (snapshot.hasError || !snapshot.hasData) {
+                    return const ErrorViewWidget();
+                  }
 
-                if (snapshot.data == false) {
-                  return const NoInternetWidget();
-                }
+                  if (snapshot.data == false) {
+                    return const NoInternetWidget();
+                  }
 
-                return LoadableWidget(
-                    loader: () => GeolocationApp().getPosition(),
-                    builder: (_, LatLng coordinates) {
-                      return MapResidencesSearch(
-                        coordinates: coordinates,
-                      );
-                    });
-              }),
-        ));
+                  return LoadableWidget(
+                      loader: () => GeolocationApp().getPosition(),
+                      builder: (_, LatLng coordinates) {
+                        return MapResidencesSearch(
+                          mapListProvider: _mapListProvider,
+                          coordinates: coordinates,
+                        );
+                      });
+                }),
+          )),
+    );
   }
 }

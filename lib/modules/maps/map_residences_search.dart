@@ -13,8 +13,9 @@ import 'package:provider/provider.dart';
 ///Widgete that receives a configuration to display the list of residences and maps.
 class MapResidencesSearch extends StatefulWidget {
   final LatLng coordinates;
+  final MapListProvider mapListProvider;
 
-  const MapResidencesSearch({super.key, required this.coordinates});
+  const MapResidencesSearch({super.key, required this.coordinates, required this.mapListProvider});
 
   @override
   State<MapResidencesSearch> createState() => _MapResidencesSearchState();
@@ -22,23 +23,23 @@ class MapResidencesSearch extends StatefulWidget {
 
 class _MapResidencesSearchState extends State<MapResidencesSearch> {
   late List<Marker> markersList;
-  late MapListProvider _mapListProvider;
+  // late MapListProvider _mapListProvider;
   late List<Listing> coordinatesMarkers;
 
   @override
   void initState() {
     markersList = [];
     coordinatesMarkers = [];
-    _mapListProvider = Provider.of<MapListProvider>(context, listen: false);
-    MapListProvider.intiConfig();
-    _mapListProvider.getLocationsResidences(widget.coordinates);
+    // _mapListProvider = Provider.of<MapListProvider>(context, listen: false);
+    // MapListProvider.intiConfig();
+    widget.mapListProvider.getLocationsResidences(widget.coordinates);
     super.initState();
   }
 
   @override
   void dispose() {
     markersList = [];
-    _mapListProvider.close();
+    // widget.mapListProvider.close();
     super.dispose();
   }
 
@@ -46,14 +47,14 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        _mapListProvider.listingSelected = [];
+        widget.mapListProvider.listingSelected = [];
 
         return true;
       },
       child: Stack(
         children: [
           _mapTilerList(context),
-          _mapListProvider.loadMap
+          widget.mapListProvider.loadMap
               ? const LinearProgressIndicator(
                   backgroundColor: kWarningColor,
                   valueColor: AlwaysStoppedAnimation<Color>(kSecondaryColor),
@@ -89,7 +90,7 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
               onTapMarkers(mapMarkers, listingSelected);
             },
             changeZoom: (mapEvent) {
-              _mapListProvider.selectedCluster = [];
+              widget.mapListProvider.selectedCluster = [];
               markersList = [];
             },
             zoom: 10,
@@ -99,8 +100,8 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
   }
 
   void onTapMarkers(List<Marker> mapMarkers, List<Listing> listingSelected) async {
-    _mapListProvider.getFilterListings(listingSelected);
-    _mapListProvider.selectedCluster = mapMarkers;
+    widget.mapListProvider.getFilterListings(listingSelected);
+    widget.mapListProvider.selectedCluster = mapMarkers;
     markersList = [];
   }
 
@@ -138,7 +139,7 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
                           size: 25,
                         ),
                         onPressed: () {
-                          _mapListProvider.selectedCluster = [];
+                          widget.mapListProvider.selectedCluster = [];
                           markersList = [];
                         },
                       ),
