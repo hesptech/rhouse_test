@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/modules/cards/card_game/card_game.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/providers/repliers_game.dart';
-import 'package:flutter_black_white/modules/cards/card_search/card_search.dart';
 
 class CardsSliderGame extends StatefulWidget {
   
@@ -71,7 +71,7 @@ class _CardsSliderGameState extends State<CardsSliderGame> {
                     controller: scrollController,
                     scrollDirection: Axis.vertical,
                     itemCount: widget.listing.length,
-                    itemBuilder: ( _ , int index) => CardSearch( widget.listing[index])
+                    itemBuilder: ( _ , int index) => CardGame( widget.listing[index])
                   )
                 ),
                 //const Text('data'),

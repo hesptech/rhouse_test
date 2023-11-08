@@ -15,32 +15,45 @@ class GameScreen extends StatelessWidget {
     List valuesParams = ['n7274034','w7275236','w7235370'];
     final repliersGame = Provider.of<RepliersGame>(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(5.0),
-          child: Container(
-            height: 5.0,
-            color: kSecondaryColor,
-          )
+    return WillPopScope(
+      onWillPop: () async {
+        ScaffoldMessenger.of(context).clearMaterialBanners();
+        return true;
+      },      
+      child: Scaffold(
+        appBar: AppBar(
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(5.0),
+            child: Container(
+              height: 5.0,
+              color: kSecondaryColor,
+            )
+          ),
+          centerTitle: true,
+          title: const Text('Play&Learn'),
+          leading: IconButton(
+            onPressed: () {
+              ScaffoldMessenger.of(context).removeCurrentMaterialBanner();
+              Navigator.pushNamed(context, '/');
+            },
+            icon: const Icon(Icons.close_outlined),
+          ),
         ),
-        centerTitle: true,
-        title: const Text('Play&Learn'),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            CardsSliderGame(
-              listing: repliersGame.onDisplayGame,
-              //listing: repliersGame.getDisplayGame(valuesParams),
-              onInitPage: () => repliersGame.initGetDisplay(valuesParams),
-            ),
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              CardsSliderGame(
+                listing: repliersGame.onDisplayGame,
+                //listing: repliersGame.getDisplayGame(valuesParams),
+                onInitPage: () => repliersGame.initGetDisplay(valuesParams),
+              ),
+            ],
+          ),
         ),
+        /* body: const Center(
+          child: Text('game screen'),
+        ), */
       ),
-      /* body: const Center(
-        child: Text('game screen'),
-      ), */
     );
   }
 }
