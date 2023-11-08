@@ -28,10 +28,8 @@ class FiltersScreen extends StatelessWidget {
           onPressed: () {
             if (pathArgument == MapScreen.pathScreen) {
               if (Preferences.isCleanFilter) {
-                Navigator.pushNamed(context, MapScreen.pathScreen, arguments: {
-                  'filter': "false",
-                });
-                Preferences.isCleanFilter = false;
+                Navigator.popUntil(context, ModalRoute.withName(MapScreen.pathScreen));
+                // Preferences.isCleanFilter = false;
                 return;
               }
 

@@ -23,15 +23,12 @@ class MapResidencesSearch extends StatefulWidget {
 
 class _MapResidencesSearchState extends State<MapResidencesSearch> {
   late List<Marker> markersList;
-  // late MapListProvider _mapListProvider;
   late List<Listing> coordinatesMarkers;
 
   @override
   void initState() {
     markersList = [];
     coordinatesMarkers = [];
-    // _mapListProvider = Provider.of<MapListProvider>(context, listen: false);
-    // MapListProvider.intiConfig();
     widget.mapListProvider.getLocationsResidences(widget.coordinates);
     super.initState();
   }
@@ -74,28 +71,32 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
       double screenHeight = constraints.maxHeight;
       double cardHeight = screenHeight * 0.25;
 
-      return Consumer<MapListProvider>(builder: (context, mapListProvider, _) {
-        // generateMarkers(mapListProvider.listingMaps);
-        return MapTilerWidget(
-            key: const Key("value"),
-            center: widget.coordinates,
-            listCoordinates: mapListProvider.listingMaps,
-            loadMap: mapListProvider.loadMap,
-            selectedCluster: markersList,
-            cards: _scrollListing(context, cardHeight),
-            onClusterTap: (markerClusred, List<Listing> listingSelected) {
-              onTapMarkers(markerClusred, listingSelected);
-            },
-            onTapMarker: (mapMarkers, listingSelected) {
-              onTapMarkers(mapMarkers, listingSelected);
-            },
-            changeZoom: (mapEvent) {
-              widget.mapListProvider.selectedCluster = [];
-              markersList = [];
-            },
-            zoom: 10,
-            isMultiple: true);
-      });
+      return StreamBuilder<List<Listing>>(
+        initialData: const [],
+        stream: widget.mapListProvider.listingStreams,
+        builder: (context, snapshot) {
+          return Consumer<MapListProvider>(builder: (context, mapListProvider, _) {
+            return MapTilerWidget(
+                key: const Key("value"),
+                center: widget.coordinates,
+                listCoordinates: snapshot.hasData ? snapshot.data! : [],
+                selectedCluster: markersList,
+                cards: _scrollListing(context, cardHeight),
+                onClusterTap: (markerClusred, List<Listing> listingSelected) {
+                  onTapMarkers(markerClusred, listingSelected);
+                },
+                onTapMarker: (mapMarkers, listingSelected) {
+                  onTapMarkers(mapMarkers, listingSelected);
+                },
+                changeZoom: (mapEvent) {
+                  widget.mapListProvider.selectedCluster = [];
+                  markersList = [];
+                },
+                zoom: 10,
+                isMultiple: true);
+          });
+        }
+      );
     });
   }
 

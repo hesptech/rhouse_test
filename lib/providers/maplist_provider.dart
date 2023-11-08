@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
@@ -15,37 +17,39 @@ import '../utils/shared_preferences.dart';
 ///Provider class providing a list of properties
 class MapListProvider extends ChangeNotifier {
   List<Listing> listingSelected = [];
-  List<Listing> listingMaps = [];
   List<Marker> _selectedCluster = [];
-  bool _disposed = false;
   bool _loadMap = true;
+
+  bool get loadMap => _loadMap;
+
+  set loadMap(bool value) {
+    _loadMap = value;
+    notifyListeners();
+  }
+
   bool loadView = false;
+
+  StreamController<List<Listing>> _listingsController = StreamController<List<Listing>>.broadcast();
+
+  Stream<List<Listing>> get listingStreams => _listingsController.stream;
+  late StreamSubscription<List<Listing>> _streamLoop;
 
   initData() {
     listingSelected = [];
-    listingMaps = [];
     _selectedCluster = [];
-    _disposed = false;
     _loadMap = true;
     loadView = true;
+    _flush();
   }
 
-  close() {
+  close() async {
     listingSelected = [];
-    listingMaps = [];
     _selectedCluster = [];
-    _disposed = true;
     _loadMap = false;
+    _closeStreams();
   }
 
   MapListProvider();
-  MapListProvider.intiConfig() {
-    initData();
-  }
-
-  bool get loadMap {
-    return _loadMap;
-  }
 
   List<Marker> get selectedCluster {
     return _selectedCluster;
@@ -68,21 +72,36 @@ class MapListProvider extends ChangeNotifier {
   }
 
   Future<void> getLocationsResidences(LatLng coordinates) async {
-    initData();
     if (!await ConnectivityInternet.hasConnection()) {
       return;
     }
 
-    await _getlistingsByRadius('listings', coordinates, 200);
+    await _getlistingsByRadiusStream('listings', coordinates, 200);
   }
 
-  Future<void> _getlistingsByRadius(String endPoint, [LatLng? latLng, int radius = 0]) async {
+  Future<void> _getlistingsByRadiusStream(String endPoint, [LatLng? latLng, int radius = 0]) async {
     try {
       int pageListings = 1;
       String envApiKey = dotenv.get('REPLIERS-API-KEY');
-      bool isMorePages = true;
 
-      Map<String, dynamic> queryParamsLoop = {};
+      ResponseBody bodyResidencesFirst = await _sendRequestListings(pageListings, latLng, radius, envApiKey, endPoint);
+      _listingsController.sink.add(bodyResidencesFirst.listings);
+
+      if (bodyResidencesFirst.numPages > 1) {
+        int totalPages = bodyResidencesFirst.numPages - 1;
+
+        _streamLoop = iterablesPageStreams(totalPages, pageListings, latLng, radius, envApiKey, endPoint).listen((event) {
+          if (_listingsController.isClosed) {
+            return;
+          }
+          _listingsController.sink.add(event);
+        });
+      }
+    } catch (_) {}
+  }
+
+  Future<ResponseBody> _sendRequestListings(int pageListings, LatLng? latLng, int radius, String envApiKey, String endPoint) async {
+    try {
       Map<String, dynamic> filters = {};
 
       var isFilter = Preferences.isFilter;
@@ -91,53 +110,54 @@ class MapListProvider extends ChangeNotifier {
         filters = _getFilters();
       }
 
-      while (isMorePages && !_disposed) {
-        queryParamsLoop = {
-          'pageNum': '$pageListings',
-          'resultsPerPage': '800',
-          'type': 'sale',
-          'hasImages': 'true',
-          'fields':
-              'details,mlsNumber,class,images,listDate,timestamps,daysOnMarket,listPrice,address,details,map,rooms,lot,taxes,occupancy,nearby,condominium,office,status',
-          'lat': '${latLng?.latitude}',
-          'long': '${latLng?.longitude}',
-          'radius': '$radius',
-          'class': ['condo', 'residential'],
-        };
+      Map<String, dynamic> queryParamsLoop = {
+        'pageNum': '$pageListings',
+        'resultsPerPage': '800',
+        'type': 'sale',
+        'hasImages': 'true',
+        'fields':
+            'details,mlsNumber,class,images,listDate,timestamps,daysOnMarket,listPrice,address,details,map,rooms,lot,taxes,occupancy,nearby,condominium,office,status',
+        'lat': '${latLng?.latitude}',
+        'long': '${latLng?.longitude}',
+        'radius': '$radius',
+        'class': ['condo', 'residential'],
+      };
 
-        if (isFilter) {
-          queryParamsLoop.addAll(filters);
-        }
-
-        Map<String, String>? headers = {'REPLIERS-API-KEY': envApiKey};
-
-        Map<String, dynamic> params = {"endPoint": endPoint, "queryParams": queryParamsLoop, "headers": headers};
-        final responseHttp = await compute(getResponse, params);
-          
-        final bodyResidences = await compute((message) {
-          return ResponseBody.fromJson(message as String);
-        }, responseHttp.body);
-
-        debugPrint("Pagina ${bodyResidences.page} Total de paginas encontradas ${bodyResidences.numPages}");
-
-        if (pageListings < bodyResidences.numPages) {
-          pageListings++;
-        } else {
-          isMorePages = false;
-        }
-
-        listingMaps = bodyResidences.listings;
-
-        notifyListeners();
+      if (isFilter) {
+        queryParamsLoop.addAll(filters);
       }
 
-      _loadMap = false;
-      notifyListeners();
+      Map<String, String>? headers = {'REPLIERS-API-KEY': envApiKey};
+
+      Map<String, dynamic> params = {"endPoint": endPoint, "queryParams": queryParamsLoop, "headers": headers};
+      final responseHttp = await compute(getResponse, params);
+      final bodyResidences = await compute(processResponse, responseHttp.body);
+      return bodyResidences;
     } catch (_) {
-      listingMaps = [];
-      _loadMap = false;
-      notifyListeners();
-      return;
+      return ResponseBody(page: 0, numPages: 0, pageSize: 0, count: 0, statistics: Statistics(), listings: const []);
+    }
+  }
+
+  Stream<List<Listing>> iterablesPageStreams(int totalPages, int pageListings, LatLng? latLng, int radius, String envApiKey, String endPoint) async* {
+    var listGenerates = List.generate(totalPages, (index) => index);
+
+    for (var _ in listGenerates) {
+      pageListings++;
+      var responseStream = await _sendRequestListings(pageListings, latLng, radius, envApiKey, endPoint);
+
+      if (pageListings == responseStream.numPages) {
+        loadMap = false;
+      }
+
+      yield responseStream.listings;
+    }
+  }
+
+  static ResponseBody processResponse(String responseString) {
+    try {
+      return ResponseBody.fromJson(responseString);
+    } catch (_) {
+      return ResponseBody(page: 0, numPages: 0, pageSize: 0, count: 0, statistics: Statistics(), listings: const []);
     }
   }
 
@@ -172,5 +192,23 @@ class MapListProvider extends ChangeNotifier {
     filtersResults.addAll(filtersMaps);
 
     return filtersResults;
+  }
+
+  _flush() {
+    try {
+      _listingsController.close();
+      _listingsController = StreamController<List<Listing>>.broadcast();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  _closeStreams() {
+    try {
+      _listingsController.close();
+      _streamLoop.cancel();
+    } catch (_) {
+      
+    }
   }
 }

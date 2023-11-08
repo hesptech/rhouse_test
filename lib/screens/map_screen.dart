@@ -45,7 +45,7 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        _mapListProvider.close();
+        // _mapListProvider.close();
         Navigator.pushReplacementNamed(context, "/");
 
         // _mapListProvider.initData();
@@ -64,10 +64,13 @@ class _MapScreenState extends State<MapScreen> {
                 SizedBox(
                   width: 140,
                   child: TextButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        _mapListProvider.close();
                         FilterProvider().cleanFilter();
-                        // Navigator.pushNamedAndRemoveUntil(context, MapScreen.pathScreen, (route) => false, arguments: {'filter': "false"});
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => super.widget));
+                        Navigator.pushNamed(context, MapScreen.pathScreen, arguments: {'filter': "false"});
+                        // Navigator.pushReplacementNamed(context, MapScreen.pathScreen, arguments: {'filter': "false"});
+                        // Navigator.pushReplacementNamed(context, "/");
+                        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => super.widget));
                       },
                       child: const Row(
                         crossAxisAlignment: CrossAxisAlignment.center,

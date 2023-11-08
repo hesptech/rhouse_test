@@ -22,7 +22,6 @@ class MapTilerWidget extends StatefulWidget {
   final double zoom;
   final bool isMultiple;
   final bool isMiniature;
-  final bool loadMap;
   final List<Marker> markers;
 
   const MapTilerWidget(
@@ -35,7 +34,6 @@ class MapTilerWidget extends StatefulWidget {
       this.center,
       this.zoom = 18,
       this.isMultiple = true,
-      this.loadMap = false,
       this.isMiniature = false,
       this.selectedCluster = const [],
       this.listingSingle,
@@ -111,6 +109,7 @@ class _MapWidget extends State<MapTilerWidget> {
   @override
   void dispose() {
     _controller.dispose();
+    propertiesAll = [];
     _minZoom = 6;
     _maxZoomList = 15;
     _maxZoomsingle = 18;
@@ -124,47 +123,62 @@ class _MapWidget extends State<MapTilerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: FlutterMap(
-            mapController: _controller,
-            options: MapOptions(
-                bounds: LatLngBounds.fromPoints([widget.center!]),
-                zoom: _zoomValue,
-                minZoom: _minZoom,
-                maxZoom: widget.isMultiple ? _maxZoomList : _maxZoomsingle,
-                keepAlive: true,
-                onTap: (tapPosition, point) {
-                  if (widget.onTapMap == null) {
-                    return;
-                  }
-                  widget.onTapMap!();
-                },
-                onMapReady: () {
-                  double latitudeAlfa = 0;
+    return WillPopScope(
+      onWillPop: () {
+        _controller.dispose();
+        propertiesAll = [];
+        _minZoom = 6;
+        _maxZoomList = 15;
+        _maxZoomsingle = 18;
+        _maxZoom = 20;
+        _zoomValue = 0;
+        markers = [];
+        _selectedCluster = [];
+        currentMarker = null;
+        return Future.value(true);
+      },
+      child: Column(
+        children: [
+          Expanded(
+            child: FlutterMap(
+              mapController: _controller,
+              options: MapOptions(
+                  bounds: LatLngBounds.fromPoints([widget.center!]),
+                  zoom: _zoomValue,
+                  minZoom: _minZoom,
+                  maxZoom: widget.isMultiple ? _maxZoomList : _maxZoomsingle,
+                  keepAlive: true,
+                  onTap: (tapPosition, point) {
+                    if (widget.onTapMap == null) {
+                      return;
+                    }
+                    widget.onTapMap!();
+                  },
+                  onMapReady: () {
+                    double latitudeAlfa = 0;
 
-                  if (widget.isMiniature) {
-                    latitudeAlfa = widget.center!.latitude;
-                  } else {
-                    latitudeAlfa = widget.center!.latitude - 0.0003;
-                  }
+                    if (widget.isMiniature) {
+                      latitudeAlfa = widget.center!.latitude;
+                    } else {
+                      latitudeAlfa = widget.center!.latitude - 0.0003;
+                    }
 
-                  _controller.move(LatLng(latitudeAlfa, widget.center!.longitude), _zoomValue);
-                },
-                interactiveFlags: widget.isMiniature
-                    ? InteractiveFlag.none
-                    : InteractiveFlag.drag | InteractiveFlag.flingAnimation | InteractiveFlag.pinchMove | InteractiveFlag.pinchZoom | InteractiveFlag.doubleTapZoom),
-            children: [
-              TileLayer(
-                urlTemplate: kMaptilerUrl,
-              ),
-              _markers()
-            ],
+                    _controller.move(LatLng(latitudeAlfa, widget.center!.longitude), _zoomValue);
+                  },
+                  interactiveFlags: widget.isMiniature
+                      ? InteractiveFlag.none
+                      : InteractiveFlag.drag | InteractiveFlag.flingAnimation | InteractiveFlag.pinchMove | InteractiveFlag.pinchZoom | InteractiveFlag.doubleTapZoom),
+              children: [
+                TileLayer(
+                  urlTemplate: kMaptilerUrl,
+                ),
+                _markers()
+              ],
+            ),
           ),
-        ),
-        widget.cards
-      ],
+          widget.cards
+        ],
+      ),
     );
   }
 
@@ -173,13 +187,12 @@ class _MapWidget extends State<MapTilerWidget> {
       key: const Key("value"),
       options: MarkerClusterLayerOptions(
         animationsOptions: const AnimationsOptions(
-          centerMarkerCurves: Curves.fastOutSlowIn,
-          fitBoundCurves: Curves.fastOutSlowIn,
-          centerMarker: Duration.zero,
-          fitBound: Duration.zero,
-          spiderfy: Duration.zero,
-          zoom: Duration.zero
-        ),
+            centerMarkerCurves: Curves.fastOutSlowIn,
+            fitBoundCurves: Curves.fastOutSlowIn,
+            centerMarker: Duration.zero,
+            fitBound: Duration.zero,
+            spiderfy: Duration.zero,
+            zoom: Duration.zero),
         size: const Size(50, 50),
         maxClusterRadius: 80,
         spiderfyCluster: false,
@@ -325,5 +338,4 @@ class _MapWidget extends State<MapTilerWidget> {
               ));
         });
   }
-
 }
