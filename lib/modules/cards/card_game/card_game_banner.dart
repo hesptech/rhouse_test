@@ -38,7 +38,7 @@ class CardGameBanner extends StatelessWidget {
       price = propertyItem.listPrice?? '';
       lastStatusHistory = 'TERMINATED';
       priceLabel = 'Listed for: ';
-      colorLabel = Colors.amber;
+      colorLabel = kYellow;
     } else if (propertyItem.lastStatus == 'Sus') {
       //dateHistory = suspendedDate;
       dateHistory = dateHistory.length > 4 ? dateHistory.substring(0,11) : '';
@@ -46,7 +46,7 @@ class CardGameBanner extends StatelessWidget {
       price = propertyItem.listPrice?? '';
       lastStatusHistory = 'SUSPENDED';
       priceLabel = 'Listed for: ';
-      colorLabel = Colors.amber;
+      colorLabel = kYellow;
     } else if (propertyItem.lastStatus == 'Exp') {
       //dateHistory = expiryDate;
       dateHistory = dateHistory.length > 4 ? dateHistory.substring(0,11) : '';
@@ -54,7 +54,7 @@ class CardGameBanner extends StatelessWidget {
       price = propertyItem.listPrice?? '';
       lastStatusHistory = 'EXPIRED';
       priceLabel = 'Listed for: ';
-      colorLabel = Colors.amber;
+      colorLabel = kYellow;
     } else if (propertyItem.lastStatus == 'New') {
       //dateHistory = expiryDate;
       dateHistory = dateHistory.length > 4 ? dateHistory.substring(0,11) : '';
@@ -80,6 +80,7 @@ class CardGameBanner extends StatelessWidget {
       padding: const EdgeInsetsDirectional.symmetric( horizontal: 10.0, vertical: 7.0),
       child: GestureDetector(
         onTap: () {
+          ScaffoldMessenger.of(context).removeCurrentMaterialBanner();
           Navigator.pushNamed(context, 'card_details_full_screen', arguments: propertyItem);
         }, 
         child: Row(
@@ -105,7 +106,7 @@ class CardGameBanner extends StatelessWidget {
                   height: 117,
                   padding: const EdgeInsets.only(
                     left: 10.0,
-                    bottom: 5.0,
+                    bottom: 10.0,
                   ),
                   alignment: Alignment.bottomLeft,
                   child: ClipRRect(

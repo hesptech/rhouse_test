@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/modules/cards/card_game/card_game.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_black_white/utils/constants.dart';
-import 'package:flutter_black_white/models/models.dart';
+
 import 'package:flutter_black_white/providers/repliers_game.dart';
+import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/modules/cards/card_game/card_game.dart';
+import 'package:flutter_black_white/modules/cards/card_game/card_game_banner_price.dart';
 
 class CardsSliderGame extends StatefulWidget {
   
   final List<Listing> listing;
   final Function onInitPage;
+  final Listing? bannerPriceListing;
 
   const CardsSliderGame({
     super.key, 
     required this.listing,
-    required this.onInitPage,
+    required this.onInitPage, 
+    this.bannerPriceListing,
   });
   
   @override
@@ -44,6 +48,8 @@ class _CardsSliderGameState extends State<CardsSliderGame> {
     final repliersGame = Provider.of<RepliersGame>(context);
     bool countEmpty = (repliersGame.onCount > 0) ? false : true  ;
     print(repliersGame.onCount);
+    //print(widget.bannerPriceListing?.mlsNumber);
+    Listing priceListing = widget.bannerPriceListing?? Listing();
 
     return Container(
       height: screenSize.height - 60,
@@ -57,15 +63,22 @@ class _CardsSliderGameState extends State<CardsSliderGame> {
             children: countEmpty 
             ? [
                 const Center(
-                  heightFactor: 5.0,
+                  heightFactor: 10.0,
                   child: Text(
-                    'sorry, \n no Properties found', 
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: kPrimaryColor),
+                    'You don\'t have properties on your \n GUESS SOLD PRICE history yet', 
+                    style: TextStyle(
+                      fontSize: 20, 
+                      fontWeight: FontWeight.bold, 
+                      color: Color.fromARGB(255, 99, 99, 99),
+                    ),
                     textAlign: TextAlign.center,
                   ),
                 ),
               ]
             : [
+                if (widget.bannerPriceListing?.mlsNumber != null) 
+                CardGameBannerPrice( priceListing ),
+                Divider(color: Colors.grey.withOpacity(0.1), thickness: 5, height: 1,),
                 Expanded(
                   child: ListView.builder(
                     controller: scrollController,
@@ -74,7 +87,6 @@ class _CardsSliderGameState extends State<CardsSliderGame> {
                     itemBuilder: ( _ , int index) => CardGame( widget.listing[index])
                   )
                 ),
-                //const Text('data'),
               ],
           ),
     );

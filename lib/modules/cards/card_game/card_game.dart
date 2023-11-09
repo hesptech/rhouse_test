@@ -57,7 +57,7 @@ class _CardGameState extends State<CardGame> {
       price = widget.propertyItem.listPrice?? '';
       lastStatusHistory = 'TERMINATED';
       priceLabel = 'Listed for: ';
-      colorLabel = Colors.amber;
+      colorLabel = kYellow;
     } else if (widget.propertyItem.lastStatus == 'Sus') {
       //dateHistory = suspendedDate;
       dateHistory = dateHistory.length > 4 ? dateHistory.substring(0,11) : '';
@@ -65,7 +65,7 @@ class _CardGameState extends State<CardGame> {
       price = widget.propertyItem.listPrice?? '';
       lastStatusHistory = 'SUSPENDED';
       priceLabel = 'Listed for: ';
-      colorLabel = Colors.amber;
+      colorLabel = kYellow;
     } else if (widget.propertyItem.lastStatus == 'Exp') {
       //dateHistory = expiryDate;
       dateHistory = dateHistory.length > 4 ? dateHistory.substring(0,11) : '';
@@ -73,7 +73,7 @@ class _CardGameState extends State<CardGame> {
       price = widget.propertyItem.listPrice?? '';
       lastStatusHistory = 'EXPIRED';
       priceLabel = 'Listed for: ';
-      colorLabel = Colors.amber;
+      colorLabel = kYellow;
     } else if (widget.propertyItem.lastStatus == 'New') {
       //dateHistory = expiryDate;
       dateHistory = dateHistory.length > 4 ? dateHistory.substring(0,11) : '';

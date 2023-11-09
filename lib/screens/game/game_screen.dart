@@ -4,15 +4,20 @@ import 'package:provider/provider.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/providers/repliers_game.dart';
 import 'package:flutter_black_white/widgets/cards_slider_game.dart';
+import 'package:flutter_black_white/models/models.dart';
 
 
 class GameScreen extends StatelessWidget {
-  const GameScreen({super.key});
+  static String pathScreen = "game_screen";
+
+  final Listing? bannerPriceListing;
+  const GameScreen({super.key, this.bannerPriceListing});
 
   @override
   Widget build(BuildContext context) {
 
-    List valuesParams = ['n7274034','w7275236','w7235370'];
+    Listing listingArgument = _checkArguments(context);
+    List valuesParams = ['n7274034','w7275236','w7235370','N5632323'];
     final repliersGame = Provider.of<RepliersGame>(context);
 
     return WillPopScope(
@@ -46,6 +51,7 @@ class GameScreen extends StatelessWidget {
                 listing: repliersGame.onDisplayGame,
                 //listing: repliersGame.getDisplayGame(valuesParams),
                 onInitPage: () => repliersGame.initGetDisplay(valuesParams),
+                bannerPriceListing: listingArgument,
               ),
             ],
           ),
@@ -55,5 +61,16 @@ class GameScreen extends StatelessWidget {
         ), */
       ),
     );
+  }
+
+  Listing _checkArguments(BuildContext context) {
+    try {
+      final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
+
+      return arguments["listing"] as Listing;
+    } catch (e) {
+      //Navigator.pop(context);
+      return Listing();
+    }
   }
 }
