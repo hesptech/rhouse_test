@@ -5,6 +5,7 @@ import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/modules/cards/card_game/card_game_banner.dart';
+import 'package:flutter_black_white/modules/cards/card_game/widgets/game_last_status.dart';
 
 class CardGame extends StatefulWidget {
 
@@ -17,6 +18,14 @@ class CardGame extends StatefulWidget {
 }
 
 class _CardGameState extends State<CardGame> {
+
+  late final TextEditingController _guessPrice;
+
+  @override
+  void initState() {
+    super.initState();
+    _guessPrice = TextEditingController(text: "\$ 1,780,000");
+  }
 
   /* @override
   void dispose() {
@@ -35,63 +44,11 @@ class _CardGameState extends State<CardGame> {
 
     final dataFormatted = DataFormatter(widget.propertyItem);
     final String images = widget.propertyItem.images?.first?? '';
-
-    String price = '';
+    final statusParams = GameLastStatus(widget.propertyItem);
     String formattedPrice = '---';
-    String dateHistory = '';
-    String lastStatusHistory = '';
-    String priceLabel = '';
-    Color colorLabel = Colors.transparent;
-    if(widget.propertyItem.lastStatus == 'Sld') {
-      //dateHistory = soldDate;
-      dateHistory = dateHistory.length > 4 ? dateHistory.substring(0,11) : '';
-      dateHistory = dateHistory == '2000-01-01' ? '0000-00-00' : dateHistory ;
-      price = widget.propertyItem.soldPrice?? '';
-      lastStatusHistory = 'SOLD';
-      priceLabel = 'SOLD PRICE: ';
-      colorLabel = kWarningColor;
-    } else if (widget.propertyItem.lastStatus == 'Ter') {
-      //dateHistory = terminatedDate;
-      dateHistory = dateHistory.length > 4 ? dateHistory.substring(0,11) : '';
-      dateHistory = dateHistory == '2000-01-01' ? '0000-00-00' : dateHistory ;
-      price = widget.propertyItem.listPrice?? '';
-      lastStatusHistory = 'TERMINATED';
-      priceLabel = 'Listed for: ';
-      colorLabel = kYellow;
-    } else if (widget.propertyItem.lastStatus == 'Sus') {
-      //dateHistory = suspendedDate;
-      dateHistory = dateHistory.length > 4 ? dateHistory.substring(0,11) : '';
-      dateHistory = dateHistory == '2000-01-01' ? '0000-00-00' : dateHistory ;
-      price = widget.propertyItem.listPrice?? '';
-      lastStatusHistory = 'SUSPENDED';
-      priceLabel = 'Listed for: ';
-      colorLabel = kYellow;
-    } else if (widget.propertyItem.lastStatus == 'Exp') {
-      //dateHistory = expiryDate;
-      dateHistory = dateHistory.length > 4 ? dateHistory.substring(0,11) : '';
-      dateHistory = dateHistory == '2000-01-01' ? '0000-00-00' : dateHistory ;
-      price = widget.propertyItem.listPrice?? '';
-      lastStatusHistory = 'EXPIRED';
-      priceLabel = 'Listed for: ';
-      colorLabel = kYellow;
-    } else if (widget.propertyItem.lastStatus == 'New') {
-      //dateHistory = expiryDate;
-      dateHistory = dateHistory.length > 4 ? dateHistory.substring(0,11) : '';
-      dateHistory = dateHistory == '2000-01-01' ? '0000-00-00' : dateHistory ;
-      price = widget.propertyItem.listPrice?? '';
-      lastStatusHistory = 'Active';
-      priceLabel = 'Listed for: ';
-      colorLabel = kSecondaryColor;
-    } else {
-      dateHistory = '   no data    ';
-      price = widget.propertyItem.listPrice?? '';
-      lastStatusHistory = widget.propertyItem.lastStatus?? '';
-      priceLabel = 'Listed for: ';
-      colorLabel = Colors.transparent;
-    }
 
-    if( price.length > 4 ) {
-      double doubleString = double.parse(price);
+    if( statusParams.price.length > 4 ) {
+      double doubleString = double.parse(statusParams.price);
       formattedPrice = '\$${doubleString.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}';
     }
 
@@ -104,6 +61,10 @@ class _CardGameState extends State<CardGame> {
           return showBanner();
         }, 
         child: Card(
+          clipBehavior: Clip.antiAlias,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(0),
+          ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -115,7 +76,10 @@ class _CardGameState extends State<CardGame> {
                       placeholder: const AssetImage('assets/no-image_128_85.jpg'), 
                       image: NetworkImage('$kRepliersCdn$images?w=250'),
                       imageErrorBuilder: (context, error, stackTrace) {
-                        return Image.asset('assets/no-image_128_85.jpg', fit: BoxFit.fitWidth);
+                        return Image.asset(
+                          'assets/no-image_128_85.jpg', 
+                          fit: BoxFit.fitWidth
+                        );
                       },
                       width: 150,
                       height: 120,
@@ -128,12 +92,25 @@ class _CardGameState extends State<CardGame> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(3),
                           child: Container(
-                            color: colorLabel,
+                            color: statusParams.colorLabel,
                             width: 120.0,
-                            child: Text(
-                              lastStatusHistory,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(color: Colors.white),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  statusParams.iconLabel,
+                                  color: Colors.white,
+                                  size: 18,
+                                ),
+                                const SizedBox(
+                                  width: 5.0,
+                                ),                             
+                                Text(
+                                  statusParams.lastStatusHistory,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -154,12 +131,12 @@ class _CardGameState extends State<CardGame> {
                           alignment: Alignment.bottomLeft,
                           child: Text( dataFormatted.addressCity, ),
                         ),
-                        const SizedBox(height: 5.0,),
+                        const SizedBox(height: 3.0,),
                         Row(
                           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              priceLabel,
+                              statusParams.priceLabel,
                               style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                             Text(
@@ -178,8 +155,14 @@ class _CardGameState extends State<CardGame> {
                             ), */
                           ],
                         ),
-                        const SizedBox(height: 5.0,),
-                  
+                        const SizedBox(height: 10.0,),
+                         Align(
+                            alignment: Alignment.centerLeft,
+                           child: SizedBox(
+                            width: 150,
+                            height: 35,
+                            child: _guessPriceTextForm()),
+                         )
                   
           
                       ],
@@ -208,12 +191,74 @@ class _CardGameState extends State<CardGame> {
           onPressed: () => ScaffoldMessenger.of(context).hideCurrentMaterialBanner(), 
           child: const Text(''),
         ),
-        TextButton(
-          onPressed: () => ScaffoldMessenger.of(context).hideCurrentMaterialBanner(), 
-          child: const Text('dismiss'),
+        IconButton(
+          onPressed: () => ScaffoldMessenger.of(context).hideCurrentMaterialBanner(),
+          icon: const Icon(Icons.cancel_outlined)
         )
       ]
     ),
   );
 
+  Widget _guessPriceTextForm() {
+    return TextFormField(
+      controller: _guessPrice,               
+      keyboardType: TextInputType.visiblePassword,
+      textAlign: TextAlign.left,
+      readOnly: true,
+      //maxLines: 2,
+      style: const TextStyle(
+        height: 1.7,
+        color: kWarningColor,
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+      ),
+      decoration: InputDecoration(
+        //hintText: "guess Price",
+        labelText: "Your guess SOLD Price",
+        contentPadding: const EdgeInsets.only(top: 0.0, right: 0, left: 15.0, bottom: 0.0),
+        suffixIcon: _suffixGuessPrice(),
+        suffixIconColor: kWarningColor,
+        labelStyle: const TextStyle(
+          color: kWarningColor,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+        ),
+        hintStyle: const TextStyle(fontWeight: FontWeight.w500, color: kWarningColor),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5.0),
+          borderSide: const BorderSide(color: kWarningColor),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5.0),
+          borderSide: const BorderSide(color: kWarningColor),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5.0),
+          borderSide: const BorderSide(color: kWarningColor),
+        ),
+      ),
+    );
+  }
+
+  Widget _suffixGuessPrice() {
+    return InkWell(
+      onTap: () {        
+        //Navigator.pushNamed(context, PriceDeleteScreen.pathScreen);
+      },
+      child: Container(
+          //height: 60,
+          //width: 60,
+          padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
+          /* decoration: BoxDecoration(
+            //color: kWarningColor,
+            borderRadius: const BorderRadius.only(topRight: Radius.circular(10), bottomRight: Radius.circular(10)),
+            border: Border.all(width: 1, style: BorderStyle.solid, color: kWarningColor),
+          ), */
+          child: const Icon(
+            Icons.lock_outlined,
+            color: Colors.grey,
+            size: 18,
+          )),
+    );
+  }
 }

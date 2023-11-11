@@ -35,7 +35,9 @@ class GameScreen extends StatelessWidget {
             )
           ),
           centerTitle: true,
-          title: const Text('Play&Learn'),
+          title: const Image(
+            image: AssetImage('assets/play&learn_logo108x37.png'),
+          ),
           leading: IconButton(
             onPressed: () {
               ScaffoldMessenger.of(context).removeCurrentMaterialBanner();

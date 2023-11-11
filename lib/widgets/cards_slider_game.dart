@@ -52,43 +52,70 @@ class _CardsSliderGameState extends State<CardsSliderGame> {
     Listing priceListing = widget.bannerPriceListing?? Listing();
 
     return Container(
-      height: screenSize.height - 60,
+      height: screenSize.height - 80,
       color: kBackgroundColor,
-      child: !repliersGame.loaded
+       child: !repliersGame.loaded
         ? const Center(
             child: CircularProgressIndicator( color: kPrimaryColor, ),
           )
-        : Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: countEmpty 
-            ? [
-                const Center(
-                  heightFactor: 10.0,
-                  child: Text(
-                    'You don\'t have properties on your \n GUESS SOLD PRICE history yet', 
-                    style: TextStyle(
-                      fontSize: 20, 
-                      fontWeight: FontWeight.bold, 
-                      color: Color.fromARGB(255, 99, 99, 99),
+        : SingleChildScrollView(
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: countEmpty 
+              ? [
+                  const Center(
+                    heightFactor: 10.0,
+                    child: Text(
+                      'You don\'t have properties on your \n GUESS SOLD PRICE history yet', 
+                      style: TextStyle(
+                        fontSize: 20, 
+                        fontWeight: FontWeight.bold, 
+                        color: Color.fromARGB(255, 99, 99, 99),
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
-                ),
-              ]
-            : [
-                if (widget.bannerPriceListing?.mlsNumber != null) 
-                CardGameBannerPrice( priceListing ),
-                Divider(color: Colors.grey.withOpacity(0.1), thickness: 5, height: 1,),
-                Expanded(
-                  child: ListView.builder(
+                ]
+              : [
+                  /* Container(
+                    height: 100,
+                    child: const Text('dddd'),
+                  )
+                  Flexible(
+                    child: ListView.builder(
+                      controller: scrollController,
+                      scrollDirection: Axis.vertical,
+                      itemCount: widget.listing.length,
+                      itemBuilder: ( _ , int index) => CardGame( widget.listing[index])
+                    )
+                  ), */
+        
+                  if (widget.bannerPriceListing?.mlsNumber != null) 
+                  CardGameBannerPrice( priceListing ),
+                  Divider(color: Colors.grey.withOpacity(0.1), thickness: 5, height: 1,),
+        
+                  const SizedBox(
+                    height: 50,
+                    child: Padding(
+                       padding: EdgeInsets.only(top: 20, bottom: 10), 
+                      child: Text(
+                        'YOUR GUESS PROPERTIES',
+                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                      )
+                    ),
+                  ),
+        
+                  ListView.builder(
+                    shrinkWrap: true,
+                    primary: false,
                     controller: scrollController,
                     scrollDirection: Axis.vertical,
                     itemCount: widget.listing.length,
                     itemBuilder: ( _ , int index) => CardGame( widget.listing[index])
-                  )
-                ),
-              ],
-          ),
+                  ),
+                ],
+            ),
+        ),
     );
   }
 }
