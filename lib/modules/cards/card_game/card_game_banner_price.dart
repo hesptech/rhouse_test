@@ -5,6 +5,7 @@ import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/modules/cards/card_game/widgets/game_last_status.dart';
+import 'package:flutter_black_white/modules/cards/card_game/widgets/game_guess_price.dart';
 
 class CardGameBannerPrice extends StatelessWidget {
 
@@ -25,6 +26,8 @@ class CardGameBannerPrice extends StatelessWidget {
       formattedPrice = '\$${doubleString.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}';
     }
 
+    //final registerFormProvider = Provider.of<RegisterFormProvider>(context, listen: false);
+
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.all(16),
@@ -35,88 +38,170 @@ class CardGameBannerPrice extends StatelessWidget {
             ScaffoldMessenger.of(context).removeCurrentMaterialBanner();
             Navigator.pushNamed(context, 'card_details_full_screen', arguments: propertyItem);
           }, 
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Column(
             children: [
-              Stack(
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  FadeInImage(
-                    placeholder: const AssetImage('assets/no-image_128_85.jpg'), 
-                    image: NetworkImage('$kRepliersCdn$images?w=250'),
-                    imageErrorBuilder: (context, error, stackTrace) {
-                      return Image.asset(
-                        'assets/no-image_128_85.jpg', 
-                        fit: BoxFit.fitWidth,
-                      );
-                    },
-                    width: 175,
-                    height: 117,
-                    fit: BoxFit.cover,
-                  ),
-                  Container(
-                    width: 175,
-                    height: 117,
-                    padding: const EdgeInsets.only(
-                      left: 10.0,
-                      bottom: 10.0,
-                    ),
-                    alignment: Alignment.bottomLeft,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(3),
-                      child: Container(
-                        color: statusParams.colorLabel,
-                        width: 120.0,
-                        child: Text(
-                          statusParams.lastStatusHistory,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(color: Colors.white),
+                  Stack(
+                    children: [
+                      FadeInImage(
+                        placeholder: const AssetImage('assets/no-image_128_85.jpg'), 
+                        image: NetworkImage('$kRepliersCdn$images?w=250'),
+                        imageErrorBuilder: (context, error, stackTrace) {
+                          return Image.asset(
+                            'assets/no-image_128_85.jpg', 
+                            fit: BoxFit.cover,
+                          );
+                        },
+                        width: 165,
+                        height: 140,
+                        fit: BoxFit.fitHeight,
+                      ),
+                      Container(
+                        width: 165,
+                        height: 140,
+                        padding: const EdgeInsets.only(
+                          left: 10.0,
+                          bottom: 10.0,
+                        ),
+                        alignment: Alignment.bottomLeft,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(3),
+                          child: Container(
+                            color: statusParams.colorLabel,
+                            width: 120.0,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    statusParams.iconLabel,
+                                    color: Colors.white,
+                                    size: 18,
+                                  ),
+                                  const SizedBox(
+                                    width: 5.0,
+                                  ),                             
+                                  Text(
+                                    statusParams.lastStatusHistory,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                ],
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 7.0),
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.bottomLeft,
-                        child: Text( dataFormatted.address,)
-                      ),
-                      Align(
-                        alignment: Alignment.bottomLeft,
-                        child: Text( dataFormatted.addressCity, ),
-                      ),
-                      const SizedBox(height: 5.0,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            statusParams.priceLabel,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            formattedPrice, 
-                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kPrimaryColor),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 5.0,),
                     ],
                   ),
-                )
-              )          
-            ],    
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 7.0),
+                      child: Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.bottomLeft,
+                            child: Text( 
+                              dataFormatted.address,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16.0
+                              ),
+                            )
+                          ),
+                          Align(
+                            alignment: Alignment.bottomLeft,
+                            child: Text( dataFormatted.addressCity, ),
+                          ),
+                          const SizedBox(height: 5.0,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                statusParams.priceLabel,
+                                style: const TextStyle( fontSize: 12.0 ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                formattedPrice, 
+                                style: const TextStyle(
+                                  fontSize: 18, 
+                                  fontWeight: FontWeight.bold, 
+                                  color: kPrimaryColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 10.0,),
+                          const GameGuessPrice( cardGameEmpty: true,),
+                        ],
+                      ),
+                    )
+                  )          
+                ],    
+              ),
+              const SizedBox(width: 5.0,),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    width: 165.0,
+                    child: Text(
+                      'This property.....lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent malesuada et magna sed tincidunt.',
+                      style: TextStyle( fontSize: 12 ),                      
+                    ),
+                  ),
+                  const SizedBox(width: 5.0,),
+                  //_buttondRegister(context, registerFormProvider)
+                  Expanded(
+                    child: _buttondRegister(context)
+                  ),
+                ],
+              )
+            ],
           ),
         ),
       ),
+    );
+  }
+
+  //Widget _buttondRegister(BuildContext context, registerFormProvider) {
+  Widget _buttondRegister(BuildContext context) {
+
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        elevation: 0,
+        //minimumSize: const Size(320, 50),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+        ),
+        backgroundColor: kWarningColor,
+      ),
+      child: const Text(
+        "SUBMIT & LEARN", 
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 16.0,
+        ),
+      ),
+      onPressed: () {
+        
+        //final validForm = registerFormProvider.validateForm();
+        //if ( !validForm ) return;
+        
+        /* final authProvider = Provider.of<AuthProvider>(context, listen: false);
+        authProvider.register(
+          registerFormProvider.name,
+          registerFormProvider.email, 
+          registerFormProvider.password, 
+        );
+        Navigator.pushNamed(context, RegisterTermsUseScreen.pathScreen); */
+
+      },
     );
   }
 }

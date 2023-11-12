@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+//import 'package:provider/provider.dart';
 
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/search_delegate.dart';
-import 'package:flutter_black_white/providers/filter_provider.dart';
+//import 'package:flutter_black_white/providers/filter_provider.dart';
 
 class CustomBottomNavigator extends StatefulWidget {
   const CustomBottomNavigator({ Key? key }) : super(key: key);
@@ -20,7 +20,7 @@ class _CustomBottomNavigatorState extends State<CustomBottomNavigator> {
   static const List<String> _pages = <String>[
     '/',
     '/',
-    'game_welcome_screen',
+    'game_screen',
     '/',
     'login_screen',
   ];
@@ -32,12 +32,13 @@ class _CustomBottomNavigatorState extends State<CustomBottomNavigator> {
       if (index == 1) {
         showSearch(context: context, delegate: InputSearchDelegate());
       } else if (index == 2) {
-        if (Provider.of<FilterProvider>(context, listen: false).gameWelcomeVisited == false) {
-          Provider.of<FilterProvider>(context, listen: false).gameWelcomeVisited = true;
+        Navigator.pushNamed(context, _pages[index]);
+        /* if (Provider.of<FilterProvider>(context, listen: false).cardGamePriceDisplay == false) {
+          Provider.of<FilterProvider>(context, listen: false).cardGamePriceDisplay = true;
           Navigator.pushNamed(context, _pages[2]);
         } else {
           Navigator.pushNamed(context, 'game_screen');
-        }
+        } */
       } else if (index == 4 && loggedIn) {
         Navigator.pushNamed(context, _pages[4]);
         //Navigator.pop(context);

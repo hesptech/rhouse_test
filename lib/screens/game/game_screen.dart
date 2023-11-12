@@ -45,6 +45,28 @@ class GameScreen extends StatelessWidget {
             },
             icon: const Icon(Icons.close_outlined),
           ),
+          actions: [
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, 'game_welcome_screen');
+              },
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(
+                      Icons.help_center_outlined, size: 24.0, 
+                  ),
+                  SizedBox(width: 3.0,),
+                  Text(
+                    'Help',
+                    style: TextStyle(fontSize: 14.0),
+                    textAlign: TextAlign.end,
+                  ),
+                  SizedBox(width: 15.0,),
+                ],
+              ),
+            )
+          ],
         ),
         body: SingleChildScrollView(
           child: Column(

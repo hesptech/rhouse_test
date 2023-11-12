@@ -13,7 +13,7 @@ class FilterProvider extends ChangeNotifier {
   List<String> _filtersAmmenities = Preferences.getfiltersIndexAmmenities();
   List<String> _filtersBasement = Preferences.getfiltersIndexBasement();
   List<String> _filtersStatusProperties = Preferences.filtersStatusProperties;
-  bool _gameWelcomeVisited = false;
+  bool _cardGamePriceDisplay = false;
 
   String get filterProvider {
     return _filterProvider;
@@ -96,12 +96,12 @@ class FilterProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool get gameWelcomeVisited {
-    return _gameWelcomeVisited;
+  bool get cardGamePriceDisplay {
+    return _cardGamePriceDisplay;
   }
 
-  set gameWelcomeVisited( bool value ) {
-    _gameWelcomeVisited = value;
+  set cardGamePriceDisplay( bool value ) {
+    _cardGamePriceDisplay = value;
     notifyListeners();
   }
 

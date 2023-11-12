@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_black_white/providers/repliers_game.dart';
+import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/modules/cards/card_game/card_game.dart';
@@ -90,9 +91,9 @@ class _CardsSliderGameState extends State<CardsSliderGame> {
                     )
                   ), */
         
-                  if (widget.bannerPriceListing?.mlsNumber != null) 
+                  if (widget.bannerPriceListing?.mlsNumber != null && Provider.of<FilterProvider>(context).cardGamePriceDisplay == true) 
                   CardGameBannerPrice( priceListing ),
-                  Divider(color: Colors.grey.withOpacity(0.1), thickness: 5, height: 1,),
+                  //Divider(color: Colors.grey.withOpacity(0.1), thickness: 5, height: 1,),
         
                   const SizedBox(
                     height: 50,

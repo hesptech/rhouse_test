@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
@@ -53,9 +55,10 @@ class _CardGameState extends State<CardGame> {
     }
 
     return Padding(
-      padding: const EdgeInsetsDirectional.symmetric( horizontal: 10.0, vertical: 7.0),
+      padding: const EdgeInsetsDirectional.symmetric( horizontal: 10.0, vertical: 3.0),
       child: GestureDetector(
         onTap: () {
+          Provider.of<FilterProvider>(context, listen: false).cardGamePriceDisplay = false;
           ScaffoldMessenger.of(context).removeCurrentMaterialBanner();
           //ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
           return showBanner();
@@ -179,11 +182,12 @@ class _CardGameState extends State<CardGame> {
 
   void showBanner() => ScaffoldMessenger.of(context).showMaterialBanner(
     MaterialBanner(
+      elevation: 5.0,
       backgroundColor: Colors.white,
-      padding: const EdgeInsets.all(16),
+      //padding: const EdgeInsets.all(16),
       content: Column(
         children: [
-          CardGameBanner(widget.propertyItem)
+          CardGameBanner(widget.propertyItem),
         ],
       ),
       actions: [
@@ -194,7 +198,7 @@ class _CardGameState extends State<CardGame> {
         IconButton(
           onPressed: () => ScaffoldMessenger.of(context).hideCurrentMaterialBanner(),
           icon: const Icon(Icons.cancel_outlined)
-        )
+        ),
       ]
     ),
   );
