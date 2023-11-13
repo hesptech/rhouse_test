@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_black_white/config/environment.dart';
+import 'package:flutter_black_white/modules/cards/card_game/widgets/game_guess_richtext.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 import 'package:flutter_black_white/models/models.dart';
@@ -19,6 +20,7 @@ class CardGameBanner extends StatelessWidget {
     final dataFormatted = DataFormatter(propertyItem);
     final String images = propertyItem.images?.first?? '';
     final statusParams = GameLastStatus(propertyItem);
+    final bool labelStatus = statusParams.priceLabel == 'SOLD PRICE: ' ? true : false ;
     String formattedPrice = '---';
 
     if( statusParams.price.length > 4 ) {
@@ -114,7 +116,10 @@ class CardGameBanner extends StatelessWidget {
                           children: [
                             Text(
                               statusParams.priceLabel,
-                              style: const TextStyle( fontSize: 12.0 ),
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                fontWeight: labelStatus ? FontWeight.bold : FontWeight.normal, 
+                              ),
                             ),
                           ],
                         ),
@@ -123,12 +128,23 @@ class CardGameBanner extends StatelessWidget {
                           children: [
                             Text(
                               formattedPrice, 
-                              style: const TextStyle(fontSize: 18, color: kPrimaryColor),
+                              style: TextStyle(
+                                fontSize: 18, 
+                                color: kPrimaryColor,
+                                fontWeight: labelStatus ? FontWeight.bold : FontWeight.normal,
+                              ),
                             ),
                           ],
                         ),
                         const SizedBox(height: 15.0,),
-                        const GameGuessPriceDb( cardGameEmpty: false ),
+                        const Align(
+                          alignment: Alignment.centerLeft,
+                          child: SizedBox(
+                            width: 150.0,
+                            height: 35.0,
+                            child: GameGuessPriceDb( cardGameEmpty: false )
+                          ),
+                        ),
                       ],
                     ),
                   )
@@ -136,9 +152,7 @@ class CardGameBanner extends StatelessWidget {
               ],    
             ),
             const SizedBox(height: 15.0,),
-            const Text(
-              'This property.....lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent malesuada et magna sed tincidunt.'
-            ),
+            GameGuessRichtext(propertyItem: propertyItem),
           ],
         ),
       ),

@@ -26,7 +26,7 @@ class _GameGuessPriceDbState extends State<GameGuessPriceDb> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: _guessPrice,               
-      keyboardType: TextInputType.visiblePassword,
+      keyboardType: TextInputType.number,
       textAlign: TextAlign.left,
       readOnly: true,
       //maxLines: 2,
@@ -39,7 +39,7 @@ class _GameGuessPriceDbState extends State<GameGuessPriceDb> {
       decoration: InputDecoration(
         //hintText: "guess Price",
         labelText: "Your guess SOLD Price",
-        contentPadding: const EdgeInsets.only(top: 0.0, right: 0, left: 15.0, bottom: 0.0),
+        contentPadding: const EdgeInsets.only(top: 0.0, right: 0.0, left: 15.0, bottom: 0.0),
         suffixIcon: _suffixGuessPrice(),
         suffixIconColor: kWarningColor,
         labelStyle: const TextStyle(

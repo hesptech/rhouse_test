@@ -23,7 +23,7 @@ class GameGuessPrice extends StatelessWidget {
       decoration: InputDecoration(
         hintText: "\$ 0.00",
         labelText: "Your guess SOLD Price",
-        contentPadding: const EdgeInsets.only(top: 0.0, right: 0, left: 15.0, bottom: 0.0),
+        contentPadding: const EdgeInsets.only(top: 0.0, right: 0, left: 10.0, bottom: 0.0),
         suffixIcon: cardGameEmpty ? null : _suffixGuessPrice(),
         suffixIconColor: kWarningColor,
         labelStyle: const TextStyle(

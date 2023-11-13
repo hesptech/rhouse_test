@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/modules/cards/card_game/widgets/game_welcome_content.dart';
 
 class GameWelcomeScreen extends StatelessWidget {
   const GameWelcomeScreen({super.key});
@@ -16,11 +17,12 @@ class GameWelcomeScreen extends StatelessWidget {
           )
         ),
         centerTitle: true,
-        title: const Text('Welcome Play&Learn'),
+        title: const Text('Help'),
       ),
-      body: const Center(
-        child: Text('game welcome'),
-      ),
+      body: const SafeArea(
+        child: GameWelcomeContent()
+      )
+
     );
   }
 }

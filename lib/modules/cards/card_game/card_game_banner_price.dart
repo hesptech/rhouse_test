@@ -149,13 +149,14 @@ class CardGameBannerPrice extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
-                    width: 165.0,
+                    width: 162.0,
                     child: Text(
-                      'This property.....lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent malesuada et magna sed tincidunt.',
-                      style: TextStyle( fontSize: 12 ),                      
+                      'Price must be no less than \$50% % lower, and no less than 75% higher, otherwise people can put prices that are just completely out of range to increase or lower the average',
+                      textAlign: TextAlign.justify,
+                      style: TextStyle( fontSize: 10 ),                      
                     ),
                   ),
-                  const SizedBox(width: 5.0,),
+                  const SizedBox(width: 10.0,),
                   //_buttondRegister(context, registerFormProvider)
                   Expanded(
                     child: _buttondRegister(context)

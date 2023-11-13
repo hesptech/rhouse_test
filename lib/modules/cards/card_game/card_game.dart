@@ -8,6 +8,7 @@ import 'package:flutter_black_white/utils/data_formatter.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/modules/cards/card_game/card_game_banner.dart';
 import 'package:flutter_black_white/modules/cards/card_game/widgets/game_last_status.dart';
+import 'package:flutter_black_white/modules/cards/card_game/widgets/game_guess_price_db.dart';
 
 class CardGame extends StatefulWidget {
 
@@ -21,12 +22,12 @@ class CardGame extends StatefulWidget {
 
 class _CardGameState extends State<CardGame> {
 
-  late final TextEditingController _guessPrice;
+  //late final TextEditingController _guessPrice;
 
   @override
   void initState() {
     super.initState();
-    _guessPrice = TextEditingController(text: "\$ 1,780,000");
+    //_guessPrice = TextEditingController(text: "\$ 1,780,000");
   }
 
   /* @override
@@ -45,6 +46,8 @@ class _CardGameState extends State<CardGame> {
   Widget build(BuildContext context) {
 
     final dataFormatted = DataFormatter(widget.propertyItem);
+    final gameAddress = dataFormatted.address.length > 24 ? '${dataFormatted.address.substring(0, 24)}...' : dataFormatted.address ;
+    final gameAddressCity = dataFormatted.addressCity.length > 24 ? '${dataFormatted.addressCity.substring(0, 24)}...' : dataFormatted.addressCity ;
     final String images = widget.propertyItem.images?.first?? '';
     final statusParams = GameLastStatus(widget.propertyItem);
     String formattedPrice = '---';
@@ -128,11 +131,11 @@ class _CardGameState extends State<CardGame> {
                       children: [
                         Align(
                           alignment: Alignment.bottomLeft,
-                          child: Text( dataFormatted.address,)
+                          child: Text( gameAddress )
                         ),
                         Align(
                           alignment: Alignment.bottomLeft,
-                          child: Text( dataFormatted.addressCity, ),
+                          child: Text( gameAddressCity ),
                         ),
                         const SizedBox(height: 3.0,),
                         Row(
@@ -146,28 +149,17 @@ class _CardGameState extends State<CardGame> {
                               formattedPrice,
                               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: kPrimaryColor),
                             ),
-                            /* Container(
-                              padding: const EdgeInsets.symmetric( vertical: 2, horizontal: 5.0 ),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: kPrimaryColor),
-                              ),
-                              child: Text(
-                                widget.propertyItem.details?.propertyType?? '', 
-                                style: const TextStyle(fontSize: 12, color: kPrimaryColor,),
-                              ),
-                            ), */
                           ],
                         ),
                         const SizedBox(height: 10.0,),
-                         Align(
-                            alignment: Alignment.centerLeft,
-                           child: SizedBox(
-                            width: 150,
-                            height: 35,
-                            child: _guessPriceTextForm()),
-                         )
-                  
-          
+                        const Align(
+                          alignment: Alignment.centerLeft,
+                          child: SizedBox(
+                            width: 150.0,
+                            height: 35.0,
+                            child: GameGuessPriceDb( cardGameEmpty: false )
+                          ),
+                        ),
                       ],
                     ),
                   )
@@ -202,67 +194,4 @@ class _CardGameState extends State<CardGame> {
       ]
     ),
   );
-
-  Widget _guessPriceTextForm() {
-    return TextFormField(
-      controller: _guessPrice,               
-      keyboardType: TextInputType.visiblePassword,
-      textAlign: TextAlign.left,
-      readOnly: true,
-      //maxLines: 2,
-      style: const TextStyle(
-        height: 1.7,
-        color: kWarningColor,
-        fontSize: 18,
-        fontWeight: FontWeight.bold,
-      ),
-      decoration: InputDecoration(
-        //hintText: "guess Price",
-        labelText: "Your guess SOLD Price",
-        contentPadding: const EdgeInsets.only(top: 0.0, right: 0, left: 15.0, bottom: 0.0),
-        suffixIcon: _suffixGuessPrice(),
-        suffixIconColor: kWarningColor,
-        labelStyle: const TextStyle(
-          color: kWarningColor,
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-        ),
-        hintStyle: const TextStyle(fontWeight: FontWeight.w500, color: kWarningColor),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5.0),
-          borderSide: const BorderSide(color: kWarningColor),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5.0),
-          borderSide: const BorderSide(color: kWarningColor),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5.0),
-          borderSide: const BorderSide(color: kWarningColor),
-        ),
-      ),
-    );
-  }
-
-  Widget _suffixGuessPrice() {
-    return InkWell(
-      onTap: () {        
-        //Navigator.pushNamed(context, PriceDeleteScreen.pathScreen);
-      },
-      child: Container(
-          //height: 60,
-          //width: 60,
-          padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
-          /* decoration: BoxDecoration(
-            //color: kWarningColor,
-            borderRadius: const BorderRadius.only(topRight: Radius.circular(10), bottomRight: Radius.circular(10)),
-            border: Border.all(width: 1, style: BorderStyle.solid, color: kWarningColor),
-          ), */
-          child: const Icon(
-            Icons.lock_outlined,
-            color: Colors.grey,
-            size: 18,
-          )),
-    );
-  }
 }
