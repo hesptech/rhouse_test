@@ -24,22 +24,25 @@ class _GameGuessPriceDbState extends State<GameGuessPriceDb> {
 
   @override
   Widget build(BuildContext context) {
+
+    final smallScreen = MediaQuery.of(context).size.width < 361 ? true : false ;
+
     return TextFormField(
       controller: _guessPrice,               
       keyboardType: TextInputType.number,
       textAlign: TextAlign.left,
       readOnly: true,
       //maxLines: 2,
-      style: const TextStyle(
+      style: TextStyle(
         height: 1.7,
         color: kWarningColor,
-        fontSize: 18,
+        fontSize: smallScreen ? 14 : 18,
         fontWeight: FontWeight.bold,
       ),
       decoration: InputDecoration(
         //hintText: "guess Price",
         labelText: "Your guess SOLD Price",
-        contentPadding: const EdgeInsets.only(top: 0.0, right: 0.0, left: 15.0, bottom: 0.0),
+        contentPadding: EdgeInsets.only(left: smallScreen ? 10.0 : 15.0 ),
         suffixIcon: _suffixGuessPrice(),
         suffixIconColor: kWarningColor,
         labelStyle: const TextStyle(

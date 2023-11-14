@@ -8,6 +8,7 @@ class GameWelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(5.0),

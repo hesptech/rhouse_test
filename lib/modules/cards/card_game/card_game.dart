@@ -138,18 +138,23 @@ class _CardGameState extends State<CardGame> {
                           child: Text( gameAddressCity ),
                         ),
                         const SizedBox(height: 3.0,),
-                        Row(
-                          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              statusParams.priceLabel,
-                              style: const TextStyle(fontWeight: FontWeight.bold),
+                        Align(
+                          alignment: Alignment.bottomLeft,
+                          child: FittedBox(
+                            fit: BoxFit.fitWidth,                            
+                            child: Row(
+                              children: [
+                                Text(
+                                  statusParams.priceLabel,
+                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  formattedPrice,
+                                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: kPrimaryColor),
+                                ),
+                              ],
                             ),
-                            Text(
-                              formattedPrice,
-                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: kPrimaryColor),
-                            ),
-                          ],
+                          ),
                         ),
                         const SizedBox(height: 10.0,),
                         const Align(

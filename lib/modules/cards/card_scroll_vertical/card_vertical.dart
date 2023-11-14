@@ -1,6 +1,7 @@
-//import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/utils/constants.dart';
@@ -75,20 +76,21 @@ class CardVertical extends StatelessWidget {
                           },
                         ),                      
                       ),
-
-                      Container(
-                        width: double.infinity,
-                        height: 217,
-                        padding: const EdgeInsets.fromLTRB( 0, 0, 10, 0),
-                        alignment: Alignment.bottomRight,
-                        child: InkWell(
-                          child: const Image(image: AssetImage('assets/play&learn_chip_53h.png'), ),
-                          onTap: () {
-                            //print('object');
-                          },
+                      Consumer<FilterProvider>(
+                        builder: (context, currentFilter, child) => Container(
+                          width: double.infinity,
+                          height: 217,
+                          padding: const EdgeInsets.fromLTRB( 0, 0, 10, 0),
+                          alignment: Alignment.bottomRight,
+                          child: InkWell(
+                            child: const Image(image: AssetImage('assets/play&learn_chip_53h.png'), ),
+                            onTap: () {
+                              currentFilter.cardGamePriceDisplay = true;
+                              Navigator.pushNamed(context, 'game_screen',arguments: {'listing': listing});
+                            },
+                          ),
                         ),
-                      ),
-
+                      )
                     ],
                   ),
                 ),

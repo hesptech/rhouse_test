@@ -1,78 +1,92 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-
+import 'package:flutter/gestures.dart';
 class GameWelcomeContent extends StatelessWidget {
   const GameWelcomeContent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 35, right: 35, top: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 20),
-            _imageWelcome(),
-            const SizedBox(height: 30),
-            RichText(
-              text: TextSpan(
-                style: DefaultTextStyle.of(context).style,
-                children: <TextSpan>[
-                  const TextSpan(text: 'At '),
-                  TextSpan(
-                    text: _paragraphBoldText, 
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: kPrimaryColor
+    return Padding(
+      padding: const EdgeInsets.only(left: 35, right: 35, top: 20, bottom: 30),
+      child: Column(
+        //mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Column(
+            children: [
+              const SizedBox(height: 20),
+              _imageWelcome(),
+              const SizedBox(height: 30),
+              RichText(
+                text: TextSpan(
+                  style: DefaultTextStyle.of(context).style,
+                  children: <TextSpan>[
+                    const TextSpan(text: 'At '),
+                    TextSpan(
+                      text: _paragraphBoldText, 
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: kPrimaryColor
+                      ),
                     ),
-                  ),
-                  TextSpan(text: _paragraph1),
-                ]
+                    TextSpan(text: _paragraph1),
+                  ]
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            Text(_paragraph2, style: const TextStyle(fontWeight: FontWeight.w500)),
-            const SizedBox(
-              height: 20,
-            ),
-            RichText(
-              text: TextSpan(
-                style: DefaultTextStyle.of(context).style,
-                children: <TextSpan>[
-                  TextSpan(
-                    text: _paragraphBoldText, 
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: kPrimaryColor,
+              const SizedBox(height: 20),
+              Text(_paragraph2, style: const TextStyle(fontWeight: FontWeight.w500)),
+              const SizedBox(
+                height: 20,
+              ),
+              RichText(
+                text: TextSpan(
+                  style: DefaultTextStyle.of(context).style,
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: _paragraphBoldText, 
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: kPrimaryColor,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                        Navigator.pushNamed(context, 'game_screen');
+                      },
                     ),
-                  ),
-                  TextSpan(text: _paragraph3),
-                ]
+                    TextSpan(text: _paragraph3),
+                  ]
+                ),
               ),
-            ),
-            const SizedBox(height: 20.0),
-            RichText(
-              text: TextSpan(
-                style: DefaultTextStyle.of(context).style,
-                children: <TextSpan>[
-                  TextSpan(text: _paragraph4),
-                  TextSpan(
-                    text: _paragraph4BoldText, 
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: kSecondaryColor,
+              const SizedBox(height: 20.0),
+              RichText(
+                text: TextSpan(
+                  style: DefaultTextStyle.of(context).style,
+                  children: <TextSpan>[
+                    TextSpan(text: _paragraph4),
+                    TextSpan(
+                      text: _paragraph4BoldText, 
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: kSecondaryColor,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                        Navigator.pushNamed(context, 'game_screen');
+                      },
                     ),
-                  ),
-                ]
+                  ]
+                ),
               ),
-            ),
-            const SizedBox(height: 40.0),
-            _buttonStartPlaying(context),
-            const SizedBox(height: 40.0),
-          ],
-        ),
+            ]
+          
+          ),
+          Expanded(
+            child: _buttonStartPlaying(context),
+          )
+          //const SizedBox(height: 40.0),
+          //_buttonStartPlaying(context),
+          //const SizedBox(height: 40.0),
+        ],
       ),
     );
   }
@@ -82,26 +96,30 @@ class GameWelcomeContent extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const SizedBox(width: 20),
+        //const SizedBox(width: 20),
         Expanded(
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              elevation: 0,
-              minimumSize: const Size(130, 40),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                fixedSize: const Size(250, 45),
+                //minimumSize: const Size(160, 40),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                backgroundColor: kSecondaryColor,
               ),
-              backgroundColor: kSecondaryColor,
-            ),
-            child: const Text(
-              "Start playing now!",
-              style: TextStyle(
-                fontSize: 16.0
+              child: const Text(
+                "Start playing now!",
+                style: TextStyle(
+                  fontSize: 16.0
+                ),
               ),
+              onPressed: () {
+                Navigator.pushNamed(context, 'game_screen');
+              },
             ),
-            onPressed: () {
-              Navigator.pushNamed(context, 'game_screen');
-            },
           ),
         ),
         const SizedBox(width: 20),
