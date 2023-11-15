@@ -13,6 +13,7 @@ class FilterProvider extends ChangeNotifier {
   List<String> _filtersAmmenities = Preferences.getfiltersIndexAmmenities();
   List<String> _filtersBasement = Preferences.getfiltersIndexBasement();
   List<String> _filtersStatusProperties = Preferences.filtersStatusProperties;
+  List<String> _gameFavoritesTemp = [];
 
   String get filterProvider {
     return _filterProvider;
@@ -92,6 +93,16 @@ class FilterProvider extends ChangeNotifier {
 
   set filtersStatusProperties( List<String> value ) {
     _filtersStatusProperties = value;
+    notifyListeners();
+  }
+
+  // Favorites
+  List<String> get gameFavoritesTemp {
+    return _gameFavoritesTemp;
+  }
+
+  set gameFavoritesTemp( List<String> value ) {
+    _gameFavoritesTemp = value;
     notifyListeners();
   }
 
