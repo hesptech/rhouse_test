@@ -17,3 +17,4 @@ export 'package:flutter_black_white/screens/contact_agent_screen.dart';
 export 'package:flutter_black_white/screens/forgot_password_screen.dart';
 export 'package:flutter_black_white/screens/game/game_screen.dart';
 export 'package:flutter_black_white/screens/game/game_welcome_screen.dart';
+export 'package:flutter_black_white/screens/favorites_screen.dart';

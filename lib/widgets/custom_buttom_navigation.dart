@@ -21,7 +21,7 @@ class _CustomBottomNavigatorState extends State<CustomBottomNavigator> {
     '/',
     '/',
     'game_screen',
-    '/',
+    'favorites_screen',
     'login_screen',
   ];
 
@@ -39,6 +39,8 @@ class _CustomBottomNavigatorState extends State<CustomBottomNavigator> {
         } else {
           Navigator.pushNamed(context, 'game_screen');
         } */
+      } else if (index == 3) {
+        Navigator.pushNamed(context, _pages[index]);
       } else if (index == 4 && loggedIn) {
         Navigator.pushNamed(context, _pages[4]);
         //Navigator.pop(context);

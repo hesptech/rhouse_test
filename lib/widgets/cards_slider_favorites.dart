@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:flutter_black_white/providers/repliers_game.dart';
-import 'package:flutter_black_white/providers/filter_provider.dart';
+//import 'package:flutter_black_white/providers/repliers_game.dart';
+import 'package:flutter_black_white/providers/repliers_favorites.dart';
+//import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-import 'package:flutter_black_white/modules/cards/card_game/card_game.dart';
-import 'package:flutter_black_white/modules/cards/card_game/card_game_banner_price.dart';
+import 'package:flutter_black_white/modules/cards/card_favorites/card_favorites.dart';
+//import 'package:flutter_black_white/modules/cards/card_game/card_game_banner_price.dart';
 
-class CardsSliderGame extends StatefulWidget {
+class CardsSliderFavorites extends StatefulWidget {
   
   final List<Listing> listing;
   final Function onInitPage;
   final Listing? bannerPriceListing;
 
-  const CardsSliderGame({
+  const CardsSliderFavorites({
     super.key, 
     required this.listing,
     required this.onInitPage, 
@@ -22,13 +23,13 @@ class CardsSliderGame extends StatefulWidget {
   });
   
   @override
-  State<CardsSliderGame> createState() => _CardsSliderGameState();
+  State<CardsSliderFavorites> createState() => _CardsSliderFavoritesState();
 }
 
-class _CardsSliderGameState extends State<CardsSliderGame> {
+class _CardsSliderFavoritesState extends State<CardsSliderFavorites> {
 
   final ScrollController scrollController = ScrollController();
-  final Map<String, dynamic> gameResults = {};
+  final Map<String, dynamic> favoritesResults = {};
 
   @override
   void initState() {
@@ -46,16 +47,16 @@ class _CardsSliderGameState extends State<CardsSliderGame> {
   Widget build(BuildContext context) {
 
     final screenSize = MediaQuery.of(context).size;
-    final repliersGame = Provider.of<RepliersGame>(context);
-    bool countEmpty = (repliersGame.onCount > 0) ? false : true  ;
-    //print(repliersGame.onCount);
+    final repliersFavorites = Provider.of<RepliersFavorites>(context);
+    bool countEmpty = (repliersFavorites.onCount > 0) ? false : true  ;
+    //print(repliersFavorites.onCount);
     //print(widget.bannerPriceListing?.mlsNumber);
-    Listing priceListing = widget.bannerPriceListing?? Listing();
+    //Listing priceListing = widget.bannerPriceListing?? Listing();
 
     return Container(
       height: screenSize.height - 80,
       color: kBackgroundColor,
-       child: !repliersGame.loaded
+       child: !repliersFavorites.loaded
         ? const Center(
             child: CircularProgressIndicator( color: kPrimaryColor, ),
           )
@@ -67,7 +68,7 @@ class _CardsSliderGameState extends State<CardsSliderGame> {
                   const Center(
                     heightFactor: 10.0,
                     child: Text(
-                      'You don\'t have properties on your \n GUESS SOLD PRICE history yet', 
+                      'You haven\'t selected properties as \n FAVORITES yet.', 
                       style: TextStyle(
                         fontSize: 20, 
                         fontWeight: FontWeight.bold, 
@@ -78,31 +79,18 @@ class _CardsSliderGameState extends State<CardsSliderGame> {
                   ),
                 ]
               : [
-                  /* Container(
-                    height: 100,
-                    child: const Text('dddd'),
-                  )
-                  Flexible(
-                    child: ListView.builder(
-                      controller: scrollController,
-                      scrollDirection: Axis.vertical,
-                      itemCount: widget.listing.length,
-                      itemBuilder: ( _ , int index) => CardGame( widget.listing[index])
-                    )
-                  ), */
-        
-                  if (widget.bannerPriceListing?.mlsNumber != null && Provider.of<FilterProvider>(context).cardGamePriceDisplay == true) 
-                  CardGameBannerPrice( priceListing ),
-                  //Divider(color: Colors.grey.withOpacity(0.1), thickness: 5, height: 1,),
+                  //if (widget.bannerPriceListing?.mlsNumber != null && Provider.of<FilterProvider>(context).cardGamePriceDisplay == true) 
+                  //CardGameBannerPrice( priceListing ),
         
                   const SizedBox(
-                    height: 50,
+                    height: 75,
                     child: Padding(
-                       padding: EdgeInsets.only(top: 20, bottom: 10), 
-                      child: Text(
-                        'YOUR GUESS PROPERTIES',
+                      padding: EdgeInsets.only(top: 23, bottom: 10), 
+                      child: Icon(Icons.favorite, color: kSecondaryColor, size: 42),
+                      /* child: Text(
+                        'Your FAVORITE Properties',
                         style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                      )
+                      ) */
                     ),
                   ),
         
@@ -112,7 +100,7 @@ class _CardsSliderGameState extends State<CardsSliderGame> {
                     controller: scrollController,
                     scrollDirection: Axis.vertical,
                     itemCount: widget.listing.length,
-                    itemBuilder: ( _ , int index) => CardGame( widget.listing[index])
+                    itemBuilder: ( _ , int index) => CardFavorites( widget.listing[index])
                   ),
                 ],
             ),

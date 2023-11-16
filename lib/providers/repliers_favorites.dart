@@ -5,15 +5,15 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-class RepliersGame extends ChangeNotifier {
-  List<Listing> onDisplayGame = [];
+class RepliersFavorites extends ChangeNotifier {
+  List<Listing> onDisplayFavorites = [];
   bool isLoading = false;
   bool loaded = false;
   int onCount = 0;
 
   Future<String> _getJsonData( String endPoint, List valuesParams ) async {
     
-    valuesParams = ['n7274034','w7275236','w7235370','N5632323','N5782890'];
+    //print(valuesParams);
     valuesParams = valuesParams.isEmpty ? ['0'] : valuesParams ;
     
     final url = Uri.https( kBaseUrl, endPoint, {
@@ -37,7 +37,7 @@ class RepliersGame extends ChangeNotifier {
     }
   }
 
-  getDisplayGame(List mlsNumbers) async {
+  getDisplayFavorites(List mlsNumbers) async {
 
     if (isLoading) return;
     isLoading = true;
@@ -46,8 +46,7 @@ class RepliersGame extends ChangeNotifier {
 
     final nowDisplayResponse = ResponseBody.fromJson(jsonData);
 
-    onDisplayGame = [ ...onDisplayGame, ...nowDisplayResponse.listings];
-    //print(onDisplayGame[0].mlsNumber);
+    onDisplayFavorites = [ ...onDisplayFavorites, ...nowDisplayResponse.listings];
     onCount = nowDisplayResponse.count;
     loaded = true;
     notifyListeners();
@@ -55,10 +54,9 @@ class RepliersGame extends ChangeNotifier {
   } 
 
   initGetDisplay(List mlsNumbers) {
-
-    onDisplayGame = [];
+    onDisplayFavorites = [];
     onCount = 0;
     loaded = false;
-    getDisplayGame(mlsNumbers);
+    getDisplayFavorites(mlsNumbers);
   }
 }

@@ -58,7 +58,7 @@ class CardGameBannerPrice extends StatelessWidget {
                         height: 140,
                         fit: BoxFit.fitHeight,
                       ),
-                      Container(
+                      /* Container(
                         width: 165,
                         height: 140,
                         padding: const EdgeInsets.only(
@@ -91,7 +91,7 @@ class CardGameBannerPrice extends StatelessWidget {
                               ),
                           ),
                         ),
-                      ),
+                      ), */
                     ],
                   ),
                   Expanded(

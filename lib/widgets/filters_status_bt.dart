@@ -65,7 +65,7 @@ class TypePropertyBtn extends StatelessWidget {
             ),
             top: BorderSide(
             color: typePropertyColorBorder,
-            width: 2,
+            width: 0,
             ),
             right: BorderSide(
             color: typePropertyColorBorder,

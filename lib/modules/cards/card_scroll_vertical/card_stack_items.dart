@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
@@ -15,6 +18,9 @@ class CardStackItems extends StatefulWidget {
 }
 
 class _CardStackItemsState extends State<CardStackItems> {
+
+  bool toggle = false;
+
   @override
   Widget build(BuildContext context) {
 
@@ -56,16 +62,35 @@ class _CardStackItemsState extends State<CardStackItems> {
               Stack(
                 children: [
                   const Positioned(
-                    left: 1.0,
-                    top: 2.0,
+                    left: 11.0,
+                    top: 11.0,
                     child: Icon(Icons.favorite_border_outlined, color: Colors.black26, size: 30),
                   ),
-                  InkWell(
-                    child: const Icon(Icons.favorite_border_outlined, color: Color(0xFFffffff), size: 30),
-                    onTap: () {
-                      //print('object');
-                    },
-                  )                              
+                  Consumer<FilterProvider>(
+                    builder: (context, currentFavorite, child) => Material(
+                      color: Colors.transparent,
+                      clipBehavior: Clip.hardEdge,
+                      borderRadius: BorderRadius.circular(50),
+                      child: IconButton(
+                        splashColor: kPrimaryColor.withOpacity(0.8),
+                        highlightColor: kPrimaryColor,
+                        icon: currentFavorite.gameFavoritesTemp.contains(widget.listing.mlsNumber?? '')
+                          ? const Icon(Icons.favorite, size: 30, color: Colors.white,)
+                          : const Icon(Icons.favorite_border, size: 30, color: Colors.white,),
+                        onPressed: () {
+                          setState(() {
+                            // Here we changing the icon.
+                            toggle = !toggle;
+                            if(toggle == true) {
+                              currentFavorite.gameFavoritesTemp.add(widget.listing.mlsNumber?? '');
+                            } else {
+                              currentFavorite.gameFavoritesTemp.removeWhere((String name) => name == widget.listing.mlsNumber);
+                            }
+                          });
+                        }
+                      ),
+                    )
+                  ),                              
                 ],
               ),
               const SizedBox(width: 7.0,),
