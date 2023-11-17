@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/modules/authentication/widgets/steps_widget.dart';
+import 'package:flutter_black_white/providers/register_pin_provider.dart';
 import 'package:flutter_black_white/screens/register_finish_screen.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 
@@ -13,6 +14,10 @@ class PinVerifyContent extends StatefulWidget {
 class _PinViewState extends State<PinVerifyContent> {
   late List<TextEditingController> _controllers;
   late List<FocusNode> _focusNodes;
+  final registerPinProvider = RegisterPinProvider();
+  String error = '';
+  final List<int> listPins = List<int>.generate(4, (index) => index);
+  final List<bool> listHasErros = List<bool>.generate(4, (index) => false);
 
   @override
   void initState() {
@@ -43,6 +48,11 @@ class _PinViewState extends State<PinVerifyContent> {
         _focusNodes[index - 1].requestFocus();
       }
     }
+
+
+    var pinAdd = registerPinProvider.getPinAdd(index);
+    pinAdd(value);
+
   }
 
   @override
@@ -69,9 +79,13 @@ class _PinViewState extends State<PinVerifyContent> {
             _textsPin(),
             const SizedBox(height: 20),
             labelPinBottom(),
-            const SizedBox(height: 40,),
+            const SizedBox(
+              height: 40,
+            ),
             _buttondRegister(),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),
@@ -79,33 +93,61 @@ class _PinViewState extends State<PinVerifyContent> {
   }
 
   Widget _textsPin() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        for (int i = 0; i < 4; i++)
-          SizedBox(
-            width: 60,
-            child: TextField(
-              controller: _controllers[i],
-              keyboardType: TextInputType.number,
-              textInputAction: TextInputAction.next,
-              maxLength: 1,
-              onChanged: (value) => _onTextChanged(i, value),
-              focusNode: _focusNodes[i],
-              textAlign: TextAlign.center,
-              decoration:  InputDecoration(
-                counterText: '',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: const BorderSide(
-                    color: kClTxtInputFieldLog,
-                    width: 2
-                  )
-                ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ...listPins.map(
+              (i) => SizedBox(
+                width: 60,
+                child: StreamBuilder<String>(
+                    stream: registerPinProvider.getPinStream(i),
+                    builder: (context, snapshot) {
+                      
+                      if (snapshot.hasError) {
+                        listHasErros[i] = true;
+                      } else {
+                        listHasErros[i] = false;
+                      }
+
+                      registerPinProvider.pinValidationAdd(snapshot.data ?? "");
+
+
+                      return TextField(
+                        controller: _controllers[i],
+                        keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.next,
+                        maxLength: 1,
+                        onChanged: (value) => _onTextChanged(i, value),
+                        focusNode: _focusNodes[i],
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                          counterText: '',
+                          errorText: snapshot.hasError ? '' : null,
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0), borderSide: const BorderSide(color: kClTxtInputFieldLog, width: 2)),
+                        ),
+                      );
+                    }),
               ),
-            ),
-          ),
+            )
+          ],
+        ),
+        StreamBuilder<String>(
+              stream: registerPinProvider.pinValidationStream,
+              builder: ((context, snapshot) {
+                var existError = listHasErros.contains(true);
+
+                return Visibility(
+                  visible: existError,
+                  child: const Text(
+                    "Enter a valid value",
+                    style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500, fontSize: 12),
+                  ),
+                );
+              })),
       ],
     );
   }
@@ -139,28 +181,43 @@ class _PinViewState extends State<PinVerifyContent> {
   }
 
   Widget _labelPin() {
-    return const Text("CODE", style: TextStyle(color: kClTxtInputFieldLog, fontWeight: FontWeight.w600),);
+    return const Text(
+      "CODE",
+      style: TextStyle(color: kClTxtInputFieldLog, fontWeight: FontWeight.w600),
+    );
   }
 
   Widget labelPinBottom() {
-    return const Text("Enter 4 digit code", style: TextStyle(color: kClTxtInputFieldLog),);
+    return const Text(
+      "Enter 4 digit code",
+      style: TextStyle(color: kClTxtInputFieldLog),
+    );
   }
 
   Widget _buttondRegister() {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        elevation: 0,
-        minimumSize: const Size(320, 50),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        backgroundColor: kSecondaryColor,
-      ),
-      child: const Text("REGISTER", style: TextStyle(fontWeight: FontWeight.bold),),
-      onPressed: () {
-        Navigator.pushNamed(context, RegisterFinishScreen.pathScreen);
-
-      },
-    );
-  }  
+    return StreamBuilder<bool>(
+        stream: registerPinProvider.registerPinValidator.submit,
+        builder: (context, snapshot) {
+          return ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                elevation: 0,
+                minimumSize: const Size(320, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                backgroundColor: kSecondaryColor,
+                disabledBackgroundColor: kSecondaryColor.withOpacity(0.5),
+                disabledForegroundColor: Colors.white),
+            onPressed: snapshot.hasData && snapshot.data!
+                ? () {
+                    Navigator.pushNamed(context, RegisterFinishScreen.pathScreen);
+                  }
+                : null,
+            child: const Text(
+              "REGISTER",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          );
+        });
+  }
 }

@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/vallidators/change_password_validator.dart';
 
-class ChangePasswordContent extends StatelessWidget {
+class ChangePasswordContent extends StatefulWidget {
   const ChangePasswordContent({super.key});
+
+  @override
+  State<ChangePasswordContent> createState() => _ChangePasswordContentState();
+}
+
+class _ChangePasswordContentState extends State<ChangePasswordContent> {
+  final changePasswordValidator = ChangePasswordValidator();
 
   @override
   Widget build(BuildContext context) {
@@ -13,20 +21,20 @@ class ChangePasswordContent extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-              _titleName(),
-              _titleEmail(),
-              const SizedBox(
-                height: 30,
-              ),
-              _passwordField(),
-              const SizedBox(
-                height: 15,
-              ),
-              _orPasswordLabel(),
-              const SizedBox(
-                height: 15,
-              ),
-              _buttondSubmit(context)
+            _titleName(),
+            _titleEmail(),
+            const SizedBox(
+              height: 30,
+            ),
+            _passwordField(),
+            const SizedBox(
+              height: 15,
+            ),
+            _orPasswordLabel(),
+            const SizedBox(
+              height: 15,
+            ),
+            _buttondSubmit(context)
           ],
         ),
       ),
@@ -34,21 +42,25 @@ class ChangePasswordContent extends StatelessWidget {
   }
 
   Widget _passwordField() {
-    return TextFormField(
-      obscureText: true,
-      keyboardType: TextInputType.visiblePassword,
-      textAlign: TextAlign.center,
-      decoration: InputDecoration(
-        hintText: "Enter new password",
-        hintStyle: const TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Colors.grey
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(color: Colors.grey),
-        ),
-      ),
+    return StreamBuilder<String>(
+      stream: changePasswordValidator.passwordStream,
+      builder: (context, snapshot) {
+        return TextFormField(
+          obscureText: true,
+          keyboardType: TextInputType.visiblePassword,
+          textAlign: TextAlign.center,
+          onChanged: changePasswordValidator.passwordAdd,
+          decoration: InputDecoration(
+            hintText: "Enter new password",
+            errorText: snapshot.error?.toString(),
+            hintStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+          ),
+        );
+      }
     );
   }
 
@@ -73,28 +85,33 @@ class ChangePasswordContent extends StatelessWidget {
   }
 
   Widget _buttondSubmit(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        elevation: 0,
-        minimumSize: const Size(double.maxFinite, 50),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        backgroundColor: kSecondaryColor,
-      ),
-      child: const Text(
-        "SUBMIT",
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-      ),
-      onPressed: () {
-        Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
-      },
+    return StreamBuilder<String>(
+      stream: changePasswordValidator.passwordStream,
+      builder: (context, snapshot) {
+        return ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            elevation: 0,
+            minimumSize: const Size(double.maxFinite, 50),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            disabledBackgroundColor: kSecondaryColor.withOpacity(0.5),
+            disabledForegroundColor: Colors.white,            
+            backgroundColor: kSecondaryColor,
+          ),
+          onPressed: snapshot.hasData && !snapshot.hasError ? () {
+            Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+          } : null,
+          child: const Text(
+            "SUBMIT",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        );
+      }
     );
   }
 
-
   Widget _orPasswordLabel() {
     return const Text("password must be at least 8 characters");
-  }  
-
+  }
 }

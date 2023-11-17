@@ -11,6 +11,7 @@ class RegisterScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
+
           elevation: 0.0,
           title: const Text('Sign Up'),
           leading: IconButton(
@@ -23,7 +24,7 @@ class RegisterScreen extends StatelessWidget {
                 size: 34,
               )),
         ),
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         body: const SafeArea(child: RegisterContent()));
   }
 }

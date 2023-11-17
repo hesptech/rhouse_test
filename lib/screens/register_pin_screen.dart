@@ -23,7 +23,7 @@ class RegisterPinScreen extends StatelessWidget {
                 size: 34,
               )),
         ),
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         body: const SafeArea(child: PinVerifyContent()));
   }
 }
