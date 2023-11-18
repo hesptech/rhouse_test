@@ -15,7 +15,7 @@ class AccountScreen extends StatelessWidget {
           title: const Text('Account'),
           leading: IconButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pushNamed(context, "/");
               },
               icon: const Icon(
                 Icons.close,

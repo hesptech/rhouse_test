@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/config/navigator_config.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
@@ -47,12 +48,16 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'RHOUZE',
-      theme: theme,
-      initialRoute: '/',
-      routes: customRoutes,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'RHOUZE',
+        theme: theme,
+        initialRoute: '/',
+        navigatorKey: NavigatorConfig.globalkey,
+        routes: customRoutes,
+      ),
     );
   }
 }

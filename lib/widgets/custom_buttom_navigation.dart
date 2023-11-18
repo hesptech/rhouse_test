@@ -1,39 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/screens/screens.dart';
+import 'package:flutter_black_white/utils/authentication_singleton.dart';
 import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/utils/enums_app.dart';
 import 'package:flutter_black_white/utils/search_delegate.dart';
 
 class CustomBottomNavigator extends StatefulWidget {
-  const CustomBottomNavigator({ Key? key }) : super(key: key);
+  const CustomBottomNavigator({Key? key}) : super(key: key);
 
   @override
   State<CustomBottomNavigator> createState() => _CustomBottomNavigatorState();
 }
 
 class _CustomBottomNavigatorState extends State<CustomBottomNavigator> {
-
   final loggedIn = false;
   final int _selectedIndex = 0;
 
-  static const List<String> _pages = <String>[
+  static final List<String> _pages = <String>[
     '/',
     '/',
     '/',
     '/',
-    'login_screen',
+    LoginScreen.pathScreen,
   ];
 
   void _onItemTapped(int index) {
     setState(() {
       //_selectedIndex = index;
       //print(loggedIn);
-      if ( index == 4 && loggedIn ) {
+      if (index == 4 && loggedIn) {
         Navigator.pushNamed(context, _pages[5]);
         //Navigator.pop(context);
         //Navigator.restorablePopAndPushNamed(context, '/');
       } else if (index == 1) {
         showSearch(context: context, delegate: InputSearchDelegate());
       } else if (index > 0) {
-        Navigator.pushNamed(context, _pages[index]);
+        if (_pages[index] == LoginScreen.pathScreen) {
+          var authStatus = AuthSingleton().authStatus;
+          if (authStatus == AuthStatus.authenticated) {
+            Navigator.pushNamed(context, AccountScreen.pathScreen);
+          } else {
+            Navigator.pushNamed(context, _pages[index]);
+          }
+        } else {
+          Navigator.pushNamed(context, _pages[index]);
+        }
       }
     });
   }
@@ -48,27 +59,29 @@ class _CustomBottomNavigatorState extends State<CustomBottomNavigator> {
       showSelectedLabels: false,
       showUnselectedLabels: false,
       iconSize: 32,
-      items: const <BottomNavigationBarItem> [
+      items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon( Icons.home_outlined, size: 36.0, ),
-          label: ''
-        ),
+            icon: Icon(
+              Icons.home_outlined,
+              size: 36.0,
+            ),
+            label: ''),
         BottomNavigationBarItem(
-          icon: Icon( Icons.search_outlined,  ),
-          label: ''
-        ),
+            icon: Icon(
+              Icons.search_outlined,
+            ),
+            label: ''),
+        BottomNavigationBarItem(icon: ImageIcon(AssetImage("assets/play&learn_bottom_nav.png")), label: ''),
         BottomNavigationBarItem(
-          icon: ImageIcon(AssetImage("assets/play&learn_bottom_nav.png")),
-          label: ''
-        ),
+            icon: Icon(
+              Icons.favorite_border_outlined,
+            ),
+            label: ''),
         BottomNavigationBarItem(
-          icon: Icon( Icons.favorite_border_outlined,  ),
-          label: ''
-        ),
-        BottomNavigationBarItem(
-          icon: Icon( Icons.account_circle_outlined,  ),
-          label: ''
-        ),
+            icon: Icon(
+              Icons.account_circle_outlined,
+            ),
+            label: ''),
       ],
       currentIndex: _selectedIndex,
       selectedItemColor: const Color(0xFF211f7c),

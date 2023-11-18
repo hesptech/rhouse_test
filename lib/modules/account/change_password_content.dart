@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/providers/change_password_provider.dart';
+import 'package:flutter_black_white/utils/authentication_singleton.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/vallidators/change_password_validator.dart';
 
@@ -11,6 +13,15 @@ class ChangePasswordContent extends StatefulWidget {
 
 class _ChangePasswordContentState extends State<ChangePasswordContent> {
   final changePasswordValidator = ChangePasswordValidator();
+  late final AuthSingleton authInformation;
+  late final ChangePasswordProvider changePasswordProvider;
+
+  @override
+  void initState() {
+    authInformation = AuthSingleton();
+    changePasswordProvider = ChangePasswordProvider();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,72 +54,72 @@ class _ChangePasswordContentState extends State<ChangePasswordContent> {
 
   Widget _passwordField() {
     return StreamBuilder<String>(
-      stream: changePasswordValidator.passwordStream,
-      builder: (context, snapshot) {
-        return TextFormField(
-          obscureText: true,
-          keyboardType: TextInputType.visiblePassword,
-          textAlign: TextAlign.center,
-          onChanged: changePasswordValidator.passwordAdd,
-          decoration: InputDecoration(
-            hintText: "Enter new password",
-            errorText: snapshot.error?.toString(),
-            hintStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              borderSide: const BorderSide(color: Colors.grey),
+        stream: changePasswordValidator.passwordStream,
+        builder: (context, snapshot) {
+          return TextFormField(
+            obscureText: true,
+            keyboardType: TextInputType.visiblePassword,
+            textAlign: TextAlign.center,
+            onChanged: changePasswordValidator.passwordAdd,
+            decoration: InputDecoration(
+              hintText: "Enter new password",
+              errorText: snapshot.error?.toString(),
+              hintStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
             ),
-          ),
-        );
-      }
-    );
+          );
+        });
   }
 
   Widget _titleName() {
-    return const Center(
+    return Center(
       child: Text(
-        "Pepito Perez",
+        authInformation.authInfo.fullName,
         textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
+        style: const TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
       ),
     );
   }
 
   Widget _titleEmail() {
-    return const Center(
+    return Center(
       child: Text(
-        "pepito@email.com",
+        authInformation.authInfo.email,
         textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500),
+        style: const TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500),
       ),
     );
   }
 
   Widget _buttondSubmit(BuildContext context) {
     return StreamBuilder<String>(
-      stream: changePasswordValidator.passwordStream,
-      builder: (context, snapshot) {
-        return ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            elevation: 0,
-            minimumSize: const Size(double.maxFinite, 50),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+        stream: changePasswordValidator.passwordStream,
+        builder: (context, snapshot) {
+          return ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              elevation: 0,
+              minimumSize: const Size(double.maxFinite, 50),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              disabledBackgroundColor: kSecondaryColor.withOpacity(0.5),
+              disabledForegroundColor: Colors.white,
+              backgroundColor: kSecondaryColor,
             ),
-            disabledBackgroundColor: kSecondaryColor.withOpacity(0.5),
-            disabledForegroundColor: Colors.white,            
-            backgroundColor: kSecondaryColor,
-          ),
-          onPressed: snapshot.hasData && !snapshot.hasError ? () {
-            Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
-          } : null,
-          child: const Text(
-            "SUBMIT",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
-        );
-      }
-    );
+            onPressed: snapshot.hasData && !snapshot.hasError
+                ? () {
+                    changePasswordProvider.changePassword(changePasswordValidator.passwordValue);
+                  }
+                : null,
+            child: const Text(
+              "SUBMIT",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          );
+        });
   }
 
   Widget _orPasswordLabel() {

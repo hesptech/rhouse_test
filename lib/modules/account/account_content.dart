@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/providers/session_provider.dart';
 import 'package:flutter_black_white/screens/account_change_password_screen.dart';
 import 'package:flutter_black_white/screens/account_delete_screen.dart';
+import 'package:flutter_black_white/utils/authentication_singleton.dart';
 import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/widgets/messaes_modals_widget.dart';
 
 class AccountContent extends StatefulWidget {
   const AccountContent({super.key});
@@ -15,10 +18,14 @@ class _AccountContentState extends State<AccountContent> {
   late final TextEditingController _fullNameCtrl;
   late final TextEditingController _passwordCtrl;
   late final TextEditingController _deleteAcccount;
+  late final AuthSingleton authSingleton;
+
   @override
   void initState() {
-    _registerOnCtrl = TextEditingController(text: "2022/06/20");
-    _fullNameCtrl = TextEditingController(text: "Lucas Porras");
+    authSingleton = AuthSingleton();
+
+    _registerOnCtrl = TextEditingController(text: authSingleton.authInfo.registrationDate);
+    _fullNameCtrl = TextEditingController(text: authSingleton.authInfo.fullName);
     _passwordCtrl = TextEditingController(text: "123456789");
     _deleteAcccount = TextEditingController(text: "Once you delete the account, there is no going back, please be certain.");
     super.initState();
@@ -92,21 +99,21 @@ class _AccountContentState extends State<AccountContent> {
   }
 
   Widget _titleName() {
-    return const Center(
+    return Center(
       child: Text(
-        "Pepito Perez",
+        authSingleton.authInfo.fullName,
         textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
+        style: const TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
       ),
     );
   }
 
   Widget _titleEmail() {
-    return const Center(
+    return Center(
       child: Text(
-        "pepito@email.com",
+        authSingleton.authInfo.email,
         textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500),
+        style: const TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500),
       ),
     );
   }
@@ -276,7 +283,7 @@ class _AccountContentState extends State<AccountContent> {
       readOnly: true,
       obscureText: true,
       style: const TextStyle(
-        color: Colors.black,        
+        color: Colors.black,
         fontWeight: FontWeight.w400,
       ),
       decoration: InputDecoration(
@@ -362,9 +369,22 @@ class _AccountContentState extends State<AccountContent> {
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
       ),
       onPressed: () {
-        Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+        MessagesDialogsWidget.dialogInformation(
+            title: const Text(
+              "Session",
+            ),
+            content: const Text(
+              "Are you sure you want to log out?",
+              style: TextStyle(fontSize: 13),
+            ),
+            ok: _ok);
       },
     );
+  }
+
+  void _ok() {
+    SessionProvider.close();
+    Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
   }
 
   Widget _suffixPassword() {
@@ -404,7 +424,7 @@ class _AccountContentState extends State<AccountContent> {
 
   Widget _suffixDeleteAccount() {
     return InkWell(
-      onTap: () {        
+      onTap: () {
         Navigator.pushNamed(context, AccountDeleteScreen.pathScreen);
       },
       child: Container(

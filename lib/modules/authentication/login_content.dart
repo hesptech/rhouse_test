@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/providers/authentication_provider.dart';
 import 'package:flutter_black_white/screens/screens.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/vallidators/login_validator.dart';
@@ -169,7 +170,7 @@ class _LoginContentState extends State<LoginContent> {
             ),
             onPressed: snapshot.hasData && snapshot.data!
                 ? () {
-                    Navigator.pushNamed(context, AccountScreen.pathScreen);
+                    AuthenticationProvider().login(loginValidator.emailValue, loginValidator.passwordValue);
                   }
                 : null,
             child: const Text(

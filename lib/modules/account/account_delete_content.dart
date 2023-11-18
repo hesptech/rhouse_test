@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/config/navigator_config.dart';
+import 'package:flutter_black_white/providers/account_delete_provider.dart';
+import 'package:flutter_black_white/utils/authentication_singleton.dart';
 import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/widgets/messaes_modals_widget.dart';
 
 class AccountDeleteContent extends StatelessWidget {
   const AccountDeleteContent({super.key});
@@ -30,29 +34,32 @@ class AccountDeleteContent extends StatelessWidget {
   }
 
   Widget _titleConfirm() {
-    return const Text("This action cannot be undone. This will permanently delete all information assoociated with pepito@email.com account", textAlign: TextAlign.center, style: TextStyle(fontSize: 15),);
+    return const Text(
+      "This action cannot be undone. This will permanently delete all information assoociated with pepito@email.com account",
+      textAlign: TextAlign.center,
+      style: TextStyle(fontSize: 15),
+    );
   }
 
   Widget _titleName() {
-    return const Center(
+    return  Center(
       child: Text(
-        "Pepito Perez",
+        AuthSingleton().authInfo.fullName,
         textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
+        style: const TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
       ),
     );
   }
 
   Widget _titleEmail() {
-    return const Center(
+    return Center(
       child: Text(
-        "pepito@email.com",
+        AuthSingleton().authInfo.email,
         textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500),
+        style: const TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500),
       ),
     );
   }
-
 
   Widget _buttondSignOut(BuildContext context) {
     return ElevatedButton(
@@ -69,9 +76,19 @@ class AccountDeleteContent extends StatelessWidget {
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
       ),
       onPressed: () {
-        Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+        MessagesDialogsWidget.dialogInformation(
+            title: const Text("Delete account"),
+            content: const Text(
+              "Are you sure you want to delete your account?",
+              style: TextStyle(fontSize: 13),
+            ),
+            ok: _ok);
       },
     );
   }
 
+  void _ok() {
+    NavigatorConfig.pop();
+    AccountDeleteProvider().deleteAccount();
+  }
 }

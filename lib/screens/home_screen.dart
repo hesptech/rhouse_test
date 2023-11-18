@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/providers/session_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_black_white/providers/repliers_provider.dart';
@@ -14,36 +15,41 @@ class HomeScreen extends StatelessWidget {
     final repliersProvider = Provider.of<RepliersProvider>(context);
     final repliersStatusProperties = Provider.of<FilterProvider>(context).filtersStatusProperties;
 
-    return Scaffold(
-      appBar: const CustomAppbar(),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox( height: 45,),
-
-                CardsSliderHor(
-                  listing: repliersProvider.onDisplayHouses,
-                  title: 'HOUSE Listings',
-                  onNextPage: () => repliersProvider.getDisplayHouses(repliersStatusProperties),
-                  onInitPage: () => repliersProvider.initGetDisplay(repliersStatusProperties),
+    return FutureBuilder<bool>(
+      future: SessionProvider().checkAuthentication(),
+      builder: (context, snapshot) {
+        return Scaffold(
+          appBar: const CustomAppbar(),
+          body: Stack(
+            children: [
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const SizedBox( height: 45,),
+    
+                    CardsSliderHor(
+                      listing: repliersProvider.onDisplayHouses,
+                      title: 'HOUSE Listings',
+                      onNextPage: () => repliersProvider.getDisplayHouses(repliersStatusProperties),
+                      onInitPage: () => repliersProvider.initGetDisplay(repliersStatusProperties),
+                    ),
+    
+                    CardsSliderHor(
+                      listing: repliersProvider.onDisplayCondo,
+                      title: 'CONDO Listings',
+                      onNextPage: () => repliersProvider.getDisplayCondo(repliersStatusProperties),
+                      onInitPage: () => repliersProvider.initGetDisplay(repliersStatusProperties),
+                    ),
+    
+                  ],
                 ),
-
-                CardsSliderHor(
-                  listing: repliersProvider.onDisplayCondo,
-                  title: 'CONDO Listings',
-                  onNextPage: () => repliersProvider.getDisplayCondo(repliersStatusProperties),
-                  onInitPage: () => repliersProvider.initGetDisplay(repliersStatusProperties),
-                ),
-
-              ],
-            ),
+              ),
+              const FiltersStatusBt(),
+            ],
           ),
-          const FiltersStatusBt(),
-        ],
-      ),
-      bottomNavigationBar: const CustomBottomNavigator(),
+          bottomNavigationBar: const CustomBottomNavigator(),
+        );
+      }
     );    
   }
 }
