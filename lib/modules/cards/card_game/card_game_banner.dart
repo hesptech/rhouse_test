@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/modules/cards/card_game/widgets/game_guess_richtext.dart';
+import 'package:flutter_black_white/utils/card_full_description_arguments.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 import 'package:flutter_black_white/models/models.dart';
@@ -33,7 +34,12 @@ class CardGameBanner extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           ScaffoldMessenger.of(context).removeCurrentMaterialBanner();
-          Navigator.pushNamed(context, 'card_details_full_screen', arguments: propertyItem);
+          Navigator.pushNamed(
+            context, 
+            'card_details_full_screen', 
+            arguments: CardFullDescriptionArguments(propertyItem, 'game_screen')
+
+          );
         }, 
         child: Column(
           children: [

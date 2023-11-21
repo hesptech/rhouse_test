@@ -67,12 +67,12 @@ class GameWelcomeContent extends StatelessWidget {
                       text: _paragraph4BoldText, 
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: kSecondaryColor,
+                        //color: kSecondaryColor,
                       ),
-                      recognizer: TapGestureRecognizer()
+                      /* recognizer: TapGestureRecognizer()
                         ..onTap = () {
                         Navigator.pushNamed(context, 'game_screen');
-                      },
+                      }, */
                     ),
                   ]
                 ),
@@ -117,7 +117,7 @@ class GameWelcomeContent extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                Navigator.pushNamed(context, 'game_screen');
+                Navigator.pushNamed(context, '/');
               },
             ),
           ),

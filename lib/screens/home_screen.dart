@@ -6,6 +6,8 @@ import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
+  static String pathScreen = "/";
+
   const HomeScreen({Key? key}) : super(key: key);
 
   @override

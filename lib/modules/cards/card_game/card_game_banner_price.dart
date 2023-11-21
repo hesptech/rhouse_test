@@ -137,7 +137,10 @@ class CardGameBannerPrice extends StatelessWidget {
                             ],
                           ),
                           const SizedBox(height: 10.0,),
-                          const GameGuessPrice( cardGameEmpty: true,),
+                          const SizedBox(
+                            height: 40.0,
+                            child: GameGuessPrice( cardGameEmpty: true,),
+                          ),
                         ],
                       ),
                     )
@@ -152,8 +155,7 @@ class CardGameBannerPrice extends StatelessWidget {
                     width: 162.0,
                     child: Text(
                       'Price must be no less than \$50% % lower, and no less than 75% higher, otherwise people can put prices that are just completely out of range to increase or lower the average',
-                      textAlign: TextAlign.justify,
-                      style: TextStyle( fontSize: 10 ),                      
+                      style: TextStyle( fontSize: 8 ),                      
                     ),
                   ),
                   const SizedBox(width: 10.0,),

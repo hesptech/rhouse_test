@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/screens/game/game_screen.dart';
+//import 'package:flutter_black_white/utils/search_delegate.dart';
 import 'package:provider/provider.dart';
 
+import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/providers/repliers_listing_mls.dart';
-import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/modules/cards/card_details_full/cards.dart';
+import 'package:flutter_black_white/utils/card_full_description_arguments.dart';
+import 'package:flutter_black_white/screens/filters_results_screen.dart';
+//import 'package:flutter_black_white/screens/home_screen.dart';
 
 class CardDetailsFullScreen extends StatelessWidget {
   const CardDetailsFullScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final Listing listing = ModalRoute.of(context)?.settings.arguments! as Listing;
+    //final Listing listing = ModalRoute.of(context)?.settings.arguments! as Listing;
+    final CardFullDescriptionArguments screenArguments = ModalRoute.of(context)?.settings.arguments! as CardFullDescriptionArguments;
+    final Listing listing = screenArguments.listing;
+    final String pathScreen = screenArguments.pathScreen;
     final repliersHistory = Provider.of<RepliersListingMls>(context);
 
     return Scaffold(
@@ -28,6 +36,21 @@ class CardDetailsFullScreen extends StatelessWidget {
         centerTitle: true,
         title: const Image(
           image: AssetImage('assets/r_logo_112x38.png'),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            if (pathScreen == FiltersResultsScreen.pathScreen) {
+              Navigator.pushNamed(context, 'filters_results_screen');
+            } else if (pathScreen == GameScreen.pathScreen) {
+              Navigator.pushNamed(context, 'game_screen');
+            } else if (pathScreen == 'search') {
+              //showSearch(context: context, delegate: InputSearchDelegate());
+              Navigator.pop(context);
+            } else {
+              Navigator.pushNamed(context, '/');
+            }
+          },
+          icon: const Icon(Icons.close_outlined),
         ),
         actions: [
           IconButton(

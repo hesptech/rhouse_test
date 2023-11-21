@@ -1,18 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_black_white/utils/constants.dart';
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 
-class GameGuessPrice extends StatelessWidget {  
+class GameGuessPrice extends StatefulWidget {  
   final bool cardGameEmpty;
 
   const GameGuessPrice({super.key, required this.cardGameEmpty});
 
   @override
+  State<GameGuessPrice> createState() => _GameGuessPriceState();
+}
+
+class _GameGuessPriceState extends State<GameGuessPrice> {
+
+  //final CurrencyTextInputFormatter _formatter = CurrencyTextInputFormatter();
+
+  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      //controller: _guessPrice,               
+      //controller: _guessPrice, 
+      inputFormatters: <TextInputFormatter>[
+        CurrencyTextInputFormatter(
+          locale: 'ko',
+          decimalDigits: 0,
+          symbol: '\$ ',
+        ),
+      ],             
       keyboardType: const TextInputType.numberWithOptions(),
       textAlign: TextAlign.left,
-      readOnly: cardGameEmpty ? false : true,
+      readOnly: widget.cardGameEmpty ? false : true,
       //maxLines: 2,
       style: const TextStyle(
         height: 1.7,
@@ -24,7 +41,7 @@ class GameGuessPrice extends StatelessWidget {
         hintText: "\$ 0.00",
         labelText: "Your guess SOLD Price",
         contentPadding: const EdgeInsets.only(top: 0.0, right: 0, left: 10.0, bottom: 0.0),
-        suffixIcon: cardGameEmpty ? null : _suffixGuessPrice(),
+        suffixIcon: widget.cardGameEmpty ? null : _suffixGuessPrice(),
         suffixIconColor: kWarningColor,
         labelStyle: const TextStyle(
           color: kWarningColor,
