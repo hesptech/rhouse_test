@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_black_white/config/environment.dart';
-import 'package:flutter_black_white/modules/cards/card_game/widgets/game_guess_richtext.dart';
-import 'package:flutter_black_white/utils/card_full_description_arguments.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-import 'package:flutter_black_white/utils/data_formatter.dart';
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/utils/data_formatter.dart';
+import 'package:flutter_black_white/utils/card_full_description_arguments.dart';
 import 'package:flutter_black_white/modules/cards/card_game/widgets/game_last_status.dart';
 import 'package:flutter_black_white/modules/cards/card_game/widgets/game_guess_price_db.dart';
+import 'package:flutter_black_white/modules/cards/card_game/widgets/game_guess_richtext.dart';
 
 class CardGameBanner extends StatelessWidget {
 
@@ -37,8 +37,7 @@ class CardGameBanner extends StatelessWidget {
           Navigator.pushNamed(
             context, 
             'card_details_full_screen', 
-            arguments: CardFullDescriptionArguments(propertyItem, 'game_screen')
-
+            arguments: CardFullDescriptionArguments(propertyItem, 'card_game_banner')
           );
         }, 
         child: Column(

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/screens/game/game_screen.dart';
-//import 'package:flutter_black_white/utils/search_delegate.dart';
 import 'package:provider/provider.dart';
+//import 'package:flutter_black_white/utils/search_delegate.dart';
 
-import 'package:flutter_black_white/utils/constants.dart';
-import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/providers/repliers_listing_mls.dart';
-import 'package:flutter_black_white/modules/cards/card_details_full/cards.dart';
+import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/card_full_description_arguments.dart';
+import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/modules/cards/card_details_full/cards.dart';
+import 'package:flutter_black_white/screens/game/game_screen.dart';
 import 'package:flutter_black_white/screens/filters_results_screen.dart';
 //import 'package:flutter_black_white/screens/home_screen.dart';
 
@@ -43,6 +43,10 @@ class CardDetailsFullScreen extends StatelessWidget {
               Navigator.pushNamed(context, 'filters_results_screen');
             } else if (pathScreen == GameScreen.pathScreen) {
               Navigator.pushNamed(context, 'game_screen');
+            } else if (pathScreen == 'favorites_screen') {
+               Navigator.pushNamed(context, 'favorites_screen');
+            } else if (pathScreen == 'card_game_banner') {
+               Navigator.pop(context);
             } else if (pathScreen == 'search') {
               //showSearch(context: context, delegate: InputSearchDelegate());
               Navigator.pop(context);

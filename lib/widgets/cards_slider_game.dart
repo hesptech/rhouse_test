@@ -10,12 +10,14 @@ import 'package:flutter_black_white/modules/cards/card_game/card_game_banner_pri
 
 class CardsSliderGame extends StatefulWidget {
   
+  final List<String> mlsGuesses; 
   final List<Listing> listing;
   final Function onInitPage;
   final Listing? bannerPriceListing;
 
   const CardsSliderGame({
     super.key, 
+    required this.mlsGuesses,
     required this.listing,
     required this.onInitPage, 
     this.bannerPriceListing,

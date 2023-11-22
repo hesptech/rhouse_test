@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/search_delegate.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 //import 'package:flutter_black_white/providers/filter_provider.dart';
 
 class CustomBottomNavigator extends StatefulWidget {
@@ -41,7 +42,8 @@ class _CustomBottomNavigatorState extends State<CustomBottomNavigator> {
         } */
       } else if (index == 3) {
         Navigator.pushNamed(context, _pages[index]);
-      } else if (index == 4 && loggedIn) {
+      } else if (index == 4) {
+        Preferences.isLoggedIn = !Preferences.isLoggedIn;
         Navigator.pushNamed(context, _pages[4]);
         //Navigator.pop(context);
         //Navigator.restorablePopAndPushNamed(context, '/');

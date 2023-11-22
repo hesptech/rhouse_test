@@ -41,7 +41,7 @@ class GameScreen extends StatelessWidget {
           leading: IconButton(
             onPressed: () {
               ScaffoldMessenger.of(context).removeCurrentMaterialBanner();
-              Navigator.pushNamed(context, '/');
+              Navigator.pop(context);
             },
             icon: const Icon(Icons.close_outlined),
           ),
@@ -73,6 +73,7 @@ class GameScreen extends StatelessWidget {
           child: Column(
             children: [
               CardsSliderGame(
+                mlsGuesses: repliersGame.onDisplayMlsGuesses,
                 listing: repliersGame.onDisplayGame,
                 //listing: repliersGame.getDisplayGame(valuesParams),
                 onInitPage: () => repliersGame.initGetDisplay(valuesParams),

@@ -65,10 +65,12 @@ class _CardsSliderFavoritesState extends State<CardsSliderFavorites> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: countEmpty 
               ? [
+                  const SizedBox(height: 23.0,),
+                  const Icon(Icons.favorite, color: kSecondaryColor, size: 42),
                   const Center(
-                    heightFactor: 10.0,
+                    heightFactor: 5.0,
                     child: Text(
-                      'You haven\'t selected properties as \n FAVORITES yet.', 
+                      'You haven\'t selected properties \n as FAVORITES yet.', 
                       style: TextStyle(
                         fontSize: 20, 
                         fontWeight: FontWeight.bold, 

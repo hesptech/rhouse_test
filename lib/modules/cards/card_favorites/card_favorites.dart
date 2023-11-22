@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/utils/card_full_description_arguments.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_black_white/providers/filter_provider.dart';
@@ -43,7 +44,12 @@ class _CardFavoritesState extends State<CardFavorites> {
       padding: const EdgeInsetsDirectional.symmetric( horizontal: 10.0, vertical: 3.0),
       child: GestureDetector(
         onTap: () {
-            Navigator.pushNamed(context, 'card_details_full_screen', arguments: widget.propertyItem);
+          //Navigator.pushNamed(context, 'card_details_full_screen', arguments: widget.propertyItem);
+          Navigator.pushNamed(
+            context, 
+            'card_details_full_screen', 
+            arguments: CardFullDescriptionArguments(widget.propertyItem, 'favorites_screen')
+          );
         }, 
         child: Card(
           clipBehavior: Clip.antiAlias,

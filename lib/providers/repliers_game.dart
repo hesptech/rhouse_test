@@ -7,9 +7,42 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class RepliersGame extends ChangeNotifier {
   List<Listing> onDisplayGame = [];
+  List<String> onDisplayMlsGuesses = [];
   bool isLoading = false;
   bool loaded = false;
   int onCount = 0;
+
+  Future<String> _getJsonMlsGuesses( String endPoint, List valuesParams ) async {
+    
+    final url = Uri.https( kRhouzeUrl, endPoint, {
+      'userId': valuesParams,
+    });
+
+    String token = '123456789';
+    Map<String, String>? headers = { 'token': token };
+
+    try {
+      print(url);
+      final response = await http.get(url, headers: headers);
+      if(response.statusCode == 200) {
+        return response.body;
+      } else {
+        return processResponse(response);
+      }
+    } catch (e) {
+      return 'Error: $e';
+    }
+  }
+
+  getDisplayMlsGuesses(List mlsGuesses) async {
+    final jsonData = await _getJsonMlsGuesses('/rhouze_db/mlsguesses', mlsGuesses);
+
+    final nowDisplayResponse = ResponseMlsGuesses.fromRawJson(jsonData);
+    print(nowDisplayResponse.mlsGuesses);
+
+    onDisplayMlsGuesses = [...onDisplayMlsGuesses, ...nowDisplayResponse.mlsGuesses];
+  }
+
 
   Future<String> _getJsonData( String endPoint, List valuesParams ) async {
     
@@ -35,7 +68,7 @@ class RepliersGame extends ChangeNotifier {
     } catch (e) {
       return 'Error: $e';
     }
-  }
+  } 
 
   getDisplayGame(List mlsNumbers) async {
 
@@ -60,5 +93,6 @@ class RepliersGame extends ChangeNotifier {
     onCount = 0;
     loaded = false;
     getDisplayGame(mlsNumbers);
+    getDisplayMlsGuesses(mlsNumbers);
   }
 }
