@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-import 'package:flutter_black_white/modules/cards/card_game/widgets/game_welcome_content.dart';
+import 'package:flutter_black_white/modules/cards/card_game/widgets/game_help_content.dart';
 
-class GameWelcomeScreen extends StatelessWidget {
-  const GameWelcomeScreen({super.key});
+class GameHelpScreen extends StatelessWidget {
+  static String pathScreen = "game_help_screen";
+
+  const GameHelpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +20,10 @@ class GameWelcomeScreen extends StatelessWidget {
           )
         ),
         centerTitle: true,
+        title: const Text('Help'),
       ),
       body: const SafeArea(
-        child: GameWelcomeContent()
+        child: GameHelpContent()
       )
 
     );

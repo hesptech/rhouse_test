@@ -43,7 +43,7 @@ class _CustomBottomNavigatorState extends State<CustomBottomNavigator> {
       } else if (index == 3) {
         Navigator.pushNamed(context, _pages[index]);
       } else if (index == 4) {
-        Preferences.isLoggedIn = !Preferences.isLoggedIn;
+        //Preferences.isLoggedIn = !Preferences.isLoggedIn;
         Navigator.pushNamed(context, _pages[4]);
         //Navigator.pop(context);
         //Navigator.restorablePopAndPushNamed(context, '/');

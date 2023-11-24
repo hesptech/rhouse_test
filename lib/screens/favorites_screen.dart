@@ -40,7 +40,7 @@ class FavoritesScreen extends StatelessWidget {
 
       body: SingleChildScrollView(
         child: Column(
-          children: Preferences.isLoggedIn 
+          children: !Preferences.isLoggedIn 
           ? [
               CardsSliderFavorites(
                 listing: repliersFavorites.onDisplayFavorites,

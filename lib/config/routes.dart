@@ -14,6 +14,7 @@ var customRoutes = <String, WidgetBuilder>{
   'card_images_screen': ( _ ) => const CardImagesScreen(),
   'game_welcome_screen': ( _ ) => const GameWelcomeScreen(),
   'game_screen': ( _ ) => const GameScreen(),
+  GameHelpScreen.pathScreen: ( _ ) => const GameHelpScreen(), 
   FavoritesScreen.pathScreen: ( _ ) => const FavoritesScreen(),
   LoginScreen.pathScreen: ( _ ) => const LoginScreen(),
   RegisterScreen.pathScreen: ( _ ) => const RegisterScreen(),

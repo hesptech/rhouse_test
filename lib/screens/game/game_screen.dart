@@ -49,7 +49,7 @@ class GameScreen extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 ScaffoldMessenger.of(context).removeCurrentMaterialBanner();
-                Navigator.pushNamed(context, 'game_welcome_screen');
+                Navigator.pushNamed(context, 'game_help_screen');
               },
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.start,

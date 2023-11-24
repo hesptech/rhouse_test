@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-//import 'package:flutter/gestures.dart';
-class GameWelcomeContent extends StatelessWidget {
-  const GameWelcomeContent({super.key});
+
+class GameHelpContent extends StatelessWidget {
+  const GameHelpContent({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -78,11 +78,7 @@ class GameWelcomeContent extends StatelessWidget {
                 ),
               ),
             ]
-          
           ),
-          Expanded(
-            child: _buttonStartPlaying(context),
-          )
           //const SizedBox(height: 40.0),
           //_buttonStartPlaying(context),
           //const SizedBox(height: 40.0),
@@ -90,42 +86,6 @@ class GameWelcomeContent extends StatelessWidget {
       ),
     );
   }
-
-  Widget _buttonStartPlaying(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        //const SizedBox(width: 20),
-        Expanded(
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                elevation: 0,
-                fixedSize: const Size(250, 45),
-                //minimumSize: const Size(160, 40),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                backgroundColor: kSecondaryColor,
-              ),
-              child: const Text(
-                "Start playing now!",
-                style: TextStyle(
-                  fontSize: 16.0
-                ),
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, '/');
-              },
-            ),
-          ),
-        ),
-        const SizedBox(width: 20),
-      ],
-    );
-  }  
 
   Widget _imageWelcome() {
     return const Center(

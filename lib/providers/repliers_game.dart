@@ -38,9 +38,21 @@ class RepliersGame extends ChangeNotifier {
     final jsonData = await _getJsonMlsGuesses('/rhouze_db/mlsguesses', mlsGuesses);
 
     final nowDisplayResponse = ResponseMlsGuesses.fromRawJson(jsonData);
-    print(nowDisplayResponse.mlsGuesses);
+    //print(nowDisplayResponse.mlsGuesses);   
 
-    onDisplayMlsGuesses = [...onDisplayMlsGuesses, ...nowDisplayResponse.mlsGuesses];
+    //onDisplayMlsGuesses = [...onDisplayMlsGuesses, ...nowDisplayResponse.mlsGuesses];
+
+    onDisplayMlsGuesses = [];
+    List<String> tempMlsList = [];
+    for (int i = 0; i < nowDisplayResponse.mlsGuesses.length; i++) {    
+      tempMlsList = nowDisplayResponse.mlsGuesses[i].split('-');
+      onDisplayMlsGuesses.add(tempMlsList[0]);
+      //mlsGuessesPrice[tempMlsList[0]] = tempMlsList[1]; 
+    }
+    print(onDisplayMlsGuesses);
+
+    Map<String, String> map1 = { for (var e in nowDisplayResponse.mlsGuesses) e.split('-')[0] : e.split('-')[1] };
+    print(map1);
   }
 
 
