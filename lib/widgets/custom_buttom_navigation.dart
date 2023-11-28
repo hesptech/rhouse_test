@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 //import 'package:provider/provider.dart';
 
+//import 'package:flutter_black_white/providers/repliers_game.dart';
+//import 'package:flutter_black_white/providers/repliers_favorites.dart';
+
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/search_delegate.dart';
-import 'package:flutter_black_white/utils/shared_preferences.dart';
+//import 'package:flutter_black_white/utils/shared_preferences.dart';
 //import 'package:flutter_black_white/providers/filter_provider.dart';
 
 class CustomBottomNavigator extends StatefulWidget {
@@ -41,6 +44,7 @@ class _CustomBottomNavigatorState extends State<CustomBottomNavigator> {
           Navigator.pushNamed(context, 'game_screen');
         } */
       } else if (index == 3) {
+        //Provider.of<RepliersFavorites>(context, listen: false).getSelectFavorites('1');
         Navigator.pushNamed(context, _pages[index]);
       } else if (index == 4) {
         //Preferences.isLoggedIn = !Preferences.isLoggedIn;

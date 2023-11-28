@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:flutter_black_white/providers/repliers_favorites.dart';
 import 'package:flutter_black_white/providers/repliers_provider.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/widgets/widgets.dart';
@@ -14,7 +15,20 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final repliersProvider = Provider.of<RepliersProvider>(context);
-    final repliersStatusProperties = Provider.of<FilterProvider>(context).filtersStatusProperties;
+    
+    final filterProvider = Provider.of<FilterProvider>(context);
+    final repliersStatusProperties = filterProvider.filtersStatusProperties;
+    
+    final repliersFavorites = Provider.of<RepliersFavorites>(context, listen: false);
+    repliersFavorites.getSelectFavorites('2');
+
+      for (int i = 0; i < repliersFavorites.onSelectFavorites.length; i++) { 
+        if(!filterProvider.gameFavoritesTemp.contains(repliersFavorites.onSelectFavorites[i])){
+          filterProvider.gameFavoritesTemp.add(repliersFavorites.onSelectFavorites[i]); 
+        }   
+      }
+      print(filterProvider.gameFavoritesTemp);
+
 
     return Scaffold(
       appBar: const CustomAppbar(),
