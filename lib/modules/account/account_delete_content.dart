@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/config/navigator_config.dart';
-import 'package:flutter_black_white/providers/account_delete_provider.dart';
+import 'package:flutter_black_white/providers/account/account_delete_provider.dart';
 import 'package:flutter_black_white/utils/authentication_singleton.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/widgets/messaes_modals_widget.dart';
@@ -18,6 +18,7 @@ class AccountDeleteContent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             _titleName(),
+            _titleLastName(),
             _titleEmail(),
             const SizedBox(
               height: 30,
@@ -43,23 +44,32 @@ class AccountDeleteContent extends StatelessWidget {
 
   Widget _titleName() {
     return  Center(
-      child: Text(
-        AuthSingleton().authInfo.fullName,
+      child: Text("Name: ${AuthSingleton().authInfo.name}",
         textAlign: TextAlign.center,
-        style: const TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
+        style: const TextStyle(color: Colors.black, fontSize: 28, fontWeight: FontWeight.bold),
       ),
     );
   }
 
+  Widget _titleLastName() {
+    return Center(
+      child: Text("Last name: ${AuthSingleton().authInfo.lastName}",
+        textAlign: TextAlign.center,
+        style: const TextStyle(color: Colors.black, fontSize: 28, fontWeight: FontWeight.bold),
+      ),
+    );
+  }    
+
   Widget _titleEmail() {
     return Center(
-      child: Text(
-        AuthSingleton().authInfo.email,
+      child: Text("Email: ${AuthSingleton().authInfo.email}",
         textAlign: TextAlign.center,
         style: const TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500),
       ),
     );
   }
+
+
 
   Widget _buttondSignOut(BuildContext context) {
     return ElevatedButton(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/providers/authentication_provider.dart';
+import 'package:flutter_black_white/providers/account/authentication_provider.dart';
 import 'package:flutter_black_white/screens/screens.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/vallidators/login_validator.dart';

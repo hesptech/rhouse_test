@@ -26,6 +26,8 @@ class SessionProvider {
         return Future.value(true);
       }
 
+      print(userData);
+
       var expiresInDate = DateTime.parse(expiresIn);
 
       if (expiresInDate.isBefore(DateTime.now().toUtc())) {

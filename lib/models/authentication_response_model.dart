@@ -10,7 +10,8 @@ class AuthenticationResponseModel {
     String tokenType;
     DateTime? expiresIn;
     String email;
-    String fullName;
+    String name;
+    String lastName;
     DateTime? registrationDate;
 
     AuthenticationResponseModel({
@@ -19,7 +20,8 @@ class AuthenticationResponseModel {
         this.tokenType = "",
         this.expiresIn,
         this.email = "",
-        this.fullName = "",
+        this.name = "",
+        this.lastName = "",
         this.registrationDate,
     });
 
@@ -29,7 +31,8 @@ class AuthenticationResponseModel {
         tokenType: json["tokenType"] ?? "",
         expiresIn: json["expiresIn"] == null ? null : DateTime.parse(json["expiresIn"]),
         email: json["email"] ?? "",
-        fullName: json["fullName"] ?? "",
+        name: json["name"] ?? "",
+        lastName: json["lastName"] ?? "",
         registrationDate: json["registrationDate"] == null ? null : DateTime.parse(json["registrationDate"]),
     );
 
@@ -39,7 +42,8 @@ class AuthenticationResponseModel {
         "tokenType": tokenType,
         "expiresIn": expiresIn?.toIso8601String(),
         "email": email,
-        "fullName": fullName,
+        "name": name,
+        "lastName": lastName,
         "registrationDate": registrationDate?.toIso8601String(),
     };
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/providers/session_provider.dart';
+import 'package:flutter_black_white/providers/account/session_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_black_white/providers/repliers_provider.dart';

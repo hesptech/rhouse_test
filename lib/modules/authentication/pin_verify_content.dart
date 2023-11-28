@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/modules/authentication/widgets/steps_widget.dart';
-import 'package:flutter_black_white/providers/register_pin_provider.dart';
-import 'package:flutter_black_white/screens/register_finish_screen.dart';
+import 'package:flutter_black_white/providers/account/register_pin_provider.dart';
+import 'package:flutter_black_white/screens/account/register_finish_screen.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 
 class PinVerifyContent extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/providers/session_provider.dart';
-import 'package:flutter_black_white/screens/account_change_password_screen.dart';
-import 'package:flutter_black_white/screens/account_delete_screen.dart';
+import 'package:flutter_black_white/providers/account/session_provider.dart';
+import 'package:flutter_black_white/screens/account/account_change_password_screen.dart';
+import 'package:flutter_black_white/screens/account/account_delete_screen.dart';
 import 'package:flutter_black_white/utils/authentication_singleton.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/widgets/messaes_modals_widget.dart';
@@ -25,7 +25,7 @@ class _AccountContentState extends State<AccountContent> {
     authSingleton = AuthSingleton();
 
     _registerOnCtrl = TextEditingController(text: authSingleton.authInfo.registrationDate);
-    _fullNameCtrl = TextEditingController(text: authSingleton.authInfo.fullName);
+    _fullNameCtrl = TextEditingController(text: "Name: ${authSingleton.authInfo.name} Last name: ${authSingleton.authInfo.lastName}");
     _passwordCtrl = TextEditingController(text: "123456789");
     _deleteAcccount = TextEditingController(text: "Once you delete the account, there is no going back, please be certain.");
     super.initState();
@@ -49,6 +49,7 @@ class _AccountContentState extends State<AccountContent> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _titleName(),
+              _lastName(),
               _titleEmail(),
               const SizedBox(
                 height: 30,
@@ -101,17 +102,27 @@ class _AccountContentState extends State<AccountContent> {
   Widget _titleName() {
     return Center(
       child: Text(
-        authSingleton.authInfo.fullName,
+        "Name: ${authSingleton.authInfo.name}",
         textAlign: TextAlign.center,
-        style: const TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
+        style: const TextStyle(color: Colors.black, fontSize: 28, fontWeight: FontWeight.bold),
       ),
     );
   }
 
-  Widget _titleEmail() {
+  Widget _lastName() {
     return Center(
       child: Text(
-        authSingleton.authInfo.email,
+        "Last name: ${authSingleton.authInfo.lastName}",
+        textAlign: TextAlign.center,
+        style: const TextStyle(color: Colors.black, fontSize: 28, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
+
+  Widget _titleEmail() {
+    return Center(
+      child: Text("Email: ${authSingleton.authInfo.email}",
         textAlign: TextAlign.center,
         style: const TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500),
       ),

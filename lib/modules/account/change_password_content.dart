@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/providers/change_password_provider.dart';
+import 'package:flutter_black_white/providers/account/change_password_provider.dart';
 import 'package:flutter_black_white/utils/authentication_singleton.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/vallidators/change_password_validator.dart';
@@ -33,6 +33,7 @@ class _ChangePasswordContentState extends State<ChangePasswordContent> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             _titleName(),
+            _titleLastName(),
             _titleEmail(),
             const SizedBox(
               height: 30,
@@ -76,18 +77,26 @@ class _ChangePasswordContentState extends State<ChangePasswordContent> {
 
   Widget _titleName() {
     return Center(
-      child: Text(
-        authInformation.authInfo.fullName,
+      child: Text( "Name: ${authInformation.authInfo.name}",
         textAlign: TextAlign.center,
-        style: const TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
+        style: const TextStyle(color: Colors.black, fontSize: 28, fontWeight: FontWeight.bold),
       ),
     );
   }
 
+  Widget _titleLastName() {
+    return Center(
+      child: Text( "Last name: ${authInformation.authInfo.lastName}",
+        textAlign: TextAlign.center,
+        style: const TextStyle(color: Colors.black, fontSize: 28, fontWeight: FontWeight.bold),
+      ),
+    );
+  }  
+
   Widget _titleEmail() {
     return Center(
       child: Text(
-        authInformation.authInfo.email,
+        "Email: ${authInformation.authInfo.email}",
         textAlign: TextAlign.center,
         style: const TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500),
       ),
