@@ -81,7 +81,7 @@ class _CardHistoryStackState extends State<CardHistoryStack> {
               ),
               Consumer<FilterProvider>(
                 builder: (context, currentFavorite, child) => IconButton(
-                  icon: currentFavorite.gameFavoritesTemp.contains(widget.listing.mlsNumber?? '')
+                  icon: currentFavorite.favoritesTemp.contains(widget.listing.mlsNumber?? '')
                     ? const Icon(Icons.favorite, size: 30, color: Colors.white,)
                     : const Icon(Icons.favorite_border, size: 30, color: Colors.white,),
                   onPressed: () {
@@ -89,9 +89,9 @@ class _CardHistoryStackState extends State<CardHistoryStack> {
                       // Here we changing the icon.
                       toggle = !toggle;
                       if(toggle == true) {
-                        currentFavorite.gameFavoritesTemp.add(widget.listing.mlsNumber?? '');
+                        currentFavorite.favoritesTemp.add(widget.listing.mlsNumber?? '');
                       } else {
-                        currentFavorite.gameFavoritesTemp.removeWhere((String name) => name == widget.listing.mlsNumber);
+                        currentFavorite.favoritesTemp.removeWhere((String name) => name == widget.listing.mlsNumber);
                       }
                     });
                   }

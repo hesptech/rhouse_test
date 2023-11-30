@@ -23,6 +23,15 @@ class FavoritesScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
+            /* repliersFavorites.getSelectFavorites('2');
+
+            for (int i = 0; i < filterProvider.favoritesTemp.length; i++) {
+              if(!repliersFavorites.onSelectFavorites.contains(filterProvider.favoritesTemp[i])) {
+                print('second loop favorite screen');
+                filterProvider.favoritesTemp.removeWhere((element) => element == filterProvider.favoritesTemp[i]);
+              }
+            } */
+
             Navigator.pushNamed(context, '/');
           },
           icon: const Icon(Icons.close_outlined),
@@ -44,7 +53,7 @@ class FavoritesScreen extends StatelessWidget {
           ? [
               CardsSliderFavorites(
                 listing: repliersFavorites.onDisplayFavorites,
-                onInitPage: () => repliersFavorites.initGetDisplay(filterProvider.gameFavoritesTemp),
+                onInitPage: () => repliersFavorites.initGetDisplay(filterProvider.favoritesTemp),
               ),           
             ]
           : [

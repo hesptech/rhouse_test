@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-//import 'package:flutter_black_white/utils/search_delegate.dart';
 
 import 'package:flutter_black_white/providers/repliers_listing_mls.dart';
 import 'package:flutter_black_white/utils/constants.dart';
@@ -9,7 +8,6 @@ import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/modules/cards/card_details_full/cards.dart';
 import 'package:flutter_black_white/screens/game/game_screen.dart';
 import 'package:flutter_black_white/screens/filters_results_screen.dart';
-//import 'package:flutter_black_white/screens/home_screen.dart';
 
 class CardDetailsFullScreen extends StatelessWidget {
   const CardDetailsFullScreen({Key? key}) : super(key: key);
@@ -21,6 +19,7 @@ class CardDetailsFullScreen extends StatelessWidget {
     final Listing listing = screenArguments.listing;
     final String pathScreen = screenArguments.pathScreen;
     final repliersHistory = Provider.of<RepliersListingMls>(context);
+
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -39,6 +38,7 @@ class CardDetailsFullScreen extends StatelessWidget {
         ),
         leading: IconButton(
           onPressed: () {
+
             if (pathScreen == FiltersResultsScreen.pathScreen) {
               Navigator.pushNamed(context, 'filters_results_screen');
             } else if (pathScreen == GameScreen.pathScreen) {
@@ -53,6 +53,7 @@ class CardDetailsFullScreen extends StatelessWidget {
             } else {
               Navigator.pushNamed(context, '/');
             }
+            
           },
           icon: const Icon(Icons.close_outlined),
         ),

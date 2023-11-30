@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/utils/card_full_description_arguments.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_black_white/providers/filter_provider.dart';
-import 'package:flutter_black_white/config/environment.dart';
-import 'package:flutter_black_white/modules/cards/card_favorites/card_favorites_icons.dart';
+import 'package:flutter_black_white/providers/repliers_favorites.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-import 'package:flutter_black_white/utils/data_formatter.dart';
+import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/utils/data_formatter.dart';
+import 'package:flutter_black_white/utils/card_full_description_arguments.dart';
+import 'package:flutter_black_white/modules/cards/card_game/widgets/game_last_status.dart';
+import 'package:flutter_black_white/modules/cards/card_favorites/card_favorites_icons.dart';
 
-import '../card_game/widgets/game_last_status.dart';
 
 class CardFavorites extends StatefulWidget {
 
@@ -38,9 +39,11 @@ class _CardFavoritesState extends State<CardFavorites> {
       formattedPrice = '\$${doubleString.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}';
     }
 
-    final filterProvider = Provider.of<FilterProvider>(context, listen: false).gameFavoritesTemp;
+    final filterProvider = Provider.of<FilterProvider>(context);
+    final repliersFavorites = Provider.of<RepliersFavorites>(context);
 
-    return  filterProvider.contains(widget.propertyItem.mlsNumber) ? Padding(
+
+    return  filterProvider.favoritesTemp.contains(widget.propertyItem.mlsNumber) ? Padding(
       padding: const EdgeInsetsDirectional.symmetric( horizontal: 10.0, vertical: 3.0),
       child: GestureDetector(
         onTap: () {
@@ -87,8 +90,15 @@ class _CardFavoritesState extends State<CardFavorites> {
                             child: IconButton(
                               padding: const EdgeInsets.all(0.0),
                               onPressed: (){
-                                filterProvider.removeWhere((String name) => name == widget.propertyItem.mlsNumber);
-                                Navigator.pushNamed(context, 'favorites_screen');
+                                setState(() {
+                                  filterProvider.favoritesTemp.removeWhere((String name) => name == widget.propertyItem.mlsNumber);
+                                  repliersFavorites.getDeleteFavorites( '2', widget.propertyItem.mlsNumber?? '0');
+                                  //Navigator.pushNamed(context, 'favorites_screen');
+                                  
+                                  if(!filterProvider.favoritesTemp.contains('0')){
+                                    filterProvider.favoritesTemp.add('0');
+                                  }
+                                });
                               }, 
                               icon: const Icon(Icons.cancel_outlined, size: 30,)
                             ),

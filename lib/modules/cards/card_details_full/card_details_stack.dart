@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_black_white/providers/filter_provider.dart';
+import 'package:flutter_black_white/providers/repliers_favorites.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
@@ -24,6 +25,9 @@ class _CardDetailsStackState extends State<CardDetailsStack> {
 
     final dataFormatted = DataFormatter(widget.listing);
     final bool statusActive = widget.listing.status == 'A' ? true : false;
+
+    final filterProvider = Provider.of<FilterProvider>(context);
+    final repliersFavorites = Provider.of<RepliersFavorites>(context);
 
     return Stack(
       children: [
@@ -81,31 +85,35 @@ class _CardDetailsStackState extends State<CardDetailsStack> {
                 top: 11.0,
                 child: Icon(Icons.favorite_border_outlined, color: Colors.black26, size: 32),
               ),
-                Consumer<FilterProvider>(
-                  builder: (context, currentFavorite, child) => Material(
-                    color: Colors.transparent,
-                    clipBehavior: Clip.hardEdge,
-                    borderRadius: BorderRadius.circular(50),
-                    child: IconButton(
-                      splashColor: kPrimaryColor.withOpacity(0.8),
-                      highlightColor: kPrimaryColor,
-                      icon: currentFavorite.gameFavoritesTemp.contains(widget.listing.mlsNumber?? '')
-                        ? const Icon(Icons.favorite, size: 30, color: Colors.white,)
-                        : const Icon(Icons.favorite_border, size: 30, color: Colors.white,),
-                      onPressed: () {
-                        setState(() {
-                          // Here we changing the icon.
-                          toggle = !toggle;
-                          if(toggle == true) {
-                            currentFavorite.gameFavoritesTemp.add(widget.listing.mlsNumber?? '');
-                          } else {
-                            currentFavorite.gameFavoritesTemp.removeWhere((String name) => name == widget.listing.mlsNumber);
-                          }
-                        });
+              Material(
+                color: Colors.transparent,
+                clipBehavior: Clip.hardEdge,
+                borderRadius: BorderRadius.circular(50),
+                child: IconButton(
+                  splashColor: kPrimaryColor.withOpacity(0.8),
+                  highlightColor: kPrimaryColor,
+                  icon: filterProvider.favoritesTemp.contains(widget.listing.mlsNumber?? '')
+                    ? const Icon(Icons.favorite, size: 30, color: Colors.white,)
+                    : const Icon(Icons.favorite_border, size: 30, color: Colors.white,),
+                  onPressed: () {
+                    setState(() {
+                      // Here we changing the icon.
+                      toggle = !toggle;
+                      if(!filterProvider.favoritesTemp.contains(widget.listing.mlsNumber?? '')) {
+                        filterProvider.favoritesTemp.add(widget.listing.mlsNumber?? '');
+                        repliersFavorites.getInsertFavorites( '2', widget.listing.mlsNumber?? '');
+                      } else {
+                        filterProvider.favoritesTemp.removeWhere((String name) => name == widget.listing.mlsNumber);
+                        repliersFavorites.getDeleteFavorites( '2', widget.listing.mlsNumber?? '');
                       }
-                    ),
-                  )
+
+                      if(!filterProvider.favoritesTemp.contains('0')){
+                        filterProvider.favoritesTemp.add('0');
+                      }
+                    });
+                  }
                 ),
+              ),
             ],
           ),
         ),

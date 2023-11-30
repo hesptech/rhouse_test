@@ -15,20 +15,27 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final repliersProvider = Provider.of<RepliersProvider>(context);
-    
     final filterProvider = Provider.of<FilterProvider>(context);
     final repliersStatusProperties = filterProvider.filtersStatusProperties;
     
-    final repliersFavorites = Provider.of<RepliersFavorites>(context, listen: false);
-    repliersFavorites.getSelectFavorites('2');
+    final repliersFavorites = Provider.of<RepliersFavorites>(context);
 
+      /* for (int i = 0; i < filterProvider.favoritesTemp.length; i++) {
+        if(!repliersFavorites.onSelectFavorites.contains(filterProvider.favoritesTemp[i])) {
+        print('second loop');
+          filterProvider.favoritesTemp.removeWhere((element) => element == filterProvider.favoritesTemp[i]);
+        }
+      } */
+
+    if ( filterProvider.favoritesTemp.isEmpty) {
+      repliersFavorites.getSelectFavorites('2');
       for (int i = 0; i < repliersFavorites.onSelectFavorites.length; i++) { 
-        if(!filterProvider.gameFavoritesTemp.contains(repliersFavorites.onSelectFavorites[i])){
-          filterProvider.gameFavoritesTemp.add(repliersFavorites.onSelectFavorites[i]); 
+        if(!filterProvider.favoritesTemp.contains(repliersFavorites.onSelectFavorites[i])){
+          filterProvider.favoritesTemp.add(repliersFavorites.onSelectFavorites[i]); 
         }   
-      }
-      print(filterProvider.gameFavoritesTemp);
-
+      }      
+      //filterProvider.favoritesTemp.add('0');
+    }
 
     return Scaffold(
       appBar: const CustomAppbar(),

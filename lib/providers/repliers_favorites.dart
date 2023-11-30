@@ -9,14 +9,59 @@ import 'package:flutter_black_white/models/models.dart';
 class RepliersFavorites extends ChangeNotifier {
   List<Listing> onDisplayFavorites = [];
   List<String> onSelectFavorites = [];
+  List<String> onInsertFavorites = [];
+  List<String> onDeleteFavorites = [];
   bool isLoading = false;
   bool loaded = false;
   int onCount = 0;
 
+
+  Future<String> _getJsonDataInsert( String endPoint, String userId, String mlsNumber) async {
+    
+    userId = userId.isEmpty ? '0' : userId ;
+    mlsNumber = mlsNumber.isEmpty ? '0' : mlsNumber ;
+    
+    final url = Uri.https( kRhouzeUrl, endPoint, {
+      'mlsinsert': '1',
+      'mlsuserid': userId,
+      'mlsnumber': mlsNumber
+    });
+      String token = '123456789';
+    Map<String, String>? headers = { 'token': token };
+
+    try {
+      //print(url);
+      final response = await http.get(url, headers: headers);
+      if(response.statusCode == 200) {
+        return response.body;
+      } else {
+        return processResponse(response);
+      }
+    } catch (e) {
+      return 'Error: $e';
+    }
+  }
+
+  Future<List<String>> getInsertFavorites(String userId, String mlsNumber) async {
+
+    final jsonData = await _getJsonDataInsert('/rhouze_db/favorites', userId, mlsNumber);
+
+    final insertResponse = ResponseMlsFavorites.fromRawJson(jsonData);
+
+    onInsertFavorites = [];
+    for (int i = 0; i < insertResponse.mlsFavorites.length; i++ ) {
+      //onSelectFavorites.add(insertResponse.mlsFavorites[i]);
+    }
+
+    return onInsertFavorites;
+  }
+
+
   Future<String> _getJsonDataSelect( String endPoint, String userId) async {
     userId = userId.isEmpty ? '' : userId ;
     final url = Uri.https( kRhouzeUrl, endPoint, {
-      'userid': userId
+      'mlsselect': '1',
+      'mlsuserid': userId
     });
       String token = '123456789';
     Map<String, String>? headers = { 'token': token };
@@ -49,6 +94,49 @@ class RepliersFavorites extends ChangeNotifier {
     //print(onSelectFavorites);
     return onSelectFavorites;
   }
+
+
+  Future<String> _getJsonDataDelete( String endPoint, String userId, String mlsNumber) async {
+    
+    userId = userId.isEmpty ? '0' : userId ;
+    mlsNumber = mlsNumber.isEmpty ? '0' : mlsNumber ;
+    
+    final url = Uri.https( kRhouzeUrl, endPoint, {
+      'mlsdelete': '1',
+      'mlsuserid': userId,
+      'mlsnumber': mlsNumber
+    });
+    
+    String token = '123456789';
+    Map<String, String>? headers = { 'token': token };
+
+    try {
+      //print(url);
+      final response = await http.get(url, headers: headers);
+      if(response.statusCode == 200) {
+        return response.body;
+      } else {
+        return processResponse(response);
+      }
+    } catch (e) {
+      return 'Error: $e';
+    }
+  }
+
+  Future<List<String>> getDeleteFavorites(String userId, String mlsNumber) async {
+
+    final jsonData = await _getJsonDataDelete('/rhouze_db/favorites', userId, mlsNumber);
+
+    final deleteResponse = ResponseMlsFavorites.fromRawJson(jsonData);
+
+    onDeleteFavorites = [];
+    for (int i = 0; i < deleteResponse.mlsFavorites.length; i++ ) {
+      //onSelectFavorites.add(deleteResponse.mlsFavorites[i]);
+    }
+
+    return onDeleteFavorites;
+  }
+
 
   Future<String> _getJsonDataDisplay( String endPoint, List valuesParams ) async {
     
@@ -92,6 +180,7 @@ class RepliersFavorites extends ChangeNotifier {
     notifyListeners();
     isLoading = false;
   } 
+  
 
   initGetDisplay(List mlsNumbers) {
     onDisplayFavorites = [];
