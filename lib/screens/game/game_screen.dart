@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/providers/repliers_game.dart';
-import 'package:flutter_black_white/widgets/cards_slider_game.dart';
+import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/widgets/cards_slider_game.dart';
 
 
 class GameScreen extends StatelessWidget {
@@ -17,8 +18,9 @@ class GameScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     Listing listingArgument = _checkArguments(context);
-    List valuesParams = ['n7274034','w7275236','w7235370','N5632323'];
+    //List valuesParams = ['n7274034','w7275236','w7235370','N5632323'];
     final repliersGame = Provider.of<RepliersGame>(context);
+    final filterProvider = Provider.of<FilterProvider>(context);
 
     return WillPopScope(
       onWillPop: () async {
@@ -73,10 +75,11 @@ class GameScreen extends StatelessWidget {
           child: Column(
             children: [
               CardsSliderGame(
-                mlsGuesses: repliersGame.onDisplayMlsGuesses,
+                mlsGame: repliersGame.onSelectGame,
                 listing: repliersGame.onDisplayGame,
                 //listing: repliersGame.getDisplayGame(valuesParams),
-                onInitPage: () => repliersGame.initGetDisplay(valuesParams),
+                //onInitPage: () => repliersGame.initGetDisplay(valuesParams),
+                onInitPage: () => repliersGame.initGetDisplay(filterProvider.gameTemp),
                 bannerPriceListing: listingArgument,
               ),
             ],

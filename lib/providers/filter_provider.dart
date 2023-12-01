@@ -15,6 +15,7 @@ class FilterProvider extends ChangeNotifier {
   List<String> _filtersStatusProperties = Preferences.filtersStatusProperties;
   bool _cardGamePriceDisplay = false;
   List<String> _favoritesTemp = [];
+  List<String> _gameTemp = [];
 
   String get filterProvider {
     return _filterProvider;
@@ -112,6 +113,15 @@ class FilterProvider extends ChangeNotifier {
 
   set favoritesTemp( List<String> value ) {
     _favoritesTemp = value;
+    notifyListeners();
+  }
+
+  List<String> get gameTemp {
+    return _gameTemp;
+  }
+
+  set gameTemp( List<String> value ) {
+    _gameTemp = value;
     notifyListeners();
   }
 

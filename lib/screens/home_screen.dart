@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:flutter_black_white/providers/repliers_favorites.dart';
 import 'package:flutter_black_white/providers/repliers_provider.dart';
+import 'package:flutter_black_white/providers/repliers_favorites.dart';
+import 'package:flutter_black_white/providers/repliers_game.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/widgets/widgets.dart';
 
@@ -19,6 +20,7 @@ class HomeScreen extends StatelessWidget {
     final repliersStatusProperties = filterProvider.filtersStatusProperties;
     
     final repliersFavorites = Provider.of<RepliersFavorites>(context);
+    final repliersGame = Provider.of<RepliersGame>(context);
 
       /* for (int i = 0; i < filterProvider.favoritesTemp.length; i++) {
         if(!repliersFavorites.onSelectFavorites.contains(filterProvider.favoritesTemp[i])) {
@@ -31,10 +33,21 @@ class HomeScreen extends StatelessWidget {
       repliersFavorites.getSelectFavorites('2');
       for (int i = 0; i < repliersFavorites.onSelectFavorites.length; i++) { 
         if(!filterProvider.favoritesTemp.contains(repliersFavorites.onSelectFavorites[i])){
+          //print(repliersFavorites.onSelectFavorites);
           filterProvider.favoritesTemp.add(repliersFavorites.onSelectFavorites[i]); 
         }   
       }      
       //filterProvider.favoritesTemp.add('0');
+    }
+
+    if ( filterProvider.gameTemp.isEmpty) {
+      repliersGame.getSelectGame('1');
+      for (int i = 0; i < repliersGame.onSelectGame.length; i++) {
+        if(!filterProvider.gameTemp.contains(repliersGame.onSelectGame[i])){
+          //print(repliersGame.onSelectGame[i]);
+          filterProvider.gameTemp.add(repliersGame.onSelectGame[i]);
+        }
+      }
     }
 
     return Scaffold(

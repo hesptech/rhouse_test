@@ -1,21 +1,26 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/config/environment.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
+
+import 'package:flutter_black_white/config/environment.dart';
+import 'package:flutter_black_white/models/models.dart';
 
 class RepliersGame extends ChangeNotifier {
   List<Listing> onDisplayGame = [];
-  List<String> onDisplayMlsGuesses = [];
+  List<String> onSelectGame = [];
+  List<String> onInsertGame = [];
+  List<String> onDeleteGame = [];
   bool isLoading = false;
   bool loaded = false;
   int onCount = 0;
 
-  Future<String> _getJsonMlsGuesses( String endPoint, List valuesParams ) async {
+  /// SELECT
+  Future<String> _getJsonDataSelect( String endPoint, String userId ) async {
     
     final url = Uri.https( kRhouzeUrl, endPoint, {
-      'userId': valuesParams,
+      'mlsselect': '1',
+      'mlsuserid': userId,
     });
 
     String token = '123456789';
@@ -34,31 +39,30 @@ class RepliersGame extends ChangeNotifier {
     }
   }
 
-  getDisplayMlsGuesses(List mlsGuesses) async {
-    final jsonData = await _getJsonMlsGuesses('/rhouze_db/mlsguesses', mlsGuesses);
+  getSelectGame(String userId) async {
+    final jsonData = await _getJsonDataSelect('/rhouze_db/game', userId);
 
-    final nowDisplayResponse = ResponseMlsGuesses.fromRawJson(jsonData);
-    //print(nowDisplayResponse.mlsGuesses);   
+    final nowDisplayResponse = ResponseMlsGame.fromRawJson(jsonData);
+    //print(nowDisplayResponse.mlsGame);   
 
-    //onDisplayMlsGuesses = [...onDisplayMlsGuesses, ...nowDisplayResponse.mlsGuesses];
-
-    onDisplayMlsGuesses = [];
+    onSelectGame = [];
     List<String> tempMlsList = [];
-    for (int i = 0; i < nowDisplayResponse.mlsGuesses.length; i++) {    
-      tempMlsList = nowDisplayResponse.mlsGuesses[i].split('-');
-      onDisplayMlsGuesses.add(tempMlsList[0]);
-      //mlsGuessesPrice[tempMlsList[0]] = tempMlsList[1]; 
+    for (int i = 0; i < nowDisplayResponse.mlsGame.length; i++) {    
+      tempMlsList = nowDisplayResponse.mlsGame[i].split('-');
+      onSelectGame.add(tempMlsList[0]);
+      //mlsGamePrice[tempMlsList[0]] = tempMlsList[1]; 
     }
-    print(onDisplayMlsGuesses);
+    //print(onSelectGame);
 
-    Map<String, String> map1 = { for (var e in nowDisplayResponse.mlsGuesses) e.split('-')[0] : e.split('-')[1] };
-    print(map1);
+    Map<String, String> map1 = { for (var e in nowDisplayResponse.mlsGame) e.split('-')[0] : e.split('-')[1] };
+    //print(map1);
   }
 
-
-  Future<String> _getJsonData( String endPoint, List valuesParams ) async {
+  /// DISPLAY
+  Future<String> _getJsonDataDisplay( String endPoint, List valuesParams ) async {
     
-    valuesParams = ['N7305326','n7274034','w7275236','w7235370','N5632323','N5782890'];
+    print(valuesParams);
+    //valuesParams = ['N7305326','n7274034','w7275236','w7235370','N5632323','N5782890'];
     valuesParams = valuesParams.isEmpty ? ['0'] : valuesParams ;
     
     final url = Uri.https( kBaseUrl, endPoint, {
@@ -87,7 +91,7 @@ class RepliersGame extends ChangeNotifier {
     if (isLoading) return;
     isLoading = true;
 
-    final jsonData = await _getJsonData('listings', mlsNumbers); 
+    final jsonData = await _getJsonDataDisplay('listings', mlsNumbers); 
 
     final nowDisplayResponse = ResponseBody.fromJson(jsonData);
 
@@ -100,11 +104,10 @@ class RepliersGame extends ChangeNotifier {
   } 
 
   initGetDisplay(List mlsNumbers) {
-
     onDisplayGame = [];
     onCount = 0;
     loaded = false;
     getDisplayGame(mlsNumbers);
-    getDisplayMlsGuesses(mlsNumbers);
+    //getSelectGame('1');
   }
 }
