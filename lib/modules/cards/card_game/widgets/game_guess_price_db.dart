@@ -1,34 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
+
+import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/models/models.dart';
 
-class GameGuessPriceDb extends StatefulWidget {
+class GameGuessPriceDb extends StatelessWidget {
 
-  
   final bool cardGameEmpty;
+  final Listing propertyItem;
 
-  const GameGuessPriceDb({super.key, required this.cardGameEmpty});
+  const GameGuessPriceDb({super.key, required this.cardGameEmpty, required this.propertyItem});
 
-  @override
-  State<GameGuessPriceDb> createState() => _GameGuessPriceDbState();
-}
 
-class _GameGuessPriceDbState extends State<GameGuessPriceDb> {
 
-  late final TextEditingController _guessPrice;
 
-  @override
-  void initState() {
-    super.initState();
-    _guessPrice = TextEditingController(text: "\$ 1,780,000");
-  }
 
   @override
   Widget build(BuildContext context) {
 
     final smallScreen = MediaQuery.of(context).size.width < 361 ? true : false ;
+    //widget.propertyItem.mlsNumber 
+    final filterProvider = Provider.of<FilterProvider>(context, listen: false);
+    final priceGameDb= filterProvider.gameTempObj[propertyItem.mlsNumber];
+    final CurrencyTextInputFormatter formatter = CurrencyTextInputFormatter(
+      locale: 'ko',
+      decimalDigits: 0,
+      symbol: '\$ ',      
+    );
 
     return TextFormField(
-      controller: _guessPrice,               
+      inputFormatters: <TextInputFormatter>[
+        CurrencyTextInputFormatter(
+          locale: 'ko',
+          decimalDigits: 0,
+          symbol: '\$ ',
+        ),
+      ], 
+      initialValue: formatter.format(priceGameDb?? ''),             
       keyboardType: TextInputType.number,
       textAlign: TextAlign.left,
       readOnly: true,
@@ -44,6 +55,7 @@ class _GameGuessPriceDbState extends State<GameGuessPriceDb> {
         labelText: "Your guess SOLD Price",
         contentPadding: EdgeInsets.only(left: smallScreen ? 10.0 : 15.0 ),
         suffixIcon: _suffixGuessPrice(),
+        suffixIconConstraints: const BoxConstraints(minWidth: 32.0),
         suffixIconColor: kWarningColor,
         labelStyle: const TextStyle(
           color: kWarningColor,
@@ -68,17 +80,10 @@ class _GameGuessPriceDbState extends State<GameGuessPriceDb> {
   }
 
   Widget _suffixGuessPrice() {
-    return InkWell(
-      onTap: () {        
-        //Navigator.pushNamed(context, PriceDeleteScreen.pathScreen);
-      },
-      child: Container(
-          padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
-          child: const Icon(
-            Icons.lock_outlined,
-            color: Colors.grey,
-            size: 18,
-          )),
+    return const Icon(
+      Icons.lock_outlined,
+      color: Colors.grey,
+      size: 18,
     );
   }
 }

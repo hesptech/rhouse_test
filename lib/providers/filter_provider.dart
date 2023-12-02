@@ -16,6 +16,7 @@ class FilterProvider extends ChangeNotifier {
   bool _cardGamePriceDisplay = false;
   List<String> _favoritesTemp = [];
   List<String> _gameTemp = [];
+  Map<String, String> _gameTempObj = {};
 
   String get filterProvider {
     return _filterProvider;
@@ -122,6 +123,15 @@ class FilterProvider extends ChangeNotifier {
 
   set gameTemp( List<String> value ) {
     _gameTemp = value;
+    notifyListeners();
+  }
+
+  Map<String, String> get gameTempObj {
+    return _gameTempObj;
+  }
+
+  set gameTempObj( Map<String, String> value ) {
+    _gameTempObj = value;
     notifyListeners();
   }
 

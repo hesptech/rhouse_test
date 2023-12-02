@@ -48,7 +48,10 @@ class HomeScreen extends StatelessWidget {
           filterProvider.gameTemp.add(repliersGame.onSelectGame[i]);
         }
       }
+      filterProvider.gameTempObj.addAll(repliersGame.onSelectGameObj);
     }
+
+    //onSelectGameObj
 
     return Scaffold(
       appBar: const CustomAppbar(),

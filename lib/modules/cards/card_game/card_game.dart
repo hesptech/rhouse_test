@@ -157,12 +157,12 @@ class _CardGameState extends State<CardGame> {
                           ),
                         ),
                         const SizedBox(height: 10.0,),
-                        const Align(
+                       Align(
                           alignment: Alignment.centerLeft,
                           child: SizedBox(
-                            width: 150.0,
+                            width: 160.0,
                             height: 35.0,
-                            child: GameGuessPriceDb( cardGameEmpty: false )
+                            child: GameGuessPriceDb( cardGameEmpty: false, propertyItem: widget.propertyItem )
                           ),
                         ),
                       ],

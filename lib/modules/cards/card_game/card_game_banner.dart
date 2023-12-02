@@ -142,12 +142,12 @@ class CardGameBanner extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 15.0,),
-                        const Align(
+                        Align(
                           alignment: Alignment.centerLeft,
                           child: SizedBox(
-                            width: 150.0,
+                            width: 160.0,
                             height: 35.0,
-                            child: GameGuessPriceDb( cardGameEmpty: false )
+                            child: GameGuessPriceDb( cardGameEmpty: false, propertyItem: propertyItem, )
                           ),
                         ),
                       ],

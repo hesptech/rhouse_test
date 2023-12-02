@@ -11,6 +11,7 @@ class RepliersGame extends ChangeNotifier {
   List<String> onSelectGame = [];
   List<String> onInsertGame = [];
   List<String> onDeleteGame = [];
+  Map<String, String>  onSelectGameObj = {};
   bool isLoading = false;
   bool loaded = false;
   int onCount = 0;
@@ -55,7 +56,8 @@ class RepliersGame extends ChangeNotifier {
     //print(onSelectGame);
 
     Map<String, String> map1 = { for (var e in nowDisplayResponse.mlsGame) e.split('-')[0] : e.split('-')[1] };
-    //print(map1);
+    onSelectGameObj = { for (var e in nowDisplayResponse.mlsGame) e.split('-')[0] : e.split('-')[1] };
+    //print(onSelectGameObj);
   }
 
   /// DISPLAY
