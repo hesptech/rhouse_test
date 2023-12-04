@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/modules/maps/map_residences_search.dart';
 import 'package:flutter_black_white/modules/maps/utils/geolocation_app.dart';
-import 'package:flutter_black_white/providers/maplist_provider.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/widgets/error_view_widget.dart';
 import 'package:flutter_black_white/widgets/loadable_widget.dart';
 import 'package:flutter_black_white/widgets/widgets.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:provider/provider.dart';
 
 import '../providers/filter_provider.dart';
 import '../utils/connectivity_internet.dart';
@@ -24,20 +22,20 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   late bool isFilter = false;
-  late MapListProvider _mapListProvider;
+  // late MapListProvider _mapListProvider;
 
   @override
   void initState() {
     isFilter = Preferences.isFilter;
 
-    _mapListProvider = Provider.of<MapListProvider>(context, listen: false);
-    _mapListProvider.initData();
+    // _mapListProvider = Provider.of<MapListProvider>(context, listen: false);
+    // _mapListProvider.initData();
     super.initState();
   }
 
   @override
   void dispose() {
-    _mapListProvider.close();
+    // _mapListProvider.close();
     super.dispose();
   }
 
@@ -45,10 +43,7 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        // _mapListProvider.close();
         Navigator.pushReplacementNamed(context, "/");
-
-        // _mapListProvider.initData();
         return true;
       },
       child: Scaffold(
@@ -65,12 +60,9 @@ class _MapScreenState extends State<MapScreen> {
                   width: 140,
                   child: TextButton(
                       onPressed: () async {
-                        _mapListProvider.close();
+                        // _mapListProvider.close();
                         FilterProvider().cleanFilter();
                         Navigator.pushNamed(context, MapScreen.pathScreen, arguments: {'filter': "false"});
-                        // Navigator.pushReplacementNamed(context, MapScreen.pathScreen, arguments: {'filter': "false"});
-                        // Navigator.pushReplacementNamed(context, "/");
-                        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => super.widget));
                       },
                       child: const Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -155,7 +147,7 @@ class _MapScreenState extends State<MapScreen> {
                       loader: () => GeolocationApp().getPosition(),
                       builder: (_, LatLng coordinates) {
                         return MapResidencesSearch(
-                          mapListProvider: _mapListProvider,
+                          // mapListProvider: _mapListProvider,
                           coordinates: coordinates,
                         );
                       });

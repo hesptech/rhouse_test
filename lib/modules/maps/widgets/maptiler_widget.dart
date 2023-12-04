@@ -22,6 +22,7 @@ class MapTilerWidget extends StatefulWidget {
   final double zoom;
   final bool isMultiple;
   final bool isMiniature;
+  final bool isLoading;
   final List<Marker> markers;
 
   const MapTilerWidget(
@@ -35,6 +36,7 @@ class MapTilerWidget extends StatefulWidget {
       this.zoom = 18,
       this.isMultiple = true,
       this.isMiniature = false,
+      this.isLoading = false,
       this.selectedCluster = const [],
       this.listingSingle,
       this.onTapMap,
@@ -57,6 +59,7 @@ class _MapWidget extends State<MapTilerWidget> {
   Marker? currentMarker;
   late bool _cleanMarkers;
   late List<Listing> propertiesAll;
+
   @override
   void initState() {
     _controller = MapController();
@@ -80,9 +83,7 @@ class _MapWidget extends State<MapTilerWidget> {
         if (_zoomValue != event.zoom) {
           _zoomValue = event.zoom;
           widget.changeZoom!(event);
-          setState(() {
-            currentMarker = null;
-          });
+          currentMarker = null;
         }
       });
     } else {
@@ -97,10 +98,8 @@ class _MapWidget extends State<MapTilerWidget> {
     if (widget.isMultiple) {
       _setMarkers();
 
-      setState(() {
-        _selectedCluster = widget.selectedCluster;
-        currentMarker = widget.selectedCluster.isEmpty ? null : currentMarker;
-      });
+      _selectedCluster = widget.selectedCluster;
+      currentMarker = widget.selectedCluster.isEmpty ? null : currentMarker;
     }
     _zoomValue = _controller.zoom;
     super.didUpdateWidget(oldWidget);
@@ -206,8 +205,17 @@ class _MapWidget extends State<MapTilerWidget> {
             return;
           }
           currentMarker = null;
-          var keys = markerClusterNode.mapMarkers.map((marker) => ValueKey(marker.key).value).toSet();
-          var filteredListings = propertiesAll.where((listing) => keys.contains(Key(listing.mlsNumber!))).toList();
+          Set<Key?> keys = markerClusterNode.mapMarkers.map((marker) => ValueKey(marker.key).value).toSet();
+          List<Listing> filteredListings = propertiesAll.map((listing) {
+            if (keys.contains(Key(listing.mlsNumber!))) {
+              return listing;
+            }
+
+            return Listing(mlsNumber: "app-90");
+          }).toList();
+
+          filteredListings.removeWhere((element) => element.mlsNumber == "app-90");
+          // List<Listing> filteredListings = propertiesAll.where((listing) => keys.contains(Key(listing.mlsNumber!))).toList();
           widget.onClusterTap!(markerClusterNode.mapMarkers, filteredListings);
         },
         builder: (context, markers) {
@@ -240,79 +248,91 @@ class _MapWidget extends State<MapTilerWidget> {
   }
 
   void _setMarkers() {
+    if (!widget.isLoading) {
+      return;
+    }
     if (_cleanMarkers) {
       _cleanMarkers = false;
       markers = [];
     }
 
-    final existingMarkerKeys = markers.map((marker) => marker.key).toSet();
+    Set<Key?> existingMarkerKeys = markers.map((marker) => marker.key).toSet();
 
-    for (var item in widget.listCoordinates) {
-      var key = Key(item.mlsNumber ?? "");
+    Iterable<Marker> markerCache = widget.listCoordinates.map((e) {
+      return _getMarkerItem(e);
+    });
+
+    for (var i = 0; i < markerCache.length; i++) {
+      Listing item = widget.listCoordinates[i];
+      Key key = Key(item.mlsNumber ?? "");
 
       if (!existingMarkerKeys.contains(key)) {
-        markers.add(Marker(
-          key: key,
-          height: 50,
-          width: 50,
-          point: LatLng(item.mapCoordinates!.latitude, item.mapCoordinates!.longitude),
-          builder: (ctx) {
-            bool isSelected = false;
-            if (currentMarker != null && currentMarker!.key == key) {
-              isSelected = true;
-            }
-
-            return GestureDetector(
-              onTap: () {
-                if (widget.onTapMarker == null) {
-                  return;
-                }
-
-                var markerItem = markers.where((element) => element.key == key).toList();
-
-                if (markerItem.isNotEmpty) {
-                  setState(() {
-                    currentMarker = markerItem.first; // asigna el marcador seleccionado
-                  });
-
-                  var keys = markerItem.map((marker) => ValueKey(marker.key).value).toSet();
-                  var filteredListings = propertiesAll.where((listing) => keys.contains(Key(listing.mlsNumber!))).toList();
-
-                  widget.onTapMarker!(markerItem, filteredListings);
-                }
-              },
-              child: Container(
-                width: 100.0,
-                height: 100.0,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: !isSelected ? kPrimaryColor : kWarningColor,
-                  border: Border.all(
-                    color: !isSelected ? kSecondaryColor : Colors.white,
-                    width: 5.0,
-                  ),
-                ),
-                child: const Center(
-                  child: Text(
-                    "1",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
-            );
-          },
-        ));
+        markers.add(markerCache.elementAt(i));
       }
 
-      var propertyItem = propertiesAll.singleWhere(
-        (element) => element.mlsNumber == item.mlsNumber,
-        orElse: () => Listing(mlsNumber: ""),
-      );
-
-      if (propertyItem.mlsNumber == null || propertyItem.mlsNumber == "") {
+      if (!propertiesAll.contains(item)) {
         propertiesAll.add(item);
       }
     }
+
+    if (widget.listCoordinates.isNotEmpty) {
+      widget.listCoordinates.removeRange(0, widget.listCoordinates.length);
+    }
+    markerCache = [];
+    // widget.listCoordinates.removeRange(0, widget.listCoordinates.length);
+  }
+
+  Marker _getMarkerItem(Listing item) {
+    var key = Key(item.mlsNumber ?? "");
+    return Marker(
+      key: key,
+      height: 50,
+      width: 50,
+      point: LatLng(item.mapCoordinates!.latitude, item.mapCoordinates!.longitude),
+      builder: (ctx) {
+        bool isSelected = false;
+        if (currentMarker != null && currentMarker!.key == key) {
+          isSelected = true;
+        }
+
+        return GestureDetector(
+          onTap: () {
+            if (widget.onTapMarker == null) {
+              return;
+            }
+
+            var markerItem = markers.where((element) => element.key == key).toList();
+
+            if (markerItem.isNotEmpty) {
+              currentMarker = markerItem.first; // asigna el marcador seleccionado
+
+              var keys = markerItem.map((marker) => ValueKey(marker.key).value).toSet();
+              var filteredListings = propertiesAll.where((listing) => keys.contains(Key(listing.mlsNumber!))).toList();
+
+              widget.onTapMarker!(markerItem, filteredListings);
+            }
+          },
+          child: Container(
+            width: 100.0,
+            height: 100.0,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: !isSelected ? kPrimaryColor : kWarningColor,
+              border: Border.all(
+                color: !isSelected ? kSecondaryColor : Colors.white,
+                width: 5.0,
+              ),
+            ),
+            child: const Center(
+              child: Text(
+                "1",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   void _setMarker() {

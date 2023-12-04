@@ -19,10 +19,10 @@ class MapCardSmall extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dataFormatted = DataFormatter(listing);
+    final DataFormatter dataFormatted = DataFormatter(listing);
 
-    const loggedIn = true;
-    const blurImg = loggedIn == false ? 5.0 : 0.0;
+    const bool loggedIn = true;
+    const double blurImg = loggedIn == false ? 5.0 : 0.0;
 
     final String images = listing.images?.first ?? '';
 
@@ -69,8 +69,6 @@ class MapCardSmall extends StatelessWidget {
   }
 
   Widget _detailsBody(DataFormatter dataFormatted, BuildContext context) {
-    final String propertyType = listing.details?.propertyType ?? '';
-
     String neighborhood = listing.address?.neighborhood ?? '';
     final String city = listing.address?.city ?? '';
     final String cityArea = listing.address?.area == 'Toronto' ? 'Toronto' : city;
@@ -81,14 +79,6 @@ class MapCardSmall extends StatelessWidget {
 
     if (neighborhood == 'Waterfront Communities C8') {
       neighborhood == 'Waterfront Communities East';
-    }
-
-    final String finalAddress2 = '$neighborhood, $cityArea';
-    String finalAddress3 = '';
-    if (finalAddress2.length > 30) {
-      finalAddress3 = '${finalAddress2.substring(0, 30)}...';
-    } else {
-      finalAddress3 = finalAddress2;
     }
 
     return Padding(
@@ -116,16 +106,16 @@ class MapCardSmall extends StatelessWidget {
             dataFormatted.address,
             maxLines: 2,
             softWrap: true,
-            style: const TextStyle(fontSize: 12, color: Color(0xFF58595B)),
+            style: const TextStyle(fontSize: 10, color: Color(0xFF58595B)),
             overflow: TextOverflow.ellipsis,
           ),
           Text(
-            finalAddress3,
+            '$neighborhood, $cityArea',
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             softWrap: true,
             style: const TextStyle(
-              fontSize: 12,
+              fontSize: 10,
               color: Color(0xFF58595B),
             ),
           ),
@@ -136,12 +126,12 @@ class MapCardSmall extends StatelessWidget {
               border: Border.all(color: kPrimaryColor),
             ),
             child: Text(
-              propertyType,
+              listing.details?.propertyType ?? '',
               maxLines: 1,
               softWrap: true,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
-                fontSize: 12,
+                fontSize: 10,
                 color: kPrimaryColor,
               ),
             ),
@@ -152,8 +142,6 @@ class MapCardSmall extends StatelessWidget {
   }
 
   Widget _detailsResidence(DataFormatter dataFormatted) {
-    final String numBathrooms = listing.details?.numBathrooms ?? '';
-
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -221,7 +209,7 @@ class MapCardSmall extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    numBathrooms,
+                    listing.details?.numBathrooms ?? '',
                     overflow: TextOverflow.ellipsis,
                     softWrap: true,
                     maxLines: 1,
@@ -329,8 +317,8 @@ class MapCardSmall extends StatelessWidget {
         height: 25,
         margin: const EdgeInsets.only(top: 5, left: 10),
         child: ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(kPrimaryColor),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: kPrimaryColor
           ),
           onPressed: () {
             //Navigator.pushNamed(context, 'details', arguments: listing);

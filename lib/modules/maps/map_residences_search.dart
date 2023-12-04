@@ -13,9 +13,9 @@ import 'package:provider/provider.dart';
 ///Widgete that receives a configuration to display the list of residences and maps.
 class MapResidencesSearch extends StatefulWidget {
   final LatLng coordinates;
-  final MapListProvider mapListProvider;
+  // final MapListProvider mapListProvider;
 
-  const MapResidencesSearch({super.key, required this.coordinates, required this.mapListProvider});
+  const MapResidencesSearch({super.key, required this.coordinates});
 
   @override
   State<MapResidencesSearch> createState() => _MapResidencesSearchState();
@@ -24,19 +24,22 @@ class MapResidencesSearch extends StatefulWidget {
 class _MapResidencesSearchState extends State<MapResidencesSearch> {
   late List<Marker> markersList;
   late List<Listing> coordinatesMarkers;
-
+  late MapListProvider _mapListProvider;
+  bool isLoading = true;
   @override
   void initState() {
     markersList = [];
     coordinatesMarkers = [];
-    widget.mapListProvider.getLocationsResidences(widget.coordinates);
+    _mapListProvider = context.read<MapListProvider>();
+    _mapListProvider.initData();
+    _mapListProvider.getLocationsResidences(widget.coordinates);
     super.initState();
   }
 
   @override
   void dispose() {
     markersList = [];
-    // widget.mapListProvider.close();
+    _mapListProvider.close();
     super.dispose();
   }
 
@@ -44,14 +47,15 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        widget.mapListProvider.listingSelected = [];
+        _mapListProvider.close();
+        _mapListProvider.listingSelected = [];
 
         return true;
       },
       child: Stack(
         children: [
           _mapTilerList(context),
-          widget.mapListProvider.loadMap
+          getIsLoad()
               ? const LinearProgressIndicator(
                   backgroundColor: kWarningColor,
                   valueColor: AlwaysStoppedAnimation<Color>(kSecondaryColor),
@@ -64,22 +68,22 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
 
   Widget _mapTilerList(BuildContext context) {
     if (markersList.isEmpty) {
-      markersList = Provider.of<MapListProvider>(context).selectedCluster;
+      // markersList = Provider.of<MapListProvider>(context).selectedCluster;
+      markersList = context.select((MapListProvider m) => m.selectedCluster);
     }
+
 
     return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
       double screenHeight = constraints.maxHeight;
       double cardHeight = screenHeight * 0.25;
+    
+    
+        final listingMaps = context.select((MapListProvider m) => m.listingMaps);
 
-      return StreamBuilder<List<Listing>>(
-        initialData: const [],
-        stream: widget.mapListProvider.listingStreams,
-        builder: (context, snapshot) {
-          return Consumer<MapListProvider>(builder: (context, mapListProvider, _) {
-            return MapTilerWidget(
-                key: const Key("value"),
+        return MapTilerWidget(
                 center: widget.coordinates,
-                listCoordinates: snapshot.hasData ? snapshot.data! : [],
+                isLoading: isLoading,
+                listCoordinates: listingMaps,
                 selectedCluster: markersList,
                 cards: _scrollListing(context, cardHeight),
                 onClusterTap: (markerClusred, List<Listing> listingSelected) {
@@ -89,26 +93,26 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
                   onTapMarkers(mapMarkers, listingSelected);
                 },
                 changeZoom: (mapEvent) {
-                  widget.mapListProvider.selectedCluster = [];
+                  _mapListProvider.selectedCluster = [];
                   markersList = [];
                 },
                 zoom: 10,
                 isMultiple: true);
-          });
-        }
-      );
     });
   }
 
   void onTapMarkers(List<Marker> mapMarkers, List<Listing> listingSelected) async {
-    widget.mapListProvider.getFilterListings(listingSelected);
-    widget.mapListProvider.selectedCluster = mapMarkers;
+    _mapListProvider.getFilterListings(listingSelected);
+    _mapListProvider.selectedCluster = mapMarkers;
     markersList = [];
   }
 
   Widget _scrollListing(BuildContext context, double cardHeight) {
-    var providerMapList = Provider.of<MapListProvider>(context);
+    if (markersList.isEmpty) {
+      _mapListProvider.listingSelected = [];
+    }
 
+    List<Listing> listingSelected = context.select((MapListProvider m) => m.listingSelected);
     return Visibility(
       visible: markersList.isNotEmpty,
       child: AspectRatio(
@@ -130,7 +134,7 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        "${providerMapList.listingSelected.length} listings in total",
+                        "${listingSelected.length} listings in total",
                         style: const TextStyle(color: Colors.white, fontSize: 14.8),
                       ),
                       IconButton(
@@ -140,7 +144,7 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
                           size: 25,
                         ),
                         onPressed: () {
-                          widget.mapListProvider.selectedCluster = [];
+                          _mapListProvider.selectedCluster = [];
                           markersList = [];
                         },
                       ),
@@ -153,7 +157,9 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
                   child: ListView.builder(
                       padding: const EdgeInsets.all(0),
                       scrollDirection: Axis.horizontal,
-                      itemCount: providerMapList.listingSelected.length,
+                      primary: false,
+                      shrinkWrap: true,
+                      itemCount: listingSelected.length,
                       itemBuilder: (_, index) {
                         return FittedBox(
                           alignment: Alignment.topCenter,
@@ -163,7 +169,7 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
                             width: 320,
                             height: 150,
                             margin: const EdgeInsets.only(right: 8),
-                            child: MapCardSmall(providerMapList.listingSelected[index]),
+                            child: MapCardSmall(key: Key("$index"), listingSelected[index]),
                           ),
                         );
                       }),
@@ -174,5 +180,11 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
         ),
       ),
     );
+  }
+
+  bool getIsLoad() {
+    isLoading = context.select((MapListProvider m) => m.loadMap);
+
+    return isLoading;
   }
 }
