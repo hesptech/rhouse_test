@@ -33,7 +33,6 @@ class _ChangePasswordContentState extends State<ChangePasswordContent> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             _titleName(),
-            _titleLastName(),
             _titleEmail(),
             const SizedBox(
               height: 30,
@@ -77,26 +76,16 @@ class _ChangePasswordContentState extends State<ChangePasswordContent> {
 
   Widget _titleName() {
     return Center(
-      child: Text( "Name: ${authInformation.authInfo.name}",
+      child: Text( "${authInformation.authInfo.name} ${authInformation.authInfo.lastName}",
         textAlign: TextAlign.center,
         style: const TextStyle(color: Colors.black, fontSize: 28, fontWeight: FontWeight.bold),
       ),
     );
-  }
-
-  Widget _titleLastName() {
-    return Center(
-      child: Text( "Last name: ${authInformation.authInfo.lastName}",
-        textAlign: TextAlign.center,
-        style: const TextStyle(color: Colors.black, fontSize: 28, fontWeight: FontWeight.bold),
-      ),
-    );
-  }  
+  } 
 
   Widget _titleEmail() {
     return Center(
-      child: Text(
-        "Email: ${authInformation.authInfo.email}",
+      child: Text(authInformation.authInfo.email,
         textAlign: TextAlign.center,
         style: const TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500),
       ),

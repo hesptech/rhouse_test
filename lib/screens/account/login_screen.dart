@@ -15,7 +15,8 @@ class LoginScreen extends StatelessWidget {
         title: const Text('Log in'),
           leading: IconButton(
               onPressed: () {
-                Navigator.pop(context);
+                 Navigator.of(context).pushNamed("/");
+
               },
               icon: const Icon(
                 Icons.close,

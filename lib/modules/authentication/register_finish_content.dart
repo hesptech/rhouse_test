@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/modules/authentication/widgets/steps_widget.dart';
+import 'package:flutter_black_white/screens/account/login_screen.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 
 class RegisterFinishContent extends StatefulWidget {
@@ -79,7 +80,7 @@ class _RegisterFinishContentState extends State<RegisterFinishContent> {
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       onPressed: () {
-        Navigator.of(context).pushNamedAndRemoveUntil("/", (Route<dynamic> route) => false);
+        Navigator.of(context).pushNamedAndRemoveUntil(LoginScreen.pathScreen, (route) => false);
       },
     );
   }

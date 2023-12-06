@@ -60,7 +60,6 @@ class _RegisterContentState extends State<RegisterContent> {
       stream: registerFirstValidator.fullNameStream,
       builder: (context, snapshot) {
         return TextFormField(
-          obscureText: true,
           keyboardType: TextInputType.text,
           textInputAction: TextInputAction.next,
           textAlign: TextAlign.center,
@@ -79,7 +78,7 @@ class _RegisterContentState extends State<RegisterContent> {
         );
       }
     );
-  }
+  } 
 
   Widget _passwordField() {
     return StreamBuilder<String>(

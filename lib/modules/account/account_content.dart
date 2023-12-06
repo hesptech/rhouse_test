@@ -25,7 +25,7 @@ class _AccountContentState extends State<AccountContent> {
     authSingleton = AuthSingleton();
 
     _registerOnCtrl = TextEditingController(text: authSingleton.authInfo.registrationDate);
-    _fullNameCtrl = TextEditingController(text: "Name: ${authSingleton.authInfo.name} Last name: ${authSingleton.authInfo.lastName}");
+    _fullNameCtrl = TextEditingController(text: "${authSingleton.authInfo.name} ${authSingleton.authInfo.lastName}");
     _passwordCtrl = TextEditingController(text: "123456789");
     _deleteAcccount = TextEditingController(text: "Once you delete the account, there is no going back, please be certain.");
     super.initState();
@@ -49,7 +49,6 @@ class _AccountContentState extends State<AccountContent> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _titleName(),
-              _lastName(),
               _titleEmail(),
               const SizedBox(
                 height: 30,
@@ -102,27 +101,16 @@ class _AccountContentState extends State<AccountContent> {
   Widget _titleName() {
     return Center(
       child: Text(
-        "Name: ${authSingleton.authInfo.name}",
+        "${authSingleton.authInfo.name} ${authSingleton.authInfo.lastName}",
         textAlign: TextAlign.center,
         style: const TextStyle(color: Colors.black, fontSize: 28, fontWeight: FontWeight.bold),
       ),
     );
   }
-
-  Widget _lastName() {
-    return Center(
-      child: Text(
-        "Last name: ${authSingleton.authInfo.lastName}",
-        textAlign: TextAlign.center,
-        style: const TextStyle(color: Colors.black, fontSize: 28, fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-
 
   Widget _titleEmail() {
     return Center(
-      child: Text("Email: ${authSingleton.authInfo.email}",
+      child: Text(authSingleton.authInfo.email,
         textAlign: TextAlign.center,
         style: const TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500),
       ),

@@ -18,7 +18,6 @@ class AccountDeleteContent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             _titleName(),
-            _titleLastName(),
             _titleEmail(),
             const SizedBox(
               height: 30,
@@ -44,25 +43,16 @@ class AccountDeleteContent extends StatelessWidget {
 
   Widget _titleName() {
     return  Center(
-      child: Text("Name: ${AuthSingleton().authInfo.name}",
+      child: Text("${AuthSingleton().authInfo.name} ${AuthSingleton().authInfo.lastName}",
         textAlign: TextAlign.center,
         style: const TextStyle(color: Colors.black, fontSize: 28, fontWeight: FontWeight.bold),
       ),
     );
   }
 
-  Widget _titleLastName() {
-    return Center(
-      child: Text("Last name: ${AuthSingleton().authInfo.lastName}",
-        textAlign: TextAlign.center,
-        style: const TextStyle(color: Colors.black, fontSize: 28, fontWeight: FontWeight.bold),
-      ),
-    );
-  }    
-
   Widget _titleEmail() {
     return Center(
-      child: Text("Email: ${AuthSingleton().authInfo.email}",
+      child: Text(AuthSingleton().authInfo.email,
         textAlign: TextAlign.center,
         style: const TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500),
       ),

@@ -14,27 +14,29 @@ import 'package:flutter_black_white/widgets/snack_bar_app_widget.dart';
 class AuthenticationProvider {
   void login(String email, String password) async {
     try {
-      var request = AuthenticationRequestModel(email: email, password: password);
+       //TODO: Quitar los comentarios
+      // final request = AuthenticationRequestModel(email: email, password: password);
 
-      loadingDialogShow();
-      var result = await HttpProcessResponse.post<AuthenticationResponseModel>(HttpProcessResponse.login, body: request.toJson());
-      NavigatorConfig.pop();
-      
-      if (!result.error.isNotEmpty) { //TODO: quita el operador de negación
-        SnackBarAppWidget.show(message: result.error, statusColor: StatusColor.danger);
-        return;
-      }
+      // loadingDialogShow();
+      // final result = await HttpProcessResponse.post<AuthenticationResponseModel>(HttpProcessResponse.login, body: request.toJson());
+      // NavigatorConfig.pop();
 
-      var authResponseData = result.data ?? AuthenticationResponseModel(
-        email: "emai@test.com",
-        expiresIn: DateTime.now().toUtc().add(Duration(days: 30)),
-        name: "John",
-        lastName: "Smith",
-        registrationDate: DateTime.now(),
-        token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOm51bGx9.D_OA8tFtGiiNoULLnYCz82dPGo5hFleWdiPEdhXFvGw",
-        tokenType: "jwt",
-        userId: 899
-      ); //TODO: quitar estos valores
+      // if (result.error.isNotEmpty) {
+      //   SnackBarAppWidget.show(message: result.error, statusColor: StatusColor.danger);
+      //   return;
+      // }
+
+      // final authResponseData = result.data ?? AuthenticationResponseModel();
+
+      final authResponseData = AuthenticationResponseModel(
+          email: "emai@test.com",
+          expiresIn: DateTime.now().toUtc().add(Duration(days: 30)),
+          name: "John",
+          lastName: "Smith",
+          registrationDate: DateTime.now(),
+          token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOm51bGx9.D_OA8tFtGiiNoULLnYCz82dPGo5hFleWdiPEdhXFvGw",
+          tokenType: "jwt",
+          userId: 899); //TODO: quitar estos valores
 
       await StoreAppShared.write(StoreAppSharedKeys.expiresIn, authResponseData.expiresIn!.toIso8601String());
       await StoreAppShared.write(StoreAppSharedKeys.token, authResponseData.token);

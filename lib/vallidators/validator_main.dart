@@ -36,7 +36,7 @@ class ValidatorMain {
       return;
     }
 
-    final nameFullRegex = RegExp(r'^[a-zA-Z]{2,30}$');
+    final nameFullRegex = RegExp(r'^[a-zA-Z ]{2,30}$');
 
     if (!nameFullRegex.hasMatch(value)) {
       sink.addError("Name has incorrect characters");
