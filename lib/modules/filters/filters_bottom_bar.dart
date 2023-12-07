@@ -34,7 +34,7 @@ class _FiltersBottomBarState extends State<FiltersBottomBar> {
                 ),
                 onPressed: () {
                   setState(() {
-                    FilterProvider().cleanFilter();                    
+                    FilterProvider().cleanFilter();
                     filterProvider.filterProvider = 'residential';
                     Provider.of<FilterProvider>(context, listen: false).filtersPropertyTypeHouse = [];
                     Provider.of<FilterProvider>(context, listen: false).filtersLocation = [];
@@ -68,7 +68,15 @@ class _FiltersBottomBarState extends State<FiltersBottomBar> {
                   Preferences.isFilter = true;
 
                   if (widget.pathScreen == MapScreen.pathScreen) {
-                    Navigator.pushReplacementNamed(context, MapScreen.pathScreen, arguments: {'filter': "true"});
+                    // Navigator.pop(context);
+                    Preferences.isFilterSubmit = true;
+                    // Navigator.pushReplacementNamed(context, MapScreen.pathScreen);
+                    // Navigator.pushNamed(context, MapScreen.pathScreen);
+                    // Navigator.removeRoute(context, MaterialPageRoute(builder: (context) => const MapScreen()));
+                    Navigator.of(context).pushNamedAndRemoveUntil(MapScreen.pathScreen, (Route<dynamic> route) => false);
+                    // Navigator.of(context).popUntil(ModalRoute.withName(MapScreen.pathScreen));
+
+                    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => MapScreen()),);
                   } else {
                     Navigator.pushNamed(context, 'filters_results_screen', arguments: 'Filtered results');
                   }

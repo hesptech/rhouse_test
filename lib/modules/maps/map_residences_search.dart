@@ -5,6 +5,7 @@ import 'package:flutter_black_white/modules/maps/map_card_small.dart';
 import 'package:flutter_black_white/providers/maplist_provider.dart';
 import 'package:flutter_black_white/modules/maps/widgets/maptiler_widget.dart';
 import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_map/flutter_map.dart';
 // import 'package:flutter_map_supercluster/flutter_map_supercluster.dart';
 import 'package:latlong2/latlong.dart';
@@ -26,12 +27,18 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
   late List<Listing> coordinatesMarkers;
   late MapListProvider _mapListProvider;
   bool isLoading = true;
+
   @override
   void initState() {
     markersList = [];
     coordinatesMarkers = [];
     _mapListProvider = context.read<MapListProvider>();
-    _mapListProvider.initData();
+    final isRefresh = Preferences.isFilterSubmit;
+
+    if (!isRefresh) {
+      _mapListProvider.initData();
+    }
+
     _mapListProvider.getLocationsResidences(widget.coordinates);
     super.initState();
   }
@@ -39,7 +46,17 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
   @override
   void dispose() {
     markersList = [];
+
     _mapListProvider.close();
+    final isRefresh = Preferences.isFilterSubmit;
+
+    if (isRefresh) {
+      _mapListProvider.initData();
+      _mapListProvider.getLocationsResidences(widget.coordinates);
+    }
+
+    _mapListProvider.close();
+
     super.dispose();
   }
 
@@ -68,22 +85,22 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
 
   Widget _mapTilerList(BuildContext context) {
     if (markersList.isEmpty) {
-      // markersList = Provider.of<MapListProvider>(context).selectedCluster;
       markersList = context.select((MapListProvider m) => m.selectedCluster);
     }
-
 
     return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
       double screenHeight = constraints.maxHeight;
       double cardHeight = screenHeight * 0.25;
-    
-    
-        final listingMaps = context.select((MapListProvider m) => m.listingMaps);
 
-        return MapTilerWidget(
+      return StreamBuilder<List<Listing>>(
+          initialData: const [],
+          stream: _mapListProvider.listingStreams,
+          builder: (context, snapshot) {
+            return MapTilerWidget(
+                key: const Key("value"),
                 center: widget.coordinates,
                 isLoading: isLoading,
-                listCoordinates: listingMaps,
+                listCoordinates: snapshot.hasData ? snapshot.data! : [],
                 selectedCluster: markersList,
                 cards: _scrollListing(context, cardHeight),
                 onClusterTap: (markerClusred, List<Listing> listingSelected) {
@@ -98,6 +115,7 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
                 },
                 zoom: 10,
                 isMultiple: true);
+          });
     });
   }
 

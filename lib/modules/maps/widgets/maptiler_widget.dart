@@ -107,16 +107,7 @@ class _MapWidget extends State<MapTilerWidget> {
 
   @override
   void dispose() {
-    _controller.dispose();
-    propertiesAll = [];
-    _minZoom = 6;
-    _maxZoomList = 15;
-    _maxZoomsingle = 18;
-    _maxZoom = 20;
-    _zoomValue = 0;
-    markers = [];
-    _selectedCluster = [];
-    currentMarker = null;
+    resetData();
     super.dispose();
   }
 
@@ -124,16 +115,7 @@ class _MapWidget extends State<MapTilerWidget> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-        _controller.dispose();
-        propertiesAll = [];
-        _minZoom = 6;
-        _maxZoomList = 15;
-        _maxZoomsingle = 18;
-        _maxZoom = 20;
-        _zoomValue = 0;
-        markers = [];
-        _selectedCluster = [];
-        currentMarker = null;
+        resetData();
         return Future.value(true);
       },
       child: Column(
@@ -179,6 +161,19 @@ class _MapWidget extends State<MapTilerWidget> {
         ],
       ),
     );
+  }
+
+  void resetData() {
+    _controller.dispose();
+    propertiesAll = [];
+    _minZoom = 6;
+    _maxZoomList = 15;
+    _maxZoomsingle = 18;
+    _maxZoom = 20;
+    _zoomValue = 0;
+    markers = [];
+    _selectedCluster = [];
+    currentMarker = null;
   }
 
   Widget _markers() {
