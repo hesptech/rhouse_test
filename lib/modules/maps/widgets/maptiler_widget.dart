@@ -243,9 +243,7 @@ class _MapWidget extends State<MapTilerWidget> {
   }
 
   void _setMarkers() {
-    if (!widget.isLoading) {
-      return;
-    }
+
     if (_cleanMarkers) {
       _cleanMarkers = false;
       markers = [];

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/modules/maps/utils/geolocation_app.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/connectivity_internet.dart';
 import 'package:flutter_black_white/utils/filters_preferences.dart';
@@ -20,15 +21,16 @@ class MapListProvider extends ChangeNotifier {
   List<Marker> _selectedCluster = [];
   bool _loadMap = true;
 
-  late StreamController<List<Listing>> _listingsController = StreamController<List<Listing>>();
+  static late StreamController<List<Listing>> _listingsController;
   late StreamSubscription<List<Listing>> _streamLoop;
 
-  Stream<List<Listing>> get listingStreams => _listingsController.stream;
+  static Stream<List<Listing>> get listingStreams => _listingsController.stream;
 
   initData() {
     listingSelected = [];
     _selectedCluster = [];
     _loadMap = true;
+    _listingsController = StreamController<List<Listing>>();
     _flush();
   }
 
@@ -71,13 +73,18 @@ class MapListProvider extends ChangeNotifier {
       int pageListings = 1;
       String envApiKey = dotenv.get('REPLIERS-API-KEY');
 
-      ResponseBody bodyResidencesFirst = await _sendRequestListings(pageListings, latLng, radius, envApiKey, endPoint);
+      bool isCoordinates = false;
+      if (await GeolocationApp.isCheckPermission()) {
+        isCoordinates = true;
+      }
+
+      ResponseBody bodyResidencesFirst = await _sendRequestListings(pageListings, latLng, radius, envApiKey, endPoint, isCoordinates);
       _listingsController.sink.add(bodyResidencesFirst.listings);
 
       if (bodyResidencesFirst.numPages > 1) {
         int totalPages = bodyResidencesFirst.numPages - 1;
 
-        _streamLoop = iterablesPageStreams(totalPages, pageListings, latLng, radius, envApiKey, endPoint).listen((event) {
+        _streamLoop = iterablesPageStreams(totalPages, pageListings, latLng, radius, envApiKey, endPoint, isCoordinates).listen((event) {
           if (_listingsController.isClosed) {
             return;
           }
@@ -89,11 +96,11 @@ class MapListProvider extends ChangeNotifier {
     } catch (_) {}
   }
 
-  Future<ResponseBody> _sendRequestListings(int pageListings, LatLng? latLng, int radius, String envApiKey, String endPoint) async {
+  Future<ResponseBody> _sendRequestListings(int pageListings, LatLng? latLng, int radius, String envApiKey, String endPoint, bool isCoordinates) async {
     try {
       Map<String, dynamic> filters = {};
 
-      var isFilter = Preferences.isFilter;
+      final isFilter = Preferences.isFilter;
 
       if (isFilter) {
         filters = _getFilters();
@@ -106,10 +113,6 @@ class MapListProvider extends ChangeNotifier {
         'hasImages': 'true',
         'fields':
             'details,mlsNumber,class,images,listDate,timestamps,daysOnMarket,listPrice,address,details,map,rooms,lot,taxes,occupancy,nearby,condominium,office,status',
-        'lat': '${latLng?.latitude}',
-        'long': '${latLng?.longitude}',
-        'radius': '$radius',
-        'map': '[[[-79.7337553,44.5208101],[-78.3197115,44.3044942],[-79.3180671,43.2184596],[-80.0274040,43.1684845]]]',
       };
 
       if (isFilter) {
@@ -119,6 +122,22 @@ class MapListProvider extends ChangeNotifier {
           'class': ['condo', 'residential'],
         };
         queryParamsLoop.addEntries(classFilter.entries);
+      }
+
+      if (isCoordinates) {
+        final Map<String, dynamic> coordinates = {
+          'lat': '${latLng?.latitude}',
+          'long': '${latLng?.longitude}',
+          'radius': '$radius',
+        };
+
+        queryParamsLoop.addEntries(coordinates.entries);
+      } else {
+        final Map<String, dynamic> mapCoordinates = {
+          'map': '[[[-79.7337553,44.5208101],[-78.3197115,44.3044942],[-79.3180671,43.2184596],[-80.0274040,43.1684845]]]',
+        };
+
+        queryParamsLoop.addEntries(mapCoordinates.entries);
       }
 
       Map<String, String>? headers = {'REPLIERS-API-KEY': envApiKey};
@@ -146,12 +165,12 @@ class MapListProvider extends ChangeNotifier {
     }
   }
 
-  Stream<List<Listing>> iterablesPageStreams(int totalPages, int pageListings, LatLng? latLng, int radius, String envApiKey, String endPoint) async* {
+  Stream<List<Listing>> iterablesPageStreams(int totalPages, int pageListings, LatLng? latLng, int radius, String envApiKey, String endPoint, bool isCoordinates) async* {
     final listGenerates = List.generate(totalPages, (index) => index);
 
     for (var _ in listGenerates) {
       pageListings++;
-      final responseStream = await _sendRequestListings(pageListings, latLng, radius, envApiKey, endPoint);
+      final responseStream = await _sendRequestListings(pageListings, latLng, radius, envApiKey, endPoint, isCoordinates);
 
       if (pageListings == responseStream.numPages) {
         loadMap = false;
@@ -203,12 +222,7 @@ class MapListProvider extends ChangeNotifier {
   }
 
   _flush() async {
-    try {
-      _listingsController.close();        
-      _streamLoop.cancel();
-    } catch (e) {
-      // debugPrint(e.toString());
-    }
+    _closeStreams();
     _listingsController = StreamController<List<Listing>>();
   }
 

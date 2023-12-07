@@ -35,7 +35,10 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
     _mapListProvider = context.read<MapListProvider>();
     final isRefresh = Preferences.isFilterSubmit;
 
-    if (!isRefresh) {
+    if (isRefresh) {
+      _mapListProvider.close();
+      _mapListProvider.initData();
+    } else {
       _mapListProvider.initData();
     }
 
@@ -47,16 +50,12 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
   void dispose() {
     markersList = [];
 
-    _mapListProvider.close();
     final isRefresh = Preferences.isFilterSubmit;
 
-    if (isRefresh) {
-      _mapListProvider.initData();
-      _mapListProvider.getLocationsResidences(widget.coordinates);
+    if (!isRefresh) {
+      _mapListProvider.close();
+      Preferences.isFilterSubmit = false;
     }
-
-    _mapListProvider.close();
-
     super.dispose();
   }
 
@@ -94,7 +93,7 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
 
       return StreamBuilder<List<Listing>>(
           initialData: const [],
-          stream: _mapListProvider.listingStreams,
+          stream: MapListProvider.listingStreams,
           builder: (context, snapshot) {
             return MapTilerWidget(
                 key: const Key("value"),

@@ -8,14 +8,15 @@ class GeolocationApp {
   GeolocationApp();
 
   Future<LatLng> getPosition() async {
-    var coordinatesDefault = const LatLng(43.656008, -79.382189);
+    const coordinatesDefault = LatLng(43.656008, -79.382189);
+
     try {
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
         return Future.value(coordinatesDefault);
       }
 
-      var permission = await Geolocator.checkPermission();
+      final permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
         return Future.value(coordinatesDefault);
       }
@@ -39,7 +40,7 @@ class GeolocationApp {
         return;
       }
 
-      var permission = await Geolocator.checkPermission();
+      LocationPermission permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
 
@@ -53,6 +54,28 @@ class GeolocationApp {
       }
     } catch (e) {
       Future.error(e.toString());
+    }
+  }
+
+  static Future<bool> isCheckPermission() async {
+    try {
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        return false;
+      }
+
+      final permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.value(false);
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        return Future.value(false);
+      }
+
+      return Future.value(true);
+    } catch (e) {
+      return Future.value(false);
     }
   }
 
