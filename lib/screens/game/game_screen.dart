@@ -43,7 +43,9 @@ class GameScreen extends StatelessWidget {
           leading: IconButton(
             onPressed: () {
               ScaffoldMessenger.of(context).removeCurrentMaterialBanner();
-              Navigator.pop(context);
+              //Navigator.pop(context);
+              Navigator.pushNamed(context, '/');
+              filterProvider.cardGamePriceDisplayBtTxt = false;
             },
             icon: const Icon(Icons.close_outlined),
           ),

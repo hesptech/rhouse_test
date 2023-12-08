@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
@@ -15,6 +15,51 @@ class RepliersGame extends ChangeNotifier {
   bool isLoading = false;
   bool loaded = false;
   int onCount = 0;
+
+  /// INSERT
+  Future<String> _getJsonDataInsert( String endPoint, String userId, String mlsNumber, String price, String mlsDate ) async {
+
+    userId = userId.isEmpty ? '0' : userId ;
+    mlsNumber = mlsNumber.isEmpty ? '0' : mlsNumber ;
+    price = price.isEmpty ? '0' : price ;
+
+    final url = Uri.https( kRhouzeUrl, endPoint, {
+      'mlsinsert': '1',
+      'mlsuserid': userId,
+      'mlsnumber': mlsNumber,
+      'mlsprice': price,
+      'mlsdate': mlsDate
+    });
+    print(url);
+
+    String token = '123456789';
+    Map<String, String> headers = { 'token': token }; 
+
+    try {
+      final response = await http.get(url, headers: headers);
+      if(response.statusCode == 200){
+        return response.body;
+      } else {
+        return processResponse(response);
+      }
+    } catch (e) {
+      return 'Error: $e';
+    }
+  }
+  
+  Future<List<String>> getInsertGame(String userId, String mlsNumber, String price, String mlsDate) async {
+    //print('$userId $price $mlsNumber $mlsDate');
+    final jsonData = await _getJsonDataInsert('/rhouze_db/game', userId, mlsNumber, price, mlsDate);
+
+    final insertResponse = ResponseMlsGame.fromRawJson(jsonData);
+
+    onInsertGame = [];
+    for (int i = 0; i < insertResponse.mlsGame.length; i++) {
+      onInsertGame.add(insertResponse.mlsGame[i]);
+    }
+    //print(onInsertGame);
+    return onInsertGame;
+  }
 
   /// SELECT
   Future<String> _getJsonDataSelect( String endPoint, String userId ) async {
