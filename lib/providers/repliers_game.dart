@@ -30,7 +30,7 @@ class RepliersGame extends ChangeNotifier {
       'mlsprice': price,
       'mlsdate': mlsDate
     });
-    print(url);
+    //print(url);
 
     String token = '123456789';
     Map<String, String> headers = { 'token': token }; 
@@ -73,7 +73,6 @@ class RepliersGame extends ChangeNotifier {
     Map<String, String>? headers = { 'token': token };
 
     try {
-      print(url);
       final response = await http.get(url, headers: headers);
       if(response.statusCode == 200) {
         return response.body;
@@ -108,7 +107,7 @@ class RepliersGame extends ChangeNotifier {
   /// DISPLAY
   Future<String> _getJsonDataDisplay( String endPoint, List valuesParams ) async {
     
-    print(valuesParams);
+    //print(valuesParams);
     //valuesParams = ['N7305326','n7274034','w7275236','w7235370','N5632323','N5782890'];
     valuesParams = valuesParams.isEmpty ? ['0'] : valuesParams ;
     
