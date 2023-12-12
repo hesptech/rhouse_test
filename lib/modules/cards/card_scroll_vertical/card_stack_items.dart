@@ -6,6 +6,8 @@ import 'package:flutter_black_white/providers/repliers_favorites.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
+
 
 class CardStackItems extends StatefulWidget {
 
@@ -86,10 +88,10 @@ class _CardStackItemsState extends State<CardStackItems> {
                           toggle = !toggle;
                           if(!filterProvider.favoritesTemp.contains(widget.listing.mlsNumber?? '')) {
                             filterProvider.favoritesTemp.add(widget.listing.mlsNumber?? '');
-                            repliersFavorites.getInsertFavorites( '2', widget.listing.mlsNumber?? '');
+                            repliersFavorites.getInsertFavorites( Preferences.userId.toString(), widget.listing.mlsNumber?? '');
                           } else {
                             filterProvider.favoritesTemp.removeWhere((String name) => name == widget.listing.mlsNumber);
-                            repliersFavorites.getDeleteFavorites( '2', widget.listing.mlsNumber?? '');
+                            repliersFavorites.getDeleteFavorites( Preferences.userId.toString(), widget.listing.mlsNumber?? '');
                           }
 
                           if(!filterProvider.favoritesTemp.contains('0')){

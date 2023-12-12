@@ -51,7 +51,6 @@ class _CardsSliderGameState extends State<CardsSliderGame> {
     final repliersGame = Provider.of<RepliersGame>(context);
     bool countEmpty = (repliersGame.onCount > 0) ? false : true  ;
     //print(repliersGame.onCount);
-    //print(widget.bannerPriceListing?.mlsNumber);
     Listing priceListing = widget.bannerPriceListing?? Listing();
 
     return Container(
@@ -66,6 +65,9 @@ class _CardsSliderGameState extends State<CardsSliderGame> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: countEmpty 
               ? [
+                  if (widget.bannerPriceListing?.mlsNumber != null && Provider.of<FilterProvider>(context).cardGamePriceDisplay == true) 
+                  CardGameBannerPrice( priceListing ),
+
                   const Center(
                     heightFactor: 10.0,
                     child: Text(

@@ -58,7 +58,7 @@ class CardGameBanner extends StatelessWidget {
                       },
                       width: 165,
                       height: 140,
-                      fit: BoxFit.fitHeight,
+                      fit: BoxFit.cover,
                     ),
                     Container(
                       width: 165,

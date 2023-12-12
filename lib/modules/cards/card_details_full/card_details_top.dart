@@ -19,6 +19,7 @@ class CardDetailsTop extends StatelessWidget {
 
     final dataFormatted = DataFormatter(listing);
     final screenSize = MediaQuery.of(context).size;
+    final bool statusActive = listing.status == 'A' ? true : false;
     //final String images = listing.images?.first ?? '';
 
     return Container(
@@ -93,7 +94,7 @@ class CardDetailsTop extends StatelessWidget {
               },
             ),
           ),
-          Consumer<FilterProvider>(
+          if(statusActive) Consumer<FilterProvider>(
             builder: (context, currentFilter, child) => Container(
               //width: 310,
               height: 370,

@@ -7,6 +7,7 @@ import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/utils/card_full_description_arguments.dart';
 import 'package:flutter_black_white/modules/cards/card_game/widgets/game_last_status.dart';
 import 'package:flutter_black_white/modules/cards/card_favorites/card_favorites_icons.dart';
@@ -92,7 +93,7 @@ class _CardFavoritesState extends State<CardFavorites> {
                               onPressed: (){
                                 setState(() {
                                   filterProvider.favoritesTemp.removeWhere((String name) => name == widget.propertyItem.mlsNumber);
-                                  repliersFavorites.getDeleteFavorites( '2', widget.propertyItem.mlsNumber?? '0');
+                                  repliersFavorites.getDeleteFavorites( Preferences.userId.toString(), widget.propertyItem.mlsNumber?? '0');
                                   //Navigator.pushNamed(context, 'favorites_screen');
                                   
                                   if(!filterProvider.favoritesTemp.contains('0')){
@@ -100,7 +101,7 @@ class _CardFavoritesState extends State<CardFavorites> {
                                   }
                                 });
                               }, 
-                              icon: const Icon(Icons.cancel_outlined, size: 30,)
+                              icon: const Icon(Icons.delete_outline, size: 30,)
                             ),
                           ),
                         ),

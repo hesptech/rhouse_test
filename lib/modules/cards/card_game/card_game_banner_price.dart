@@ -29,10 +29,12 @@ class _CardGameBannerPriceState extends State<CardGameBannerPrice> {
   Widget build(BuildContext context) {
 
     final dataFormatted = DataFormatter(widget.propertyItem);
-    final String images = widget.propertyItem.images?.first?? '';
+    //final String images = widget.propertyItem.images?.first?? '';
+    final urlImage = '$kRepliersCdn${widget.propertyItem.images![0]}?w=1080';
     final statusParams = GameLastStatus(widget.propertyItem);
+    final expiryDate = widget.propertyItem.timestamps?.expiryDate.toString().substring(0,11)?? '';
+    
     String formattedPrice = '---';
-
     if( statusParams.price.length > 4 ) {
       double doubleString = double.parse(statusParams.price);
       formattedPrice = '\$${doubleString.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}';
@@ -65,7 +67,7 @@ class _CardGameBannerPriceState extends State<CardGameBannerPrice> {
     
                     FadeInImage(
                       placeholder: const AssetImage('assets/no-image_128_85.jpg'), 
-                      image: NetworkImage('$kRepliersCdn$images?w=250'),
+                      image: NetworkImage(urlImage),
                       imageErrorBuilder: (context, error, stackTrace) {
                         return Image.asset(
                           'assets/no-image_128_85.jpg', 
@@ -74,20 +76,28 @@ class _CardGameBannerPriceState extends State<CardGameBannerPrice> {
                       },
                       width: 165,
                       height: 140,
-                      fit: BoxFit.fitHeight,
+                      fit: BoxFit.cover,
                     ),
     
-                    !btTxt ? const Row(
+                    !btTxt ? Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
+                        /* SizedBox(
                           width: 162.0,
                           child: Text(
                             'Price must be no less than \$50% % lower, and no less than 75% higher, otherwise people can put prices that are just completely out of range to increase or lower the average',
                             style: TextStyle( fontSize: 8 ),                      
                           ),
+                        ), */
+                        Container(
+                          width: 162.0,
+                          padding: const EdgeInsets.all(5.0),
+                          child: const Text(
+                            'Price must be no less than \$50% % lower, and no less than 75% higher, otherwise people can put prices that are just completely out of range to increase or lower the average',
+                            style: TextStyle( fontSize: 8 ),                      
+                          ),
                         ),
-                        SizedBox(width: 10.0,),
+                        const SizedBox(width: 10.0,),
                       ],
                     ) :
                     const SizedBox()
@@ -148,18 +158,18 @@ class _CardGameBannerPriceState extends State<CardGameBannerPrice> {
               ],
             ),
 
-            btTxt ? Container(
+            btTxt ? SizedBox(
               width: double.infinity,
-              child: const Column(
+              child: Column(
                 children: [
                     Padding(
-                      padding: EdgeInsets.symmetric( vertical: 10.0 ),
+                      padding: const EdgeInsets.symmetric( vertical: 10.0 ),
                       child: Text(
-                        'Your guess SOLD price has been submitted for this property on November 21st, 2023.',
-                        style: TextStyle( fontSize: 14, color: kSecondaryColor, fontWeight: FontWeight.bold ),                      
+                        'Your guess SOLD price has been submitted for this property. Listing expires on $expiryDate.',
+                        style: const TextStyle( fontSize: 14, color: kSecondaryColor, fontWeight: FontWeight.bold ),                      
                       ),
                     ),
-                    Text(
+                    const Text(
                       'Thank you!  We will let you know when the property is sold, and how close you were to guess the right SOLD price',
                       style: TextStyle( fontSize: 14, fontWeight: FontWeight.bold),                      
                     ),

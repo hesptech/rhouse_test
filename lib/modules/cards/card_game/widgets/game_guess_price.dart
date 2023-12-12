@@ -8,6 +8,8 @@ import 'package:flutter_black_white/providers/form_game_provider.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/models/response_listings.dart';
 import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
+
 
 class GameGuessPrice extends StatefulWidget {
 
@@ -122,7 +124,7 @@ class _GameGuessPriceState extends State<GameGuessPrice> {
                   date = widget.propertyItem.timestamps?.expiryDate.toString()?? '';
             
                   //filterProvider.cardGamePriceDisplay = false;
-                  final insertGameSuccess = await repliersgame.getInsertGame('1', widget.propertyItem.mlsNumber.toString(), price, date);
+                  final insertGameSuccess = await repliersgame.getInsertGame(Preferences.userId.toString(), widget.propertyItem.mlsNumber.toString(), price, date);
                   
                   if (insertGameSuccess[0] == '0-success') {
                     filterProvider.cardGamePriceDisplayBtTxt = true;

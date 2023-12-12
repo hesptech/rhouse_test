@@ -14,13 +14,15 @@ class _GameGuessRichtextState extends State<GameGuessRichtext> {
   @override
   Widget build(BuildContext context) {
 
+    final expiryDate = widget.propertyItem.timestamps?.expiryDate.toString().substring(0,11)?? '';
+
     String formattedPrice = '---';
     if( widget.propertyItem.soldPrice!.length > 4 ) {
       double doubleString = double.parse(widget.propertyItem.soldPrice!);
       formattedPrice = '\$${doubleString.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}';
     }
 
-    String paragraphNew1 = 'Your guess SOLD price has been submitted for this property on November 21st, 2023. \n \n';
+    String paragraphNew1 = 'Your guess SOLD price has been submitted for this property. Listing expires on $expiryDate. \n \n';
     String paragraphNew2 = 'Thank you! ';
     String paragraphNew3 = 'We will let you know when the property is sold, and how close you were to guess the right SOLD price.';
     

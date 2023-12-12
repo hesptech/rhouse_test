@@ -5,6 +5,7 @@ import 'package:flutter_black_white/providers/repliers_provider.dart';
 import 'package:flutter_black_white/providers/repliers_favorites.dart';
 import 'package:flutter_black_white/providers/repliers_game.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -28,27 +29,28 @@ class HomeScreen extends StatelessWidget {
           filterProvider.favoritesTemp.removeWhere((element) => element == filterProvider.favoritesTemp[i]);
         }
       } */
-
-    if ( filterProvider.favoritesTemp.isEmpty) {
-      repliersFavorites.getSelectFavorites('2');
-      for (int i = 0; i < repliersFavorites.onSelectFavorites.length; i++) { 
-        if(!filterProvider.favoritesTemp.contains(repliersFavorites.onSelectFavorites[i])){
-          //print(repliersFavorites.onSelectFavorites);
-          filterProvider.favoritesTemp.add(repliersFavorites.onSelectFavorites[i]); 
-        }   
-      }      
-      //filterProvider.favoritesTemp.add('0');
-    }
-
-    if ( filterProvider.gameTemp.isEmpty) {
-      repliersGame.getSelectGame('1');
-      for (int i = 0; i < repliersGame.onSelectGame.length; i++) {
-        if(!filterProvider.gameTemp.contains(repliersGame.onSelectGame[i])){
-          //print(repliersGame.onSelectGame[i]);
-          filterProvider.gameTemp.add(repliersGame.onSelectGame[i]);
-        }
+    if (Preferences.userId > 0) {
+      if ( filterProvider.favoritesTemp.isEmpty) {
+        repliersFavorites.getSelectFavorites(Preferences.userId.toString());
+        for (int i = 0; i < repliersFavorites.onSelectFavorites.length; i++) { 
+          if(!filterProvider.favoritesTemp.contains(repliersFavorites.onSelectFavorites[i])){
+            //print(repliersFavorites.onSelectFavorites);
+            filterProvider.favoritesTemp.add(repliersFavorites.onSelectFavorites[i]); 
+          }   
+        }      
+        //filterProvider.favoritesTemp.add('0');
       }
-      filterProvider.gameTempObj.addAll(repliersGame.onSelectGameObj);
+
+      if ( filterProvider.gameTemp.isEmpty) {
+        repliersGame.getSelectGame(Preferences.userId.toString());
+        for (int i = 0; i < repliersGame.onSelectGame.length; i++) {
+          if(!filterProvider.gameTemp.contains(repliersGame.onSelectGame[i])){
+            //print(repliersGame.onSelectGame[i]);
+            filterProvider.gameTemp.add(repliersGame.onSelectGame[i]);
+          }
+        }
+        filterProvider.gameTempObj.addAll(repliersGame.onSelectGameObj);
+      }
     }
 
     //onSelectGameObj
