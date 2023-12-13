@@ -21,7 +21,7 @@ class MapListProvider extends ChangeNotifier {
   List<Marker> _selectedCluster = [];
   bool _loadMap = true;
 
-  static late StreamController<List<Listing>> _listingsController;
+  static StreamController<List<Listing>> _listingsController = getInstance();
   late StreamSubscription<List<Listing>> _streamLoop;
 
   static Stream<List<Listing>> get listingStreams => _listingsController.stream;
@@ -30,11 +30,11 @@ class MapListProvider extends ChangeNotifier {
     listingSelected = [];
     _selectedCluster = [];
     _loadMap = true;
-    _listingsController = StreamController<List<Listing>>();
+
     _flush();
   }
 
-  close() async {
+  Future<void> close() async {
     listingSelected = [];
     _selectedCluster = [];
     _loadMap = false;
@@ -222,14 +222,34 @@ class MapListProvider extends ChangeNotifier {
   }
 
   _flush() async {
-    _closeStreams();
-    _listingsController = StreamController<List<Listing>>();
+    try {
+      await _closeStreams();
+
+      _listingsController = getInstance();
+    } catch (_) {}
   }
 
-  _closeStreams() {
+  Future<void> _closeStreams() async {
     try {
-      _listingsController.close();
-      _streamLoop.cancel();
+      await _listingsController.close();
+      await _streamLoop.cancel();
     } catch (_) {}
+  }
+
+  static StreamController<List<Listing>> getInstance() {
+    late StreamController<List<Listing>> instance = StreamController<List<Listing>>();
+    try {
+      if (_listingsController.isClosed) {
+        return StreamController<List<Listing>>();
+      }
+
+      if (!_listingsController.isClosed) {
+        return _listingsController;
+      }
+    } catch (_) {
+      instance = StreamController<List<Listing>>();
+    }
+
+    return instance;
   }
 }

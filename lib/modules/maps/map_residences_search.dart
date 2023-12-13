@@ -32,7 +32,7 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
   void initState() {
     markersList = [];
     coordinatesMarkers = [];
-    _mapListProvider = context.read<MapListProvider>();
+    _mapListProvider = Provider.of<MapListProvider>(context, listen: false);
     final isRefresh = Preferences.isFilterSubmit;
 
     if (isRefresh) {
@@ -56,6 +56,7 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
       _mapListProvider.close();
       Preferences.isFilterSubmit = false;
     }
+
     super.dispose();
   }
 
@@ -84,7 +85,7 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
 
   Widget _mapTilerList(BuildContext context) {
     if (markersList.isEmpty) {
-      markersList = context.select((MapListProvider m) => m.selectedCluster);
+      markersList = Provider.of<MapListProvider>(context).selectedCluster;
     }
 
     return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
@@ -129,9 +130,9 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
       _mapListProvider.listingSelected = [];
     }
 
-    List<Listing> listingSelected = context.select((MapListProvider m) => m.listingSelected);
+    List<Listing> listingSelected = Provider.of<MapListProvider>(context).listingSelected;
     return Visibility(
-      visible: markersList.isNotEmpty,
+      visible: listingSelected.isNotEmpty,
       child: AspectRatio(
         aspectRatio: 16 / 9,
         child: Container(
@@ -162,6 +163,7 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
                         ),
                         onPressed: () {
                           _mapListProvider.selectedCluster = [];
+                          // context.watch<MapListProvider>().selectedCluster = [];
                           markersList = [];
                         },
                       ),

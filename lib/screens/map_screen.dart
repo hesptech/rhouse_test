@@ -44,6 +44,7 @@ class _MapScreenState extends State<MapScreen> {
     return WillPopScope(
       onWillPop: () async {
         Navigator.pushReplacementNamed(context, "/");
+        Preferences.isFilterSubmit = false;
         return true;
       },
       child: Scaffold(
@@ -62,7 +63,8 @@ class _MapScreenState extends State<MapScreen> {
                       onPressed: () async {
                         // _mapListProvider.close();
                         FilterProvider().cleanFilter();
-                        Navigator.pushNamed(context, MapScreen.pathScreen, arguments: {'filter': "false"});
+                        Preferences.isFilterSubmit = true;
+                        Navigator.pushReplacementNamed(context, MapScreen.pathScreen);
                       },
                       child: const Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -91,6 +93,8 @@ class _MapScreenState extends State<MapScreen> {
             leading: IconButton(
                 onPressed: () {
                   Navigator.pushReplacementNamed(context, "/");
+
+                  Preferences.isFilterSubmit = false;
                 },
                 icon: const Icon(
                   Icons.arrow_back,
