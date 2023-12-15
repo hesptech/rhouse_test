@@ -32,15 +32,8 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
   void initState() {
     markersList = [];
     coordinatesMarkers = [];
-    _mapListProvider = Provider.of<MapListProvider>(context, listen: false);
-    final isRefresh = Preferences.isFilterSubmit;
-
-    if (isRefresh) {
-      _mapListProvider.close();
-      _mapListProvider.initData();
-    } else {
-      _mapListProvider.initData();
-    }
+    _mapListProvider = context.read<MapListProvider>();
+    _mapListProvider.initData();
 
     _mapListProvider.getLocationsResidences(widget.coordinates);
     super.initState();
@@ -54,8 +47,12 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
 
     if (!isRefresh) {
       _mapListProvider.close();
-      Preferences.isFilterSubmit = false;
+      // _mapListProvider.initData();
     }
+    // else {
+    //   _mapListProvider.close();
+    //   Preferences.isFilterSubmit = false;
+    // }
 
     super.dispose();
   }
@@ -94,29 +91,34 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
 
       return StreamBuilder<List<Listing>>(
           initialData: const [],
-          stream: MapListProvider.listingStreams,
+          stream: _mapListProvider.listingStreams,
           builder: (context, snapshot) {
-            return MapTilerWidget(
-                key: const Key("value"),
-                center: widget.coordinates,
-                isLoading: isLoading,
-                listCoordinates: snapshot.hasData ? snapshot.data! : [],
-                selectedCluster: markersList,
-                cards: _scrollListing(context, cardHeight),
-                onClusterTap: (markerClusred, List<Listing> listingSelected) {
-                  onTapMarkers(markerClusred, listingSelected);
-                },
-                onTapMarker: (mapMarkers, listingSelected) {
-                  onTapMarkers(mapMarkers, listingSelected);
-                },
-                changeZoom: (mapEvent) {
-                  _mapListProvider.selectedCluster = [];
-                  markersList = [];
-                },
-                zoom: 10,
-                isMultiple: true);
+            final List<Listing> listings = snapshot.hasData ? snapshot.data! : [];
+            return _mapBuildMap(listings, context, cardHeight);
           });
     });
+  }
+
+  MapTilerWidget _mapBuildMap(List<Listing> listings, BuildContext context, double cardHeight) {
+    return MapTilerWidget(
+        key: const Key("MapTiler"),
+        center: widget.coordinates,
+        isLoading: isLoading,
+        listCoordinates: listings,
+        selectedCluster: markersList,
+        cards: _scrollListing(context, cardHeight),
+        onClusterTap: (markerClusred, List<Listing> listingSelected) {
+          onTapMarkers(markerClusred, listingSelected);
+        },
+        onTapMarker: (mapMarkers, listingSelected) {
+          onTapMarkers(mapMarkers, listingSelected);
+        },
+        changeZoom: (mapEvent) {
+          _mapListProvider.selectedCluster = [];
+          markersList = [];
+        },
+        zoom: 10,
+        isMultiple: true);
   }
 
   void onTapMarkers(List<Marker> mapMarkers, List<Listing> listingSelected) async {
@@ -176,8 +178,6 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
                   child: ListView.builder(
                       padding: const EdgeInsets.all(0),
                       scrollDirection: Axis.horizontal,
-                      primary: false,
-                      shrinkWrap: true,
                       itemCount: listingSelected.length,
                       itemBuilder: (_, index) {
                         return FittedBox(
@@ -201,8 +201,10 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
     );
   }
 
+
   bool getIsLoad() {
-    isLoading = context.select((MapListProvider m) => m.loadMap);
+    // isLoading = context.select((MapListProvider m) => m.loadMap);
+    isLoading = Provider.of<MapListProvider>(context).loadMap;
 
     return isLoading;
   }

@@ -61,10 +61,28 @@ class _MapScreenState extends State<MapScreen> {
                   width: 140,
                   child: TextButton(
                       onPressed: () async {
-                        // _mapListProvider.close();
                         FilterProvider().cleanFilter();
                         Preferences.isFilterSubmit = true;
-                        Navigator.pushReplacementNamed(context, MapScreen.pathScreen);
+
+                        showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          useSafeArea: true,
+                          builder: (BuildContext context) {
+                            return WillPopScope(
+                                onWillPop: () async => false,
+                                child: const AlertDialog(
+                                  elevation: 0,
+                                  content: SizedBox(height: 120, child: LoadWidget()),
+                                ));
+                          },
+                        );
+                        await Future.delayed(
+                          const Duration(seconds: 1),
+                          () {
+                            Navigator.of(context).pushNamedAndRemoveUntil(MapScreen.pathScreen, (Route<dynamic> route) => false);
+                          },
+                        );
                       },
                       child: const Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -92,9 +110,8 @@ class _MapScreenState extends State<MapScreen> {
             ),
             leading: IconButton(
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, "/");
-
                   Preferences.isFilterSubmit = false;
+                  Navigator.of(context).pushNamedAndRemoveUntil("/", (Route<dynamic> route) => false);
                 },
                 icon: const Icon(
                   Icons.arrow_back,

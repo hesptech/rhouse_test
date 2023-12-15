@@ -11,6 +11,7 @@ import 'package:flutter_map/plugin_api.dart';
 import 'package:http/http.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:http/http.dart' as http;
+import 'package:rxdart/subjects.dart';
 
 import '../config/environment.dart';
 import '../utils/shared_preferences.dart';
@@ -21,24 +22,24 @@ class MapListProvider extends ChangeNotifier {
   List<Marker> _selectedCluster = [];
   bool _loadMap = true;
 
-  static StreamController<List<Listing>> _listingsController = getInstance();
-  late StreamSubscription<List<Listing>> _streamLoop;
+  late StreamController<List<Listing>> _listingsController = BehaviorSubject<List<Listing>>();
+  late StreamSubscription<List<Listing>>? _streamLoop;
 
-  static Stream<List<Listing>> get listingStreams => _listingsController.stream;
+  Stream<List<Listing>> get listingStreams => _listingsController.stream;
 
   initData() {
     listingSelected = [];
     _selectedCluster = [];
     _loadMap = true;
 
-    _flush();
+    // _flush();
   }
 
   Future<void> close() async {
     listingSelected = [];
     _selectedCluster = [];
-    _loadMap = false;
-    _closeStreams();
+    // _loadMap = false;
+    await _closeStreams();
   }
 
   String get getApiKey {
@@ -63,6 +64,23 @@ class MapListProvider extends ChangeNotifier {
   Future<void> getLocationsResidences(LatLng coordinates) async {
     if (!await ConnectivityInternet.hasConnection()) {
       return;
+    }
+
+    // final isRefresh = Preferences.isFilterSubmit;
+
+    try {
+      if (!_listingsController.isClosed) {
+        await _listingsController.close();
+        _listingsController = BehaviorSubject<List<Listing>>();
+      }
+    } catch (_) {
+      debugPrint(_.toString());
+    }
+
+    try {
+      await _streamLoop?.cancel();
+    } catch (_) {
+      debugPrint(_.toString());
     }
 
     await _getlistingsByRadiusStream('listings', coordinates, 200);
@@ -169,15 +187,16 @@ class MapListProvider extends ChangeNotifier {
     final listGenerates = List.generate(totalPages, (index) => index);
 
     for (var _ in listGenerates) {
+      if (_listingsController.isClosed) {
+        return;
+      }
+
       pageListings++;
       final responseStream = await _sendRequestListings(pageListings, latLng, radius, envApiKey, endPoint, isCoordinates);
 
-      if (pageListings == responseStream.numPages) {
-        loadMap = false;
-      }
-
       yield responseStream.listings;
     }
+    loadMap = false;
   }
 
   static ResponseBody processResponse(String responseString) {
@@ -223,33 +242,17 @@ class MapListProvider extends ChangeNotifier {
 
   _flush() async {
     try {
-      await _closeStreams();
+      _listingsController.close();
+      _streamLoop?.cancel();
 
-      _listingsController = getInstance();
+      _listingsController = BehaviorSubject<List<Listing>>();
     } catch (_) {}
   }
 
   Future<void> _closeStreams() async {
     try {
       await _listingsController.close();
-      await _streamLoop.cancel();
+      await _streamLoop?.cancel();
     } catch (_) {}
-  }
-
-  static StreamController<List<Listing>> getInstance() {
-    late StreamController<List<Listing>> instance = StreamController<List<Listing>>();
-    try {
-      if (_listingsController.isClosed) {
-        return StreamController<List<Listing>>();
-      }
-
-      if (!_listingsController.isClosed) {
-        return _listingsController;
-      }
-    } catch (_) {
-      instance = StreamController<List<Listing>>();
-    }
-
-    return instance;
   }
 }
