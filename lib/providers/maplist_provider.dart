@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cancellation_token_http/http.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/modules/maps/utils/geolocation_app.dart';
@@ -8,9 +9,11 @@ import 'package:flutter_black_white/utils/connectivity_internet.dart';
 import 'package:flutter_black_white/utils/filters_preferences.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/plugin_api.dart';
-import 'package:http/http.dart';
+// import 'package:http/http.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
+import 'package:cancellation_token_http/http.dart' as http;
+
 import 'package:rxdart/subjects.dart';
 
 import '../config/environment.dart';
@@ -20,10 +23,10 @@ import '../utils/shared_preferences.dart';
 class MapListProvider extends ChangeNotifier {
   List<Listing> listingSelected = [];
   List<Marker> _selectedCluster = [];
-  bool _loadMap = true;
+  static bool _loadMap = true;
 
-  late StreamController<List<Listing>> _listingsController = BehaviorSubject<List<Listing>>();
-  late StreamSubscription<List<Listing>>? _streamLoop;
+  late StreamController<List<Listing>> _listingsController;
+  late StreamSubscription<List<Listing>> _streamLoop;
 
   Stream<List<Listing>> get listingStreams => _listingsController.stream;
 
@@ -31,15 +34,21 @@ class MapListProvider extends ChangeNotifier {
     listingSelected = [];
     _selectedCluster = [];
     _loadMap = true;
-
-    // _flush();
+    _flush();
   }
 
-  Future<void> close() async {
+  Future<void> closeAsync() async {
     listingSelected = [];
     _selectedCluster = [];
-    // _loadMap = false;
+    loadMap = false;
     await _closeStreams();
+  }
+
+  Future<void> closeView() async {
+    listingSelected = [];
+    _selectedCluster = [];
+    loadMap = false;
+    _closeStreamsSync();
   }
 
   String get getApiKey {
@@ -61,32 +70,37 @@ class MapListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getLocationsResidences(LatLng coordinates) async {
+  Future<void> getLocationsResidences(LatLng coordinates, CancellationToken tokenHttpCancelation) async {
     if (!await ConnectivityInternet.hasConnection()) {
       return;
     }
 
     // final isRefresh = Preferences.isFilterSubmit;
 
-    try {
-      if (!_listingsController.isClosed) {
-        await _listingsController.close();
-        _listingsController = BehaviorSubject<List<Listing>>();
-      }
-    } catch (_) {
-      debugPrint(_.toString());
-    }
+    // try {
+    //   if (!_listingsController.isClosed) {
+    //     await _listingsController.close();
+    //     _listingsController = BehaviorSubject<List<Listing>>();
+    //   }
+    // } catch (_) {
+    //   debugPrint(_.toString());
+    // }
 
-    try {
-      await _streamLoop?.cancel();
-    } catch (_) {
-      debugPrint(_.toString());
-    }
+    // try {
+    //   await _streamLoop?.cancel();
+    // } catch (_) {
+    //   debugPrint(_.toString());
+    // }
 
-    await _getlistingsByRadiusStream('listings', coordinates, 200);
+    await _getlistingsByRadiusStream('listings', tokenHttpCancelation, coordinates, 200);
   }
 
-  Future<void> _getlistingsByRadiusStream(String endPoint, [LatLng? latLng, int radius = 0]) async {
+  Future<void> _getlistingsByRadiusStream(
+    String endPoint,
+    CancellationToken tokenHttpCancelation, [
+    LatLng? latLng,
+    int radius = 0,
+  ]) async {
     try {
       int pageListings = 1;
       String envApiKey = dotenv.get('REPLIERS-API-KEY');
@@ -96,13 +110,17 @@ class MapListProvider extends ChangeNotifier {
         isCoordinates = true;
       }
 
-      ResponseBody bodyResidencesFirst = await _sendRequestListings(pageListings, latLng, radius, envApiKey, endPoint, isCoordinates);
+      ResponseBody bodyResidencesFirst = await _sendRequestListings(pageListings, latLng, radius, envApiKey, endPoint, isCoordinates, tokenHttpCancelation);
       _listingsController.sink.add(bodyResidencesFirst.listings);
+
+      if (_listingsController.isClosed) {
+        return;
+      }
 
       if (bodyResidencesFirst.numPages > 1) {
         int totalPages = bodyResidencesFirst.numPages - 1;
 
-        _streamLoop = iterablesPageStreams(totalPages, pageListings, latLng, radius, envApiKey, endPoint, isCoordinates).listen((event) {
+        _streamLoop = iterablesPageStreams(totalPages, pageListings, latLng, radius, envApiKey, endPoint, isCoordinates, tokenHttpCancelation).listen((event) {
           if (_listingsController.isClosed) {
             return;
           }
@@ -111,11 +129,22 @@ class MapListProvider extends ChangeNotifier {
 
         debugPrint("");
       }
-    } catch (_) {}
+
+      _streamLoop.onDone(() {
+        loadMap = false;
+      });
+    } catch (_) {
+      loadMap = false;
+    }
   }
 
-  Future<ResponseBody> _sendRequestListings(int pageListings, LatLng? latLng, int radius, String envApiKey, String endPoint, bool isCoordinates) async {
+  Future<ResponseBody> _sendRequestListings(
+      int pageListings, LatLng? latLng, int radius, String envApiKey, String endPoint, bool isCoordinates, CancellationToken tokenHttpCancelation) async {
     try {
+      if (!_loadMap) {
+        loadMap = true;
+      }
+
       Map<String, dynamic> filters = {};
 
       final isFilter = Preferences.isFilter;
@@ -160,43 +189,35 @@ class MapListProvider extends ChangeNotifier {
 
       Map<String, String>? headers = {'REPLIERS-API-KEY': envApiKey};
 
-      Map<String, dynamic> params = {"endPoint": endPoint, "queryParams": queryParamsLoop, "headers": headers};
+      Map<String, dynamic> params = {"endPoint": endPoint, "queryParams": queryParamsLoop, "headers": headers, "tokenHttpCancelation": tokenHttpCancelation};
       final responseHttp = await compute(getResponse, params);
       final bodyResidences = await compute(processResponse, responseHttp.body);
 
-      final residential = bodyResidences.listings.where((element) {
-        String listingClass = element.listingClass!.toLowerCase();
-        return listingClass == "residentialproperty";
-      });
-
-      final condo = bodyResidences.listings.where((element) {
-        String listingClass = element.listingClass!.toLowerCase();
-        return listingClass == "condoproperty";
-      });
-
-      debugPrint(
-          "${bodyResidences.count}: En la pagina $pageListings/${bodyResidences.numPages} se encontraron Residencial ${residential.length} y Condominios: ${condo.length}");
-
       return bodyResidences;
     } catch (_) {
-      return ResponseBody(page: 0, numPages: 0, pageSize: 0, count: 0, statistics: Statistics(), listings: const []);
+      loadMap = false;
+      throw Exception("Error");
     }
   }
 
-  Stream<List<Listing>> iterablesPageStreams(int totalPages, int pageListings, LatLng? latLng, int radius, String envApiKey, String endPoint, bool isCoordinates) async* {
+  Stream<List<Listing>> iterablesPageStreams(int totalPages, int pageListings, LatLng? latLng, int radius, String envApiKey, String endPoint, bool isCoordinates,
+      CancellationToken tokenHttpCancelation) async* {
     final listGenerates = List.generate(totalPages, (index) => index);
 
-    for (var _ in listGenerates) {
-      if (_listingsController.isClosed) {
-        return;
+    try {
+      for (var _ in listGenerates) {
+        if (_listingsController.isClosed) {
+          return;
+        }
+
+        pageListings++;
+        final responseStream = await _sendRequestListings(pageListings, latLng, radius, envApiKey, endPoint, isCoordinates, tokenHttpCancelation);
+
+        yield responseStream.listings;
       }
-
-      pageListings++;
-      final responseStream = await _sendRequestListings(pageListings, latLng, radius, envApiKey, endPoint, isCoordinates);
-
-      yield responseStream.listings;
+    } catch (_) {
+      throw Exception("Error");
     }
-    loadMap = false;
   }
 
   static ResponseBody processResponse(String responseString) {
@@ -212,9 +233,10 @@ class MapListProvider extends ChangeNotifier {
       String endPoint = params["endPoint"] as String;
       Map<String, dynamic> queryParams = params["queryParams"] as Map<String, dynamic>;
       Map<String, String>? headers = params["headers"] as Map<String, String>?;
+      final CancellationToken tokenHttpCancelation = params["tokenHttpCancelation"] as CancellationToken;
 
       final url = Uri.https(kBaseUrl, endPoint, queryParams);
-      final response = await http.get(url, headers: headers);
+      final response = await http.get(url, headers: headers, cancellationToken: tokenHttpCancelation);
 
       return Future.value(response);
     } catch (_) {
@@ -243,16 +265,34 @@ class MapListProvider extends ChangeNotifier {
   _flush() async {
     try {
       _listingsController.close();
-      _streamLoop?.cancel();
+    } catch (_) {
+      debugPrint("");
+    }
 
+    try {
+      _streamLoop.cancel();
+    } catch (_) {
+      debugPrint("");
+    }
+
+    try {
       _listingsController = BehaviorSubject<List<Listing>>();
-    } catch (_) {}
+    } catch (_) {
+      debugPrint("");
+    }
   }
 
   Future<void> _closeStreams() async {
     try {
       await _listingsController.close();
-      await _streamLoop?.cancel();
+      await _streamLoop.cancel();
+    } catch (_) {}
+  }
+
+  Future<void> _closeStreamsSync() async {
+    try {
+      _listingsController.close();
+      _streamLoop.cancel();
     } catch (_) {}
   }
 }

@@ -1,3 +1,4 @@
+import 'package:cancellation_token_http/http.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' hide Theme;
 import 'package:flutter_black_white/models/response_listings.dart';
@@ -5,7 +6,6 @@ import 'package:flutter_black_white/modules/maps/map_card_small.dart';
 import 'package:flutter_black_white/providers/maplist_provider.dart';
 import 'package:flutter_black_white/modules/maps/widgets/maptiler_widget.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_map/flutter_map.dart';
 // import 'package:flutter_map_supercluster/flutter_map_supercluster.dart';
 import 'package:latlong2/latlong.dart';
@@ -14,9 +14,10 @@ import 'package:provider/provider.dart';
 ///Widgete that receives a configuration to display the list of residences and maps.
 class MapResidencesSearch extends StatefulWidget {
   final LatLng coordinates;
-  // final MapListProvider mapListProvider;
+  final MapListProvider mapListProvider;
+  final CancellationToken tokenHttpCancelation;
 
-  const MapResidencesSearch({super.key, required this.coordinates});
+  const MapResidencesSearch({super.key, required this.coordinates, required this.mapListProvider, required this.tokenHttpCancelation});
 
   @override
   State<MapResidencesSearch> createState() => _MapResidencesSearchState();
@@ -25,34 +26,25 @@ class MapResidencesSearch extends StatefulWidget {
 class _MapResidencesSearchState extends State<MapResidencesSearch> {
   late List<Marker> markersList;
   late List<Listing> coordinatesMarkers;
-  late MapListProvider _mapListProvider;
+  late final ScrollController _scrollController;
+
+  // late MapListProvider widget.mapListProvider;
   bool isLoading = true;
 
   @override
   void initState() {
+    _scrollController = ScrollController();
     markersList = [];
     coordinatesMarkers = [];
-    _mapListProvider = context.read<MapListProvider>();
-    _mapListProvider.initData();
+    // _mapListProvider = context.read<MapListProvider>();
+    // widget.mapListProvider.initData();
 
-    _mapListProvider.getLocationsResidences(widget.coordinates);
+    widget.mapListProvider.getLocationsResidences(widget.coordinates, widget.tokenHttpCancelation);
     super.initState();
   }
 
   @override
   void dispose() {
-    markersList = [];
-
-    final isRefresh = Preferences.isFilterSubmit;
-
-    if (!isRefresh) {
-      _mapListProvider.close();
-      // _mapListProvider.initData();
-    }
-    // else {
-    //   _mapListProvider.close();
-    //   Preferences.isFilterSubmit = false;
-    // }
 
     super.dispose();
   }
@@ -61,8 +53,8 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        _mapListProvider.close();
-        _mapListProvider.listingSelected = [];
+        widget.mapListProvider.closeAsync();
+        widget.mapListProvider.listingSelected = [];
 
         return true;
       },
@@ -91,7 +83,7 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
 
       return StreamBuilder<List<Listing>>(
           initialData: const [],
-          stream: _mapListProvider.listingStreams,
+          stream: widget.mapListProvider.listingStreams,
           builder: (context, snapshot) {
             final List<Listing> listings = snapshot.hasData ? snapshot.data! : [];
             return _mapBuildMap(listings, context, cardHeight);
@@ -114,7 +106,7 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
           onTapMarkers(mapMarkers, listingSelected);
         },
         changeZoom: (mapEvent) {
-          _mapListProvider.selectedCluster = [];
+          widget.mapListProvider.selectedCluster = [];
           markersList = [];
         },
         zoom: 10,
@@ -122,17 +114,28 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
   }
 
   void onTapMarkers(List<Marker> mapMarkers, List<Listing> listingSelected) async {
-    _mapListProvider.getFilterListings(listingSelected);
-    _mapListProvider.selectedCluster = mapMarkers;
+    widget.mapListProvider.getFilterListings(listingSelected);
+    widget.mapListProvider.selectedCluster = mapMarkers;
     markersList = [];
+
+
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        0.0,
+        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 300),
+      );
+    }
+
   }
 
   Widget _scrollListing(BuildContext context, double cardHeight) {
     if (markersList.isEmpty) {
-      _mapListProvider.listingSelected = [];
+      widget.mapListProvider.listingSelected = [];
     }
 
-    List<Listing> listingSelected = Provider.of<MapListProvider>(context).listingSelected;
+    final List<Listing> listingSelected = Provider.of<MapListProvider>(context).listingSelected;
+
     return Visibility(
       visible: listingSelected.isNotEmpty,
       child: AspectRatio(
@@ -164,7 +167,7 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
                           size: 25,
                         ),
                         onPressed: () {
-                          _mapListProvider.selectedCluster = [];
+                          widget.mapListProvider.selectedCluster = [];
                           // context.watch<MapListProvider>().selectedCluster = [];
                           markersList = [];
                         },
@@ -176,9 +179,11 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
                 Flexible(
                   flex: 3,
                   child: ListView.builder(
+                      controller: _scrollController,
                       padding: const EdgeInsets.all(0),
                       scrollDirection: Axis.horizontal,
                       itemCount: listingSelected.length,
+                      shrinkWrap: true,
                       itemBuilder: (_, index) {
                         return FittedBox(
                           alignment: Alignment.topCenter,
@@ -200,7 +205,6 @@ class _MapResidencesSearchState extends State<MapResidencesSearch> {
       ),
     );
   }
-
 
   bool getIsLoad() {
     // isLoading = context.select((MapListProvider m) => m.loadMap);

@@ -1,11 +1,15 @@
+import 'package:cancellation_token_http/http.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/modules/maps/map_residences_search.dart';
 import 'package:flutter_black_white/modules/maps/utils/geolocation_app.dart';
+import 'package:flutter_black_white/providers/maplist_provider.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/widgets/error_view_widget.dart';
 import 'package:flutter_black_white/widgets/loadable_widget.dart';
 import 'package:flutter_black_white/widgets/widgets.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:provider/provider.dart';
+import 'package:cancellation_token_http/http.dart' as http;
 
 import '../providers/filter_provider.dart';
 import '../utils/connectivity_internet.dart';
@@ -22,20 +26,29 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   late bool isFilter = false;
-  // late MapListProvider _mapListProvider;
+  late MapListProvider _mapListProvider;
+  bool isEnable = false;
+  late final CancellationToken tokenHttpCancelation;
 
   @override
   void initState() {
+    tokenHttpCancelation = http.CancellationToken();
     isFilter = Preferences.isFilter;
 
-    // _mapListProvider = Provider.of<MapListProvider>(context, listen: false);
-    // _mapListProvider.initData();
+    _mapListProvider = Provider.of<MapListProvider>(context, listen: false);
+    _mapListProvider.initData();
     super.initState();
   }
 
   @override
   void dispose() {
-    // _mapListProvider.close();
+    final isRefresh = Preferences.isFilterSubmit;
+
+    if (!isRefresh) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _mapListProvider.closeView();
+      });
+    }
     super.dispose();
   }
 
@@ -43,8 +56,9 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pushReplacementNamed(context, "/");
         Preferences.isFilterSubmit = false;
+        tokenHttpCancelation.cancel();
+        Navigator.pushReplacementNamed(context, "/");
         return true;
       },
       child: Scaffold(
@@ -61,9 +75,9 @@ class _MapScreenState extends State<MapScreen> {
                   width: 140,
                   child: TextButton(
                       onPressed: () async {
+                        tokenHttpCancelation.cancel();
                         FilterProvider().cleanFilter();
                         Preferences.isFilterSubmit = true;
-
                         showDialog(
                           barrierDismissible: false,
                           context: context,
@@ -77,8 +91,11 @@ class _MapScreenState extends State<MapScreen> {
                                 ));
                           },
                         );
+
+                        await _mapListProvider.closeAsync();
+
                         await Future.delayed(
-                          const Duration(seconds: 1),
+                          const Duration(milliseconds: 400),
                           () {
                             Navigator.of(context).pushNamedAndRemoveUntil(MapScreen.pathScreen, (Route<dynamic> route) => false);
                           },
@@ -110,6 +127,7 @@ class _MapScreenState extends State<MapScreen> {
             ),
             leading: IconButton(
                 onPressed: () {
+                  tokenHttpCancelation.cancel();
                   Preferences.isFilterSubmit = false;
                   Navigator.of(context).pushNamedAndRemoveUntil("/", (Route<dynamic> route) => false);
                 },
@@ -167,10 +185,7 @@ class _MapScreenState extends State<MapScreen> {
                   return LoadableWidget(
                       loader: () => GeolocationApp().getPosition(),
                       builder: (_, LatLng coordinates) {
-                        return MapResidencesSearch(
-                          // mapListProvider: _mapListProvider,
-                          coordinates: coordinates,
-                        );
+                        return MapResidencesSearch(mapListProvider: _mapListProvider, coordinates: coordinates, tokenHttpCancelation: tokenHttpCancelation);
                       });
                 }),
           )),
