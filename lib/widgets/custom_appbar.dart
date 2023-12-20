@@ -20,15 +20,20 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
               margin: const EdgeInsets.fromLTRB(30, 10, 30, 0),
               child: Column(
                 children: [
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Image(
+                      const Image(
                         image: AssetImage('assets/r_logo_100x30.png'),
                       ),
                       //const Spacer(),
-                      Image(
-                        image: AssetImage('assets/play&learn_logo100x30.png'),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, 'game_welcome_screen');
+                        },
+                        child: const Image(
+                          image: AssetImage('assets/play&learn_logo100x30.png'),
+                        ),
                       ),
                     ],
                   ),

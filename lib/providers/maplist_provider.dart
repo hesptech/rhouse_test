@@ -75,23 +75,6 @@ class MapListProvider extends ChangeNotifier {
       return;
     }
 
-    // final isRefresh = Preferences.isFilterSubmit;
-
-    // try {
-    //   if (!_listingsController.isClosed) {
-    //     await _listingsController.close();
-    //     _listingsController = BehaviorSubject<List<Listing>>();
-    //   }
-    // } catch (_) {
-    //   debugPrint(_.toString());
-    // }
-
-    // try {
-    //   await _streamLoop?.cancel();
-    // } catch (_) {
-    //   debugPrint(_.toString());
-    // }
-
     await _getlistingsByRadiusStream('listings', tokenHttpCancelation, coordinates, 200);
   }
 
@@ -126,8 +109,6 @@ class MapListProvider extends ChangeNotifier {
           }
           _listingsController.sink.add(event);
         });
-
-        debugPrint("");
       }
 
       _streamLoop.onDone(() {

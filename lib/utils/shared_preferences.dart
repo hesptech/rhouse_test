@@ -5,6 +5,7 @@ class Preferences {
   static late SharedPreferences _prefs;
 
   static bool _isLoggedIn = false;
+  static int _userId = 2;
   static double _locationLat = 43.651070;
   static double _locationLng = -79.347015;
   static List<String> _filtersClassButtons = [];
@@ -258,6 +259,7 @@ class Preferences {
     _prefs.setStringList('filtersStyleCondo', value);
   }
 
+
   // FILTERS Other
   static List<String> get filtersOther {
     return _prefs.getStringList('filtersOther') ?? _filtersOther;
@@ -444,9 +446,6 @@ class Preferences {
     _prefs.setStringList('filtersAmmenities', value);
   }
 
-  static bool get isCleanFilter {
-    return _prefs.getBool('isCleanFilter') ?? false;
-  }
 
   // FILTERS Status Properties
   static List<String> get filtersStatusProperties {
@@ -458,7 +457,11 @@ class Preferences {
     _prefs.setStringList('filtersStatusProperties', value);
   }
 
-  static set isCleanFilter(bool value) {
+    static bool get isCleanFilter {
+    return _prefs.getBool('isCleanFilter') ?? false;
+  }
+
+  static set isCleanFilter(bool value ) {
     _prefs.setBool('isCleanFilter', value);
   }
 
@@ -466,11 +469,22 @@ class Preferences {
     return _prefs.getBool('isFilter') ?? false;
   }
 
-  static set isFilter(bool value) {
+  static set isFilter(bool value ) {
     _prefs.setBool('isFilter', value);
   }
 
-  static Future setfiltersIndexStyleHouse(List<String> value) async => await _prefs.setStringList('filtersIndexStyleHouse', value);
+
+  static int get userId {
+    return _prefs.getInt('userId') ?? _userId;
+  }
+
+  static set userId(int value) {
+    _userId = value;
+    _prefs.setInt('userId', value);
+  }
+
+
+  static Future setfiltersIndexStyleHouse( List<String> value ) async => await _prefs.setStringList('filtersIndexStyleHouse', value);
   static List<String> getfiltersIndexStyleHouse() => _prefs.getStringList('filtersIndexStyleHouse') ?? _filtersIndexStyleHouse;
 
   static Future setfiltersIndexStyleCondo(List<String> value) async => await _prefs.setStringList('filtersIndexStyleCondo', value);

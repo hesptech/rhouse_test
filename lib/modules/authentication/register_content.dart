@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/modules/authentication/widgets/steps_widget.dart';
-import 'package:flutter_black_white/screens/login_screen.dart';
-import 'package:flutter_black_white/screens/register_terms_use_screen.dart';
+import 'package:flutter_black_white/screens/account/login_screen.dart';
+import 'package:flutter_black_white/screens/account/register_terms_use_screen.dart';
 import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/vallidators/register_first_validator.dart';
 
-class RegisterContent extends StatelessWidget {
+class RegisterContent extends StatefulWidget {
   const RegisterContent({super.key});
+
+  @override
+  State<RegisterContent> createState() => _RegisterContentState();
+}
+
+class _RegisterContentState extends State<RegisterContent> {
+  final registerFirstValidator = RegisterFirstValidator();
 
   @override
   Widget build(BuildContext context) {
@@ -41,79 +49,111 @@ class RegisterContent extends StatelessWidget {
   }
 
   Widget _titleRegister() {
-    return const Text("Create an Account", style: TextStyle(color: kPrimaryColor, fontSize: 18, fontWeight: FontWeight.bold),);
-  }
-
-  Widget _fullNameField() {
-    return TextFormField(
-      obscureText: true,
-      keyboardType: TextInputType.text,
-      textInputAction: TextInputAction.next,
-      textAlign: TextAlign.center,
-      decoration: InputDecoration(
-        hintText: "Full Name",
-        hintStyle: const TextStyle(
-          fontWeight: FontWeight.w600,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(color: Colors.grey),
-        ),
-      ),
+    return const Text(
+      "Create an Account",
+      style: TextStyle(color: kPrimaryColor, fontSize: 18, fontWeight: FontWeight.bold),
     );
   }
 
+  Widget _fullNameField() {
+    return StreamBuilder<String>(
+      stream: registerFirstValidator.fullNameStream,
+      builder: (context, snapshot) {
+        return TextFormField(
+          keyboardType: TextInputType.text,
+          textInputAction: TextInputAction.next,
+          textAlign: TextAlign.center,
+          onChanged: registerFirstValidator.fullNameAdd,
+          decoration: InputDecoration(
+            hintText: "Full Name",
+            errorText: snapshot.error?.toString(),
+            hintStyle: const TextStyle(
+              fontWeight: FontWeight.w600,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+          ),
+        );
+      }
+    );
+  } 
+
   Widget _passwordField() {
-    return TextFormField(
-      obscureText: true,
-      keyboardType: TextInputType.visiblePassword,
-      textAlign: TextAlign.center,
-      decoration: InputDecoration(
-        hintText: "Password",
-        hintStyle: const TextStyle(
-          fontWeight: FontWeight.w600,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(color: Colors.grey),
-        ),
-      ),
+    return StreamBuilder<String>(
+      stream: registerFirstValidator.passwordStream,
+      builder: (context, snapshot) {
+        return TextFormField(
+          obscureText: true,
+          keyboardType: TextInputType.visiblePassword,
+          textAlign: TextAlign.center,
+          onChanged: registerFirstValidator.passwordAdd,
+          decoration: InputDecoration(
+            hintText: "Password",
+            errorText: snapshot.error?.toString(),
+            hintStyle: const TextStyle(
+              fontWeight: FontWeight.w600,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+          ),
+        );
+      }
     );
   }
 
   Widget _emailField() {
-    return TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      textInputAction: TextInputAction.next,
-      textAlign: TextAlign.center,
-      decoration: InputDecoration(
-        hintText: "Email",
-        hintStyle: const TextStyle(
-          fontWeight: FontWeight.w600,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(color: Colors.grey),
-        ),
-      ),
+    return StreamBuilder<String>(
+      stream: registerFirstValidator.emailStream,
+      builder: (context, snapshot) {
+        return TextFormField(
+          keyboardType: TextInputType.emailAddress,
+          textInputAction: TextInputAction.next,
+          textAlign: TextAlign.center,
+          onChanged: registerFirstValidator.emailAdd,
+          decoration: InputDecoration(
+            hintText: "Email",
+            errorText: snapshot.error?.toString(),
+            hintStyle: const TextStyle(
+              fontWeight: FontWeight.w600,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+          ),
+        );
+      }
     );
   }
 
   Widget _buttondLogin(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        elevation: 0,
-        minimumSize: const Size(320, 50),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        backgroundColor: kSecondaryColor,
-      ),
-      child: const Text("REGISTER", style: TextStyle(fontWeight: FontWeight.bold),),
-      onPressed: () {
-        Navigator.pushNamed(context, RegisterTermsUseScreen.pathScreen);
-
-      },
+    return StreamBuilder<bool>(
+      stream: registerFirstValidator.submit,
+      builder: (context, snapshot) {
+        return ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            elevation: 0,
+            minimumSize: const Size(320, 50),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            backgroundColor: kSecondaryColor,
+            disabledBackgroundColor: kSecondaryColor.withOpacity(0.5),
+            disabledForegroundColor: Colors.white
+          ),
+          onPressed: snapshot.hasData && snapshot.data! ? () {
+            Navigator.pushNamed(context, RegisterTermsUseScreen.pathScreen);
+          } : null,
+          child: const Text(
+            "REGISTER",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        );
+      }
     );
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/screens/map_property_screen.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 import 'package:flutter_black_white/modules/cards/card_history/card_history_stack.dart';
@@ -87,7 +88,7 @@ class CardHistoryTop extends StatelessWidget {
                 child: Icon(Icons.map_outlined, color: kSecondaryColor, size: 30),
               ),
               onTap: () {
-                //Navigator.pushNamed(context, MapPropertyScreen.pathScreen, arguments: {'listing': listing});
+                Navigator.pushNamed(context, MapPropertyScreen.pathScreen, arguments: {'listing': listing});
               },
             ),
           ),

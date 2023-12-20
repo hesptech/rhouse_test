@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/config/navigator_config.dart';
 import 'package:flutter_black_white/widgets/error_view_widget.dart';
 
 ///Widget that displays a loading to load another widget by passing as a parameter a future function
@@ -63,3 +64,20 @@ class LoadWidget extends StatelessWidget {
     ]));
   }
 }
+
+
+loadingDialogShow() {
+    return showDialog(
+      barrierDismissible: false,
+      context: NavigatorConfig.context,
+      useSafeArea: true,
+      builder: (BuildContext context) {
+        return WillPopScope(
+            onWillPop: () async => false,
+            child: const AlertDialog(
+              elevation: 0,
+              content: SizedBox(height: 120, child: LoadWidget()),
+            ));
+      },
+    );
+  }

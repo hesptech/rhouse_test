@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/screens/map_screen.dart';
-import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
+import 'package:flutter_black_white/screens/map_screen.dart';
 
 class FiltersBottomBar extends StatefulWidget {
   final String pathScreen;
@@ -78,7 +78,7 @@ class _FiltersBottomBarState extends State<FiltersBottomBar> {
 
                     // Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => MapScreen()),);
                   } else {
-                    Navigator.pushNamed(context, 'filters_results_screen', arguments: 'Filtered results');
+                    Navigator.pushNamed(context, 'filters_results_screen');
                   }
                 },
                 child: const Text(

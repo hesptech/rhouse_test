@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/providers/account/authentication_provider.dart';
 import 'package:flutter_black_white/screens/screens.dart';
 import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/vallidators/login_validator.dart';
 
-class LoginContent extends StatelessWidget {
+class LoginContent extends StatefulWidget {
   const LoginContent({super.key});
+
+  @override
+  State<LoginContent> createState() => _LoginContentState();
+}
+
+class _LoginContentState extends State<LoginContent> {
+  final loginValidator = LoginValidator();
+
+  @override
+  void dispose() {
+    loginValidator.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,45 +49,57 @@ class LoginContent extends StatelessWidget {
   }
 
   Widget _passwordField() {
-    return TextFormField(
-      obscureText: true,
-      keyboardType: TextInputType.visiblePassword,
-      textAlign: TextAlign.center,
-      decoration: InputDecoration(
-        hintText: "Password",
-        hintStyle: const TextStyle(
-          fontWeight: FontWeight.w600,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(color: Colors.grey),
-        ),
-      ),
-    );
+    return StreamBuilder<String>(
+        stream: loginValidator.passwordStream,
+        builder: (context, snapshot) {
+          return TextFormField(
+            obscureText: true,
+            keyboardType: TextInputType.visiblePassword,
+            textAlign: TextAlign.center,
+            onChanged: loginValidator.passwordAdd,
+            decoration: InputDecoration(
+              hintText: "Password",
+              errorText: snapshot.error?.toString(),
+              hintStyle: const TextStyle(
+                fontWeight: FontWeight.w600,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+            ),
+          );
+        });
   }
 
   Widget _emailField() {
-    return TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      textInputAction: TextInputAction.next,
-      textAlign: TextAlign.center,
-      decoration: InputDecoration(
-        hintText: "Email",
-        hintStyle: const TextStyle(
-          fontWeight: FontWeight.w600,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(color: Colors.grey),
-        ),
-      ),
-    );
+    return StreamBuilder<String>(
+        stream: loginValidator.emailStream,
+        builder: (context, snapshot) {
+          return TextFormField(
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
+            textAlign: TextAlign.center,
+            onChanged: loginValidator.emailAdd,
+            decoration: InputDecoration(
+              errorText: snapshot.error?.toString(),
+              hintText: "Email",
+              hintStyle: const TextStyle(
+                fontWeight: FontWeight.w600,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+            ),
+          );
+        });
   }
 
   Widget _labelForgotPassword(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, ForgotPasswordScreen.pathScreen);      
+        Navigator.pushNamed(context, ForgotPasswordScreen.pathScreen);
       },
       child: const Text(
         "Forgot your password",
@@ -127,22 +154,30 @@ class LoginContent extends StatelessWidget {
   }
 
   Widget _buttondLogin(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        elevation: 0,
-        minimumSize: const Size(320, 50),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        backgroundColor: kSecondaryColor,
-      ),
-      child: const Text(
-        "LOG IN",
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
-      onPressed: () {
-        Navigator.pushNamed(context, AccountScreen.pathScreen);
-      },
-    );
+    return StreamBuilder<bool>(
+        stream: loginValidator.submit,
+        builder: (context, snapshot) {
+          return ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              elevation: 0,
+              minimumSize: const Size(320, 50),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              disabledBackgroundColor: kSecondaryColor.withOpacity(0.5),
+              disabledForegroundColor: Colors.white,
+              backgroundColor: kSecondaryColor,
+            ),
+            onPressed: snapshot.hasData && snapshot.data!
+                ? () {
+                    AuthenticationProvider().login(loginValidator.emailValue, loginValidator.passwordValue);
+                  }
+                : null,
+            child: const Text(
+              "LOG IN",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          );
+        });
   }
 }
