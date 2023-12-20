@@ -13,6 +13,11 @@ class FilterProvider extends ChangeNotifier {
   List<String> _filtersAmmenities = Preferences.getfiltersIndexAmmenities();
   List<String> _filtersBasement = Preferences.getfiltersIndexBasement();
   List<String> _filtersStatusProperties = Preferences.filtersStatusProperties;
+  bool _cardGamePriceDisplay = false;
+  bool _cardGamePriceDisplayBtTxt = false;
+  List<String> _favoritesTemp = [];
+  List<String> _gameTemp = [];
+  Map<String, String> _gameTempObj = {};
 
   String get filterProvider {
     return _filterProvider;
@@ -92,6 +97,51 @@ class FilterProvider extends ChangeNotifier {
 
   set filtersStatusProperties( List<String> value ) {
     _filtersStatusProperties = value;
+    notifyListeners();
+  }
+
+  bool get cardGamePriceDisplay {
+    return _cardGamePriceDisplay;
+  }
+
+  set cardGamePriceDisplay( bool value ) {
+    _cardGamePriceDisplay = value;
+    notifyListeners();
+  }
+
+  bool get cardGamePriceDisplayBtTxt {
+    return _cardGamePriceDisplayBtTxt;
+  }
+
+  set cardGamePriceDisplayBtTxt( bool value ) {
+    _cardGamePriceDisplayBtTxt = value;
+    notifyListeners();
+  }
+
+  List<String> get favoritesTemp {
+    return _favoritesTemp;
+  }
+
+  set favoritesTemp( List<String> value ) {
+    _favoritesTemp = value;
+    notifyListeners();
+  }
+
+  List<String> get gameTemp {
+    return _gameTemp;
+  }
+
+  set gameTemp( List<String> value ) {
+    _gameTemp = value;
+    notifyListeners();
+  }
+
+  Map<String, String> get gameTempObj {
+    return _gameTempObj;
+  }
+
+  set gameTempObj( Map<String, String> value ) {
+    _gameTempObj = value;
     notifyListeners();
   }
 

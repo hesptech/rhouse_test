@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter_black_white/config/environment.dart';
+import 'package:provider/provider.dart';
+
+import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
@@ -17,6 +19,7 @@ class CardDetailsTop extends StatelessWidget {
 
     final dataFormatted = DataFormatter(listing);
     final screenSize = MediaQuery.of(context).size;
+    final bool statusActive = listing.status == 'A' ? true : false;
     //final String images = listing.images?.first ?? '';
 
     return Container(
@@ -91,18 +94,21 @@ class CardDetailsTop extends StatelessWidget {
               },
             ),
           ),
-          Container(
-            //width: 310,
-            height: 370,
-            padding: const EdgeInsets.all(10.0),
-            alignment: Alignment.bottomRight,
-            child: InkWell(
-              child: const Image(
-                image: AssetImage('assets/play&learn_chip_85h.png'),
+          if(statusActive) Consumer<FilterProvider>(
+            builder: (context, currentFilter, child) => Container(
+              //width: 310,
+              height: 370,
+              padding: const EdgeInsets.all(10.0),
+              alignment: Alignment.bottomRight,
+              child: InkWell(
+                child: const Image(
+                  image: AssetImage('assets/play&learn_chip_85h.png'),
+                ),
+                onTap: () {
+                  currentFilter.cardGamePriceDisplay = true;
+                  Navigator.pushNamed(context, 'game_screen',arguments: {'listing': listing});
+                },
               ),
-              onTap: () {
-
-              },
             ),
           ),
         ],

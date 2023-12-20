@@ -1,10 +1,12 @@
-//import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
-import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
+import 'package:flutter_black_white/utils/card_full_description_arguments.dart';
 import 'package:flutter_black_white/modules/cards/card_scroll_vertical/card_stack_items.dart';
 import 'package:flutter_black_white/modules/cards/card_scroll_vertical/card_vertical_box.dart';
 import 'package:flutter_black_white/screens/map_property_screen.dart';
@@ -38,7 +40,12 @@ class CardVertical extends StatelessWidget {
           GestureDetector(
             onTap: () {
               if ( loggedIn == true ) {
-                Navigator.pushNamed(context, 'card_details_full_screen', arguments: listing);
+                Navigator.pushNamed(
+                  context, 
+                  'card_details_full_screen', 
+                  //arguments: listing
+                  arguments: CardFullDescriptionArguments(listing, 'filters_results_screen'),
+                );
               }
             }, 
             child: Column(
@@ -75,20 +82,21 @@ class CardVertical extends StatelessWidget {
                           },
                         ),                      
                       ),
-
-                      Container(
-                        width: double.infinity,
-                        height: 217,
-                        padding: const EdgeInsets.fromLTRB( 0, 0, 10, 0),
-                        alignment: Alignment.bottomRight,
-                        child: InkWell(
-                          child: const Image(image: AssetImage('assets/play&learn_chip_53h.png'), ),
-                          onTap: () {
-                            //print('object');
-                          },
+                      Consumer<FilterProvider>(
+                        builder: (context, currentFilter, child) => Container(
+                          width: double.infinity,
+                          height: 217,
+                          padding: const EdgeInsets.fromLTRB( 0, 0, 10, 0),
+                          alignment: Alignment.bottomRight,
+                          child: InkWell(
+                            child: const Image(image: AssetImage('assets/play&learn_chip_53h.png'), ),
+                            onTap: () {
+                              currentFilter.cardGamePriceDisplay = true;
+                              Navigator.pushNamed(context, 'game_screen',arguments: {'listing': listing});
+                            },
+                          ),
                         ),
-                      ),
-
+                      )
                     ],
                   ),
                 ),

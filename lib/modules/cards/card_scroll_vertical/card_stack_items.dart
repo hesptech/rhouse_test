@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:flutter_black_white/providers/filter_provider.dart';
+import 'package:flutter_black_white/providers/repliers_favorites.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
+
 
 class CardStackItems extends StatefulWidget {
 
@@ -15,10 +21,16 @@ class CardStackItems extends StatefulWidget {
 }
 
 class _CardStackItemsState extends State<CardStackItems> {
+
+  bool toggle = false;
+
   @override
   Widget build(BuildContext context) {
 
     final dataFormatted = DataFormatter(widget.listing);
+    final filterProvider = Provider.of<FilterProvider>(context);
+    final repliersFavorites = Provider.of<RepliersFavorites>(context);
+
 
     return Container(
       alignment: Alignment.topLeft,
@@ -56,16 +68,39 @@ class _CardStackItemsState extends State<CardStackItems> {
               Stack(
                 children: [
                   const Positioned(
-                    left: 1.0,
-                    top: 2.0,
+                    left: 11.0,
+                    top: 11.0,
                     child: Icon(Icons.favorite_border_outlined, color: Colors.black26, size: 30),
                   ),
-                  InkWell(
-                    child: const Icon(Icons.favorite_border_outlined, color: Color(0xFFffffff), size: 30),
-                    onTap: () {
-                      //print('object');
-                    },
-                  )                              
+                  Material(
+                    color: Colors.transparent,
+                    clipBehavior: Clip.hardEdge,
+                    borderRadius: BorderRadius.circular(50),
+                    child: IconButton(
+                      splashColor: kPrimaryColor.withOpacity(0.8),
+                      highlightColor: kPrimaryColor,
+                      icon: filterProvider.favoritesTemp.contains(widget.listing.mlsNumber?? '')
+                        ? const Icon(Icons.favorite, size: 30, color: Colors.white,)
+                        : const Icon(Icons.favorite_border, size: 30, color: Colors.white,),
+                      onPressed: () {
+                        setState(() {
+                          // Here we changing the icon.
+                          toggle = !toggle;
+                          if(!filterProvider.favoritesTemp.contains(widget.listing.mlsNumber?? '')) {
+                            filterProvider.favoritesTemp.add(widget.listing.mlsNumber?? '');
+                            repliersFavorites.getInsertFavorites( Preferences.userId.toString(), widget.listing.mlsNumber?? '');
+                          } else {
+                            filterProvider.favoritesTemp.removeWhere((String name) => name == widget.listing.mlsNumber);
+                            repliersFavorites.getDeleteFavorites( Preferences.userId.toString(), widget.listing.mlsNumber?? '');
+                          }
+
+                          if(!filterProvider.favoritesTemp.contains('0')){
+                            filterProvider.favoritesTemp.add('0');
+                          }
+                        });
+                      }
+                    ),
+                  ),                              
                 ],
               ),
               const SizedBox(width: 7.0,),

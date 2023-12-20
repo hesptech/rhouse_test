@@ -12,6 +12,7 @@ class Listing {
     this.soldPrice,
     this.soldDate,
     this.status,
+    this.lastStatus,
     this.address,
     this.details,
     this.mapCoordinates,
@@ -34,6 +35,7 @@ class Listing {
   String? soldPrice;
   DateTime? soldDate;
   String? status;
+  String? lastStatus;
   Address? address;
   Details? details;
   MapCoordinates? mapCoordinates;
@@ -59,6 +61,7 @@ class Listing {
     soldPrice: json["soldPrice"],
     soldDate: json["soldDate"] != null ? DateTime.parse(json["soldDate"]) : DateTime.parse("2023-01-01T21:55:44.000Z"),
     status: json["status"],
+    lastStatus: json["lastStatus"],
     address: json["address"] != null ? Address.fromMap(json["address"]) : null,
     details: json["details"] != null ? Details.fromMap(json["details"]) : null,
     mapCoordinates: json["map"] != null ? MapCoordinates.fromJson(json["map"]) : null,

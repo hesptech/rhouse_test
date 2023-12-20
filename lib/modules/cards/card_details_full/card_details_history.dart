@@ -106,7 +106,7 @@ class HistoryFormatter extends StatelessWidget {
   final String suspendedDate;
   final String soldPrice;
   final String listPrice;
-  final String lastStatus;  //Sld Ter Exp Sus Lsd
+  final String lastStatus;  // [Sus, Exp, Sld, Ter, Dft, Lsd, Sc, Lc, Pc, Ext, New, Sce]
   final String mlsNumberStatus;
   final Listing listing;
 

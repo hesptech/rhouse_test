@@ -6,6 +6,7 @@ const kPrimaryColor = Color(0xFF2E3191);
 const kSecondaryColor = Color(0xFF0BB58C);
 const kWarningColor = Color(0xFFED1C24);
 const kClTxtInputFieldLog = Color(0xFF58595B);
+const kYellow =  Color.fromARGB(255, 255, 174, 0);
 
 // Text
 const TextStyle kStInputFieldLog = TextStyle(
