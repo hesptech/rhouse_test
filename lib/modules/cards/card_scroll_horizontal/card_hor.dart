@@ -1,11 +1,14 @@
-
 //import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
+import 'package:flutter_black_white/utils/card_full_description_arguments.dart';
 import 'package:flutter_black_white/modules/cards/card_scroll_horizontal/card_horizontal_box.dart';
 import 'package:flutter_black_white/modules/cards/card_scroll_horizontal/card_horizontal_stack.dart';
 import 'package:flutter_black_white/screens/map_property_screen.dart';
@@ -41,7 +44,11 @@ class CardHor extends StatelessWidget {
           GestureDetector(
             onTap: () {
               if ( loggedIn == true ) {
-                Navigator.pushNamed(context, 'card_details_full_screen', arguments: listing);
+                Navigator.pushNamed(
+                  context, 
+                  'card_details_full_screen', 
+                  arguments: CardFullDescriptionArguments(listing, '/'),
+                );
               } else {
                 //Navigator.restorablePopAndPushNamed(context, '/');
               }
@@ -58,7 +65,10 @@ class CardHor extends StatelessWidget {
                         //image: AssetImage('assets/house_340x227.jpg'),
                         image: NetworkImage('$kRepliersCdn$images?w=1080'),
                         imageErrorBuilder: (context, error, stackTrace) {
-                          return Image.asset('assets/no-image_3.jpg', fit: BoxFit.fitWidth);
+                          return Image.asset(
+                            'assets/no-image_3.jpg', 
+                            fit: BoxFit.fitWidth,
+                          );
                         },
                         width: 310,
                         height: 207,
@@ -81,7 +91,7 @@ class CardHor extends StatelessWidget {
                           },
                         ),                      
                       ),
-                      Container(
+                      if (statusActive) Container(
                         width: 310,
                         height: 207,
                         padding: const EdgeInsets.all(10.0),
@@ -89,7 +99,8 @@ class CardHor extends StatelessWidget {
                         child: InkWell(
                           child: const Image(image: AssetImage('assets/play&learn_chip_53h.png'), ),
                           onTap: () {
-                            //print('object');
+                            Provider.of<FilterProvider>(context, listen: false).cardGamePriceDisplay = true;
+                            Navigator.pushNamed(context, 'game_screen',arguments: {'listing': listing});
                           },
                         ),
                       )

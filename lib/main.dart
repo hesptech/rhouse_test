@@ -9,6 +9,8 @@ import 'package:flutter_black_white/providers/repliers_provider.dart';
 import 'package:flutter_black_white/providers/repliers_filters.dart';
 import 'package:flutter_black_white/providers/repliers_listing_mls.dart';
 import 'package:flutter_black_white/providers/repliers_search.dart';
+import 'package:flutter_black_white/providers/repliers_game.dart';
+import 'package:flutter_black_white/providers/repliers_favorites.dart';
 import 'package:flutter_black_white/providers/maplist_provider.dart';
 
 import 'package:flutter_black_white/utils/shared_preferences.dart';
@@ -36,6 +38,9 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider( create: (_) => RepliersListingMls() ),
         ChangeNotifierProvider( create: (_) => RepliersSearch(), ),
         ChangeNotifierProvider( create: (_) => MapListProvider() ),
+        ChangeNotifierProvider( create: (_) => RepliersGame(), ),
+        ChangeNotifierProvider( create: (_) => RepliersFavorites(), ),
+
       ],
       child: const App(),
     );

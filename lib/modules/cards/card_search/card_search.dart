@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-import 'package:flutter_black_white/utils/data_formatter.dart';
+import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/utils/card_full_description_arguments.dart';
+import 'package:flutter_black_white/utils/data_formatter.dart';
 
 class CardSearch extends StatelessWidget {
 
@@ -21,7 +22,10 @@ class CardSearch extends StatelessWidget {
       padding: const EdgeInsetsDirectional.symmetric( horizontal: 10.0, vertical: 7.0),
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, 'card_details_full_screen', arguments: propertyItem);
+          Navigator.pushNamed(
+            context, 'card_details_full_screen', 
+            arguments: CardFullDescriptionArguments(propertyItem, 'search')
+          );
         }, 
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,

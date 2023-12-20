@@ -9,6 +9,8 @@ import 'package:flutter_black_white/widgets/widgets.dart';
 
 
 class FiltersResultsScreen extends StatefulWidget {
+  static String pathScreen = "filters_results_screen";
+
   const FiltersResultsScreen({Key? key}) : super(key: key);
 
   @override
@@ -65,6 +67,12 @@ class _FiltersResultsScreenState extends State<FiltersResultsScreen> {
         ),
         centerTitle: true,
         title: const Text('Filters Results'),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pushNamed(context, 'filters_screen');
+          },
+          icon: const Icon(Icons.close_outlined),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
