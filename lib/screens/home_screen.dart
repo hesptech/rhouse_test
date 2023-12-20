@@ -29,7 +29,9 @@ class HomeScreen extends StatelessWidget {
           filterProvider.favoritesTemp.removeWhere((element) => element == filterProvider.favoritesTemp[i]);
         }
       } */
-    if (Preferences.userId > 0) {
+    
+    //if (Preferences.userId > 0) {
+    if (Preferences.userId > 3) {
       if ( filterProvider.favoritesTemp.isEmpty) {
         repliersFavorites.getSelectFavorites(Preferences.userId.toString());
         for (int i = 0; i < repliersFavorites.onSelectFavorites.length; i++) { 

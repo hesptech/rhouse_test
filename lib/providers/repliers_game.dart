@@ -108,7 +108,7 @@ class RepliersGame extends ChangeNotifier {
   Future<String> _getJsonDataDisplay( String endPoint, List valuesParams ) async {
     
     //print(valuesParams);
-    //valuesParams = ['N7305326','n7274034','w7275236','w7235370','N5632323','N5782890'];
+    valuesParams = ['X7350112','S7362062','w7275236','w7235370','N5632323','N5782890'];
     valuesParams = valuesParams.isEmpty ? ['0'] : valuesParams ;
     
     final url = Uri.https( kBaseUrl, endPoint, {

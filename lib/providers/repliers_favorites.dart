@@ -45,14 +45,14 @@ class RepliersFavorites extends ChangeNotifier {
 
   Future<List<String>> getInsertFavorites(String userId, String mlsNumber) async {
 
-    final jsonData = await _getJsonDataInsert('/rhouze_db/favorites', userId, mlsNumber);
+    /* final jsonData = await _getJsonDataInsert('/rhouze_db/favorites', userId, mlsNumber);
 
     final insertResponse = ResponseMlsFavorites.fromRawJson(jsonData);
 
     onInsertFavorites = [];
     for (int i = 0; i < insertResponse.mlsFavorites.length; i++ ) {
       //onSelectFavorites.add(insertResponse.mlsFavorites[i]);
-    }
+    } */
 
     return onInsertFavorites;
   }
