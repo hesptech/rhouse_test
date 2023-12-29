@@ -3,9 +3,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/screens/map_screen.dart';
+import 'package:flutter_black_white/utils/card_full_description_arguments.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
-
 
 ///Widget that displays a summary information card and is used to list properties on the map.
 class MapCardSmall extends StatelessWidget {
@@ -27,11 +28,11 @@ class MapCardSmall extends StatelessWidget {
     final String images = listing.images?.first ?? '';
 
     return Card(
-          clipBehavior: Clip.antiAliasWithSaveLayer,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
         shape: RoundedRectangleBorder(
           side: const BorderSide(color: kPrimaryColor, width: 2),
           borderRadius: BorderRadius.circular(0),
-        ),        
+        ),
         child: Padding(
             padding: const EdgeInsets.all(0),
             child: ImageFiltered(
@@ -39,7 +40,8 @@ class MapCardSmall extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   if (loggedIn) {
-                    Navigator.pushNamed(context, 'card_details_full_screen', arguments: listing);
+                    // Navigator.pushNamed(context, 'card_details_full_screen', arguments: listing);
+                    Navigator.pushNamed(context, 'card_details_full_screen', arguments: CardFullDescriptionArguments(listing, MapScreen.pathScreen));
                   }
                 },
                 child: Column(
@@ -61,7 +63,6 @@ class MapCardSmall extends StatelessWidget {
                         Expanded(child: _detailsResidence(dataFormatted)),
                       ],
                     ),
-                    
                   ],
                 ),
               ),
@@ -317,9 +318,7 @@ class MapCardSmall extends StatelessWidget {
         height: 25,
         margin: const EdgeInsets.only(top: 5, left: 10),
         child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: kPrimaryColor
-          ),
+          style: ElevatedButton.styleFrom(backgroundColor: kPrimaryColor),
           onPressed: () {
             //Navigator.pushNamed(context, 'details', arguments: listing);
           },

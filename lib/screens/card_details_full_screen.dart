@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/screens/map_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_black_white/providers/repliers_listing_mls.dart';
@@ -50,7 +51,12 @@ class CardDetailsFullScreen extends StatelessWidget {
             } else if (pathScreen == 'search') {
               //showSearch(context: context, delegate: InputSearchDelegate());
               Navigator.pop(context);
-            } else {
+            } else if (pathScreen == MapScreen.pathScreen) {
+              //showSearch(context: context, delegate: InputSearchDelegate());
+              Navigator.pop(context);
+            }
+            
+             else {
               Navigator.pushNamed(context, '/');
             }
             
