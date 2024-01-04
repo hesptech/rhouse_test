@@ -40,7 +40,6 @@ class MapCardSmall extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   if (loggedIn) {
-                    // Navigator.pushNamed(context, 'card_details_full_screen', arguments: listing);
                     Navigator.pushNamed(context, 'card_details_full_screen', arguments: CardFullDescriptionArguments(listing, MapScreen.pathScreen));
                   }
                 },

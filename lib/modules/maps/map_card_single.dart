@@ -5,6 +5,8 @@ import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/modules/maps/widgets/map_card_single_box.dart';
 import 'package:flutter_black_white/modules/maps/widgets/map_card_single_stack.dart';
+import 'package:flutter_black_white/screens/map_screen.dart';
+import 'package:flutter_black_white/utils/card_full_description_arguments.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 
@@ -80,7 +82,7 @@ class MapCardSingle extends StatelessWidget {
         child: GestureDetector(
             onTap: () {
               if (loggedIn == true) {
-                Navigator.pushNamed(context, 'card_details_full_screen', arguments: listing);
+                Navigator.pushNamed(context, 'card_details_full_screen', arguments: CardFullDescriptionArguments(listing, MapScreen.pathScreen));
               } else {
                 //Navigator.restorablePopAndPushNamed(context, '/');
               }
