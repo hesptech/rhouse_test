@@ -83,7 +83,27 @@ class HomeScreen extends StatelessWidget {
                       onNextPage: () => repliersProvider.getDisplayCondo(repliersStatusProperties),
                       onInitPage: () => repliersProvider.initGetDisplay(repliersStatusProperties),
                     ),
-    
+
+                    CardsSliderHor(
+                      listing: repliersProvider.onDisplayOneBedCondo,
+                      title: 'CONDO 1 Bedroom under \$500,000',
+                      onNextPage: () => repliersProvider.getDisplayOneBedCondo(repliersStatusProperties),
+                      onInitPage: () => repliersProvider.initGetDisplay(repliersStatusProperties),
+                    ),
+
+                    CardsSliderHor(
+                      listing: repliersProvider.onDisplayTwoBedCondo,
+                      title: 'CONDO 2 Bedroom under \$850,000',
+                      onNextPage: () => repliersProvider.getDisplayTwoBedCondo(repliersStatusProperties),
+                      onInitPage: () => repliersProvider.initGetDisplay(repliersStatusProperties),
+                    ),
+
+                    CardsSliderHor(
+                      listing: repliersProvider.onDisplayCtlTrHouses,
+                      title: 'HOUSES Toronto Ctl. under \$1,400,000',
+                      onNextPage: () => repliersProvider.getDisplayTwoBedCondo(repliersStatusProperties),
+                      onInitPage: () => repliersProvider.initGetDisplay(repliersStatusProperties),
+                    ),
                   ],
                 ),
               ),
