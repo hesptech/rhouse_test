@@ -100,10 +100,19 @@ class TypePropertyBtn extends StatelessWidget {
 
             stateSaleSold.displayPageHouses = 1;
             stateSaleSold.displayPageCondo = 1;
+            stateSaleSold.displayPageOneBedCondo = 1;
+            stateSaleSold.displayPageTwoBedCondo = 1;
+            stateSaleSold.displayPageCtlTrHouses = 1;
             stateSaleSold.onDisplayHouses = [];
             stateSaleSold.onDisplayCondo = [];
+            stateSaleSold.onDisplayOneBedCondo = [];
+            stateSaleSold.onDisplayTwoBedCondo = [];
+            stateSaleSold.onDisplayCtlTrHouses = [];
             stateSaleSold.getDisplayHousesStatus(filterProvider.filtersStatusProperties);
             stateSaleSold.getDisplayCondoStatus(filterProvider.filtersStatusProperties);
+            stateSaleSold.getDisplayOneBedCondoStatus(filterProvider.filtersStatusProperties);
+            stateSaleSold.getDisplayTwoBedCondoStatus(filterProvider.filtersStatusProperties);
+            stateSaleSold.getDisplayCtlTrHousesStatus(filterProvider.filtersStatusProperties);
             Navigator.pushNamed(context, '/');
           }
         } else {
@@ -115,10 +124,19 @@ class TypePropertyBtn extends StatelessWidget {
 
             stateSaleSold.displayPageHouses = 1;
             stateSaleSold.displayPageCondo = 1;
+            stateSaleSold.displayPageOneBedCondo = 1;
+            stateSaleSold.displayPageTwoBedCondo = 1;
+            stateSaleSold.displayPageCtlTrHouses = 1;
             stateSaleSold.onDisplayHouses = [];
             stateSaleSold.onDisplayCondo = [];
+            stateSaleSold.onDisplayOneBedCondo = [];
+            stateSaleSold.onDisplayTwoBedCondo = [];
+            stateSaleSold.onDisplayCtlTrHouses = [];
             stateSaleSold.getDisplayHousesStatus(filterProvider.filtersStatusProperties);
             stateSaleSold.getDisplayCondoStatus(filterProvider.filtersStatusProperties);
+            stateSaleSold.getDisplayOneBedCondoStatus(filterProvider.filtersStatusProperties);
+            stateSaleSold.getDisplayTwoBedCondoStatus(filterProvider.filtersStatusProperties);
+            stateSaleSold.getDisplayCtlTrHousesStatus(filterProvider.filtersStatusProperties);
             Navigator.pushNamed(context, '/');
           }
         }

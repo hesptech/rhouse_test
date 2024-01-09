@@ -12,6 +12,7 @@ class RepliersProvider extends ChangeNotifier {
 
   String citySearchParam = '';
   List<String> status;
+  String minBeds = '0';
   String maxBeds = '5';
   String minPrice = '500000';
   String maxPrice = '2000000';
@@ -50,26 +51,21 @@ class RepliersProvider extends ChangeNotifier {
 
   }
 
-  Future<String> _getJsonData( String endPoint, String classParam, status, minBeds, [int page = 1] ) async {
+  Future<String> _getJsonData( String endPoint, String classParam, status, extraParams, [int page = 1] ) async {
 
-    /* minBeds = minBeds == '1' ? '1' : '0';
-    maxBeds = minBeds == '1' ? '1' : '5';
-    minPrice = minBeds == '1' ? '1' : '1500000';
-    maxPrice = minBeds == '1' ? '500000' : '2000000'; */
-
-    if(minBeds == '1') {
+    if(extraParams == '1') {
       minBeds = '1';
       maxBeds = '1';
       minPrice = '1';
       maxPrice = '500000';
       district = [];
-    } else if (minBeds == '2') {
+    } else if (extraParams == '2') {
       minBeds = '2';
       maxBeds = '2';
       minPrice = '1';
       maxPrice = '850000';
       district = [];
-    } else if (minBeds == 'CtlTrHouse') {
+    } else if (extraParams == 'CtlTrHouse') {
       minBeds = '0';
       maxBeds = '5';
       minPrice = '1';
@@ -227,6 +223,54 @@ class RepliersProvider extends ChangeNotifier {
     notifyListeners();
     isLoadingCondo = false;
   }
+
+
+  getDisplayOneBedCondoStatus(status) async {
+
+    if (isLoadingOneBedCondo) return;
+    isLoadingOneBedCondo = true;
+
+    displayPageCondo = 1;
+    final jsonData = await _getJsonData('listings', 'residential', status, '1', displayPageCondo);
+
+    final nowPlayingResponse = ResponseBody.fromJson(jsonData);
+
+    onDisplayOneBedCondo = nowPlayingResponse.listings;
+    notifyListeners();
+    isLoadingOneBedCondo = false;
+  }
+
+
+  getDisplayTwoBedCondoStatus(status) async {
+
+    if (isLoadingTwoBedCondo) return;
+    isLoadingTwoBedCondo = true;
+
+    displayPageCondo = 1;
+    final jsonData = await _getJsonData('listings', 'residential', status, '2', displayPageCondo);
+
+    final nowPlayingResponse = ResponseBody.fromJson(jsonData);
+
+    onDisplayTwoBedCondo = nowPlayingResponse.listings;
+    notifyListeners();
+    isLoadingTwoBedCondo = false;
+  }
+
+  getDisplayCtlTrHousesStatus(status) async {
+
+    if (isLoadingCtlTrHouses) return;
+    isLoadingCtlTrHouses = true;
+
+    displayPageCtlTrHouses++;
+    final jsonData = await _getJsonData('listings', 'residential', status, 'CtlTrHouse', displayPageCtlTrHouses); 
+
+    final nowPlayingResponse = ResponseBody.fromJson(jsonData);
+
+    onDisplayCtlTrHouses = [ ...onDisplayCtlTrHouses, ...nowPlayingResponse.listings];
+    notifyListeners();
+    isLoadingCtlTrHouses = false;
+  }
+
 
   initGetDisplay(status) {
     displayPageHouses = 1;
