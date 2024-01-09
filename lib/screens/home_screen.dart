@@ -101,7 +101,7 @@ class HomeScreen extends StatelessWidget {
                     CardsSliderHor(
                       listing: repliersProvider.onDisplayCtlTrHouses,
                       title: 'HOUSES Toronto Ctl. under \$1,400,000',
-                      onNextPage: () => repliersProvider.getDisplayTwoBedCondo(repliersStatusProperties),
+                      onNextPage: () => repliersProvider.getDisplayCtlTrHouses(repliersStatusProperties),
                       onInitPage: () => repliersProvider.initGetDisplay(repliersStatusProperties),
                     ),
                   ],

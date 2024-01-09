@@ -186,7 +186,7 @@ class RepliersProvider extends ChangeNotifier {
     final jsonData = await _getJsonData('listings', 'residential', status, 'CtlTrHouse', displayPageCtlTrHouses); 
 
     final nowPlayingResponse = ResponseBody.fromJson(jsonData);
-
+print(nowPlayingResponse.count);
     onDisplayCtlTrHouses = [ ...onDisplayCtlTrHouses, ...nowPlayingResponse.listings];
     notifyListeners();
     isLoadingCtlTrHouses = false;
@@ -230,8 +230,8 @@ class RepliersProvider extends ChangeNotifier {
     if (isLoadingOneBedCondo) return;
     isLoadingOneBedCondo = true;
 
-    displayPageCondo = 1;
-    final jsonData = await _getJsonData('listings', 'residential', status, '1', displayPageCondo);
+    displayPageOneBedCondo = 1;
+    final jsonData = await _getJsonData('listings', 'residential', status, '1', displayPageOneBedCondo);
 
     final nowPlayingResponse = ResponseBody.fromJson(jsonData);
 
@@ -246,8 +246,8 @@ class RepliersProvider extends ChangeNotifier {
     if (isLoadingTwoBedCondo) return;
     isLoadingTwoBedCondo = true;
 
-    displayPageCondo = 1;
-    final jsonData = await _getJsonData('listings', 'residential', status, '2', displayPageCondo);
+    displayPageTwoBedCondo = 1;
+    final jsonData = await _getJsonData('listings', 'residential', status, '2', displayPageTwoBedCondo);
 
     final nowPlayingResponse = ResponseBody.fromJson(jsonData);
 
@@ -266,7 +266,7 @@ class RepliersProvider extends ChangeNotifier {
 
     final nowPlayingResponse = ResponseBody.fromJson(jsonData);
 
-    onDisplayCtlTrHouses = [ ...onDisplayCtlTrHouses, ...nowPlayingResponse.listings];
+    onDisplayCtlTrHouses = nowPlayingResponse.listings;
     notifyListeners();
     isLoadingCtlTrHouses = false;
   }
