@@ -231,7 +231,7 @@ print(nowPlayingResponse.count);
     isLoadingOneBedCondo = true;
 
     displayPageOneBedCondo = 1;
-    final jsonData = await _getJsonData('listings', 'residential', status, '1', displayPageOneBedCondo);
+    final jsonData = await _getJsonData('listings', 'condo', status, '1', displayPageOneBedCondo);
 
     final nowPlayingResponse = ResponseBody.fromJson(jsonData);
 
@@ -247,7 +247,7 @@ print(nowPlayingResponse.count);
     isLoadingTwoBedCondo = true;
 
     displayPageTwoBedCondo = 1;
-    final jsonData = await _getJsonData('listings', 'residential', status, '2', displayPageTwoBedCondo);
+    final jsonData = await _getJsonData('listings', 'condo', status, '2', displayPageTwoBedCondo);
 
     final nowPlayingResponse = ResponseBody.fromJson(jsonData);
 
