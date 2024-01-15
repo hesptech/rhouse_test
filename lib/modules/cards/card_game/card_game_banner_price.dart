@@ -30,7 +30,7 @@ class _CardGameBannerPriceState extends State<CardGameBannerPrice> {
 
     final dataFormatted = DataFormatter(widget.propertyItem);
     //final String images = widget.propertyItem.images?.first?? '';
-    final urlImage = '$kRepliersCdn${widget.propertyItem.images![0]}?w=1080';
+    final urlImage = '$kRepliersCdn${widget.propertyItem.images![0]}?class=medium';
     final statusParams = GameLastStatus(widget.propertyItem);
     final expiryDate = widget.propertyItem.timestamps?.expiryDate.toString().substring(0,11)?? '';
     

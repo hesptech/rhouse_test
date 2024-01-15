@@ -89,7 +89,7 @@ class MapCardSingle extends StatelessWidget {
             },
             child: FadeInImage(
               placeholder: const AssetImage('assets/no-image.jpg'),
-              image: NetworkImage('$kRepliersCdn$images?w=500'),
+              image: NetworkImage('$kRepliersCdn$images?class=medium'),
               width: 380,
               height: 207,
               fit: BoxFit.cover,
