@@ -67,7 +67,7 @@ class _CardFavoritesState extends State<CardFavorites> {
               children: [
                 FadeInImage(
                   placeholder: const AssetImage('assets/no-image_128_85.jpg'), 
-                  image: NetworkImage('$kRepliersCdn$images?w=250'),
+                  image: NetworkImage('$kRepliersCdn$images?class=small'),
                   imageErrorBuilder: (context, error, stackTrace) {
                     return Image.asset(
                       'assets/no-image_128_85.jpg', 

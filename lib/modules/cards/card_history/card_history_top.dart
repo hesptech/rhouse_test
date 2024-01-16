@@ -34,7 +34,7 @@ class CardHistoryTop extends StatelessWidget {
                   height: 300,
                   placeholder: const AssetImage('assets/no-image.jpg'),
                   //image: AssetImage('assets/house_500x300.jpg'),
-                  image: NetworkImage('$kRepliersCdn$images?w=1080'),
+                  image: NetworkImage('$kRepliersCdn$images?class=medium'),
                   imageErrorBuilder: (context, error, stackTrace) {
                     return Image.asset('assets/no-image.jpg', fit: BoxFit.fitWidth);
                   },

@@ -93,7 +93,7 @@ class RepliersProvider extends ChangeNotifier {
       'maxBeds': maxBeds,
       'district': district
     });
-    print( url );
+    //print( url );
 
     String envApiKey = dotenv.get('REPLIERS-API-KEY');
 
@@ -186,7 +186,7 @@ class RepliersProvider extends ChangeNotifier {
     final jsonData = await _getJsonData('listings', 'residential', status, 'CtlTrHouse', displayPageCtlTrHouses); 
 
     final nowPlayingResponse = ResponseBody.fromJson(jsonData);
-print(nowPlayingResponse.count);
+    //print(nowPlayingResponse.count);
     onDisplayCtlTrHouses = [ ...onDisplayCtlTrHouses, ...nowPlayingResponse.listings];
     notifyListeners();
     isLoadingCtlTrHouses = false;

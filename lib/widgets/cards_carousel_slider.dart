@@ -22,9 +22,9 @@ class _CardsCarouselSliderState extends State<CardsCarouselSlider> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        widget.listing.images!.length > 1 ? buildImage('$kRepliersCdn${widget.listing.images![1]}?w=1080', 1) : const SizedBox(),
-        widget.listing.images!.length > 2 ? buildImage('$kRepliersCdn${widget.listing.images![2]}?w=1080', 2) : const SizedBox(),
-        widget.listing.images!.length > 3 ? buildImage('$kRepliersCdn${widget.listing.images![3]}?w=1080', 3) : const SizedBox(),
+        widget.listing.images!.length > 1 ? buildImage('$kRepliersCdn${widget.listing.images![1]}?class=medium', 1) : const SizedBox(),
+        widget.listing.images!.length > 2 ? buildImage('$kRepliersCdn${widget.listing.images![2]}?class=medium', 2) : const SizedBox(),
+        widget.listing.images!.length > 3 ? buildImage('$kRepliersCdn${widget.listing.images![3]}?class=medium', 3) : const SizedBox(),
         Container(
           width: MediaQuery.of(context).size.width,
           height: 300.0,
@@ -40,7 +40,7 @@ class _CardsCarouselSliderState extends State<CardsCarouselSlider> {
           ),
           itemCount: widget.listing.images!.length > 3 ? 4 : widget.listing.images!.length,
           itemBuilder: (context, index, realIndex) {
-            final urlImage = '$kRepliersCdn${widget.listing.images![index]}?w=1080';
+            final urlImage = '$kRepliersCdn${widget.listing.images![index]}?class=medium';
 
             return buildImage(urlImage, index);
           },
