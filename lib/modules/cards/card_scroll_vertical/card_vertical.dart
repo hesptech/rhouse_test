@@ -55,10 +55,10 @@ class CardVertical extends StatelessWidget {
                   child: Stack(
                     children: <Widget>[
                       FadeInImage(
-                        placeholder: const AssetImage('assets/no-image.jpg'), 
+                        placeholder: const AssetImage('assets/no_images_subs/no-image.jpg'), 
                         image: NetworkImage('$kRepliersCdn$images?class=medium'),
                         imageErrorBuilder: (context, error, stackTrace) {
-                          return Image.asset('assets/no-image.jpg', fit: BoxFit.fitWidth);
+                          return Image.asset('assets/no_images_subs/no-image.jpg', fit: BoxFit.fitWidth);
                         },
                         width: double.infinity,
                         height: 227,
@@ -89,7 +89,7 @@ class CardVertical extends StatelessWidget {
                           padding: const EdgeInsets.fromLTRB( 0, 0, 10, 0),
                           alignment: Alignment.bottomRight,
                           child: InkWell(
-                            child: const Image(image: AssetImage('assets/play&learn_chip_53h.png'), ),
+                            child: const Image(image: AssetImage('assets/logos/play&learn_chip_53h.png'), ),
                             onTap: () {
                               currentFilter.cardGamePriceDisplay = true;
                               Navigator.pushNamed(context, 'game_screen',arguments: {'listing': listing});

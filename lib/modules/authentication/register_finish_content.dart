@@ -46,7 +46,7 @@ class _RegisterFinishContentState extends State<RegisterFinishContent> {
     return const Padding(
       padding: EdgeInsets.only(left: 40, right: 40),
       child: Image(
-        image: AssetImage('assets/registerTitle.png'),
+        image: AssetImage('assets/logos/registerTitle.png'),
       ),
     );
   }

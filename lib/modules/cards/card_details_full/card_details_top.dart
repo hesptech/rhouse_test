@@ -102,7 +102,7 @@ class CardDetailsTop extends StatelessWidget {
               alignment: Alignment.bottomRight,
               child: InkWell(
                 child: const Image(
-                  image: AssetImage('assets/play&learn_chip_85h.png'),
+                  image: AssetImage('assets/logos/play&learn_chip_85h.png'),
                 ),
                 onTap: () {
                   currentFilter.cardGamePriceDisplay = true;

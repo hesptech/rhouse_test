@@ -32,11 +32,10 @@ class CardHistoryTop extends StatelessWidget {
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                 child: FadeInImage(
                   height: 300,
-                  placeholder: const AssetImage('assets/no-image.jpg'),
-                  //image: AssetImage('assets/house_500x300.jpg'),
+                  placeholder: const AssetImage('assets/no_images_subs/no-image.jpg'),
                   image: NetworkImage('$kRepliersCdn$images?class=medium'),
                   imageErrorBuilder: (context, error, stackTrace) {
-                    return Image.asset('assets/no-image.jpg', fit: BoxFit.fitWidth);
+                    return Image.asset('assets/no_images_subs/no-image.jpg', fit: BoxFit.fitWidth);
                   },
                   fit: BoxFit.cover,
                   fadeInDuration: const Duration( milliseconds: 300),

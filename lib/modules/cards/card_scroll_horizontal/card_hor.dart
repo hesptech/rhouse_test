@@ -61,12 +61,11 @@ class CardHor extends StatelessWidget {
                   child: Stack(
                     children: <Widget>[
                       FadeInImage(
-                        placeholder: const AssetImage('assets/no-image_3.jpg'), 
-                        //image: AssetImage('assets/house_340x227.jpg'),
+                        placeholder: const AssetImage('assets/no_images_subs/no-image_3.jpg'), 
                         image: NetworkImage('$kRepliersCdn$images?class=medium'),
                         imageErrorBuilder: (context, error, stackTrace) {
                           return Image.asset(
-                            'assets/no-image_3.jpg', 
+                            'assets/no_images_subs/no-image_3.jpg', 
                             fit: BoxFit.fitWidth,
                           );
                         },
@@ -97,7 +96,7 @@ class CardHor extends StatelessWidget {
                         padding: const EdgeInsets.all(10.0),
                         alignment: Alignment.bottomRight,
                         child: InkWell(
-                          child: const Image(image: AssetImage('assets/play&learn_chip_53h.png'), ),
+                          child: const Image(image: AssetImage('assets/logos/play&learn_chip_53h.png'), ),
                           onTap: () {
                             Provider.of<FilterProvider>(context, listen: false).cardGamePriceDisplay = true;
                             Navigator.pushNamed(context, 'game_screen',arguments: {'listing': listing});

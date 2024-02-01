@@ -273,7 +273,7 @@ class MapCardSmall extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 5, top: 5),
       child: FadeInImage(
-        placeholder: const AssetImage('assets/no-image.jpg'),
+        placeholder: const AssetImage('assets/no_images_subs/no-image.jpg'),
         image: NetworkImage('$kRepliersCdn$images?class=small'),
         width: 140,
         height: 116.8,

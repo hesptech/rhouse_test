@@ -90,7 +90,7 @@ class GameHelpContent extends StatelessWidget {
   Widget _imageWelcome() {
     return const Center(
       child: Image(
-        image: AssetImage('assets/game_play_learn.webp'),
+        image: AssetImage('assets/logos/game_play_learn.webp'),
       ),
     );
   }

@@ -24,7 +24,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Image(
-                        image: AssetImage('assets/r_logo_100x30.png'),
+                        image: AssetImage('assets/logos/r_logo_100x30.png'),
                       ),
                       //const Spacer(),
                       GestureDetector(
@@ -32,7 +32,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                           Navigator.pushNamed(context, 'game_welcome_screen');
                         },
                         child: const Image(
-                          image: AssetImage('assets/play&learn_logo100x30.png'),
+                          image: AssetImage('assets/logos/play&learn_logo100x30.png'),
                         ),
                       ),
                     ],
@@ -47,7 +47,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                         children: [
                           GestureDetector(
                               /* onTap: () => displayDialog( context ),
-                            child: const Image(image: AssetImage('assets/play&learn_logo108x37.png'),) */
+                            child: const Image(image: AssetImage('assets/logos/play&learn_logo108x37.png'),) */
                               onTap: () {
                                 GeolocationApp().requestLocalization().then((value) {
                                   _goToMapSearch(context);
@@ -75,7 +75,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                       ),
                       GestureDetector(
                         /* onTap: () => displayDialog( context ),
-                        child: const Image(image: AssetImage('assets/play&learn_logo108x37.png'),) */
+                        child: const Image(image: AssetImage('assets/logos/play&learn_logo108x37.png'),) */
                         onTap: () {
                           Navigator.pushNamed(context, 'filters_screen');
                         },

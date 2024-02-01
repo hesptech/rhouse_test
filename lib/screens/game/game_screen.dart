@@ -38,7 +38,7 @@ class GameScreen extends StatelessWidget {
           ),
           centerTitle: true,
           title: const Image(
-            image: AssetImage('assets/play&learn_logo108x37.png'),
+            image: AssetImage('assets/logos/play&learn_logo108x37.png'),
           ),
           leading: IconButton(
             onPressed: () {

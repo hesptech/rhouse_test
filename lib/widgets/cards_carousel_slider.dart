@@ -64,10 +64,10 @@ class _CardsCarouselSliderState extends State<CardsCarouselSlider> {
     child: FadeInImage(
       width: MediaQuery.of(context).size.width,
       height: 300,
-      placeholder: const AssetImage('assets/no-image_2.jpg'),
+      placeholder: const AssetImage('assets/no_images_subs/no-image_2.jpg'),
       image: NetworkImage(urlImage),
       imageErrorBuilder: (context, error, stackTrace) {
-        return Image.asset('assets/no-image_2.jpg', fit: BoxFit.fitWidth);
+        return Image.asset('assets/no_images_subs/no-image_2.jpg', fit: BoxFit.fitWidth);
       },
       fit: BoxFit.cover,
       fadeInDuration: const Duration(milliseconds: 50),

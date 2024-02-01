@@ -155,7 +155,7 @@ class _AccountContentState extends State<AccountContent> {
       children: [
         Expanded(
           child: Image(
-            image: AssetImage('assets/play&learn_chip_53h.png'),
+            image: AssetImage('assets/logos/play&learn_chip_53h.png'),
           ),
         ),
         SizedBox(

@@ -66,11 +66,11 @@ class _CardGameBannerPriceState extends State<CardGameBannerPrice> {
                   children: [
     
                     FadeInImage(
-                      placeholder: const AssetImage('assets/no-image_128_85.jpg'), 
+                      placeholder: const AssetImage('assets/no_images_subs/no-image_128_85.jpg'), 
                       image: NetworkImage(urlImage),
                       imageErrorBuilder: (context, error, stackTrace) {
                         return Image.asset(
-                          'assets/no-image_128_85.jpg', 
+                          'assets/no_images_subs/no-image_128_85.jpg', 
                           fit: BoxFit.cover,
                         );
                       },

@@ -27,7 +27,7 @@ class CardDetailsFullSoldScreen extends StatelessWidget {
         ),
         elevation: 0,
         centerTitle: true,
-        title: const Image(image: AssetImage('assets/r_logo_112x38.png'), ),
+        title: const Image(image: AssetImage('assets/logos/r_logo_112x38.png'), ),
       ),
       body: SingleChildScrollView(
         child: Column(
