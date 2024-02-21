@@ -20,8 +20,8 @@ class _FiltersMoreExtraState extends State<FiltersMoreExtra> {
   void initState() {
     super.initState();
 
-    _selectedBt1 = false;
-    _selectedBt2 = false;
+    _selectedBt1 = Preferences.getfiltersMaxOpenHouseDate();
+    _selectedBt2 = Preferences.getfiltersIndexSwimmingPool().isNotEmpty;
   }
 
   @override

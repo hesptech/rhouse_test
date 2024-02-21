@@ -24,7 +24,7 @@ class RepliersFilters extends ChangeNotifier {
   Future<String> _getJsonDataFilters( String endPoint, Map<String, dynamic> valuesParams, [int page = 1] ) async {
     endPoint = 'listings';
     final url = Uri.https( kBaseUrl, endPoint, valuesParams);
-    //print( url );
+    print( url );
 
     String envApiKey = dotenv.get('REPLIERS-API-KEY');
 
@@ -60,6 +60,7 @@ class RepliersFilters extends ChangeNotifier {
 
     onDisplayFilters = [ ...onDisplayFilters, ...nowPlayingResponse.listings];
     onCount = nowPlayingResponse.count;
+    print(onCount);
     loaded = true;
     notifyListeners();
     isLoading = false;
