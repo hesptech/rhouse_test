@@ -98,8 +98,9 @@ class _CardsSliderFiltersState extends State<CardsSliderFilters> {
                     scrollDirection: Axis.vertical,
                     itemCount: widget.listing.length,
                     itemBuilder: ( _ , int index) => CardVertical( widget.listing[index])
-                  )
+                  ),
                 ),
+                const SizedBox(height: 20.0,)
               ],
           ),
     );

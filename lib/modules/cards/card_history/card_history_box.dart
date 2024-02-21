@@ -175,7 +175,7 @@ class CardHistoryBox extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Listing #: ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: kSecondaryColor),),
+                const Text('MLS #: ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: kSecondaryColor),),
                 Text(
                   mlsNumberStatus,
                   style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: kPrimaryColor),
@@ -191,7 +191,7 @@ class CardHistoryBox extends StatelessWidget {
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Direction/main: ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: kSecondaryColor),),
+                    Text('Main intersection: ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: kSecondaryColor),),
                   ],
                 ),
                 SizedBox(

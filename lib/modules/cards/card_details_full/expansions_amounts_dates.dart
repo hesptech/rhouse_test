@@ -40,7 +40,7 @@ class _ExpansionsAmountsDatesState extends State<ExpansionsAmountsDates> {
     return ExpansionTile(
       tilePadding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
       childrenPadding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-      title: const Text('AMMOUNTS/DATES', 
+      title: const Text('TAX INFORMATION', 
         style: TextStyle(
           fontSize: 18, 
           fontWeight: FontWeight.bold, 
