@@ -1,4 +1,3 @@
-//import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -10,6 +9,7 @@ class RepliersFilters extends ChangeNotifier {
 
   String citySearchParam = '';
   List<Listing> onDisplayFilters = [];
+  int numPages = 1;
   int onCount = 0;
   int _displayPageFilters = 0;
   bool isLoading = false;
@@ -20,7 +20,8 @@ class RepliersFilters extends ChangeNotifier {
     citySearchParam == 'toronto' ? 'toronto' : citySearchParam ;
   }
 
-  // FILTERS
+
+  // get FILTERS
   Future<String> _getJsonDataFilters( String endPoint, Map<String, dynamic> valuesParams, [int page = 1] ) async {
     endPoint = 'listings';
     final url = Uri.https( kBaseUrl, endPoint, valuesParams);
@@ -46,6 +47,7 @@ class RepliersFilters extends ChangeNotifier {
   }
 
 
+  // filters params, loading, numPages, pageNum
   getDisplayFilters(Map<String, dynamic> filtersResults) async {
 
     if (isLoading) return;
@@ -54,16 +56,25 @@ class RepliersFilters extends ChangeNotifier {
     _displayPageFilters++;
     filtersResults['pageNum'] = _displayPageFilters.toString(); 
 
-    final jsonData = await _getJsonDataFilters('listings', filtersResults, _displayPageFilters); 
+    if(_displayPageFilters <= numPages ) {
+      print('yess... $numPages $_displayPageFilters');
 
-    final nowPlayingResponse = ResponseBody.fromJson(jsonData);
+      final jsonData = await _getJsonDataFilters('listings', filtersResults, _displayPageFilters); 
 
-    onDisplayFilters = [ ...onDisplayFilters, ...nowPlayingResponse.listings];
-    onCount = nowPlayingResponse.count;
-    print(onCount);
-    loaded = true;
-    notifyListeners();
-    isLoading = false;
+      final nowPlayingResponse = ResponseBody.fromJson(jsonData);
+
+      onDisplayFilters = [ ...onDisplayFilters, ...nowPlayingResponse.listings];
+      onCount = nowPlayingResponse.count;
+      numPages = nowPlayingResponse.numPages;
+      print(onCount);
+      loaded = true;
+      notifyListeners();
+      isLoading = false;
+    } else {
+      print('nooo... $numPages $_displayPageFilters');
+      isLoading = false;
+    }
+    
   }
 
   initGetDisplay(Map<String, dynamic> filtersResults) {
