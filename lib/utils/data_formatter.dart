@@ -1,5 +1,5 @@
 import 'package:flutter_black_white/models/models.dart';
-
+import 'package:intl/intl.dart';
 
 class DataFormatter {
 
@@ -142,6 +142,68 @@ class DataFormatter {
   String get lotSqft {
     return listingLotSqft();
   }
+
+
+  // Openhouse
+  String listingOpenHouse() {
+    final Map<String, OpenHouse>? openHouseData = listing.openHouse;
+    String openHouseDateDisplay = '';
+
+    for (var value in openHouseData!.values) {
+      if(value.date.isNotEmpty && value.date != '') {
+      //print('value date:  ${value.date}');
+        //var parsedDate = DateTime.parse(value.date!.substring(0, 10));
+        DateTime parsedDate = DateTime.parse(value.date);
+        String dateFormat = DateFormat('dd-MM-yyyy').format(parsedDate);
+
+        DateTime now = DateTime.now();
+        DateFormat formatter = DateFormat('dd-MM-yyyy');
+        String formatted = formatter.format(now);
+        
+        //print('$formatted $dateFormat');
+
+        if(formatted == dateFormat) {
+          //print('after: ${value.date!.substring(0, 10)}');
+          //openHouseDateDisplay = 'after ${dateFormat}';
+          openHouseDateDisplay = 'TODAY ${value.startTime} ${value.endTime}';
+          break;
+        } else if (parsedDate.isAfter(DateTime.now())){
+          //print('after: ${value.date!.substring(0, 10)}');
+          //openHouseDateDisplay = 'after ${dateFormat}';
+          String dateWeekFormat = DateFormat('EEEE').format(parsedDate).substring(0, 3);
+          //String dateDD = DateFormat('dd').format(parsedDate);
+
+          List splittedStartTime = value.startTime.split(':');
+          List splittedEndTime = value.endTime.split(':');
+          String startTime = splittedStartTime[0];
+          String endTime = splittedEndTime[0];
+
+          List splittedAmPmFirst = value.startTime.split(' ');
+          List splittedAmPmSecond = value.endTime.split(' ');
+          String firstTime = splittedAmPmFirst[1];
+          String secondTime = splittedAmPmSecond[1];
+
+
+          //openHouseDateDisplay = dateFormat;
+          //openHouseDateDisplay = ' $dateWeekFormat. $dateDD, ${value.startTime} ${value.endTime}';
+          openHouseDateDisplay = '$dateWeekFormat, $startTime$firstTime $endTime$secondTime';
+          break;
+        } else if (parsedDate.isBefore(DateTime.now()) || dateFormat != ''){
+          //print('before: ${parsedDate}');
+          //openHouseDateDisplay = 'before ${parsedDate}';
+          //break;
+        }
+      } else {
+        //openHouseDateDisplay = '';
+      }      
+    }
+
+    return openHouseDateDisplay;
+  }
+
+  String get openHouse {
+    return listingOpenHouse();
+  } 
 
 
   bool emptyDataCheck( String value ) {

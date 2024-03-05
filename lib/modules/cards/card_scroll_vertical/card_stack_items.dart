@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_black_white/providers/filter_provider.dart';
@@ -12,7 +11,6 @@ import 'package:flutter_black_white/utils/shared_preferences.dart';
 
 class CardStackItems extends StatefulWidget {
 
-  
   final Listing listing;
 
   const CardStackItems( this.listing, {Key? key}) : super(key: key);
@@ -31,48 +29,6 @@ class _CardStackItemsState extends State<CardStackItems> {
     final dataFormatted = DataFormatter(widget.listing);
     final filterProvider = Provider.of<FilterProvider>(context);
     final repliersFavorites = Provider.of<RepliersFavorites>(context);
-
-    final Map<String, OpenHouse>? openHouseData = widget.listing.openHouse;
-    //final openHouseDate = OpenHouseDates(listing: widget.listing);
-
-    String openHouseDateDisplay = '';
-
-    for (var value in openHouseData!.values) {
-      if(value.date.isNotEmpty && value.date != '') {
-      //print('value date:  ${value.date}');
-        //var parsedDate = DateTime.parse(value.date!.substring(0, 10));
-        DateTime parsedDate = DateTime.parse(value.date);
-        String dateFormat = DateFormat('dd-MM-yyyy').format(parsedDate);
-
-        DateTime now = DateTime.now();
-        DateFormat formatter = DateFormat('dd-MM-yyyy');
-        String formatted = formatter.format(now);
-        
-        //print('$formatted $dateFormat');
-
-        if(formatted == dateFormat) {
-          //print('after: ${value.date!.substring(0, 10)}');
-          //openHouseDateDisplay = 'after ${dateFormat}';
-          openHouseDateDisplay = 'TODAY';
-          break;
-        } else if (parsedDate.isAfter(DateTime.now())){
-          //print('after: ${value.date!.substring(0, 10)}');
-          //openHouseDateDisplay = 'after ${dateFormat}';
-          String dateWeekFormat = DateFormat('EEEE').format(parsedDate);
-          String dateDD = DateFormat('dd').format(parsedDate);
-          //openHouseDateDisplay = dateFormat;
-          openHouseDateDisplay = '$dateWeekFormat $dateDD';
-          break;
-        } else if (parsedDate.isBefore(DateTime.now()) || dateFormat != ''){
-          //print('before: ${parsedDate}');
-          //openHouseDateDisplay = 'before ${parsedDate}';
-          //break;
-        }
-      } else {
-        //openHouseDateDisplay = '';
-      }
-    }
-
 
     return Container(
       alignment: Alignment.topLeft,
@@ -168,13 +124,13 @@ class _CardStackItemsState extends State<CardStackItems> {
               ),
             ],
           ),
-          if(openHouseDateDisplay != '') Row(
+          if(dataFormatted.openHouse != '') Row(
             children: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: kSecondaryColor,
+                  backgroundColor: kPrimaryColor,
                   minimumSize: const Size(140.0, 28.0),
-                  padding: const EdgeInsets.all( 0.0 ),
+                  padding: const EdgeInsets.fromLTRB(7.0, 0.0, 7.0, 0.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
@@ -184,14 +140,20 @@ class _CardStackItemsState extends State<CardStackItems> {
                 },
                 child: Row(
                   children: [
-                    //const Icon(Icons.groups_outlined, size: 20),
-                    const Text('OPEN', style: TextStyle(fontWeight: FontWeight.bold),),
+                    const Icon(Icons.calendar_month_outlined, size: 16),
                     const SizedBox(
                       width: 5,
                     ),
                     Text(
-                      openHouseDateDisplay,
-                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600,),
+                      dataFormatted.listEntryDate,
+                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.2,),
+                    ),
+                    if(dataFormatted.openHouse != '') const Text(
+                      ' | OPEN: ', style: TextStyle(fontWeight: FontWeight.bold, height: 1.0, color: Colors.yellow),
+                    ),
+                    if(dataFormatted.openHouse != '') Text(
+                      dataFormatted.openHouse,
+                      style: const TextStyle(fontSize: 14,  height: 1.0, color: Colors.yellow),
                     ),
                   ],
                 ),
