@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/providers/repliers_favorites.dart';
-import 'package:flutter_black_white/models/models.dart';
-import 'package:flutter_black_white/utils/constants.dart';
-import 'package:flutter_black_white/utils/data_formatter.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
+import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/modules/cards/cards_widgets/open_house_dates.dart';
 
 
 class CardStackItems extends StatefulWidget {
@@ -26,7 +26,6 @@ class _CardStackItemsState extends State<CardStackItems> {
   @override
   Widget build(BuildContext context) {
 
-    final dataFormatted = DataFormatter(widget.listing);
     final filterProvider = Provider.of<FilterProvider>(context);
     final repliersFavorites = Provider.of<RepliersFavorites>(context);
 
@@ -35,10 +34,12 @@ class _CardStackItemsState extends State<CardStackItems> {
       padding: const EdgeInsets.symmetric( horizontal: 20.0, vertical: 10.0 ),
       child: Column(
         children: [
+          OpenHouseDates(listing: widget.listing, cardType: 'vertical'),
+          const SizedBox(height: 125.0,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ElevatedButton(
+              /* ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: kPrimaryColor,
                   minimumSize: const Size(140.0, 28.0),
@@ -62,9 +63,10 @@ class _CardStackItemsState extends State<CardStackItems> {
                     ),
                   ],
                 ),
-              ),
+              ), */
               Row(
                 children: [
+              const SizedBox( width: 50.0,),
                   Stack(
                     children: [
                       const Positioned(
@@ -124,42 +126,7 @@ class _CardStackItemsState extends State<CardStackItems> {
               ),
             ],
           ),
-          if(dataFormatted.openHouse != '') Row(
-            children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: kPrimaryColor,
-                  minimumSize: const Size(140.0, 28.0),
-                  padding: const EdgeInsets.fromLTRB(7.0, 0.0, 7.0, 0.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-                onPressed: () {
-                  //Navigator.pushNamed(context, 'details', arguments: movie);
-                },
-                child: Row(
-                  children: [
-                    const Icon(Icons.calendar_month_outlined, size: 16),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      dataFormatted.listEntryDate,
-                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.2,),
-                    ),
-                    if(dataFormatted.openHouse != '') const Text(
-                      ' | OPEN: ', style: TextStyle(fontWeight: FontWeight.bold, height: 1.0, color: Colors.yellow),
-                    ),
-                    if(dataFormatted.openHouse != '') Text(
-                      dataFormatted.openHouse,
-                      style: const TextStyle(fontSize: 14,  height: 1.0, color: Colors.yellow),
-                    ),
-                  ],
-                ),
-              ),              
-            ],
-          )
+          //OpenHouseDates(listing: widget.listing),
         ],
       ),
     );

@@ -91,7 +91,8 @@ class RepliersProvider extends ChangeNotifier {
       'minSoldDate': minSoldDate.toString().substring(0, 10),
       'minBeds': minBeds,
       'maxBeds': maxBeds,
-      'district': district
+      'district': district,
+      //'minOpenHouseDate': '2024-03-07',
     });
     //print( url );
 

@@ -162,10 +162,20 @@ class DataFormatter {
         
         //print('$formatted $dateFormat');
 
+        List splittedStartTime = value.startTime.split(':');
+        List splittedEndTime = value.endTime.split(':');
+        String startTime = splittedStartTime[0];
+        String endTime = splittedEndTime[0];
+
+        List splittedAmPmFirst = value.startTime.split(' ');
+        List splittedAmPmSecond = value.endTime.split(' ');
+        String firstTime = splittedAmPmFirst[1];
+        String secondTime = splittedAmPmSecond[1];
+
         if(formatted == dateFormat) {
           //print('after: ${value.date!.substring(0, 10)}');
           //openHouseDateDisplay = 'after ${dateFormat}';
-          openHouseDateDisplay = 'TODAY ${value.startTime} ${value.endTime}';
+          openHouseDateDisplay = 'TODAY $startTime$firstTime $endTime$secondTime';
           break;
         } else if (parsedDate.isAfter(DateTime.now())){
           //print('after: ${value.date!.substring(0, 10)}');
@@ -173,15 +183,7 @@ class DataFormatter {
           String dateWeekFormat = DateFormat('EEEE').format(parsedDate).substring(0, 3);
           //String dateDD = DateFormat('dd').format(parsedDate);
 
-          List splittedStartTime = value.startTime.split(':');
-          List splittedEndTime = value.endTime.split(':');
-          String startTime = splittedStartTime[0];
-          String endTime = splittedEndTime[0];
 
-          List splittedAmPmFirst = value.startTime.split(' ');
-          List splittedAmPmSecond = value.endTime.split(' ');
-          String firstTime = splittedAmPmFirst[1];
-          String secondTime = splittedAmPmSecond[1];
 
 
           //openHouseDateDisplay = dateFormat;

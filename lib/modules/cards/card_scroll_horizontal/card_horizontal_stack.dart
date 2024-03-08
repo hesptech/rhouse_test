@@ -5,8 +5,9 @@ import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/providers/repliers_favorites.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-import 'package:flutter_black_white/utils/data_formatter.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
+
+import '../cards_widgets/open_house_dates.dart';
 
 
 class CardHorizontalStack extends StatefulWidget {
@@ -27,8 +28,6 @@ class _CardHorizontalStackState extends State<CardHorizontalStack> {
   Widget build(BuildContext context) {
 
     const loggedIn = true;
-    final dataFormatted = DataFormatter(widget.listing);
-    final bool statusActive = widget.listing.status == 'A' ? true : false ;
 
     final filterProvider = Provider.of<FilterProvider>(context);
     final repliersFavorites = Provider.of<RepliersFavorites>(context);
@@ -40,7 +39,8 @@ class _CardHorizontalStackState extends State<CardHorizontalStack> {
           Container(
             padding: const EdgeInsets.only(left: 20.0, top: 10.0,),
             alignment: Alignment.topLeft,
-            child: ElevatedButton(
+            child: OpenHouseDates(listing: widget.listing, cardType: 'horizontal'),
+            /* child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: statusActive ? kPrimaryColor : kWarningColor,
                 minimumSize: const Size(140.0, 28.0),
@@ -65,12 +65,12 @@ class _CardHorizontalStackState extends State<CardHorizontalStack> {
                   ),
                 ],
               ),
-            )
+            ) */
           ),
           Container(
             width: 310,
             height: 207, 
-            padding: const EdgeInsets.fromLTRB( 0, 15, 40, 0),
+            padding: const EdgeInsets.fromLTRB( 0, 160, 190, 0),
             alignment: Alignment.topRight,  
             child: Stack(
               children: [
@@ -115,7 +115,7 @@ class _CardHorizontalStackState extends State<CardHorizontalStack> {
           Container(
             width: 310,
             height: 207, 
-            padding: const EdgeInsets.fromLTRB( 0, 25, 0, 0),
+            padding: const EdgeInsets.fromLTRB( 0, 170, 155, 0),
             alignment: Alignment.topRight,  
             child: Stack(
               children: [
