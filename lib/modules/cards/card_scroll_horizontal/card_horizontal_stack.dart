@@ -35,10 +35,13 @@ class _CardHorizontalStackState extends State<CardHorizontalStack> {
     return loggedIn == true
       ? 
       Stack(
+        //alignment: Alignment.topCenter,
         children: [
           Container(
-            padding: const EdgeInsets.only(left: 20.0, top: 10.0,),
-            alignment: Alignment.topLeft,
+            //padding: const EdgeInsets.only(left: 20.0, top: 10.0,),
+            margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+            //margin: const EdgeInsets.all(0),
+            alignment: Alignment.topCenter,
             child: OpenHouseDates(listing: widget.listing, cardType: 'horizontal'),
             /* child: ElevatedButton(
               style: ElevatedButton.styleFrom(

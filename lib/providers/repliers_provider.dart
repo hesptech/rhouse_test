@@ -92,7 +92,7 @@ class RepliersProvider extends ChangeNotifier {
       'minBeds': minBeds,
       'maxBeds': maxBeds,
       'district': district,
-      //'minOpenHouseDate': '2024-03-07',
+      'minOpenHouseDate': '2024-03-15',
     });
     //print( url );
 

@@ -140,7 +140,7 @@ class MapListProvider extends ChangeNotifier {
         'type': 'sale',
         'hasImages': 'true',
         'fields':
-            'details,mlsNumber,class,images,listDate,timestamps,daysOnMarket,listPrice,address,details,map,rooms,lot,taxes,occupancy,nearby,condominium,office,status',
+            'details,mlsNumber,class,images,listDate,timestamps,daysOnMarket,listPrice,address,details,map,rooms,lot,taxes,occupancy,nearby,condominium,office,status,openHouse',
       };
 
       if (isFilter) {
