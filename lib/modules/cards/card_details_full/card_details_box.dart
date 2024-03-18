@@ -197,7 +197,21 @@ class CardDetailsBox extends StatelessWidget {
                 ),
               ],
             ),
-          )
+          ),
+          if(dataFormatted.openHouse != '') const Divider( height: 0,  thickness: 0.8, color: kSecondaryColor, ),
+          if(dataFormatted.openHouse != '') Padding(
+            padding: const EdgeInsets.symmetric( vertical: 10.0, horizontal: 10.0 ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('OPEN HOUSE: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: kPrimaryColor),),
+                Text( 
+                  dataFormatted.openHouse, 
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: kPrimaryColor),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
