@@ -33,7 +33,7 @@ class CardDetailsFullSoldScreen extends StatelessWidget {
         child: Column(
           children: [
             CardHistoryTop(screenArguments.listing, screenArguments.lastStatusHistory, screenArguments.dateHistory),
-            CardHistoryBox(screenArguments.listing, screenArguments.lastStatusHistory, screenArguments.formattedPrice, screenArguments.mlsNumberStatus),
+            CardHistoryBox(screenArguments.listing, screenArguments.lastStatusHistory, screenArguments.formattedPrice, screenArguments.formattedHistoryListedPrice, screenArguments.mlsNumberStatus),
             const SizedBox( height: 14,),
             CardDetailsExpansions( screenArguments.listing ),
 

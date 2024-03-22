@@ -57,7 +57,7 @@ class CardHor extends StatelessWidget {
               children: [
                 // IMAGE box
                 Container(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.only(left: 10.0, top: 10, right: 10.0, bottom: 5),
                   child: Stack(
                     children: <Widget>[
                       FadeInImage(
@@ -108,7 +108,7 @@ class CardHor extends StatelessWidget {
                 ),
                 
                 SizedBox(
-                  height: 130,
+                  height: 140,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -118,25 +118,52 @@ class CardHor extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  statusActive ? 'LISTED\nFOR' : 'SOLD\nFOR',
-                                  style: TextStyle(
-                                    fontSize: 13, 
-                                    fontWeight: FontWeight.bold, 
-                                    color: statusActive ? kPrimaryColor : kWarningColor,
-                                  ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      statusActive ? 'LISTED\nFOR' : 'SOLD FOR',
+                                      style: TextStyle(
+                                        fontSize: 13, 
+                                        fontWeight: FontWeight.bold, 
+                                        color: statusActive ? kPrimaryColor : kWarningColor,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 5.0,),
+                                    Text(
+                                      statusActive ? ' ${dataFormatted.listPrice}' : dataFormatted.soldPrice,
+                                      style: TextStyle(
+                                        fontSize: 20, 
+                                        fontWeight: FontWeight.bold, 
+                                        color: statusActive ? kPrimaryColor : kWarningColor,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(width: 5.0,),
-                                Text(
-                                  statusActive ? ' ${dataFormatted.listPrice}' : dataFormatted.soldPrice,
-                                  style: TextStyle(
-                                    fontSize: 22, 
-                                    fontWeight: FontWeight.bold, 
-                                    color: statusActive ? kPrimaryColor : kWarningColor,
-                                  ),
-                                  textAlign: TextAlign.left,
+                                if(!statusActive) Row(
+                                  children: [
+                                    Text(
+                                      'LISTED FOR',
+                                      style: TextStyle(
+                                        fontSize: 12, 
+                                        fontWeight: FontWeight.bold, 
+                                        color: statusActive ? kPrimaryColor : kWarningColor,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 5.0,),
+                                    Text(
+                                      dataFormatted.listPrice,
+                                      style: TextStyle(
+                                        fontSize: 14, 
+                                        fontWeight: FontWeight.bold, 
+                                        color: statusActive ? kPrimaryColor : kWarningColor,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
@@ -185,7 +212,7 @@ class CardHor extends StatelessWidget {
                         child: Container(
                           width: 328.0,
                           padding: const EdgeInsets.only(left: 15.0, right: 5.0,),
-                          height: 25,
+                          height: 22,
                           child: FittedBox(
                             alignment: Alignment.bottomLeft,
                             child: Text(
@@ -197,7 +224,7 @@ class CardHor extends StatelessWidget {
                           ),
                         ),
                       ), 
-                      const SizedBox(height: 5,),
+                      statusActive ? const SizedBox(height: 10,) : const SizedBox(height: 5,),
 
                       CardHorizontalBox(listing),                        
                     ],
