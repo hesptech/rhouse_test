@@ -278,7 +278,7 @@ class MapCardSmall extends StatelessWidget {
           child: FadeInImage(
             placeholder: const AssetImage('assets/no_images_subs/no-image.jpg'),
             image: NetworkImage('$kRepliersCdn$images?class=small'),
-            width: 140,
+            width: 145,
             height: 116.8,
             fit: BoxFit.cover,
             fadeInDuration: const Duration(milliseconds: 300),
@@ -302,7 +302,7 @@ class MapCardSmall extends StatelessWidget {
             child: Row(
               children: [
                 const Text(
-                  'OPEN: ', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, height: 1.0, color: Colors.yellow),
+                  'OH: ', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, height: 1.0, color: Colors.yellow),
                 ),
                 Text(
                   dataFormatted.openHouse, 

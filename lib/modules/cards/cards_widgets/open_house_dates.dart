@@ -20,6 +20,7 @@ class OpenHouseDates extends StatelessWidget {
     final double buttonMaxSize = dataFormatted.openHouse != '' ? MediaQuery.of(context).size.width - widthCardType : 140.0 ;
 
     return Row(
+      mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: dataFormatted.openHouse != '' ? MainAxisAlignment.center : MainAxisAlignment.start,
       children: [
         ElevatedButton(
@@ -47,7 +48,7 @@ class OpenHouseDates extends StatelessWidget {
                 style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w400, height: 1.0,),
               ),
               if(dataFormatted.openHouse != '') const Text(
-                ' | OPEN: ', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, height: 1.0, color: Colors.yellow),
+                ' | OH: ', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, height: 1.0, color: Colors.yellow),
               ),
               if(dataFormatted.openHouse != '') Text(
                 dataFormatted.openHouse,

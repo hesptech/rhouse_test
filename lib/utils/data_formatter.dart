@@ -175,7 +175,7 @@ class DataFormatter {
         if(formatted == dateFormat) {
           //print('after: ${value.date!.substring(0, 10)}');
           //openHouseDateDisplay = 'after ${dateFormat}';
-          openHouseDateDisplay = 'TODAY $startTime$firstTime $endTime$secondTime';
+          openHouseDateDisplay = 'TODAY $startTime$firstTime-$endTime$secondTime';
           break;
         } else if (parsedDate.isAfter(DateTime.now())){
           //print('after: ${value.date!.substring(0, 10)}');
@@ -188,7 +188,7 @@ class DataFormatter {
 
           //openHouseDateDisplay = dateFormat;
           //openHouseDateDisplay = ' $dateWeekFormat. $dateDD, ${value.startTime} ${value.endTime}';
-          openHouseDateDisplay = '$dateWeekFormat, $startTime$firstTime $endTime$secondTime';
+          openHouseDateDisplay = '$dateWeekFormat, $startTime$firstTime-$endTime$secondTime';
           break;
         } else if (parsedDate.isBefore(DateTime.now()) || dateFormat != ''){
           //print('before: ${parsedDate}');

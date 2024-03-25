@@ -128,26 +128,44 @@ class CardDetailsFullScreen extends StatelessWidget {
 
           // Floating footer button
           Positioned(
-            bottom: 5,
-            left: 30,
-            child: listing.status == 'A' ? InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, ContactAgentScreen.pathScreen, arguments: listing);
-              },
-              child: Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width - 60,
-                //padding: const EdgeInsets.only(left: 10, right: 5, top: 5, bottom: 5),
-                decoration: BoxDecoration(
-                  color: kPrimaryColor,
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  border: Border.all(width: 1, style: BorderStyle.solid, color: kPrimaryColor),
+            bottom: 0,
+            //left: 30,
+            child: listing.status == 'A' ? Container(
+              height: 68,
+              color: kSecondaryColor,
+              padding: const EdgeInsets.fromLTRB(22.0, 15.0, 22.0, 15.0),
+              width: MediaQuery.of(context).size.width,
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, ContactAgentScreen.pathScreen, arguments: listing);
+                },
+                child: Container(
+                  //height: 30,
+                  width: MediaQuery.of(context).size.width - 60,
+                  //padding: const EdgeInsets.all(0.0),
+                  decoration: const BoxDecoration(
+                    color: kPrimaryColor,
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    /* boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26.withOpacity(0.2),
+                        spreadRadius: 3,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3),
+                      )
+                    ] */
+                  ),
+                  child: const Align(
+                    alignment: Alignment.center, 
+                    child: Text(
+                      "CONTACT AGENT", 
+                      style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ),
                 ),
-                child: const Align(alignment: Alignment.center, child: Text("CONTACT AGENT", style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold))),
               ),
             ) : const SizedBox( height: 0.0 ),
           ),
-
         ],
       ),
     );

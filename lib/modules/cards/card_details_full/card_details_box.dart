@@ -339,7 +339,7 @@ class OpenhouseDateFormatter extends StatelessWidget {
       String secondTime = splittedAmPmSecond[1]; 
 
       if(formatted == dateFormat) {
-        openHouseDateDisplay = 'TODAY $startTime$firstTime  to $endTime$secondTime';
+        openHouseDateDisplay = 'TODAY $startTime$firstTime to $endTime$secondTime';
       } else if (parsedDate.isAfter(DateTime.now())){
         String dateWeekFormat = DateFormat('EEEE').format(parsedDate).substring(0, 3);
         openHouseDateDisplay = '$dateWeekFormat, $startTime$firstTime to $endTime$secondTime';
