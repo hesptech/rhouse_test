@@ -238,7 +238,7 @@ class CardDetailsBox extends StatelessWidget {
             ),
           ),
           if(dataFormatted.openHouse != '') const Divider( height: 0,  thickness: 0.8, color: kSecondaryColor, ),
-          if(dataFormatted.openHouse != '') const SizedBox(height: 8.0,),
+          //if(dataFormatted.openHouse != '') const SizedBox(height: 8.0,),
           /* if(dataFormatted.openHouse != '') Padding(
             padding: const EdgeInsets.symmetric( vertical: 10.0, horizontal: 10.0 ),
             child: Row(
@@ -274,7 +274,7 @@ class _OpenHouse extends StatelessWidget {
     //return const Placeholder();
     return Column(
       children: [
-
+        const SizedBox(height: 7.0,),
         ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
@@ -288,8 +288,8 @@ class _OpenHouse extends StatelessWidget {
 
             ],
           ),
-        )
-
+        ),
+        const SizedBox(height: 7.0,),
 
         /* Padding(
           padding: const EdgeInsets.symmetric( vertical: 10.0, horizontal: 10.0 ),
@@ -318,7 +318,7 @@ class OpenhouseDateFormatter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    String openHouseDateDisplay = '';
+    String openHouseDateDisplay = 's';
 
     if(openHouse.date.isNotEmpty && openHouse.date != '') {
       DateTime parsedDate = DateTime.parse(openHouse.date);
@@ -347,15 +347,15 @@ class OpenhouseDateFormatter extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 0, 0, 3),
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (openHouseDateDisplay != '') const Text(
+          if (openHouseDateDisplay != 's') const Text(
               'OPEN HOUSE: ', 
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: kPrimaryColor),
             ),
-          if (openHouseDateDisplay != '') Text(
+          if (openHouseDateDisplay != 's') Text(
             openHouseDateDisplay,
               style: const TextStyle(fontSize: 16, color: kPrimaryColor),
           ),

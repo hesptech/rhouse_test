@@ -37,7 +37,7 @@ class OpenHouseDates extends StatelessWidget {
             //Navigator.pushNamed(context, 'details', arguments: movie);
           },
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
             children: [
               const Icon(Icons.calendar_month_outlined, size: 16),
               const SizedBox(

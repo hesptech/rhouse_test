@@ -30,6 +30,7 @@ class _ExpansionCommentsState extends State<ExpansionComments> {
   Widget build(BuildContext context) {
 
     final String description = widget.listing.details?.description?? '';
+    final String occupancy = widget.listing.occupancy?? '';
 
     return ExpansionTile(
       tilePadding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
@@ -61,7 +62,13 @@ class _ExpansionCommentsState extends State<ExpansionComments> {
                   ),
                 ]
               ),
-
+              if (occupancy != '') const SizedBox( height: 25.0,),
+              Row(
+                children: [
+                  const Text('Possesion remarks: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
+                  Text(occupancy, style: const TextStyle(fontSize: 16, height: 1.3), ),
+                ]
+              ),
               const SizedBox( height: 25.0,),               
             ]
           ),
