@@ -32,15 +32,15 @@ class _ExpansionsAmountsDatesState extends State<ExpansionsAmountsDates> {
     final String formattedAnnualAmount = '\$${formatDoubleAnnualAmount.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}';
 
     final String assessmentYear = widget.listing.taxes?.assessmentYear?? '';
-    final double formatDoubleAssessmentYear = double.parse(assessmentYear);
-    final String formattedAssessmentYear = '\$${formatDoubleAssessmentYear.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}';
+    //final double formatDoubleAssessmentYear = double.parse(assessmentYear);
+    //final String formattedAssessmentYear = '\$${formatDoubleAssessmentYear.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}';
 
-    final String occupancy = widget.listing.occupancy?? '';
+    //final String occupancy = widget.listing.occupancy?? '';
 
     return ExpansionTile(
       tilePadding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
       childrenPadding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-      title: const Text('AMMOUNTS/DATES', 
+      title: const Text('TAX INFORMATION', 
         style: TextStyle(
           fontSize: 18, 
           fontWeight: FontWeight.bold, 
@@ -64,15 +64,15 @@ class _ExpansionsAmountsDatesState extends State<ExpansionsAmountsDates> {
               Row(
                 children: [
                   const Text('Tax year: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
-                  Text(formattedAssessmentYear, style: const TextStyle(fontSize: 16, height: 1.3), ),
+                  Text(assessmentYear, style: const TextStyle(fontSize: 16, height: 1.3), ),
                 ]
               ),
-              Row(
+              /* Row(
                 children: [
                   const Text('Possesion remarks: ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF231F20), height: 1.3, ), ),
                   Text(occupancy, style: const TextStyle(fontSize: 16, height: 1.3), ),
                 ]
-              ),
+              ), */
               const SizedBox( height: 25.0,),               
             ]
           ),

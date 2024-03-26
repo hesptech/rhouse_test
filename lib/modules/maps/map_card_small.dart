@@ -270,16 +270,49 @@ class MapCardSmall extends StatelessWidget {
   }
 
   Widget _columnHead(Listing listing, DataFormatter dataFormatted, String images) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 5, top: 5),
-      child: FadeInImage(
-        placeholder: const AssetImage('assets/no_images_subs/no-image.jpg'),
-        image: NetworkImage('$kRepliersCdn$images?class=small'),
-        width: 140,
-        height: 116.8,
-        fit: BoxFit.cover,
-        fadeInDuration: const Duration(milliseconds: 300),
-      ),
+    return Stack(
+      alignment: Alignment.topCenter,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 5, top: 5),
+          child: FadeInImage(
+            placeholder: const AssetImage('assets/no_images_subs/no-image.jpg'),
+            image: NetworkImage('$kRepliersCdn$images?class=small'),
+            width: 145,
+            height: 116.8,
+            fit: BoxFit.cover,
+            fadeInDuration: const Duration(milliseconds: 300),
+          ),
+        ),
+        if(dataFormatted.openHouse != '') Padding(
+          padding: const EdgeInsets.only(left: 5.0),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              alignment: Alignment.bottomLeft,
+              backgroundColor: kPrimaryColor,
+              minimumSize: const Size(65.0, 22.0),
+              padding: const EdgeInsets.fromLTRB(7.0, 0.0, 7.0, 5.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+            onPressed: () {
+              //Navigator.pushNamed(context, 'details', arguments: movie);
+            },
+            child: Row(
+              children: [
+                const Text(
+                  'OH: ', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, height: 1.0, color: Colors.yellow),
+                ),
+                Text(
+                  dataFormatted.openHouse, 
+                  style: const TextStyle(fontSize: 11,  height: 1.0, color: Colors.yellow),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 

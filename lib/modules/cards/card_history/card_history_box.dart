@@ -8,10 +8,11 @@ class CardHistoryBox extends StatelessWidget {
   final Listing listing;
   final String lastStatusHistory;
   final String formattedPrice;
+  final String formattedHistoryListedPrice;
   final String mlsNumberStatus;
 
 
-  const CardHistoryBox( this.listing, this.lastStatusHistory, this.formattedPrice , this.mlsNumberStatus, {super.key});
+  const CardHistoryBox( this.listing, this.lastStatusHistory, this.formattedPrice , this.formattedHistoryListedPrice, this.mlsNumberStatus, {super.key});
 
 
   @override
@@ -22,10 +23,12 @@ class CardHistoryBox extends StatelessWidget {
     //final bool statusActive = lastStatusHistory == 'SOLD' ? true : false;
     //final Color labelFormattedPriceColor = listing.status == 'A' ? kPrimaryColor : kPrimaryColor ;
     String labelFormattedPrice = 'FOR';
-    if (lastStatusHistory == 'SOLD') labelFormattedPrice = 'SOLD\nFOR';
+    if (lastStatusHistory == 'SOLD') labelFormattedPrice = 'SOLD FOR';
     if (lastStatusHistory == 'TERMINATED') labelFormattedPrice = 'TERMINATED\nLISTED FOR';
     if (lastStatusHistory == 'SUSPENDED') labelFormattedPrice = 'SUSPENDED\nLISTED FOR';
     if (lastStatusHistory == 'EXPIRED') labelFormattedPrice = 'EXPIRED\nLISTED FOR';
+
+    String labelFormattedPriceListed = 'Listed for:';
 
     return Container(
       margin: const EdgeInsets.fromLTRB(24.0, 0, 24.0, 20.0),
@@ -40,33 +43,67 @@ class CardHistoryBox extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      labelFormattedPrice,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: kWarningColor,
-                      ),
-                    ),
-                    const SizedBox(width: 10.0,),  
-                    Align(
-                      //alignment: Alignment.center,
-                      child: SizedBox(
-                     
-                        //alignment: Alignment.center,
-                        height: 25,
-                        child: FittedBox(
-                          child: Text(
-                            formattedPrice,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: kWarningColor,
-                            ),
+                    Row(
+                      children: [
+                        Text(
+                          labelFormattedPrice,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: kWarningColor,
                           ),
                         ),
-                      ),
-                    ),                  
+                        const SizedBox(width: 10.0,),  
+                        Align(
+                          //alignment: Alignment.center,
+                          child: SizedBox(
+                         
+                            //alignment: Alignment.center,
+                            height: 25,
+                            child: FittedBox(
+                              child: Text(
+                                formattedPrice,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: kWarningColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),                  
+                      ],
+                    ),
+                    if (lastStatusHistory == 'SOLD') Row(
+                      children: [
+                        Text(
+                          labelFormattedPriceListed,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: kWarningColor,
+                          ),
+                        ),
+                        const SizedBox(width: 10.0,),  
+                        Align(
+                          //alignment: Alignment.center,
+                          child: SizedBox(
+                         
+                            //alignment: Alignment.center,
+                            height: 20,
+                            child: FittedBox(
+                              child: Text(
+                                formattedHistoryListedPrice,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: kWarningColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),                  
+                      ],
+                    ),
                   ],
                 ),
                 ConstrainedBox(
@@ -175,7 +212,7 @@ class CardHistoryBox extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Listing #: ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: kSecondaryColor),),
+                const Text('MLS #: ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: kSecondaryColor),),
                 Text(
                   mlsNumberStatus,
                   style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: kPrimaryColor),
@@ -191,7 +228,7 @@ class CardHistoryBox extends StatelessWidget {
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Direction/main: ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: kSecondaryColor),),
+                    Text('Main intersection: ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: kSecondaryColor),),
                   ],
                 ),
                 SizedBox(

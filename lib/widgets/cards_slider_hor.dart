@@ -53,7 +53,7 @@ class _CardsSliderHorState extends State<CardsSliderHor> {
 
     return SizedBox(
       width: double.infinity,
-      height: 410,
+      height: 415,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

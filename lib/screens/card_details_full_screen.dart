@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/screens/map_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_black_white/providers/repliers_listing_mls.dart';
@@ -8,7 +7,9 @@ import 'package:flutter_black_white/utils/card_full_description_arguments.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/modules/cards/card_details_full/cards.dart';
 import 'package:flutter_black_white/screens/game/game_screen.dart';
+import 'package:flutter_black_white/screens/contact_agent_screen.dart';
 import 'package:flutter_black_white/screens/filters_results_screen.dart';
+import 'package:flutter_black_white/screens/map_screen.dart';
 
 class CardDetailsFullScreen extends StatelessWidget {
   const CardDetailsFullScreen({Key? key}) : super(key: key);
@@ -49,13 +50,10 @@ class CardDetailsFullScreen extends StatelessWidget {
             } else if (pathScreen == 'card_game_banner') {
                Navigator.pop(context);
             } else if (pathScreen == 'search') {
-              //showSearch(context: context, delegate: InputSearchDelegate());
               Navigator.pop(context);
             } else if (pathScreen == MapScreen.pathScreen) {
-              //showSearch(context: context, delegate: InputSearchDelegate());
               Navigator.pop(context);
             }
-            
              else {
               Navigator.pushNamed(context, '/');
             }
@@ -71,57 +69,104 @@ class CardDetailsFullScreen extends StatelessWidget {
               size: 30,
             ),
           ),
-          const SizedBox(
-            width: 10,
-          )
+          const SizedBox( width: 10 )
         ],
       ),
-      body: SingleChildScrollView(
-        physics: const ScrollPhysics(),
-        child: Column(
-          children: [
-            CardDetailsTop(listing),
-            CardDetailsBox(listing),
-            const SizedBox(
-              height: 14,
-            ),           
-            const SizedBox(
-              height: 14,
-            ),
-            CardDetailsHistory(
-              onInit: () => repliersHistory.initGetDisplay(),
-              onHistory: () => repliersHistory.getListingHistory(listing.mlsNumber),
-              listing: listing,
-            ),
-            const SizedBox(
-              height: 28,
-            ),
-            CardDetailsMap(listing: listing),
-            const SizedBox(
-              height: 22.0,
-            ),
-            CardDetailsExpansions(listing),
-            /* Consumer<FilterProvider>(
-              builder: (context, currentFilter, child) => ExpansionTile(
-                tilePadding: const EdgeInsets.symmetric(horizontal: 24.0),
-                childrenPadding: const EdgeInsets.symmetric(horizontal: 12.0),
-                title: const Text('PROPERTY TYPE', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kSecondaryColor),),
-                trailing: Icon(
-                  _openCloseIcons[0] ? Icons.remove : Icons.add,
-                  color: kSecondaryColor,
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            physics: const ScrollPhysics(),
+            child: Column(
+              children: [
+                CardDetailsTop(listing),
+                CardDetailsBox(listing),
+
+                const SizedBox( height: 28 ), 
+
+                CardDetailsHistory(
+                  onInit: () => repliersHistory.initGetDisplay(),
+                  onHistory: () => repliersHistory.getListingHistory(listing.mlsNumber),
+                  listing: listing,
                 ),
-                children: currentFilter.filterProvider == "residential" ? [const FiltersPropertyHouse()] : [const FiltersPropertyCondo()],
-                onExpansionChanged: (bool expanded) {
-                  setState(() => _openCloseIcons[0] = expanded );
-                  if (expanded == false) {
-                    setState(() => _openCloseIcons[1] = false );
-                    setState(() => _openCloseIcons[2] = false );
-                  }
+
+                const SizedBox( height: 28 ),
+
+                CardDetailsMap(listing: listing),
+
+                const SizedBox( height: 22.0 ),
+
+                CardDetailsExpansions(listing),
+
+                const SizedBox( height: 5 ),
+
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 26.0),
+                  child: Column(
+                    children: [
+                      const Row(
+                        children: [
+                          Text('Listing by')
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 300),
+                            child: Text(
+                              listing.office?.brokerageName ?? '',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox( height: 90.0 ),
+              ],
+            ),
+          ),
+
+          // Floating footer button
+          Positioned(
+            bottom: 0,
+            //left: 30,
+            child: listing.status == 'A' ? Container(
+              height: 68,
+              color: kSecondaryColor,
+              padding: const EdgeInsets.fromLTRB(22.0, 15.0, 22.0, 15.0),
+              width: MediaQuery.of(context).size.width,
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, ContactAgentScreen.pathScreen, arguments: listing);
                 },
+                child: Container(
+                  //height: 30,
+                  width: MediaQuery.of(context).size.width - 60,
+                  //padding: const EdgeInsets.all(0.0),
+                  decoration: const BoxDecoration(
+                    color: kPrimaryColor,
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    /* boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26.withOpacity(0.2),
+                        spreadRadius: 3,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3),
+                      )
+                    ] */
+                  ),
+                  child: const Align(
+                    alignment: Alignment.center, 
+                    child: Text(
+                      "CONTACT AGENT", 
+                      style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
               ),
-            ), */
-          ],
-        ),
+            ) : const SizedBox( height: 0.0 ),
+          ),
+        ],
       ),
     );
   }

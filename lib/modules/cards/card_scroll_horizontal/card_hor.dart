@@ -1,17 +1,18 @@
 //import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+//import 'package:provider/provider.dart';
 
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
-import 'package:flutter_black_white/providers/filter_provider.dart';
+//import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 import 'package:flutter_black_white/utils/card_full_description_arguments.dart';
 import 'package:flutter_black_white/modules/cards/card_scroll_horizontal/card_horizontal_box.dart';
 import 'package:flutter_black_white/modules/cards/card_scroll_horizontal/card_horizontal_stack.dart';
-import 'package:flutter_black_white/screens/map_property_screen.dart';
+import 'package:flutter_black_white/modules/cards/card_scroll_horizontal/card_hor_stack_bottom.dart';
+//import 'package:flutter_black_white/screens/map_property_screen.dart';
 
 class CardHor extends StatelessWidget {
 
@@ -57,7 +58,7 @@ class CardHor extends StatelessWidget {
               children: [
                 // IMAGE box
                 Container(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.only(left: 10.0, top: 10, right: 10.0, bottom: 5),
                   child: Stack(
                     children: <Widget>[
                       FadeInImage(
@@ -74,41 +75,12 @@ class CardHor extends StatelessWidget {
                         fit: BoxFit.cover,
                         fadeInDuration: const Duration( milliseconds: 300),
                       ),
-                      Container(
-                        width: 310,
-                        height: 207, 
-                        padding: const EdgeInsets.fromLTRB( 15, 0, 50, 15),
-                        alignment: Alignment.bottomLeft,  
-                        child: InkWell(
-                          child: const CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: 18,
-                            child: Icon(Icons.map_outlined, color: kSecondaryColor, size: 30),
-                          ),
-                          onTap: () {
-                            Navigator.pushNamed(context, MapPropertyScreen.pathScreen, arguments: {'listing': listing});
-                          },
-                        ),                      
-                      ),
-                      if (statusActive) Container(
-                        width: 310,
-                        height: 207,
-                        padding: const EdgeInsets.all(10.0),
-                        alignment: Alignment.bottomRight,
-                        child: InkWell(
-                          child: const Image(image: AssetImage('assets/logos/play&learn_chip_53h.png'), ),
-                          onTap: () {
-                            Provider.of<FilterProvider>(context, listen: false).cardGamePriceDisplay = true;
-                            Navigator.pushNamed(context, 'game_screen',arguments: {'listing': listing});
-                          },
-                        ),
-                      )
                     ], 
                   ),
                 ),
                 
                 SizedBox(
-                  height: 130,
+                  height: 140,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -118,25 +90,52 @@ class CardHor extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  statusActive ? 'LISTED\nFOR' : 'SOLD\nFOR',
-                                  style: TextStyle(
-                                    fontSize: 13, 
-                                    fontWeight: FontWeight.bold, 
-                                    color: statusActive ? kPrimaryColor : kWarningColor,
-                                  ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      statusActive ? 'LISTED\nFOR' : 'SOLD FOR',
+                                      style: TextStyle(
+                                        fontSize: 13, 
+                                        fontWeight: FontWeight.bold, 
+                                        color: statusActive ? kPrimaryColor : kWarningColor,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 5.0,),
+                                    Text(
+                                      statusActive ? ' ${dataFormatted.listPrice}' : dataFormatted.soldPrice,
+                                      style: TextStyle(
+                                        fontSize: 20, 
+                                        fontWeight: FontWeight.bold, 
+                                        color: statusActive ? kPrimaryColor : kWarningColor,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(width: 5.0,),
-                                Text(
-                                  statusActive ? ' ${dataFormatted.listPrice}' : dataFormatted.soldPrice,
-                                  style: TextStyle(
-                                    fontSize: 22, 
-                                    fontWeight: FontWeight.bold, 
-                                    color: statusActive ? kPrimaryColor : kWarningColor,
-                                  ),
-                                  textAlign: TextAlign.left,
+                                if(!statusActive) Row(
+                                  children: [
+                                    Text(
+                                      'LISTED FOR',
+                                      style: TextStyle(
+                                        fontSize: 12, 
+                                        fontWeight: FontWeight.bold, 
+                                        color: statusActive ? kPrimaryColor : kWarningColor,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 5.0,),
+                                    Text(
+                                      dataFormatted.listPrice,
+                                      style: TextStyle(
+                                        fontSize: 14, 
+                                        fontWeight: FontWeight.bold, 
+                                        color: statusActive ? kPrimaryColor : kWarningColor,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
@@ -185,7 +184,7 @@ class CardHor extends StatelessWidget {
                         child: Container(
                           width: 328.0,
                           padding: const EdgeInsets.only(left: 15.0, right: 5.0,),
-                          height: 25,
+                          height: 22,
                           child: FittedBox(
                             alignment: Alignment.bottomLeft,
                             child: Text(
@@ -197,7 +196,7 @@ class CardHor extends StatelessWidget {
                           ),
                         ),
                       ), 
-                      const SizedBox(height: 5,),
+                      statusActive ? const SizedBox(height: 10,) : const SizedBox(height: 5,),
 
                       CardHorizontalBox(listing),                        
                     ],
@@ -207,6 +206,7 @@ class CardHor extends StatelessWidget {
             ),              
           ),
           CardHorizontalStack(listing),
+          CardHorStackBottom(listing),
         ],
       )
     );
