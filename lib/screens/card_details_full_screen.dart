@@ -158,7 +158,7 @@ class CardDetailsFullScreen extends StatelessWidget {
                   child: const Align(
                     alignment: Alignment.center, 
                     child: Text(
-                      "CONTACT AGENT", 
+                      "ask agent / book a viewing", 
                       style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                   ),

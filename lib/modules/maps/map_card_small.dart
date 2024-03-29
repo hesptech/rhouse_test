@@ -302,7 +302,7 @@ class MapCardSmall extends StatelessWidget {
             child: Row(
               children: [
                 const Text(
-                  'OH: ', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, height: 1.0, color: Colors.yellow),
+                  'OPEN: ', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, height: 1.0, color: Colors.yellow),
                 ),
                 Text(
                   dataFormatted.openHouse, 
