@@ -20,14 +20,14 @@ class OpenHouseDates extends StatelessWidget {
     final double buttonMaxSize = dataFormatted.openHouse != '' ? MediaQuery.of(context).size.width - widthCardType : 140.0 ;
 
     return Row(
-      mainAxisSize: MainAxisSize.max,
+      //mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: dataFormatted.openHouse != '' ? MainAxisAlignment.center : MainAxisAlignment.start,
       children: [
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             alignment: Alignment.bottomLeft,
             backgroundColor: statusActive ? kPrimaryColor : kWarningColor,
-            minimumSize: Size(buttonMaxSize, 28.0),
+            //minimumSize: Size(buttonMaxSize, 28.0),
             padding: const EdgeInsets.fromLTRB(7.0, 0.0, 7.0, 5.0),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
@@ -37,7 +37,7 @@ class OpenHouseDates extends StatelessWidget {
             //Navigator.pushNamed(context, 'details', arguments: movie);
           },
           child: Row(
-            mainAxisSize: MainAxisSize.max,
+            //mainAxisSize: MainAxisSize.max,
             children: [
               const Icon(Icons.calendar_month_outlined, size: 16),
               const SizedBox(
@@ -48,7 +48,7 @@ class OpenHouseDates extends StatelessWidget {
                 style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w400, height: 1.0,),
               ),
               if(dataFormatted.openHouse != '') const Text(
-                ' | OH: ', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, height: 1.0, color: Colors.yellow),
+                ' | OPEN: ', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, height: 1.0, color: Colors.yellow),
               ),
               if(dataFormatted.openHouse != '') Text(
                 dataFormatted.openHouse,

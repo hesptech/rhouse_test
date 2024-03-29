@@ -7,6 +7,7 @@ import 'package:flutter_black_white/providers/repliers_favorites.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/modules/cards/cards_widgets/open_house_dates.dart';
+import 'package:flutter_black_white/utils/data_formatter.dart';
 
 
 class CardStackItems extends StatefulWidget {
@@ -28,13 +29,19 @@ class _CardStackItemsState extends State<CardStackItems> {
 
     final filterProvider = Provider.of<FilterProvider>(context);
     final repliersFavorites = Provider.of<RepliersFavorites>(context);
+    final dataFormatted = DataFormatter(widget.listing);
 
     return Container(
       alignment: Alignment.topLeft,
-      padding: const EdgeInsets.symmetric( horizontal: 20.0, vertical: 10.0 ),
+      //mainAxisAlignment: dataFormatted.openHouse != '' ? MainAxisAlignment.center : MainAxisAlignment.start,
+      //padding: const EdgeInsets.symmetric( horizontal: 20.0, vertical: 20.0 ),
       child: Column(
         children: [
-          OpenHouseDates(listing: widget.listing, cardType: 'vertical'),
+          Container(
+            height: 28,
+            margin: dataFormatted.openHouse != '' ? const EdgeInsets.only(top: 20.0) : const EdgeInsets.only(top: 20.0, left: 20.0),
+            child: OpenHouseDates(listing: widget.listing, cardType: 'vertical'),
+          ),
           const SizedBox(height: 125.0,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
