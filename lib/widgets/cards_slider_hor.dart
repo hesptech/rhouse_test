@@ -65,7 +65,7 @@ class _CardsSliderHorState extends State<CardsSliderHor> {
               child: Row(
                 //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [    
-                  /* if(widget.title! == 'HOUSE Listings' || widget.title! == 'CONDO Listings') SizedBox(
+                  if(widget.title! == 'HOUSE Listings' || widget.title! == 'CONDO Listings') SizedBox(
                     height: 16.0,
                     width: 30.0,
                     child: IconButton(
@@ -90,7 +90,7 @@ class _CardsSliderHorState extends State<CardsSliderHor> {
                           Navigator.pushNamed(context, 'filters_results_screen');
                         },
                     )
-                  ), */         
+                  ),         
                   Padding(
                     padding: const EdgeInsets.only( top: 10, left: 15, ),
                     child: Text(
