@@ -1,5 +1,16 @@
 import 'package:flutter/material.dart';
+//import 'package:provider/provider.dart';
+
+//import 'package:flutter_black_white/providers/repliers_game.dart';
+//import 'package:flutter_black_white/providers/repliers_favorites.dart';
+
 import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/utils/search_delegate.dart';
+//import 'package:flutter_black_white/utils/shared_preferences.dart';
+//import 'package:flutter_black_white/providers/filter_provider.dart';
+import 'package:flutter_black_white/screens/screens.dart';
+import 'package:flutter_black_white/utils/authentication_singleton.dart';
+import 'package:flutter_black_white/utils/enums_app.dart';
 
 class CustomBottomNavigator extends StatefulWidget {
   const CustomBottomNavigator({ Key? key }) : super(key: key);
@@ -11,26 +22,49 @@ class CustomBottomNavigator extends StatefulWidget {
 class _CustomBottomNavigatorState extends State<CustomBottomNavigator> {
 
   final loggedIn = false;
-  final int _selectedIndex = 0;
+  int _selectedIndex = 0;
 
-  static const List<String> _pages = <String>[
+  static final List<String> _pages = <String>[
     '/',
     '/',
-    '/',
-    '/',
-    'login_screen',
+    'game_screen',
+    'favorites_screen',
+    LoginScreen.pathScreen,
   ];
 
   void _onItemTapped(int index) {
     setState(() {
-      //_selectedIndex = index;
+      _selectedIndex = index;
       //print(loggedIn);
-      if ( index == 4 && loggedIn ) {
-        Navigator.pushNamed(context, _pages[5]);
+      if (index == 1) {
+        showSearch(context: context, delegate: InputSearchDelegate());
+      } else if (index == 2) {
+        Navigator.pushNamed(context, _pages[index]);
+        /* if (Provider.of<FilterProvider>(context, listen: false).cardGamePriceDisplay == false) {
+          Provider.of<FilterProvider>(context, listen: false).cardGamePriceDisplay = true;
+          Navigator.pushNamed(context, _pages[2]);
+        } else {
+          Navigator.pushNamed(context, 'game_screen');
+        } */
+      } else if (index == 3) {
+        //Provider.of<RepliersFavorites>(context, listen: false).getSelectFavorites('1');
+        Navigator.pushNamed(context, _pages[index]);
+      } else if (index == 4) {
+        //Preferences.isLoggedIn = !Preferences.isLoggedIn;
+        Navigator.pushNamed(context, _pages[4]);
         //Navigator.pop(context);
         //Navigator.restorablePopAndPushNamed(context, '/');
       } else if (index > 0) {
-        Navigator.pushNamed(context, _pages[index]);
+       if (_pages[index] == LoginScreen.pathScreen) {
+          var authStatus = AuthSingleton().authStatus;
+          if (authStatus == AuthStatus.authenticated) {
+            Navigator.pushNamed(context, AccountScreen.pathScreen);
+          } else {
+            Navigator.pushNamed(context, _pages[index]);
+          }
+        } else {
+          Navigator.pushNamed(context, _pages[index]);
+        }
       }
     });
   }
@@ -39,7 +73,7 @@ class _CustomBottomNavigatorState extends State<CustomBottomNavigator> {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
-      backgroundColor: const Color(0xFF0BB48B),
+      backgroundColor: kSecondaryColor,
       //selectedItemColor: const Color(0xFFe8eaf6),
       unselectedItemColor: kPrimaryColor,
       showSelectedLabels: false,
@@ -55,7 +89,7 @@ class _CustomBottomNavigatorState extends State<CustomBottomNavigator> {
           label: ''
         ),
         BottomNavigationBarItem(
-          icon: ImageIcon(AssetImage("assets/play&learn_bottom_nav.png")),
+          icon: ImageIcon(AssetImage("assets/logos/play&learn_bottom_nav.png")),
           label: ''
         ),
         BottomNavigationBarItem(

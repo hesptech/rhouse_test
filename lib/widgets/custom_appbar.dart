@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/screens/map_screen.dart';
 import 'package:flutter_black_white/utils/constants.dart';
-import 'package:flutter_black_white/utils/geolocation_app.dart';
-
-import '../providers/filter_provider.dart';
-//import 'package:flutter_black_white/search/search_delegate.dart';
+import 'package:flutter_black_white/utils/search_delegate.dart';
+import 'package:flutter_black_white/modules/maps/utils/geolocation_app.dart';
 
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppbar({Key? key}) : super(key: key);
@@ -24,13 +22,18 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Image(
-                        image: AssetImage('assets/r_logo_100x30.png'),
+                    children: [
+                      const Image(
+                        image: AssetImage('assets/logos/r_logo_100x30.png'),
                       ),
                       //const Spacer(),
-                      Image(
-                        image: AssetImage('assets/play&learn_logo100x30.png'),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, 'game_welcome_screen');
+                        },
+                        child: const Image(
+                          image: AssetImage('assets/logos/play&learn_logo100x30.png'),
+                        ),
                       ),
                     ],
                   ),
@@ -44,7 +47,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                         children: [
                           GestureDetector(
                               /* onTap: () => displayDialog( context ),
-                            child: const Image(image: AssetImage('assets/play&learn_logo108x37.png'),) */
+                            child: const Image(image: AssetImage('assets/logos/play&learn_logo108x37.png'),) */
                               onTap: () {
                                 GeolocationApp().requestLocalization().then((value) {
                                   _goToMapSearch(context);
@@ -52,12 +55,12 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                                   _dialogGeolocation(context);
                                 });
                               },
-                              //child: const Icon( Icons.map_outlined, color: Color(0xFF0BB48B), size: 26.0,),
-                              child: Row(
-                                children: const [
+                              //child: const Icon( Icons.map_outlined, color: kSecondaryColor, size: 26.0,),
+                              child: const Row(
+                                children: [
                                   Icon(
                                     Icons.map_outlined,
-                                    color: Color(0xFF0BB48B),
+                                    color: kSecondaryColor,
                                     size: 30.0,
                                   ),
                                   Text(
@@ -72,13 +75,13 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                       ),
                       GestureDetector(
                         /* onTap: () => displayDialog( context ),
-                        child: const Image(image: AssetImage('assets/play&learn_logo108x37.png'),) */
+                        child: const Image(image: AssetImage('assets/logos/play&learn_logo108x37.png'),) */
                         onTap: () {
                           Navigator.pushNamed(context, 'filters_screen');
                         },
                         child: const Icon(
                           Icons.tune_outlined,
-                          color: Color(0xFF0BB48B),
+                          color: kSecondaryColor,
                           size: 30.0,
                         ),
                       ),
@@ -89,6 +92,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                   GestureDetector(
                     onTap: () {
+                      showSearch(context: context, delegate: InputSearchDelegate());
                       if (loggedIn == true) {
                         //showSearch(context: context, delegate: MovieSearchDelegate());
                       } else {
@@ -118,7 +122,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
             ),
             Container(
               height: 5,
-              color: const Color(0xFF0BB48B),
+              color: kSecondaryColor,
             )
           ],
         ),
@@ -160,8 +164,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   void _goToMapSearch(BuildContext context) {
-    FilterProvider().cleanFilter();
-    Navigator.pushNamed(context, MapScreen.path, arguments: {'filter': "false", 'mlsNumber': ''});
+    Navigator.pushNamed(context, MapScreen.pathScreen, arguments: {'filter': "false"});
   }
 
   @override

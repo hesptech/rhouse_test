@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/config/navigator_config.dart';
+import 'package:flutter_black_white/widgets/error_view_widget.dart';
 
+///Widget that displays a loading to load another widget by passing as a parameter a future function
 class LoadableWidget<T> extends StatefulWidget {
   final Future<T> Function() loader;
   final Widget Function(BuildContext, T) builder;
@@ -23,10 +26,12 @@ class _LoadableWidget<T> extends State<LoadableWidget<T>> {
               state = value;
             }))
         .onError((error, stackTrace) => {
-              setState(() {
-                loadError = error?.toString();
-                debugPrint(loadError);
-              })
+              if(mounted) {
+                setState(() {
+                  loadError = error?.toString();
+                  debugPrint(loadError);
+                })
+              }
             });
   }
 
@@ -38,7 +43,7 @@ class _LoadableWidget<T> extends State<LoadableWidget<T>> {
     }
     final errorMessage = loadError;
     if (errorMessage != null) {
-      return Expanded(child: Text(errorMessage));
+      return const ErrorViewWidget();
     }
     return const LoadWidget();
   }
@@ -50,7 +55,8 @@ class LoadWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Column(children: [
+        child: Column(
+          children: [
       Expanded(child: Container()),
       const CircularProgressIndicator(),
       const Text("Loading"),
@@ -58,3 +64,20 @@ class LoadWidget extends StatelessWidget {
     ]));
   }
 }
+
+
+loadingDialogShow() {
+    return showDialog(
+      barrierDismissible: false,
+      context: NavigatorConfig.context,
+      useSafeArea: true,
+      builder: (BuildContext context) {
+        return WillPopScope(
+            onWillPop: () async => false,
+            child: const AlertDialog(
+              elevation: 0,
+              content: SizedBox(height: 120, child: LoadWidget()),
+            ));
+      },
+    );
+  }

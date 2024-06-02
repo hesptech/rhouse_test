@@ -59,7 +59,7 @@ class _FiltersPriceSliderState extends State<FiltersPriceSlider> {
       children: [
         const SizedBox(height: 24.0),
         const Text('PRICE RANGE', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kSecondaryColor),),
-        const SizedBox(height: 12.0,),
+        const SizedBox(height: 10.0,),
         Padding(
           padding: const EdgeInsets.symmetric( vertical: 0.0, horizontal: 20.0),
           child: Row(
@@ -93,7 +93,7 @@ class _FiltersPriceSliderState extends State<FiltersPriceSlider> {
           } 
         ),
 
-        const SizedBox(height: 28.0),
+        const SizedBox(height: 14.0),
       ],
     );
   }

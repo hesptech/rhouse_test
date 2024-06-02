@@ -10,11 +10,9 @@
 
    <application
         android:label="Rhouze"
+        android:usesCleartextTraffic="true"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-
-        <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyD_X7tTrFsKmQ9VkBiuPW70l19cfGIJr8Q"/>
 
         <activity
             android:name=".MainActivity"

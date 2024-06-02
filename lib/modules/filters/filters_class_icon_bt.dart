@@ -32,7 +32,7 @@ class _FiltersClassIconBtState extends State<FiltersClassIconBt> {
       children: [
         GestureDetector(
           child: Container(
-            padding: const EdgeInsets.symmetric( vertical: 20.0, horizontal: 30.0 ),
+            padding: const EdgeInsets.symmetric( vertical: 15.0, horizontal: 25.0 ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.0), 
               border: Border.all(
@@ -62,7 +62,7 @@ class _FiltersClassIconBtState extends State<FiltersClassIconBt> {
         const SizedBox( width: 18.0,),
         GestureDetector(
           child: Container(
-            padding: const EdgeInsets.symmetric( vertical: 20.0, horizontal: 30.0 ),
+            padding: const EdgeInsets.symmetric( vertical: 15.0, horizontal: 25.0 ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.0), 
               border: Border.all(

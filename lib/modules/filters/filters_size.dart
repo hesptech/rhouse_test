@@ -36,11 +36,11 @@ class _FiltersSizeState extends State<FiltersSize> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric( horizontal: 24.0),
+        const Padding(
+          padding: EdgeInsets.symmetric( horizontal: 24.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
+            children: [
               Text('SIZE', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold,),),
             ],
           ),

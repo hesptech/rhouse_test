@@ -27,15 +27,15 @@ class _FiltersParkCondoState extends State<FiltersParkCondo> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB( 24.0, 14.0, 24.0, 28.0 ),
+      padding: const EdgeInsets.fromLTRB( 24.0, 7.0, 24.0, 28.0 ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
+          const Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text('PARKINGs', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kSecondaryColor),),
+            children: [
+              Text('PARKING', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kSecondaryColor),),
             ],
           ),
           Wrap(

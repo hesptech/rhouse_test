@@ -1,171 +1,215 @@
+import 'package:cancellation_token_http/http.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' hide Theme;
 import 'package:flutter_black_white/models/response_listings.dart';
 import 'package:flutter_black_white/modules/maps/map_card_small.dart';
 import 'package:flutter_black_white/providers/maplist_provider.dart';
-import 'package:flutter_black_white/utils/geolocation_app.dart';
-import 'package:flutter_black_white/widgets/loadable_widget.dart';
-import 'package:flutter_black_white/widgets/maptiler_widget.dart';
+import 'package:flutter_black_white/modules/maps/widgets/maptiler_widget.dart';
+import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_map/flutter_map.dart';
+// import 'package:flutter_map_supercluster/flutter_map_supercluster.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
-import 'package:vector_map_tiles/vector_map_tiles.dart';
 
+///Widgete that receives a configuration to display the list of residences and maps.
 class MapResidencesSearch extends StatefulWidget {
-  final Style style;
-  final TileOffset tileOffset;
-  final bool isFilter;
+  final LatLng coordinates;
+  final MapListProvider mapListProvider;
+  final CancellationToken tokenHttpCancelation;
 
-  const MapResidencesSearch({super.key, required this.style, this.tileOffset = TileOffset.DEFAULT, this.isFilter = false});
+  const MapResidencesSearch({super.key, required this.coordinates, required this.mapListProvider, required this.tokenHttpCancelation});
 
   @override
   State<MapResidencesSearch> createState() => _MapResidencesSearchState();
 }
 
 class _MapResidencesSearchState extends State<MapResidencesSearch> {
-  late List<Listing> listingsData;
   late List<Marker> markersList;
-  late MapListProvider mapListProvider;
+  late List<Listing> coordinatesMarkers;
+  late final ScrollController _scrollController;
+
+  // late MapListProvider widget.mapListProvider;
+  bool isLoading = true;
 
   @override
   void initState() {
-    listingsData = [];
+    _scrollController = ScrollController();
     markersList = [];
+    coordinatesMarkers = [];
+    // _mapListProvider = context.read<MapListProvider>();
+    // widget.mapListProvider.initData();
+
+    widget.mapListProvider.getLocationsResidences(widget.coordinates, widget.tokenHttpCancelation);
     super.initState();
-    MapListProvider.intiConfig(context);
+  }
+
+  @override
+  void dispose() {
+
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Provider.of<MapListProvider>(context, listen: false).listingSelected = [];
-        listingsData = [];
+        widget.mapListProvider.closeAsync();
+        widget.mapListProvider.listingSelected = [];
+
         return true;
       },
-      child: FutureBuilder<LatLng>(
-          future: GeolocationApp().getPosition(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const LoadWidget();
-            }
-
-            var value = snapshot.data ?? LatLng(0, 0);
-
-            if (listingsData.isEmpty) {
-              return _mapWidget(value, context);
-            }
-
-            return _mapTilerList(value, listingsData, context);
-          }),
+      child: Stack(
+        children: [
+          _mapTilerList(context),
+          getIsLoad()
+              ? const LinearProgressIndicator(
+                  backgroundColor: kWarningColor,
+                  valueColor: AlwaysStoppedAnimation<Color>(kSecondaryColor),
+                )
+              : Container(),
+        ],
+      ),
     );
   }
 
-  Widget _mapWidget(LatLng coordinates, BuildContext context) {
-    return FutureBuilder<List<Listing>>(
-        future: MapListProvider().getLocationsResidences(widget.isFilter),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const LoadWidget();
-          }
+  Widget _mapTilerList(BuildContext context) {
+    if (markersList.isEmpty) {
+      markersList = Provider.of<MapListProvider>(context).selectedCluster;
+    }
 
-          var data = snapshot.data ?? [];
+    return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+      double screenHeight = constraints.maxHeight;
+      double cardHeight = screenHeight * 0.25;
 
-          if (listingsData.isEmpty) {
-            listingsData = data;
-          }
-
-          return _mapTilerList(coordinates, data, context);
-        });
+      return StreamBuilder<List<Listing>>(
+          initialData: const [],
+          stream: widget.mapListProvider.listingStreams,
+          builder: (context, snapshot) {
+            final List<Listing> listings = snapshot.hasData ? snapshot.data! : [];
+            return _mapBuildMap(listings, context, cardHeight);
+          });
+    });
   }
 
-  Widget _mapTilerList(LatLng coordinates, List<Listing> data, BuildContext context) {
-    if (markersList.isEmpty) {
-      markersList = Provider.of<MapListProvider>(context).selectedCluster;      
-    }
+  MapTilerWidget _mapBuildMap(List<Listing> listings, BuildContext context, double cardHeight) {
     return MapTilerWidget(
-        center: coordinates,
-        listCoordinates: data,
+        key: const Key("MapTiler"),
+        center: widget.coordinates,
+        isLoading: isLoading,
+        listCoordinates: listings,
         selectedCluster: markersList,
-        cards: _scrollListing(context),
-        onClusterTap: (markerClusred) {
-          onTapMarkers(markerClusred.mapMarkers, data, context);
+        cards: _scrollListing(context, cardHeight),
+        onClusterTap: (markerClusred, List<Listing> listingSelected) {
+          onTapMarkers(markerClusred, listingSelected);
         },
-        onTapMarker: (mapMarkers) {
-          onTapMarkers(mapMarkers, data, context);
+        onTapMarker: (mapMarkers, listingSelected) {
+          onTapMarkers(mapMarkers, listingSelected);
         },
         changeZoom: (mapEvent) {
-          Provider.of<MapListProvider>(context, listen: false).selectedCluster = [];          
+          widget.mapListProvider.selectedCluster = [];
           markersList = [];
         },
-        zoom: 5,
-        isMultiple: true,
-        layerFactory: (context, layerMode) => VectorTileLayer(
-            tileProviders: widget.style.providers, theme: widget.style.theme, layerMode: layerMode, tileOffset: widget.tileOffset));
+        zoom: 10,
+        isMultiple: true);
   }
 
-  void onTapMarkers(List<Marker>  mapMarkers, List<Listing> listCoordinates, BuildContext context) async {
-    Provider.of<MapListProvider>(context, listen: false).getFileterListings(mapMarkers, listCoordinates);
-    Provider.of<MapListProvider>(context, listen: false).selectedCluster = mapMarkers;
+  void onTapMarkers(List<Marker> mapMarkers, List<Listing> listingSelected) async {
+    widget.mapListProvider.getFilterListings(listingSelected);
+    widget.mapListProvider.selectedCluster = mapMarkers;
     markersList = [];
+
+
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        0.0,
+        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 300),
+      );
+    }
+
   }
 
-  Widget _scrollListing(BuildContext context) {
-    var providerMapList = Provider.of<MapListProvider>(context);
+  Widget _scrollListing(BuildContext context, double cardHeight) {
+    if (markersList.isEmpty) {
+      widget.mapListProvider.listingSelected = [];
+    }
+
+    final List<Listing> listingSelected = Provider.of<MapListProvider>(context).listingSelected;
 
     return Visibility(
-      visible: markersList.isNotEmpty,
-      child: Container(
-        width: double.infinity,
-        height: 230,
-        color: const Color(0XFF09B68D),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 2, bottom: 15, left: 15, right: 15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "${providerMapList.listingSelected.length} listings in total",
-                    style: const TextStyle(color: Colors.white, fontSize: 14.8),
+      visible: listingSelected.isNotEmpty,
+      child: AspectRatio(
+        aspectRatio: 16 / 9,
+        child: Container(
+          width: double.infinity,
+          height: cardHeight * 1.5,
+          color: kSecondaryColor,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 2, bottom: 15, left: 15, right: 15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Flexible(
+                  flex: 1,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "${listingSelected.length} listings in total",
+                        style: const TextStyle(color: Colors.white, fontSize: 14.8),
+                      ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.close,
+                          color: Colors.white,
+                          size: 25,
+                        ),
+                        onPressed: () {
+                          widget.mapListProvider.selectedCluster = [];
+                          // context.watch<MapListProvider>().selectedCluster = [];
+                          markersList = [];
+                        },
+                      ),
+                    ],
                   ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.close,
-                      color: Colors.white,
-                      size: 32,
-                    ),
-                    onPressed: () {
-                      Provider.of<MapListProvider>(context, listen: false).selectedCluster = [];
-                      markersList = [];
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 155,
-                child: ListView.builder(
-                    padding: const EdgeInsets.all(0),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: providerMapList.listingSelected.length,
-                    itemBuilder: (_, index) {
-                      return Container(
-                        padding: const EdgeInsets.all(0),
-                        width: 320,
-                        height: 137,
-                        margin: const EdgeInsets.only(right: 10),
-                        child: MapCardSmall(providerMapList.listingSelected[index]),
-                      );
-                    }),
-              ),
-              Expanded(child: Container())
-            ],
+                ),
+                const SizedBox(height: 10),
+                Flexible(
+                  flex: 3,
+                  child: ListView.builder(
+                      controller: _scrollController,
+                      padding: const EdgeInsets.all(0),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: listingSelected.length,
+                      shrinkWrap: true,
+                      itemBuilder: (_, index) {
+                        return FittedBox(
+                          alignment: Alignment.topCenter,
+                          fit: BoxFit.scaleDown,
+                          child: Container(
+                            padding: const EdgeInsets.all(0),
+                            width: 320,
+                            height: 150,
+                            margin: const EdgeInsets.only(right: 8),
+                            child: MapCardSmall(key: Key("$index"), listingSelected[index]),
+                          ),
+                        );
+                      }),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  bool getIsLoad() {
+    // isLoading = context.select((MapListProvider m) => m.loadMap);
+    isLoading = Provider.of<MapListProvider>(context).loadMap;
+
+    return isLoading;
   }
 }

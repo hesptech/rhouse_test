@@ -29,30 +29,60 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  firebase_core: ^1.21.0
-  firebase_auth: ^3.6.4
-  provider: ^6.0.3
-  google_fonts: ^3.0.1
-  shared_preferences: ^2.0.15
-  geolocator: ^8.2.1
-  http: ^0.13.4
-  flutter_dotenv: ^5.0.2
+  provider: ^6.1.1
+  google_fonts: ^6.1.0
+  shared_preferences: ^2.2.1
+  geolocator: ^10.1.0
+  http: ^1.1.0
+  flutter_dotenv: ^5.1.0
 
-  flutter_map: ^3.1.0
-  latlong2: ^0.8.1
-  flutter_map_marker_cluster: ^1.1.0
-  vector_map_tiles: ^3.3.5 
-  connectivity_plus: ^3.0.6
-  vector_tile_renderer: ^3.2.1
+  flutter_map: any
+  latlong2: ^0.9.0
+  flutter_map_marker_cluster: any
+  vector_map_tiles: ^6.0.1
+  connectivity_plus: ^4.0.2
+  carousel_slider: ^4.2.1
+  smooth_page_indicator: ^1.1.0
+  rxdart: ^0.27.7
+  flutter_secure_storage: ^9.0.0
+  intl: ^0.18.1
+  currency_text_input_formatter: ^2.1.10 
+  cancellation_token_http: ^2.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_native_splash: ^2.2.19
+  flutter_launcher_icons: ^0.13.1
+  flutter_lints: ^2.0.2
+
+
+flutter_icons:
+  ios: true
+  android: true
+  image_path: "assets/icon_app_main.png"
+  min_sdk_android: 20  
+
+
+flutter_native_splash:
+  color: "#2E3191"
+  image: assets/splash_app_main_6.png
+  color_dark: "#2E3191"
+  image_dark: assets/splash_app_main_6.png
+  fullscreen: true
+  # branding: assets/splash_app_main.png
+  # branding_dark: assets/splash_app_main.png
+
+  android_12:
+    image: assets/splash_app_main_6.png
+    icon_background_color: "#2E3191"
+    image_dark: assets/splash_app_main_6.png
+    icon_background_color_dark: "#2E3191"
+    fullscreen: true
+
+  web: false  
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -76,6 +106,8 @@ flutter:
   assets:
      - assets/
      - assets/icons_methods/
+     - assets/logos/
+     - assets/no_images_subs/    
      - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see

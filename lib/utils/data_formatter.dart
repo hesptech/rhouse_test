@@ -1,5 +1,5 @@
 import 'package:flutter_black_white/models/models.dart';
-
+import 'package:intl/intl.dart';
 
 class DataFormatter {
 
@@ -20,9 +20,22 @@ class DataFormatter {
     return listingEntryDate();
   }
 
+  String listingEntryDateSold() {
+    DateTime listingSoldDate = listing.soldDate?? DateTime.now();
+    DateTime addDt = DateTime.now();
+    Duration diffDt = addDt.difference(listingSoldDate);
+    final formattedSoldDate = diffDt.inDays == 0 ? 'SOLD today' : diffDt.inDays == 1 ? 'SOLD ${diffDt.inDays} day ago' : 'SOLD ${diffDt.inDays} days ago';
+    return formattedSoldDate;
+  }
+
+
+  String get listEntryDateSold {
+    return listingEntryDateSold();
+  }
+
 
   String listingListPrice() {
-    String listPrice = listing.listPrice?? '' ;
+    String listPrice = listing.listPrice?? '0.00' ;
     double doubleString = double.parse(listPrice);
     String formattedPrice = '\$${doubleString.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}';
     return formattedPrice;
@@ -30,6 +43,18 @@ class DataFormatter {
 
   String get listPrice {
     return listingListPrice();
+  }
+
+  String listingSoldPrice() {
+    String soldPrice = listing.soldPrice?? '0.00' ;
+    double doubleString = double.parse(soldPrice);
+    String formattedPrice = '\$${doubleString.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}';
+    return formattedPrice;
+  }
+
+
+  String get soldPrice {
+    return listingSoldPrice();
   }
 
 
@@ -117,6 +142,70 @@ class DataFormatter {
   String get lotSqft {
     return listingLotSqft();
   }
+
+
+  // Openhouse
+  String listingOpenHouse() {
+    final Map<String, OpenHouse>? openHouseData = listing.openHouse;
+    String openHouseDateDisplay = '';
+
+    for (var value in openHouseData!.values) {
+      if(value.date.isNotEmpty && value.date != '') {
+      //print('value date:  ${value.date}');
+        //var parsedDate = DateTime.parse(value.date!.substring(0, 10));
+        DateTime parsedDate = DateTime.parse(value.date);
+        String dateFormat = DateFormat('dd-MM-yyyy').format(parsedDate);
+
+        DateTime now = DateTime.now();
+        DateFormat formatter = DateFormat('dd-MM-yyyy');
+        String formatted = formatter.format(now);
+        
+        //print('$formatted $dateFormat');
+
+        List splittedStartTime = value.startTime.split(':');
+        List splittedEndTime = value.endTime.split(':');
+        String startTime = splittedStartTime[0];
+        String endTime = splittedEndTime[0];
+
+        List splittedAmPmFirst = value.startTime.split(' ');
+        List splittedAmPmSecond = value.endTime.split(' ');
+        String firstTime = splittedAmPmFirst[1];
+        String secondTime = splittedAmPmSecond[1];
+
+        if(formatted == dateFormat) {
+          //print('after: ${value.date!.substring(0, 10)}');
+          //openHouseDateDisplay = 'after ${dateFormat}';
+          openHouseDateDisplay = 'TODAY $startTime-$endTime$secondTime';
+          break;
+        } else if (parsedDate.isAfter(DateTime.now())){
+          //print('after: ${value.date!.substring(0, 10)}');
+          //openHouseDateDisplay = 'after ${dateFormat}';
+          String dateWeekFormat = DateFormat('EEEE').format(parsedDate).substring(0, 3);
+          //String dateDD = DateFormat('dd').format(parsedDate);
+
+
+
+
+          //openHouseDateDisplay = dateFormat;
+          //openHouseDateDisplay = ' $dateWeekFormat. $dateDD, ${value.startTime} ${value.endTime}';
+          openHouseDateDisplay = '$dateWeekFormat, $startTime-$endTime$secondTime';
+          break;
+        } else if (parsedDate.isBefore(DateTime.now()) || dateFormat != ''){
+          //print('before: ${parsedDate}');
+          //openHouseDateDisplay = 'before ${parsedDate}';
+          //break;
+        }
+      } else {
+        //openHouseDateDisplay = '';
+      }      
+    }
+
+    return openHouseDateDisplay;
+  }
+
+  String get openHouse {
+    return listingOpenHouse();
+  } 
 
 
   bool emptyDataCheck( String value ) {

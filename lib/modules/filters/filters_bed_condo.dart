@@ -43,39 +43,43 @@ class _FiltersBedCondoState extends State<FiltersBedCondo> {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB( 24.0, 28.0, 24.0, 0.0 ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Wrap(
+                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
+                  const Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text('MINIMUM', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: kSecondaryColor),),
                       Text('BEDROOMS', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kSecondaryColor),),
                     ],
                   ),
-                  Wrap(
-                    children: propertiesBedCondoWidgets.toList(),
+                  Row(
+                    children: [
+                      Wrap(
+                        children: propertiesBedCondoWidgets.toList(),
+                      ),
+                      ChoiceChip(
+                        label: Container(
+                          width: 30,
+                          alignment: Alignment.center,
+                          child: Text('DEN', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: _den ? Colors.white : kPrimaryColor  ), ),
+                        ), 
+                        labelPadding: const EdgeInsets.all(0.0),
+                        backgroundColor: const Color(0xFFFFFFFF),
+                        selectedColor: kPrimaryColor,
+                        shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
+                        side: const BorderSide( color: kPrimaryColor ),
+                        selected: _den,
+                        onSelected: ( bool selected ) {
+                          setState(() {
+                            _den = selected;
+                          });
+                          Preferences.filtersDen = _den ? 'Y' : 'N';
+                        },
+                      ),
+                    ],
                   ),
-                  ChoiceChip(
-                    label: Container(
-                      width: 30,
-                      alignment: Alignment.center,
-                      child: Text('DEN', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: _den ? Colors.white : kPrimaryColor  ), ),
-                    ), 
-                    labelPadding: const EdgeInsets.all(0.0),
-                    backgroundColor: const Color(0xFFFFFFFF),
-                    selectedColor: kPrimaryColor,
-                    shape: const RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.all(Radius.circular(8))),
-                    side: const BorderSide( color: kPrimaryColor ),
-                    selected: _den,
-                    onSelected: ( bool selected ) {
-                      setState(() {
-                        _den = selected;
-                      });
-                      Preferences.filtersDen = _den ? 'Y' : 'N';
-                    },
-                  )
                 ],
               ),
             ),        

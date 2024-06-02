@@ -12,20 +12,28 @@ class FiltersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var pathArgument = _checkArguments(context);
+
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       appBar: AppBar(
-        elevation: 0.0,
+        bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(5.0),
+            child: Container(
+              height: 5.0,
+              color: kSecondaryColor,
+            )),
+        //elevation: 0.0,
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            if (pathArgument == MapScreen.path) {
+            if (pathArgument == MapScreen.pathScreen) {
               if (Preferences.isCleanFilter) {
-                Navigator.pushNamed(context, MapScreen.path, arguments: {'filter': "false", 'mlsNumber': ''});
-                Preferences.isCleanFilter = false;
-              } else {
-                Navigator.of(context).pop();
+                Navigator.popUntil(context, ModalRoute.withName(MapScreen.pathScreen));
+                // Preferences.isCleanFilter = false;
+                return;
               }
+
+              Navigator.pop(context);
             } else {
               Navigator.pushNamed(context, '/');
             }
@@ -34,29 +42,27 @@ class FiltersScreen extends StatelessWidget {
         ),
         title: const Text('Personalize Listing'),
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 5,
-              color: kSecondaryColor,
-            ),
-            const FiltersPriceSlider(),
-            const FiltersClassIconBt(),
-            const SizedBox(
-              height: 28.0,
-            ),
-            const GreenDivider(),
-            const FiltersPropertyType(),
-            const GreenDivider(),
-            pathArgument != MapScreen.path ? const FiltersLocation() : Container(),
-            const GreenDivider(),
-            const FiltersBathbedpark(),
-            const FiltersMore(),
-          ],
-        ),
-      ),
+      body: LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+        return SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: <Widget>[
+              const FiltersPriceSlider(),
+              const FiltersClassIconBt(),
+              const SizedBox(
+                height: 24.0,
+              ),
+              const GreenDivider(),
+              const FiltersPropertyType(),
+              const GreenDivider(),
+              pathArgument != MapScreen.pathScreen ? const FiltersLocation() : Container(),
+              const GreenDivider(),
+              const FiltersBathbedpark(),
+              const FiltersMore(),
+            ],
+          ),
+        );
+      }),
       bottomNavigationBar: FiltersBottomBar(pathScreen: pathArgument),
     );
   }
@@ -64,7 +70,6 @@ class FiltersScreen extends StatelessWidget {
   String _checkArguments(BuildContext context) {
     final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
 
-    return arguments["screenPath"].toString() == MapScreen.path ? MapScreen.path : "/";
-    
+    return arguments["screenPath"].toString() == MapScreen.pathScreen ? MapScreen.pathScreen : "/";
   }
 }

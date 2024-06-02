@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/config/filters_data_locations.dart';
 
 class FiltersGtaNorth extends StatefulWidget {
   const FiltersGtaNorth({Key? key}) : super(key: key);
@@ -21,27 +22,15 @@ class _FiltersGtaNorthState extends State<FiltersGtaNorth> {
 
   bool citySelectAll = Preferences.filtersGtaNorth.length == 9 ? true : false ;
 
-  List<List<String>> gtaNorthDistricts = [
-    ['Vaughan'],
-    ['Markham'],
-    ['Richmond Hill'],
-  ];
-
-  List<List<String>> gtaNorthOtherDistricts = [
-    ['Newmarket'],
-    ['Aurora'],
-    ['King'],
-    ['Whitchurch-Stouffville'],
-    ['Georgina'],
-    ['East Gwillimbury'],
-  ];
+  List<List<String>> gtaNorthDistricts = codesGtaNorth;
+  List<List<String>> gtaNorthOtherDistricts = codesGtaNorthOther;
 
   @override
   void initState() {
     super.initState();
 
     _openCloseIcons = <bool>[
-      false,
+      true,
     ];
     
     _propertiesGtaNorth = <PropertiesGtaNorth>[
@@ -66,6 +55,7 @@ class _FiltersGtaNorthState extends State<FiltersGtaNorth> {
 
     return 
       ExpansionTile(
+        initiallyExpanded: true,
         title: const Text('GTA North', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.w500, ),),
         trailing: Icon(
           _openCloseIcons[0] ? Icons.remove : Icons.add,
@@ -79,6 +69,10 @@ class _FiltersGtaNorthState extends State<FiltersGtaNorth> {
               TextButton(
                 onPressed: () {
                   setState(() {
+
+                    Provider.of<FilterProvider>(context, listen: false).resetLocationTopbts();
+                    _filtersGtaNorth = Preferences.filtersGtaNorth;
+
                     for (var element in _propertiesGtaNorth) {
                       _filtersGtaNorth.remove(element.name) ;
                     }
@@ -140,9 +134,9 @@ class _FiltersGtaNorthState extends State<FiltersGtaNorth> {
           Wrap(
             children: propertiesGtaNorthWidgets.toList(),
           ),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
+            children: [
               SizedBox( width: 16.0, height: 42.0,),
               Text('Other', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.w500, ), textAlign: TextAlign.start, ),
             ],
@@ -176,6 +170,10 @@ class _FiltersGtaNorthState extends State<FiltersGtaNorth> {
           selected: _filtersGtaNorth.contains(propertiesGtaNorth.name),
           onSelected: ( bool selected ) {
             setState(() {
+
+                Provider.of<FilterProvider>(context, listen: false).resetLocationTopbts();
+                _filtersGtaNorth = Preferences.filtersGtaNorth;
+
                 selected ? _filtersGtaNorth.add(propertiesGtaNorth.name) : _filtersGtaNorth.removeWhere((String name) => name == propertiesGtaNorth.name) ;
                 Preferences.filtersGtaNorth = _filtersGtaNorth;
 
@@ -217,6 +215,10 @@ class _FiltersGtaNorthState extends State<FiltersGtaNorth> {
           selected: _filtersGtaNorth.contains(propertiesGtaNorthOther.name),
           onSelected: ( bool selected ) {
             setState(() {
+
+                Provider.of<FilterProvider>(context, listen: false).resetLocationTopbts();
+                _filtersGtaNorth = Preferences.filtersGtaNorth;
+                
                 selected ? _filtersGtaNorth.add(propertiesGtaNorthOther.name) : _filtersGtaNorth.removeWhere((String name) => name == propertiesGtaNorthOther.name) ;
                 Preferences.filtersGtaNorth = _filtersGtaNorth;
 

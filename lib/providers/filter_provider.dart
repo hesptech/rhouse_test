@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
+import 'package:flutter_black_white/config/filters_data_locations.dart';
 
 class FilterProvider extends ChangeNotifier {
+
   String _filterProvider = Preferences.filtersClassIconsBt == 'residential' ? 'residential' : 'condo';
+  List<String> _filtersLocationTopbts = Preferences.filtersLocationTopbts;
   List<String> _filtersLocation = Preferences.userFiltersCity;
   List<String> _filtersPropertyTypeHouse = Preferences.filtersPropertyTypeHouse;
   List<String> _filtersStyleHouse = Preferences.getfiltersIndexStyleHouse();
   List<String> _filtersStyleCondo = Preferences.getfiltersIndexStyleCondo();
   List<String> _filtersAmmenities = Preferences.getfiltersIndexAmmenities();
   List<String> _filtersBasement = Preferences.getfiltersIndexBasement();
+  List<String> _filtersStatusProperties = Preferences.filtersStatusProperties;
+  bool _cardGamePriceDisplay = false;
+  bool _cardGamePriceDisplayBtTxt = false;
+  List<String> _favoritesTemp = [];
+  List<String> _gameTemp = [];
+  Map<String, String> _gameTempObj = {};
 
   String get filterProvider {
     return _filterProvider;
@@ -25,6 +34,15 @@ class FilterProvider extends ChangeNotifier {
 
   set filtersLocation(List<String> value) {
     _filtersLocation = value;
+    notifyListeners();
+  }
+
+  List<String> get filtersLocationTopbts {
+    return _filtersLocationTopbts;
+  }
+
+  set filtersLocationTopbts( List<String> value ) {
+    _filtersLocationTopbts = value;
     notifyListeners();
   }
 
@@ -70,6 +88,60 @@ class FilterProvider extends ChangeNotifier {
 
   set filtersAmmenities(List<String> value) {
     _filtersAmmenities = value;
+    notifyListeners();
+  }
+
+  List<String> get filtersStatusProperties {
+    return _filtersStatusProperties;
+  }
+
+  set filtersStatusProperties( List<String> value ) {
+    _filtersStatusProperties = value;
+    notifyListeners();
+  }
+
+  bool get cardGamePriceDisplay {
+    return _cardGamePriceDisplay;
+  }
+
+  set cardGamePriceDisplay( bool value ) {
+    _cardGamePriceDisplay = value;
+    notifyListeners();
+  }
+
+  bool get cardGamePriceDisplayBtTxt {
+    return _cardGamePriceDisplayBtTxt;
+  }
+
+  set cardGamePriceDisplayBtTxt( bool value ) {
+    _cardGamePriceDisplayBtTxt = value;
+    notifyListeners();
+  }
+
+  List<String> get favoritesTemp {
+    return _favoritesTemp;
+  }
+
+  set favoritesTemp( List<String> value ) {
+    _favoritesTemp = value;
+    notifyListeners();
+  }
+
+  List<String> get gameTemp {
+    return _gameTemp;
+  }
+
+  set gameTemp( List<String> value ) {
+    _gameTemp = value;
+    notifyListeners();
+  }
+
+  Map<String, String> get gameTempObj {
+    return _gameTempObj;
+  }
+
+  set gameTempObj( Map<String, String> value ) {
+    _gameTempObj = value;
     notifyListeners();
   }
 
@@ -120,7 +192,54 @@ class FilterProvider extends ChangeNotifier {
     Preferences.setfiltersIndexStyleCondo([]);
     Preferences.setfiltersIndexBasement([]);
     Preferences.setfiltersIndexAmmenities([]);
+    Preferences.isFilter = false;
     Preferences.isCleanFilter = true;
+  }
 
+  void resetLocationsOnly() {
+    Preferences.filtersTrCentral = [];
+    Preferences.filtersTrEast = [];
+    Preferences.filtersTrWest = [];
+    Preferences.filtersGtaWest = [];
+    Preferences.filtersGtaNorth = [];
+    Preferences.filtersGtaEast = [];
+    Preferences.filtersOther = [];  
+  }
+
+ void resetLocationTopbts() {
+    if (Preferences.filtersLocationTopbts.contains('TORONTO') || Preferences.filtersLocationTopbts.contains('Suburbs - Outskirts')) {
+      _filtersLocationTopbts = [];
+
+      List propertiesLocationTopbtsKey = [];
+      List<List<String>> propertiesLocationTopbtsValue = [];
+
+      locationTopbt.forEach( (key, value) {
+        propertiesLocationTopbtsKey.add(key);
+      });
+
+      locationTopbt.forEach( (key, value) {
+        propertiesLocationTopbtsValue.add(value);
+      });
+
+      for (var element in propertiesLocationTopbtsKey) {
+
+        for(int i = 0; i < propertiesLocationTopbtsValue[propertiesLocationTopbtsKey.indexOf(element)].length; ++i){
+          if(Preferences.userFiltersCity.contains(propertiesLocationTopbtsValue[propertiesLocationTopbtsKey.indexOf(element)][i])){
+            Preferences.userFiltersCity.removeWhere((String name) => name == propertiesLocationTopbtsValue[propertiesLocationTopbtsKey.indexOf(element)][i]);
+            filtersLocation.removeWhere((String name) => name == propertiesLocationTopbtsValue[propertiesLocationTopbtsKey.indexOf(element)][i]);
+
+            //print(propertiesLocationTopbtsValue[propertiesLocationTopbtsKey.indexOf(element)][i]);
+          }
+        } 
+      } 
+
+      Preferences.filtersLocationTopbts = [];
+
+      //print(filtersLocationTopbts); 
+      //print('one or other');
+    } else {
+      //print('NONE');
+    }
+    //notifyListeners();
   }
 }

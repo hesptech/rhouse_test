@@ -1,10 +1,14 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
+import 'package:flutter_black_white/screens/map_screen.dart';
+import 'package:flutter_black_white/utils/card_full_description_arguments.dart';
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/utils/data_formatter.dart';
 
+///Widget that displays a summary information card and is used to list properties on the map.
 class MapCardSmall extends StatelessWidget {
   final Listing listing;
   final bool loggedIn = true;
@@ -16,17 +20,17 @@ class MapCardSmall extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dataFormatted = DataFormatter(listing);
+    final DataFormatter dataFormatted = DataFormatter(listing);
 
-    const loggedIn = true;
-    const blurImg = loggedIn == false ? 5.0 : 0.0;
+    const bool loggedIn = true;
+    const double blurImg = loggedIn == false ? 5.0 : 0.0;
 
-    // Gen. Info
     final String images = listing.images?.first ?? '';
 
     return Card(
-        clipBehavior: Clip.antiAlias,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
         shape: RoundedRectangleBorder(
+          side: const BorderSide(color: kPrimaryColor, width: 2),
           borderRadius: BorderRadius.circular(0),
         ),
         child: Padding(
@@ -36,16 +40,19 @@ class MapCardSmall extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   if (loggedIn) {
-                    Navigator.pushNamed(context, 'card_details_full_screen', arguments: listing);
+                    Navigator.pushNamed(context, 'card_details_full_screen', arguments: CardFullDescriptionArguments(listing, MapScreen.pathScreen));
                   }
                 },
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        _columnHead(listing, dataFormatted, images),
-                        Expanded(child: _detailsBody(dataFormatted, context)),
-                      ],
+                    Flexible(
+                      // flex: 1,
+                      child: Row(
+                        children: [
+                          _columnHead(listing, dataFormatted, images),
+                          Expanded(child: _detailsBody(dataFormatted, context)),
+                        ],
+                      ),
                     ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +61,7 @@ class MapCardSmall extends StatelessWidget {
                         _entryDateWidget(listing, dataFormatted),
                         Expanded(child: _detailsResidence(dataFormatted)),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -62,8 +69,6 @@ class MapCardSmall extends StatelessWidget {
   }
 
   Widget _detailsBody(DataFormatter dataFormatted, BuildContext context) {
-    final String propertyType = listing.details?.propertyType ?? '';
-
     String neighborhood = listing.address?.neighborhood ?? '';
     final String city = listing.address?.city ?? '';
     final String cityArea = listing.address?.area == 'Toronto' ? 'Toronto' : city;
@@ -76,46 +81,41 @@ class MapCardSmall extends StatelessWidget {
       neighborhood == 'Waterfront Communities East';
     }
 
-    final String finalAddress2 = '$neighborhood, $cityArea';
-    String finalAddress3 = '';
-    if (finalAddress2.length > 30) {
-      finalAddress3 = '${finalAddress2.substring(0, 30)}...';
-    } else {
-      finalAddress3 = finalAddress2;
-    }
-
     return Padding(
       padding: const EdgeInsets.only(left: 5.0, top: 5, right: 5),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            '${dataFormatted.listPrice} ',
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-            textAlign: TextAlign.justify,
-            softWrap: true,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF2D368F),
+          FittedBox(
+            child: Text(
+              '${dataFormatted.listPrice} ',
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              textAlign: TextAlign.justify,
+              softWrap: true,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: kPrimaryColor,
+              ),
             ),
           ),
           const SizedBox(height: 3),
           Text(
             dataFormatted.address,
-            maxLines: 1,
-            style: const TextStyle(fontSize: 12, color: Color(0xFF58595B)),
+            maxLines: 2,
+            softWrap: true,
+            style: const TextStyle(fontSize: 10, color: Color(0xFF58595B)),
             overflow: TextOverflow.ellipsis,
           ),
           Text(
-            finalAddress3,
+            '$neighborhood, $cityArea',
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             softWrap: true,
             style: const TextStyle(
-              fontSize: 12,
+              fontSize: 10,
               color: Color(0xFF58595B),
             ),
           ),
@@ -126,12 +126,12 @@ class MapCardSmall extends StatelessWidget {
               border: Border.all(color: kPrimaryColor),
             ),
             child: Text(
-              propertyType,
+              listing.details?.propertyType ?? '',
               maxLines: 1,
               softWrap: true,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
-                fontSize: 12,
+                fontSize: 10,
                 color: kPrimaryColor,
               ),
             ),
@@ -142,8 +142,6 @@ class MapCardSmall extends StatelessWidget {
   }
 
   Widget _detailsResidence(DataFormatter dataFormatted) {
-    final String numBathrooms = listing.details?.numBathrooms ?? '';
-
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -161,7 +159,7 @@ class MapCardSmall extends StatelessWidget {
               children: [
                 const Icon(
                   Icons.king_bed_outlined,
-                  color: Color(0xFF0BB48B),
+                  color: kSecondaryColor,
                   size: 20,
                 ),
                 const SizedBox(
@@ -192,8 +190,7 @@ class MapCardSmall extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: 5),
           decoration: const BoxDecoration(
             border: Border(
-              left: BorderSide(color: Color(0xFF0BB48B)),
-              
+              left: BorderSide(color: kSecondaryColor),
             ),
           ),
           child: Padding(
@@ -204,7 +201,7 @@ class MapCardSmall extends StatelessWidget {
               children: [
                 const Icon(
                   Icons.shower_outlined,
-                  color: Color(0xFF0BB48B),
+                  color: kSecondaryColor,
                   size: 20,
                 ),
                 const SizedBox(
@@ -212,7 +209,7 @@ class MapCardSmall extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    numBathrooms,
+                    listing.details?.numBathrooms ?? '',
                     overflow: TextOverflow.ellipsis,
                     softWrap: true,
                     maxLines: 1,
@@ -234,7 +231,7 @@ class MapCardSmall extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: 5),
           decoration: const BoxDecoration(
             border: Border(
-              left: BorderSide(color: Color(0xFF0BB48B)),
+              left: BorderSide(color: kSecondaryColor),
             ),
           ),
           child: Padding(
@@ -244,7 +241,7 @@ class MapCardSmall extends StatelessWidget {
               children: [
                 const Icon(
                   Icons.directions_car_filled_outlined,
-                  color: Color(0xFF0BB48B),
+                  color: kSecondaryColor,
                   size: 20,
                 ),
                 const SizedBox(
@@ -253,9 +250,9 @@ class MapCardSmall extends StatelessWidget {
                 Expanded(
                   child: Text(
                     dataFormatted.numParkingSpaces,
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: true,
-                      maxLines: 1,                
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: true,
+                    maxLines: 1,
                     style: const TextStyle(
                       color: Color(0xFF666597),
                       fontWeight: FontWeight.bold,
@@ -273,16 +270,49 @@ class MapCardSmall extends StatelessWidget {
   }
 
   Widget _columnHead(Listing listing, DataFormatter dataFormatted, String images) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 5, top: 5),
-      child: FadeInImage(
-        placeholder: const AssetImage('assets/no-image.jpg'),
-        image: NetworkImage('https://cdn.repliers.io/$images?w=500'),
-        width: 140,
-        height: 116.8,
-        fit: BoxFit.cover,
-        fadeInDuration: const Duration(milliseconds: 300),
-      ),
+    return Stack(
+      alignment: Alignment.topCenter,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 5, top: 5),
+          child: FadeInImage(
+            placeholder: const AssetImage('assets/no_images_subs/no-image.jpg'),
+            image: NetworkImage('$kRepliersCdn$images?class=small'),
+            width: 145,
+            height: 116.8,
+            fit: BoxFit.cover,
+            fadeInDuration: const Duration(milliseconds: 300),
+          ),
+        ),
+        if(dataFormatted.openHouse != '') Padding(
+          padding: const EdgeInsets.only(left: 5.0),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              alignment: Alignment.bottomLeft,
+              backgroundColor: kPrimaryColor,
+              minimumSize: const Size(65.0, 22.0),
+              padding: const EdgeInsets.fromLTRB(7.0, 0.0, 7.0, 5.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+            onPressed: () {
+              //Navigator.pushNamed(context, 'details', arguments: movie);
+            },
+            child: Row(
+              children: [
+                const Text(
+                  'OPEN: ', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, height: 1.0, color: Colors.yellow),
+                ),
+                Text(
+                  dataFormatted.openHouse, 
+                  style: const TextStyle(fontSize: 11,  height: 1.0, color: Colors.yellow),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -298,7 +328,7 @@ class MapCardSmall extends StatelessWidget {
             children: [
               const Icon(
                 Icons.calendar_month_outlined,
-                color: Color(0XFF2D368F),
+                color: kPrimaryColor,
                 size: 15,
               ),
               const SizedBox(
@@ -309,7 +339,7 @@ class MapCardSmall extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     softWrap: true,
-                    style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w400, color: Color(0XFF2D368F))),
+                    style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w400, color: kPrimaryColor)),
               )
             ],
           ));
@@ -320,9 +350,7 @@ class MapCardSmall extends StatelessWidget {
         height: 25,
         margin: const EdgeInsets.only(top: 5, left: 10),
         child: ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF2D368F)),
-          ),
+          style: ElevatedButton.styleFrom(backgroundColor: kPrimaryColor),
           onPressed: () {
             //Navigator.pushNamed(context, 'details', arguments: listing);
           },

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/screens/map_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_black_white/utils/constants.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
+import 'package:flutter_black_white/utils/shared_preferences.dart';
+import 'package:flutter_black_white/screens/map_screen.dart';
 
 class FiltersBottomBar extends StatefulWidget {
   final String pathScreen;
@@ -16,12 +17,12 @@ class FiltersBottomBar extends StatefulWidget {
 class _FiltersBottomBarState extends State<FiltersBottomBar> {
   @override
   Widget build(BuildContext context) {
-    final filterProvider = Provider.of<FilterProvider>( context );
+    final filterProvider = Provider.of<FilterProvider>(context);
 
     return Container(
-      height: 75,
+      height: 68,
       color: kSecondaryColor,
-      padding: const EdgeInsets.fromLTRB(22.0, 14.0, 22.0, 0),
+      padding: const EdgeInsets.fromLTRB(22.0, 10.0, 22.0, 0),
       child: Column(
         children: [
           Row(children: [
@@ -41,12 +42,12 @@ class _FiltersBottomBarState extends State<FiltersBottomBar> {
                     Provider.of<FilterProvider>(context, listen: false).filtersStyleCondo = [];
                     Provider.of<FilterProvider>(context, listen: false).filtersBasement = [];
                     Provider.of<FilterProvider>(context, listen: false).filtersAmmenities = [];
+                    Provider.of<FilterProvider>(context, listen: false).filtersLocationTopbts = [];
 
-                    if (widget.pathScreen == MapScreen.path) {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, 'filters_screen', arguments: {'screenPath': MapScreen.path});
+                    if (widget.pathScreen == MapScreen.pathScreen) {
+                      Navigator.pushReplacementNamed(context, MapScreen.pathScreen, arguments: {'filter': "true"});
                     } else {
-                      Navigator.pushNamed(context, 'filters_screen');
+                      Navigator.pushNamed(context, '/');
                     }
                   });
                 },
@@ -62,13 +63,22 @@ class _FiltersBottomBarState extends State<FiltersBottomBar> {
             Expanded(
               flex: 1,
               child: OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: kPrimaryColor), backgroundColor: kPrimaryColor),
+                style: OutlinedButton.styleFrom(side: const BorderSide(color: kPrimaryColor), backgroundColor: kPrimaryColor),
                 onPressed: () {
-                  if (widget.pathScreen == MapScreen.path) {
-                    Navigator.pushNamed(context, MapScreen.path, arguments: {'filter': "true", 'mlsNumber': ''});
+                  Preferences.isFilter = true;
+
+                  if (widget.pathScreen == MapScreen.pathScreen) {
+                    // Navigator.pop(context);
+                    Preferences.isFilterSubmit = true;
+                    // Navigator.pushReplacementNamed(context, MapScreen.pathScreen);
+                    // Navigator.pushNamed(context, MapScreen.pathScreen);
+                    // Navigator.removeRoute(context, MaterialPageRoute(builder: (context) => const MapScreen()));
+                    Navigator.of(context).pushNamedAndRemoveUntil(MapScreen.pathScreen, (Route<dynamic> route) => false);
+                    // Navigator.of(context).popUntil(ModalRoute.withName(MapScreen.pathScreen));
+
+                    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => MapScreen()),);
                   } else {
-                    Navigator.pushNamed(context, 'filters_results_screen', arguments: 'Filtered results');
+                    Navigator.pushNamed(context, 'filters_results_screen');
                   }
                 },
                 child: const Text(

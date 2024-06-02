@@ -6,7 +6,7 @@ const kPrimaryColor = Color(0xFF2E3191);
 const kSecondaryColor = Color(0xFF0BB58C);
 const kWarningColor = Color(0xFFED1C24);
 const kClTxtInputFieldLog = Color(0xFF58595B);
-
+const kYellow =  Color.fromARGB(255, 255, 174, 0);
 
 // Text
 const TextStyle kStInputFieldLog = TextStyle(
@@ -21,3 +21,7 @@ const kLabels = ['1', '100000', '150000', '200000', '250000', '300000', '350000'
     '1000000', '1200000', '1300000', '1400000', '1500000', '1600000', '1700000', '1800000', '1900000', 
     '2000000', '2250000', '2500000', '2750000', '3000000', '3250000', '3500000', '3750000', '4000000', '4250000','4500000','4750000',
     '95000000'];
+
+
+
+    

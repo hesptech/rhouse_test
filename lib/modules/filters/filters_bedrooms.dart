@@ -38,18 +38,18 @@ class _FiltersBedroomsState extends State<FiltersBedrooms> {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB( 24.0, 28.0, 24.0, 0.0 ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Wrap(
+                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
+                  const Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text('MINIMUM', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: kSecondaryColor),),
                       Text('BEDROOMS', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kSecondaryColor),),
                     ],
                   ),
-                  Wrap(
+                  Row(
                     children: propertiesRoomsWidgets.toList(),
                   ),
                 ],

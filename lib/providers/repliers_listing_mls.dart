@@ -8,7 +8,7 @@ import 'package:flutter_black_white/models/models.dart';
 class RepliersListingMls extends ChangeNotifier {
 
   List<History> onDisplayHistory = [];
-
+  //ResponseListing onDisplayData = ResponseListing();
 
   Future<String> _getJsonData( dynamic endPoint ) async {
 
@@ -19,12 +19,16 @@ class RepliersListingMls extends ChangeNotifier {
 
     Map<String, String>? headers = { 'REPLIERS-API-KEY': dotenv.get('REPLIERS-API-KEY') };
 
-    final response = await http.get(url, headers: headers);
-
-    if ( response.statusCode == 200 ) {
-      return response.body;
-    } else {
-      return processResponse(response);
+    try {
+      final response = await http.get(url, headers: headers);
+      if ( response.statusCode == 200 ) {
+        return response.body;
+      } else {
+        return processResponse(response);
+      }
+    } catch (e) {
+      //print('Error: $e');
+      return 'Error: $e';
     }
   }
 
@@ -36,11 +40,31 @@ class RepliersListingMls extends ChangeNotifier {
 
     final mlsListingResponse = ResponseListing.fromJson(jsonData);
 
-    onDisplayHistory = mlsListingResponse.history;
+    onDisplayHistory = mlsListingResponse.history?? [];
     notifyListeners();
   }
 
   initGetDisplay() {
     onDisplayHistory = [];
-  }  
+  }
+
+
+  /* getListingMlsData( dynamic pathParam ) async {
+ 
+    String endPoint = 'listings/$pathParam';
+    final jsonData = await _getJsonData( endPoint );
+
+
+    final mlsListingResponse = ResponseListing.fromJson(jsonData);
+
+
+    onDisplayData = mlsListingResponse;
+    notifyListeners();
+  }
+
+
+  initListingMlsData() {
+    onDisplayData = ResponseListing();
+  } */
+  
 }

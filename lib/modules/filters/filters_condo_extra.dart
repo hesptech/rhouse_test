@@ -57,11 +57,11 @@ class _FiltersCondoExtraState extends State<FiltersCondoExtra> {
         const Padding(
           padding: EdgeInsets.symmetric( vertical: 0.0, ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric( vertical: 12.0, horizontal: 24.0 ),
+        const Padding(
+          padding: EdgeInsets.symmetric( vertical: 12.0, horizontal: 24.0 ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
+            children: [
               Text('AMENITIES', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold,),),
             ],
           ),

@@ -9,10 +9,15 @@ class Listing {
     this.timestamps,
     this.daysOnMarket,
     this.listPrice,
+    this.soldPrice,
+    this.soldDate,
+    this.status,
+    this.lastStatus,
     this.address,
     this.details,
     this.mapCoordinates,
     this.rooms,
+    this.openHouse,
     this.lot,
     this.taxes,
     this.occupancy,
@@ -28,10 +33,15 @@ class Listing {
   Timestamps? timestamps;
   String? daysOnMarket;
   String? listPrice;
+  String? soldPrice;
+  DateTime? soldDate;
+  String? status;
+  String? lastStatus;
   Address? address;
   Details? details;
   MapCoordinates? mapCoordinates;
   Map<String, Room>? rooms;
+  Map<String, OpenHouse>? openHouse;
   Lot? lot;
   Taxes? taxes;
   String? occupancy;
@@ -50,10 +60,16 @@ class Listing {
     timestamps: json["timestamps"] != null ?  Timestamps.fromMap(json["timestamps"]) : null,
     daysOnMarket: json["daysOnMarket"],
     listPrice: json["listPrice"],
+    soldPrice: json["soldPrice"],
+    soldDate: json["soldDate"] != null ? DateTime.parse(json["soldDate"]) : DateTime.parse("2023-01-01T21:55:44.000Z"),
+    status: json["status"],
+    lastStatus: json["lastStatus"],
     address: json["address"] != null ? Address.fromMap(json["address"]) : null,
     details: json["details"] != null ? Details.fromMap(json["details"]) : null,
     mapCoordinates: json["map"] != null ? MapCoordinates.fromJson(json["map"]) : null,
     rooms: json["rooms"] != null ? Map.from(json["rooms"]).map((k, v) => MapEntry<String, Room>(k, Room.fromMap(v))) : null,
+    openHouse: json["openHouse"] != null ? Map.from(json["openHouse"]).map((k, v) => MapEntry<String, OpenHouse>(k, OpenHouse.fromMap(v))) : null,
+    //openHouse: Map.from(json["openHouse"]!).map((k, v) => MapEntry<String, OpenHouse>(k, OpenHouse.fromJson(v))),
     lot: json["lot"] != null ? Lot.fromMap(json["lot"]) : null,
     taxes: json["taxes"] != null ? Taxes.fromMap(json["taxes"]) : null,
     occupancy: json["occupancy"],
@@ -98,6 +114,60 @@ class Room {
         features2: json["features2"] ?? json["features2"],
     );
 }
+
+/* class OpenHouse {
+    OpenHouse({
+        this.date,
+        this.startTime,
+        this.endTime,
+        this.type,
+        this.status,
+    });
+
+    String? date;
+    String? startTime;
+    String? endTime;
+    String? type;
+    String? status;
+
+    factory OpenHouse.fromJson(String str) => OpenHouse.fromMap(json.decode(str));
+
+    factory OpenHouse.fromMap(Map<String, dynamic> json) => OpenHouse(
+        date: json['date'] ?? '',
+        startTime: json["startTime"] ?? '',
+        endTime: json["endTime"] ?? '',
+        type: json["type"] ?? '',
+        status: json["status"],
+    );
+} */
+
+class OpenHouse {
+    final String date;
+    final String startTime;
+    final String endTime;
+    final dynamic type;
+    final dynamic status;
+
+    OpenHouse({
+        required this.date,
+        required this.startTime,
+        required this.endTime,
+        required this.type,
+        required this.status,
+    });
+
+    factory OpenHouse.fromJson(String str) => OpenHouse.fromMap(json.decode(str));
+
+    factory OpenHouse.fromMap(Map<String, dynamic> json) => OpenHouse(
+        date: json["date"],
+        startTime: json["startTime"],
+        endTime: json["endTime"],
+        type: json["type"],
+        status: json["status"],
+    );
+}
+
+
 
 
 class Timestamps {

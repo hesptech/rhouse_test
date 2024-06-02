@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_black_white/providers/filter_provider.dart';
 import 'package:flutter_black_white/utils/shared_preferences.dart';
 import 'package:flutter_black_white/utils/constants.dart';
+import 'package:flutter_black_white/config/filters_data_locations.dart';
 
 class FiltersGtaEast extends StatefulWidget {
   const FiltersGtaEast({Key? key}) : super(key: key);
@@ -21,27 +22,15 @@ class _FiltersGtaEastState extends State<FiltersGtaEast> {
 
   bool citySelectAll = Preferences.filtersGtaEast.length == 9 ? true : false ;
 
-  List<List<String>> gtaEastDistricts = [
-    ['Toronto E06'],
-    ['Pickering'],
-    ['Ajax'],
-    ['Whitby'],
-    ['Oshawa'],
-  ];
-
-  List<List<String>> gtaEastOtherDistricts = [
-    ['Clarington'],
-    ['Uxbridge'],
-    ['Scugog'],
-    ['Brock'],
-  ];
+  List<List<String>> gtaEastDistricts = codesGtaEast;
+  List<List<String>> gtaEastOtherDistricts = codesGtaEastOther;
 
   @override
   void initState() {
     super.initState();
 
     _openCloseIcons = <bool>[
-      false,
+      true,
     ];
 
     _propertiesGtaEast = <PropertiesGtaEast>[
@@ -66,6 +55,7 @@ class _FiltersGtaEastState extends State<FiltersGtaEast> {
 
     return 
       ExpansionTile(
+        initiallyExpanded: true,
         title: const Text('GTA East', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.w500, ),),
         trailing: Icon(
           _openCloseIcons[0] ? Icons.remove : Icons.add,
@@ -79,6 +69,10 @@ class _FiltersGtaEastState extends State<FiltersGtaEast> {
               TextButton(
                 onPressed: () {
                   setState(() {
+
+                    Provider.of<FilterProvider>(context, listen: false).resetLocationTopbts();
+                    _filtersGtaEast = Preferences.filtersGtaEast;
+
                     for (var element in _propertiesGtaEast) {
                       _filtersGtaEast.remove(element.name) ;
                     }
@@ -140,9 +134,9 @@ class _FiltersGtaEastState extends State<FiltersGtaEast> {
           Wrap(
             children: propertiesGtaEastWidgets.toList(),
           ),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
+            children: [
               SizedBox( width: 16.0, height: 42.0,),
               Text('Other', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.w500, ), textAlign: TextAlign.start, ),
             ],
@@ -176,6 +170,10 @@ class _FiltersGtaEastState extends State<FiltersGtaEast> {
           selected: _filtersGtaEast.contains(propertiesGtaEast.name),
           onSelected: ( bool selected ) {
             setState(() {
+
+                Provider.of<FilterProvider>(context, listen: false).resetLocationTopbts();
+                _filtersGtaEast = Preferences.filtersGtaEast;
+
                 selected ? _filtersGtaEast.add(propertiesGtaEast.name) : _filtersGtaEast.removeWhere((String name) => name == propertiesGtaEast.name) ;
                 Preferences.filtersGtaEast = _filtersGtaEast;
 
@@ -217,6 +215,10 @@ class _FiltersGtaEastState extends State<FiltersGtaEast> {
           selected: _filtersGtaEast.contains(propertiesGtaEastOther.name),
           onSelected: ( bool selected ) {
             setState(() {
+
+                Provider.of<FilterProvider>(context, listen: false).resetLocationTopbts();
+                _filtersGtaEast = Preferences.filtersGtaEast;
+                
                 selected ? _filtersGtaEast.add(propertiesGtaEastOther.name) : _filtersGtaEast.removeWhere((String name) => name == propertiesGtaEastOther.name) ;
                 Preferences.filtersGtaEast = _filtersGtaEast;
 
