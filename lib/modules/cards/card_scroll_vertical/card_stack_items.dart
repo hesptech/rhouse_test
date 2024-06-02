@@ -42,7 +42,7 @@ class _CardStackItemsState extends State<CardStackItems> {
             margin: dataFormatted.openHouse != '' ? const EdgeInsets.only(top: 20.0) : const EdgeInsets.only(top: 20.0, left: 20.0),
             child: OpenHouseDates(listing: widget.listing, cardType: 'vertical'),
           ),
-          const SizedBox(height: 125.0,),
+          const SizedBox(height: 135.0,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -73,7 +73,7 @@ class _CardStackItemsState extends State<CardStackItems> {
               ), */
               Row(
                 children: [
-              const SizedBox( width: 50.0,),
+              const SizedBox( width: 70.0,),
                   Stack(
                     children: [
                       const Positioned(

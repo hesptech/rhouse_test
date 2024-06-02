@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_black_white/config/environment.dart';
 import 'package:flutter_black_white/models/models.dart';
 import 'package:flutter_black_white/utils/constants.dart';
+import '../widgets/contact_agent_widget.dart';
 
 class CardImagesScreen extends StatelessWidget {
   const CardImagesScreen({Key? key}) : super(key: key);
@@ -25,24 +26,28 @@ class CardImagesScreen extends StatelessWidget {
         centerTitle: true,
         title: const Text('Photo Gallery'),
       ),
-      body: MediaQuery.removePadding(
-        context: context,
-        removeTop: true,
-        removeBottom: true,
-        child: ListView.separated(
-          separatorBuilder: (context, index) => const Divider(
-            height: 0,  thickness: 3.0, color: Colors.black,
+      body: Stack(
+        children: [
+          MediaQuery.removePadding(
+            context: context,
+            removeTop: true,
+            removeBottom: true,
+            child: ListView.separated(
+              separatorBuilder: (context, index) => const Divider(
+                height: 0,  thickness: 3.0, color: Colors.black,
+              ),
+              itemCount: listing.images!.length,
+              scrollDirection: Axis.vertical,
+              itemBuilder: ( _, int index ) => _CastCard( image: listing.images?[index])
+            ),
           ),
-          itemCount: listing.images!.length,
-          scrollDirection: Axis.vertical,
-          itemBuilder: ( _, int index ) => _CastCard( image: listing.images?[index])
-        ),
+          Positioned(
+            bottom: 0,
+            //left: 30,
+            child: ContactAgentWidget(listing: listing),
+          ),
+        ],
       ),
-      /* floatingActionButton: FloatingActionButton(
-        backgroundColor: kPrimaryColor,
-        child: const Icon(Icons.navigate_before_outlined),
-        onPressed: () { Navigator.pop(context); } 
-      ), */
     );
   }
 }
