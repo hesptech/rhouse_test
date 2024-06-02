@@ -46,30 +46,32 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                       Row(
                         children: [
                           GestureDetector(
-                              /* onTap: () => displayDialog( context ),
+                            /* onTap: () => displayDialog( context ),
                             child: const Image(image: AssetImage('assets/logos/play&learn_logo108x37.png'),) */
-                              onTap: () {
-                                GeolocationApp().requestLocalization().then((value) {
-                                  _goToMapSearch(context);
-                                }, onError: (value) {
-                                  _dialogGeolocation(context);
-                                });
-                              },
-                              //child: const Icon( Icons.map_outlined, color: kSecondaryColor, size: 26.0,),
-                              child: const Row(
-                                children: [
-                                  Icon(
-                                    Icons.map_outlined,
-                                    color: kSecondaryColor,
-                                    size: 30.0,
-                                  ),
-                                  Text(
-                                    'Search by map',
-                                    style:
-                                        TextStyle(color: Colors.white54, fontSize: 12.0, fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              )),
+                            onTap: () {
+                              GeolocationApp().requestLocalization().then((value) {
+                                _goToMapSearch(context);
+                              }, onError: (value) {
+                                _dialogGeolocation(context);
+                              });
+                            },
+                            //child: const Icon( Icons.map_outlined, color: kSecondaryColor, size: 26.0,),
+                            child: const Row(
+                              children: [
+                                Icon(
+                                  Icons.map_outlined,
+                                  color: kSecondaryColor,
+                                  size: 30.0,
+                                ),
+                                SizedBox(width: 5.0),
+                                Text(
+                                  'Search by map',
+                                  style:
+                                      TextStyle(color: Colors.white54, fontSize: 12.0, fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ),
                           //const Text('Search by map', style: TextStyle(color: Colors.white54, fontSize: 12.0, fontWeight: FontWeight.bold),),
                         ],
                       ),
@@ -79,10 +81,20 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                         onTap: () {
                           Navigator.pushNamed(context, 'filters_screen');
                         },
-                        child: const Icon(
-                          Icons.tune_outlined,
-                          color: kSecondaryColor,
-                          size: 30.0,
+                        child: const Row(
+                          children: [
+                            Text(
+                              'Filters',
+                              style:
+                                  TextStyle(color: Colors.white54, fontSize: 12.0, fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(width: 5.0,),
+                            Icon(
+                              Icons.tune_outlined,
+                              color: kSecondaryColor,
+                              size: 30.0,
+                            ),
+                          ],
                         ),
                       ),
                     ],
