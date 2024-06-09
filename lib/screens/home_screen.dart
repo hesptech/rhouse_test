@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_black_white/providers/account/session_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_black_white/providers/repliers_provider.dart';
@@ -31,8 +30,8 @@ class HomeScreen extends StatelessWidget {
         }
       } */
     
-    //if (Preferences.userId > 0) {
-    if (Preferences.userId > 3) {
+    if (Preferences.userId > 0) {
+    //if (Preferences.userId > 3) {
       if ( filterProvider.favoritesTemp.isEmpty) {
         repliersFavorites.getSelectFavorites(Preferences.userId.toString());
         for (int i = 0; i < repliersFavorites.onSelectFavorites.length; i++) { 
@@ -58,61 +57,36 @@ class HomeScreen extends StatelessWidget {
 
     //onSelectGameObj
 
-    return FutureBuilder<bool>(
-      future: SessionProvider().checkAuthentication(),
-      builder: (context, snapshot) {
-        return Scaffold(
-          appBar: const CustomAppbar(),
-          body: Stack(
-            children: [
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox( height: 45,),
-    
-                    CardsSliderHor(
-                      listing: repliersProvider.onDisplayHouses,
-                      title: 'HOUSE Listings',
-                      onNextPage: () => repliersProvider.getDisplayHouses(repliersStatusProperties),
-                      onInitPage: () => repliersProvider.initGetDisplay(repliersStatusProperties),
-                    ),
-    
-                    CardsSliderHor(
-                      listing: repliersProvider.onDisplayCondo,
-                      title: 'CONDO Listings',
-                      onNextPage: () => repliersProvider.getDisplayCondo(repliersStatusProperties),
-                      onInitPage: () => repliersProvider.initGetDisplay(repliersStatusProperties),
-                    ),
+    return Scaffold(
+      appBar: const CustomAppbar(),
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox( height: 45,),
 
-                    CardsSliderHor(
-                      listing: repliersProvider.onDisplayOneBedCondo,
-                      title: '1 BR condos for less than \$500,000',
-                      onNextPage: () => repliersProvider.getDisplayOneBedCondo(repliersStatusProperties),
-                      onInitPage: () => repliersProvider.initGetDisplay(repliersStatusProperties),
-                    ),
-
-                    CardsSliderHor(
-                      listing: repliersProvider.onDisplayTwoBedCondo,
-                      title: '2 BR condos for less than \$850,000',
-                      onNextPage: () => repliersProvider.getDisplayTwoBedCondo(repliersStatusProperties),
-                      onInitPage: () => repliersProvider.initGetDisplay(repliersStatusProperties),
-                    ),
-
-                    CardsSliderHor(
-                      listing: repliersProvider.onDisplayCtlTrHouses,
-                      title: 'Houses for less than \$1,400.000',
-                      onNextPage: () => repliersProvider.getDisplayCtlTrHouses(repliersStatusProperties),
-                      onInitPage: () => repliersProvider.initGetDisplay(repliersStatusProperties),
-                    ),
-                  ],
+                CardsSliderHor(
+                  listing: repliersProvider.onDisplayHouses,
+                  title: 'HOUSE Listings',
+                  onNextPage: () => repliersProvider.getDisplayHouses(repliersStatusProperties),
+                  onInitPage: () => repliersProvider.initGetDisplay(repliersStatusProperties),
                 ),
-              ),
-              const FiltersStatusBt(),
-            ],
+
+                CardsSliderHor(
+                  listing: repliersProvider.onDisplayCondo,
+                  title: 'CONDO Listings',
+                  onNextPage: () => repliersProvider.getDisplayCondo(repliersStatusProperties),
+                  onInitPage: () => repliersProvider.initGetDisplay(repliersStatusProperties),
+                ),
+
+              ],
+            ),
           ),
-          bottomNavigationBar: const CustomBottomNavigator(),
-        );
-      }
+          const FiltersStatusBt(),
+        ],
+      ),
+      bottomNavigationBar: const CustomBottomNavigator(),
     );    
   }
 }
