@@ -167,9 +167,9 @@ class DataFormatter {
         String startTime = splittedStartTime[0];
         String endTime = splittedEndTime[0];
 
-        List splittedAmPmFirst = value.startTime.split(' ');
+        //List splittedAmPmFirst = value.startTime.split(' ');
         List splittedAmPmSecond = value.endTime.split(' ');
-        String firstTime = splittedAmPmFirst[1];
+        //String firstTime = splittedAmPmFirst[1];
         String secondTime = splittedAmPmSecond[1];
 
         if(formatted == dateFormat) {
