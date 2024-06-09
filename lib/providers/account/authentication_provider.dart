@@ -30,7 +30,7 @@ class AuthenticationProvider {
 
       final authResponseData = AuthenticationResponseModel(
           email: "emai@test.com",
-          expiresIn: DateTime.now().toUtc().add(Duration(days: 30)),
+          expiresIn: DateTime.now().toUtc().add(const Duration(days: 30)),
           name: "John",
           lastName: "Smith",
           registrationDate: DateTime.now(),

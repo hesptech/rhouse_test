@@ -25,7 +25,7 @@ class RepliersFilters extends ChangeNotifier {
   Future<String> _getJsonDataFilters( String endPoint, Map<String, dynamic> valuesParams, [int page = 1] ) async {
     endPoint = 'listings';
     final url = Uri.https( kBaseUrl, endPoint, valuesParams);
-    print( url );
+    //print( url );
 
     String envApiKey = dotenv.get('REPLIERS-API-KEY');
 
@@ -57,7 +57,7 @@ class RepliersFilters extends ChangeNotifier {
     filtersResults['pageNum'] = _displayPageFilters.toString(); 
 
     if(_displayPageFilters <= numPages ) {
-      print('yess... $numPages $_displayPageFilters');
+      //print('yess... $numPages $_displayPageFilters');
 
       final jsonData = await _getJsonDataFilters('listings', filtersResults, _displayPageFilters); 
 
@@ -66,12 +66,12 @@ class RepliersFilters extends ChangeNotifier {
       onDisplayFilters = [ ...onDisplayFilters, ...nowPlayingResponse.listings];
       onCount = nowPlayingResponse.count;
       numPages = nowPlayingResponse.numPages;
-      print(onCount);
+      //print(onCount);
       loaded = true;
       notifyListeners();
       isLoading = false;
     } else {
-      print('nooo... $numPages $_displayPageFilters');
+      //print('nooo... $numPages $_displayPageFilters');
       isLoading = false;
     }
     

@@ -99,7 +99,7 @@ class RepliersGame extends ChangeNotifier {
     }
     //print(onSelectGame);
 
-    Map<String, String> map1 = { for (var e in nowDisplayResponse.mlsGame) e.split('-')[0] : e.split('-')[1] };
+    //Map<String, String> map1 = { for (var e in nowDisplayResponse.mlsGame) e.split('-')[0] : e.split('-')[1] };
     onSelectGameObj = { for (var e in nowDisplayResponse.mlsGame) e.split('-')[0] : e.split('-')[1] };
     //print(onSelectGameObj);
   }

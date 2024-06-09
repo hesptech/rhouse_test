@@ -17,7 +17,7 @@ class OpenHouseDates extends StatelessWidget {
     final dataFormatted = DataFormatter(listing);
     final bool statusActive = listing.status == 'A' ? true : false ;
     final widthCardType = cardType == 'vertical' ? 65 : 105 ; 
-    final double buttonMaxSize = dataFormatted.openHouse != '' ? MediaQuery.of(context).size.width - widthCardType : 140.0 ;
+    //final double buttonMaxSize = dataFormatted.openHouse != '' ? MediaQuery.of(context).size.width - widthCardType : 140.0 ;
 
     return Row(
       //mainAxisSize: MainAxisSize.max,
