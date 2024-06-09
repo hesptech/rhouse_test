@@ -118,7 +118,7 @@ class _GameGuessPriceState extends State<GameGuessPrice> {
                 ),
                 onPressed: () async {
           
-                  /* formGameProvider.validatedForm();
+                  formGameProvider.validatedForm();
                   
                   price = price.replaceAll('\$ ', '').trim().replaceAll(',', '').trim();
                   date = widget.propertyItem.timestamps?.expiryDate.toString()?? '';
@@ -141,7 +141,7 @@ class _GameGuessPriceState extends State<GameGuessPrice> {
             
                   if(!filterProvider.gameTemp.contains('0')){
                     filterProvider.gameTemp.add('0');
-                  }  */         
+                  }          
           
                 },
               ),

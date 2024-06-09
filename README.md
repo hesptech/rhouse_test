@@ -1,3 +1,11 @@
+TEMP DEVELOPMENT NOTES:
+('DB_NAME', 'applicaz_rhouze');
+
+endpoints paths:
+rhouze_db/favorites/index.php
+rhouze_db/game/index.php
+
+
 # Flutter Real Estate prototype
 
 A mobile App of Toronto Houses and Condo for sale built with Flutter and Dart.
