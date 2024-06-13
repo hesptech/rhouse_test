@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -62,6 +65,14 @@ class CardDetailsFullScreen extends StatelessWidget {
           icon: const Icon(Icons.close_outlined),
         ),
         actions: [
+          IconButton(
+            onPressed: () {},
+            icon:  Icon(
+               Platform.isAndroid ? Icons.share : CupertinoIcons.share,
+              size: 30,
+            ),
+          ),
+          const SizedBox( width: 10 ),
           IconButton(
             onPressed: () {},
             icon: const Icon(
