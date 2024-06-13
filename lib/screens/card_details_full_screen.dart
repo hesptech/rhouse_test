@@ -12,7 +12,10 @@ import 'package:flutter_black_white/modules/cards/card_details_full/cards.dart';
 import 'package:flutter_black_white/screens/game/game_screen.dart';
 import 'package:flutter_black_white/screens/filters_results_screen.dart';
 import 'package:flutter_black_white/screens/map_screen.dart';
+import 'package:share_plus/share_plus.dart';
+import '../utils/data_formatter.dart';
 import '../widgets/contact_agent_widget.dart';
+import 'package:http/http.dart' as http;
 
 class CardDetailsFullScreen extends StatelessWidget {
   const CardDetailsFullScreen({Key? key}) : super(key: key);
@@ -66,7 +69,18 @@ class CardDetailsFullScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () async {
+                final dataFormatted = DataFormatter(listing);
+                await Share.share(" Check out this Listing! \n \n ${dataFormatted.address}, ${dataFormatted.addressCity} ");
+
+                //TODO: Missing image sharing and link to the web
+
+               /* final  urlImage = listing.images?[0];
+                final url = Uri.parse(urlImage!);
+                final response = await  http.get(url);
+                print(response.body);*/
+
+            },
             icon:  Icon(
                Platform.isAndroid ? Icons.share : CupertinoIcons.share,
               size: 30,
@@ -74,7 +88,9 @@ class CardDetailsFullScreen extends StatelessWidget {
           ),
           const SizedBox( width: 10 ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+
+            },
             icon: const Icon(
               Icons.search_outlined,
               size: 30,
